@@ -1,4 +1,4 @@
-package com.example.doicare
+package com.doicare.app
 
 import android.app.Notification
 import android.service.notification.NotificationListenerService

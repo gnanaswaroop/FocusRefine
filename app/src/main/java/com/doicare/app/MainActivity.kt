@@ -1,4 +1,4 @@
-package com.example.doicare
+package com.doicare.app
 
 import android.content.Intent
 import android.os.Bundle

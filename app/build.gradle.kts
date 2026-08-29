@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.doicare"
+    namespace = "com.doicare.app"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.doicare"
+        applicationId = "com.doicare.app"
         minSdk = 28
         targetSdk = 34
         versionCode = 1
