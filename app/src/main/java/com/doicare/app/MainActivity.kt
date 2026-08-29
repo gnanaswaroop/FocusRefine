@@ -3,42 +3,81 @@ package com.doicare.app
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.TextView
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: NotificationAdapter
+    private lateinit var database: AppDatabase
+    private lateinit var modeSpinner: Spinner
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-        // Basic layout programmatically for MVP simplicity
-        val layout = androidx.appcompat.widget.LinearLayoutCompat(this).apply {
-            orientation = androidx.appcompat.widget.LinearLayoutCompat.VERTICAL
-            setPadding(32, 32, 32, 32)
+        database = AppDatabase.getDatabase(this)
+
+        val settingsBtn = findViewById<Button>(R.id.btnEnableNotification)
+        settingsBtn.setOnClickListener {
+            startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
         }
 
-        val title = TextView(this).apply {
-            text = "Do I Care"
-            textSize = 24f
-            setPadding(0, 0, 0, 32)
-        }
-        layout.addView(title)
+        recyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = NotificationAdapter(emptyList())
+        recyclerView.adapter = adapter
 
-        val statusText = TextView(this).apply {
-            text = "Check notification access..."
-            setPadding(0, 0, 0, 32)
-        }
-        layout.addView(statusText)
+        modeSpinner = findViewById(R.id.modeSpinner)
+        val modes = arrayOf("Commute", "Focus", "Reading")
+        val spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, modes)
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        modeSpinner.adapter = spinnerAdapter
 
-        val settingsBtn = Button(this).apply {
-            text = "Enable Notification Access"
-            setOnClickListener {
-                startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+        // Restore saved mode
+        val prefs = getSharedPreferences("DoICarePrefs", MODE_PRIVATE)
+        val savedMode = prefs.getString("current_mode", "Commute")
+        val modeIndex = modes.indexOf(savedMode)
+        if (modeIndex >= 0) {
+            modeSpinner.setSelection(modeIndex)
+        }
+
+        modeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selectedMode = modes[position]
+                prefs.edit().putString("current_mode", selectedMode).apply()
+                // Update service about mode change (could use broadcast or bound service, skipping for simple MVP)
+            }
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+
+        // Start observing Android Auto connection
+        val autoDetector = AndroidAutoDetector(this)
+        autoDetector.observeConnection(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadNotifications()
+    }
+
+    private fun loadNotifications() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val notifications = database.notificationDao().getAll()
+            withContext(Dispatchers.Main) {
+                adapter.updateData(notifications)
             }
         }
-        layout.addView(settingsBtn)
-
-        setContentView(layout)
     }
 }
