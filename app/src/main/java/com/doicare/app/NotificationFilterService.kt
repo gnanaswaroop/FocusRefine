@@ -40,7 +40,7 @@ class NotificationFilterService : NotificationListenerService(), TextToSpeech.On
         val text = extras.getCharSequence(Notification.EXTRA_TEXT)?.toString()
         val packageName = sbn.packageName
 
-        Log.d(TAG, "Received Notification: Title=\$title, Text=\$text")
+        Log.d(TAG, "Received Notification: Title=$title, Text=$text")
 
         // Don't intercept own app or system UI to prevent weird loops
         if (packageName == this.packageName || packageName == "com.android.systemui") {
@@ -48,6 +48,11 @@ class NotificationFilterService : NotificationListenerService(), TextToSpeech.On
         }
 
         val prefs = getSharedPreferences("DoICarePrefs", Context.MODE_PRIVATE)
+        val isRunning = prefs.getBoolean("service_running", true)
+        if (!isRunning) {
+            return
+        }
+
         val currentMode = prefs.getString("current_mode", "Commute") ?: "Commute"
 
         val isUrgent = analyzeContent(title, text, currentMode)

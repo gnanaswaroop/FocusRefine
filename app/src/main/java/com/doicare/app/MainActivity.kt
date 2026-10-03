@@ -8,10 +8,12 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.switchmaterial.SwitchMaterial
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,6 +24,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: NotificationAdapter
     private lateinit var database: AppDatabase
     private lateinit var modeSpinner: Spinner
+    private lateinit var switchFiltering: SwitchMaterial
+    private lateinit var settingsBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,9 +33,18 @@ class MainActivity : AppCompatActivity() {
 
         database = AppDatabase.getDatabase(this)
 
-        val settingsBtn = findViewById<Button>(R.id.btnEnableNotification)
+        settingsBtn = findViewById(R.id.btnEnableNotification)
         settingsBtn.setOnClickListener {
             startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+        }
+
+        switchFiltering = findViewById(R.id.switchFiltering)
+        val prefs = getSharedPreferences("DoICarePrefs", MODE_PRIVATE)
+        val isRunning = prefs.getBoolean("service_running", true)
+        switchFiltering.isChecked = isRunning
+
+        switchFiltering.setOnCheckedChangeListener { _, isChecked ->
+            prefs.edit().putBoolean("service_running", isChecked).apply()
         }
 
         recyclerView = findViewById(R.id.recyclerView)
@@ -46,7 +59,6 @@ class MainActivity : AppCompatActivity() {
         modeSpinner.adapter = spinnerAdapter
 
         // Restore saved mode
-        val prefs = getSharedPreferences("DoICarePrefs", MODE_PRIVATE)
         val savedMode = prefs.getString("current_mode", "Commute")
         val modeIndex = modes.indexOf(savedMode)
         if (modeIndex >= 0) {
@@ -57,7 +69,6 @@ class MainActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 val selectedMode = modes[position]
                 prefs.edit().putString("current_mode", selectedMode).apply()
-                // Update service about mode change (could use broadcast or bound service, skipping for simple MVP)
             }
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
@@ -70,6 +81,26 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         loadNotifications()
+        updateNotificationAccessStatus()
+    }
+
+    private fun updateNotificationAccessStatus() {
+        val statusTextView = findViewById<TextView>(R.id.tvNotificationStatus)
+        if (isNotificationServiceEnabled()) {
+            statusTextView.text = "✓ Notification Access Enabled"
+            statusTextView.setTextColor(android.graphics.Color.parseColor("#2E7D32")) // Dark green
+            settingsBtn.visibility = View.GONE
+        } else {
+            statusTextView.text = "✕ Notification Access Disabled"
+            statusTextView.setTextColor(android.graphics.Color.parseColor("#C62828")) // Dark red
+            settingsBtn.visibility = View.VISIBLE
+        }
+    }
+
+    private fun isNotificationServiceEnabled(): Boolean {
+        val packageName = packageName
+        val flat = Settings.Secure.getString(contentResolver, "enabled_notification_listeners")
+        return flat != null && flat.contains(packageName)
     }
 
     private fun loadNotifications() {
