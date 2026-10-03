@@ -64,4 +64,31 @@ class NotificationFilterE2ETest {
         assertEquals("WhatsApp", mutedList[0].title)
         assertEquals(false, mutedList[0].isUrgent)
     }
+
+    @Test
+    fun testBackgroundServiceFilteringLogic() = runBlocking {
+        // Simulate background service evaluating incoming notifications against Commute prompt rules while app is minimized
+        val prompt = "navigation, turn left, turn right, meeting, traffic, call"
+        val keywords = prompt.lowercase().split(",", " ").map { it.trim() }.filter { it.isNotEmpty() }
+
+        val notificationTitle = "Slack"
+        val notificationText = "Hey, are we still having that meeting?"
+        val content = "$notificationTitle $notificationText".lowercase()
+
+        val isUrgent = keywords.any { content.contains(it) }
+        assertEquals(true, isUrgent) // "meeting" matches commute prompt
+
+        val entity = NotificationEntity(
+            title = notificationTitle,
+            text = notificationText,
+            packageName = "com.Slack",
+            timestamp = System.currentTimeMillis(),
+            isUrgent = isUrgent
+        )
+        dao.insert(entity)
+
+        val shownList = dao.getByUrgency(true)
+        assertEquals(1, shownList.size)
+        assertEquals("Slack", shownList[0].title)
+    }
 }
