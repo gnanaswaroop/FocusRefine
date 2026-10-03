@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- Unified Header with App Icon -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -16,21 +17,40 @@
             android:orientation="horizontal"
             android:layout_marginBottom="16dp">
 
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="10dp"
+                android:contentDescription="App Logo"
+                android:src="@mipmap/ic_launcher" />
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="FocusFlow Settings"
-                android:textSize="22sp"
+                android:text="Settings"
+                android:textSize="24sp"
                 android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/btnHome"
-                style="?attr/materialButtonOutlinedStyle"
+                style="?attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Home"/>
+                android:text="Back"
+                android:textAllCaps="false"/>
         </LinearLayout>
+
+        <!-- AI Support Status Note -->
+        <TextView
+            android:id="@+id/tvAiStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="#FFF3E0"
+            android:padding="12dp"
+            android:textSize="13sp"
+            android:textColor="#E65100" />
 
         <!-- Appearance / Theme Section -->
         <TextView

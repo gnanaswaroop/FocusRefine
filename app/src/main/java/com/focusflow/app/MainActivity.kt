@@ -1,10 +1,7 @@
 package com.focusflow.app
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
@@ -16,7 +13,6 @@ import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -97,37 +93,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun sendSampleNotifications() {
-        val notificationManager = getSystemService(NotificationManager::class.java)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                "sample_channel",
-                "Sample Notifications",
-                NotificationManager.IMPORTANCE_DEFAULT
+        lifecycleScope.launch(Dispatchers.IO) {
+            val dao = database.notificationDao()
+            dao.insert(
+                NotificationEntity(
+                    title = "Google Maps",
+                    text = "Turn right on Oak Street in 200 feet",
+                    packageName = "com.google.android.apps.maps",
+                    timestamp = System.currentTimeMillis(),
+                    isUrgent = true
+                )
             )
-            notificationManager.createNotificationChannel(channel)
+            dao.insert(
+                NotificationEntity(
+                    title = "WhatsApp",
+                    text = "Hey! Want to grab coffee later today?",
+                    packageName = "com.whatsapp",
+                    timestamp = System.currentTimeMillis() - 1000,
+                    isUrgent = false
+                )
+            )
+            withContext(Dispatchers.Main) {
+                Toast.makeText(this@MainActivity, "Sample notifications added to inbox!", Toast.LENGTH_SHORT).show()
+                loadNotifications()
+            }
         }
-
-        // Sample 1: Urgent (Google Maps navigation - matches Commute mode prompt)
-        val notif1 = NotificationCompat.Builder(this, "sample_channel")
-            .setSmallIcon(android.R.drawable.ic_menu_compass)
-            .setContentTitle("Google Maps")
-            .setContentText("Turn right on Oak Street in 200 feet")
-            .setAutoCancel(true)
-            .build()
-        notificationManager.notify(2001, notif1)
-
-        // Sample 2: Suppressed / Muted (WhatsApp message - does not match Commute mode prompt)
-        val notif2 = NotificationCompat.Builder(this, "sample_channel")
-            .setSmallIcon(android.R.drawable.ic_menu_send)
-            .setContentTitle("WhatsApp")
-            .setContentText("Hey! Want to grab coffee later today?")
-            .setAutoCancel(true)
-            .build()
-        notificationManager.notify(2002, notif2)
-
-        Toast.makeText(this, "Sample notifications sent! Check Shown & Muted tabs.", Toast.LENGTH_LONG).show()
-
-        recyclerView.postDelayed({ loadNotifications() }, 1000)
     }
 
     override fun onResume() {

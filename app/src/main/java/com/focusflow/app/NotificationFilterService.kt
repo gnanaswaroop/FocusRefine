@@ -13,6 +13,8 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.google.mediapipe.tasks.core.BaseOptions
+import com.google.mediapipe.tasks.text.textclassifier.TextClassifier
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,6 +25,7 @@ class NotificationFilterService : NotificationListenerService() {
     private lateinit var database: AppDatabase
     private val CHANNEL_ID = "focusflow_service_channel"
     private val NOTIFICATION_ID = 1001
+    private var textClassifier: TextClassifier? = null
 
     private val toggleReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -46,6 +49,16 @@ class NotificationFilterService : NotificationListenerService() {
         super.onCreate()
         database = AppDatabase.getDatabase(this)
         createNotificationChannel()
+
+        // Initialize MediaPipe TextClassifier (Google AI Edge Text Classification architecture)
+        try {
+            val baseOptions = BaseOptions.builder().setModelAssetPath("text_classifier.tflite").build()
+            val options = TextClassifier.TextClassifierOptions.builder().setBaseOptions(baseOptions).build()
+            textClassifier = TextClassifier.createFromOptions(this, options)
+            Log.d(TAG, "MediaPipe TextClassifier initialized successfully")
+        } catch (e: Exception) {
+            Log.d(TAG, "MediaPipe model asset not found; using semantic prompt heuristic engine: ${e.message}")
+        }
 
         val filter = IntentFilter(ACTION_TOGGLE_SERVICE)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -182,13 +195,31 @@ class NotificationFilterService : NotificationListenerService() {
             unregisterReceiver(toggleReceiver)
         } catch (_: Exception) {
         }
+        textClassifier?.close()
         super.onDestroy()
     }
 
     private fun analyzeContent(title: String?, text: String?, mode: String): Boolean {
         val content = "${title ?: ""} ${text ?: ""}".lowercase()
-        val prefs = getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
 
+        // 1. MediaPipe Text Classification on-device inference (Google AI Edge Text Classification sample style)
+        if (textClassifier != null) {
+            try {
+                val result = textClassifier!!.classify(content)
+                for (classification in result.classificationResult().classifications()) {
+                    for (category in classification.categories()) {
+                        if (category.categoryName().equals("urgent", ignoreCase = true) && category.score() > 0.6f) {
+                            return true
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "MediaPipe classification error: ${e.message}")
+            }
+        }
+
+        // 2. Semantic prompt keyword matching fallback
+        val prefs = getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
         val prompt = when (mode) {
             "Commute" -> prefs.getString("prompt_commute", "navigation, turn left, turn right, meeting, traffic, call") ?: ""
             "Focus" -> prefs.getString("prompt_focus", "call, boss, emergency") ?: ""
