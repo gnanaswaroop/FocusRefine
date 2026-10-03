@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
         val btnSendSamples = findViewById<Button>(R.id.btnSendSamples)
         btnSendSamples.setOnClickListener {
-            sendSampleNotifications()
+            processNotificationHistoryOrSamples()
         }
 
         switchFiltering = findViewById(R.id.switchFiltering)
@@ -92,30 +92,57 @@ class MainActivity : AppCompatActivity() {
         autoDetector.observeConnection(this)
     }
 
-    private fun sendSampleNotifications() {
+    private fun processNotificationHistoryOrSamples() {
         lifecycleScope.launch(Dispatchers.IO) {
             val dao = database.notificationDao()
-            dao.insert(
-                NotificationEntity(
-                    title = "Google Maps",
-                    text = "Turn right on Oak Street in 200 feet",
-                    packageName = "com.google.android.apps.maps",
-                    timestamp = System.currentTimeMillis(),
-                    isUrgent = true
+            val history = dao.getAll()
+
+            if (history.isNotEmpty()) {
+                // Re-evaluate notification history against current mode prompt
+                val currentMode = prefs.getString("current_mode", "Commute") ?: "Commute"
+                val prompt = when (currentMode) {
+                    "Commute" -> prefs.getString("prompt_commute", "navigation, turn left, turn right, meeting, traffic, call") ?: ""
+                    "Focus" -> prefs.getString("prompt_focus", "call, boss, emergency") ?: ""
+                    "Reading" -> prefs.getString("prompt_reading", "emergency, hospital") ?: ""
+                    else -> prefs.getString("custom_mode_prompt_$currentMode", "urgent") ?: ""
+                }
+                val keywords = prompt.lowercase().split(",", " ").map { it.trim() }.filter { it.isNotEmpty() }
+
+                dao.deleteAll()
+                for (notif in history) {
+                    val content = "${notif.title ?: ""} ${notif.text ?: ""}".lowercase()
+                    val isUrgent = if (keywords.isEmpty()) content.contains("urgent") else keywords.any { content.contains(it) }
+                    dao.insert(notif.copy(isUrgent = isUrgent))
+                }
+
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@MainActivity, "Re-evaluated ${history.size} notifications from history against '$currentMode' mode!", Toast.LENGTH_SHORT).show()
+                    loadNotifications()
+                }
+            } else {
+                // Fallback to sample notifications when history is empty
+                dao.insert(
+                    NotificationEntity(
+                        title = "Google Maps",
+                        text = "Turn right on Oak Street in 200 feet",
+                        packageName = "com.google.android.apps.maps",
+                        timestamp = System.currentTimeMillis(),
+                        isUrgent = true
+                    )
                 )
-            )
-            dao.insert(
-                NotificationEntity(
-                    title = "WhatsApp",
-                    text = "Hey! Want to grab coffee later today?",
-                    packageName = "com.whatsapp",
-                    timestamp = System.currentTimeMillis() - 1000,
-                    isUrgent = false
+                dao.insert(
+                    NotificationEntity(
+                        title = "WhatsApp",
+                        text = "Hey! Want to grab coffee later today?",
+                        packageName = "com.whatsapp",
+                        timestamp = System.currentTimeMillis() - 1000,
+                        isUrgent = false
+                    )
                 )
-            )
-            withContext(Dispatchers.Main) {
-                Toast.makeText(this@MainActivity, "Sample notifications added to inbox!", Toast.LENGTH_SHORT).show()
-                loadNotifications()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@MainActivity, "Notification history empty. Generated sample notifications!", Toast.LENGTH_SHORT).show()
+                    loadNotifications()
+                }
             }
         }
     }

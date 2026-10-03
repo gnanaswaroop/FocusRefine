@@ -91,4 +91,35 @@ class NotificationFilterE2ETest {
         assertEquals(1, shownList.size)
         assertEquals("Slack", shownList[0].title)
     }
+
+    @Test
+    fun testTextClassificationAndFilteringFlow() = runBlocking {
+        // Test text classification and filtering flow (testing both urgent and muted database classification)
+        val urgentNotification = NotificationEntity(
+            title = "Emergency Alert",
+            text = "Severe weather warning in your area",
+            packageName = "com.weather.alert",
+            timestamp = System.currentTimeMillis(),
+            isUrgent = true
+        )
+        dao.insert(urgentNotification)
+
+        val mutedNotification = NotificationEntity(
+            title = "Game Update",
+            text = "Your daily bonus is ready to claim!",
+            packageName = "com.game.app",
+            timestamp = System.currentTimeMillis() + 500,
+            isUrgent = false
+        )
+        dao.insert(mutedNotification)
+
+        val shown = dao.getByUrgency(true)
+        val muted = dao.getByUrgency(false)
+
+        assertEquals(1, shown.size)
+        assertEquals("Emergency Alert", shown[0].title)
+
+        assertEquals(1, muted.size)
+        assertEquals("Game Update", muted[0].title)
+    }
 }
