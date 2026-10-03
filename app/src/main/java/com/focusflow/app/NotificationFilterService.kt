@@ -31,7 +31,8 @@ class NotificationFilterService : NotificationListenerService() {
                 val current = prefs.getBoolean("service_running", true)
                 val newState = !current
                 prefs.edit().putBoolean("service_running", newState).apply()
-                updateForegroundNotification(newState)
+                val count = prefs.getInt("suppressed_count", 0)
+                updateForegroundNotification(newState, count)
                 Log.d(TAG, "Service toggled from notification bar: running = $newState")
             }
         }
@@ -55,7 +56,8 @@ class NotificationFilterService : NotificationListenerService() {
 
         val prefs = getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
         val isRunning = prefs.getBoolean("service_running", true)
-        startForeground(NOTIFICATION_ID, buildForegroundNotification(isRunning))
+        val count = prefs.getInt("suppressed_count", 0)
+        startForeground(NOTIFICATION_ID, buildForegroundNotification(isRunning, count))
         Log.d(TAG, "Service Created & Started in Foreground")
     }
 
@@ -66,14 +68,14 @@ class NotificationFilterService : NotificationListenerService() {
                 "FocusFlow Background Service",
                 NotificationManager.IMPORTANCE_LOW
             ).apply {
-                description = "Persistent notification for FocusFlow background filtering and quick toggle."
+                description = "Persistent notification showing suppression count and quick STOP/START toggle."
             }
             val manager = getSystemService(NotificationManager::class.java)
             manager.createNotificationChannel(channel)
         }
     }
 
-    private fun buildForegroundNotification(isRunning: Boolean): Notification {
+    private fun buildForegroundNotification(isRunning: Boolean, suppressedCount: Int): Notification {
         val toggleIntent = Intent(ACTION_TOGGLE_SERVICE)
         val flagImmutable = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0
         val togglePendingIntent = PendingIntent.getBroadcast(
@@ -81,8 +83,12 @@ class NotificationFilterService : NotificationListenerService() {
             PendingIntent.FLAG_UPDATE_CURRENT or flagImmutable
         )
 
-        val actionText = if (isRunning) "TURN OFF" else "TURN ON"
-        val statusText = if (isRunning) "Filtering active in background" else "Filtering paused"
+        val actionText = if (isRunning) "STOP" else "START"
+        val statusText = if (isRunning) {
+            "Suppressed: $suppressedCount notifications"
+        } else {
+            "Filtering stopped — showing all notifications"
+        }
 
         val openAppIntent = Intent(this, MainActivity::class.java)
         val openAppPendingIntent = PendingIntent.getActivity(
@@ -95,15 +101,15 @@ class NotificationFilterService : NotificationListenerService() {
             .setContentText(statusText)
             .setSmallIcon(android.R.drawable.ic_menu_manage)
             .setContentIntent(openAppPendingIntent)
-            .addAction(android.R.drawable.ic_menu_set_as, actionText, togglePendingIntent)
+            .addAction(android.R.drawable.ic_menu_close_clear_cancel, actionText, togglePendingIntent)
             .setOngoing(true)
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .build()
     }
 
-    private fun updateForegroundNotification(isRunning: Boolean) {
+    private fun updateForegroundNotification(isRunning: Boolean, suppressedCount: Int) {
         val manager = getSystemService(NotificationManager::class.java)
-        manager.notify(NOTIFICATION_ID, buildForegroundNotification(isRunning))
+        manager.notify(NOTIFICATION_ID, buildForegroundNotification(isRunning, suppressedCount))
     }
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
@@ -144,10 +150,14 @@ class NotificationFilterService : NotificationListenerService() {
                 database.notificationDao().insert(entity)
             }
         } else {
-            // Suppressed / Muted: cancel system notification, record in Muted inbox
+            // Suppressed / Muted: cancel system notification, record in Muted inbox, increment count
             if (sbn.isClearable) {
                 cancelNotification(sbn.key)
                 Log.d(TAG, "Suppressed/Muted notification: ${sbn.key}")
+
+                val count = prefs.getInt("suppressed_count", 0) + 1
+                prefs.edit().putInt("suppressed_count", count).apply()
+                updateForegroundNotification(true, count)
 
                 CoroutineScope(Dispatchers.IO).launch {
                     val entity = NotificationEntity(
