@@ -1,4 +1,4 @@
-package com.doicare.app
+package com.focusflow.app
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

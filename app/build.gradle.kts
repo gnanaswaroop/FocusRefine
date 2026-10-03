@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.doicare.app"
+    namespace = "com.focusflow.app"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.doicare.app"
+        applicationId = "com.focusflow.app"
         minSdk = 28
         targetSdk = 34
         versionCode = 1

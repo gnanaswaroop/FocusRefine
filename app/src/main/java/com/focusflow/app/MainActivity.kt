@@ -1,4 +1,4 @@
-package com.doicare.app
+package com.focusflow.app
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -82,7 +82,6 @@ class MainActivity : AppCompatActivity() {
         modeSpinner = findViewById(R.id.modeSpinner)
         setupModeSpinner()
 
-        // Start observing Android Auto connection
         val autoDetector = AndroidAutoDetector(this)
         autoDetector.observeConnection(this)
     }
@@ -146,11 +145,11 @@ class MainActivity : AppCompatActivity() {
         val statusTextView = findViewById<TextView>(R.id.tvNotificationStatus)
         if (isNotificationServiceEnabled()) {
             statusTextView.text = "✓ Notification Access Enabled"
-            statusTextView.setTextColor(android.graphics.Color.parseColor("#2E7D32")) // Dark green
+            statusTextView.setTextColor(android.graphics.Color.parseColor("#2E7D32"))
             settingsBtn.visibility = View.GONE
         } else {
             statusTextView.text = "✕ Notification Access Disabled"
-            statusTextView.setTextColor(android.graphics.Color.parseColor("#C62828")) // Dark red
+            statusTextView.setTextColor(android.graphics.Color.parseColor("#C62828"))
             settingsBtn.visibility = View.VISIBLE
         }
     }

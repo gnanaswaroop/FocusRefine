@@ -1,4 +1,4 @@
-package com.doicare.app
+package com.focusflow.app
 
 import android.content.SharedPreferences
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.doicare.app
+package com.focusflow.app
 
 import android.content.Context
 import androidx.room.Database

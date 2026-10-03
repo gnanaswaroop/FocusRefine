@@ -1,4 +1,4 @@
-package com.doicare.app
+package com.focusflow.app
 
 import androidx.room.Dao
 import androidx.room.Insert

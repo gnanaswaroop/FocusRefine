@@ -1,4 +1,4 @@
-package com.doicare.app
+package com.focusflow.app
 
 import android.app.Notification
 import android.content.Context

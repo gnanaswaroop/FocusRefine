@@ -1,5 +1,6 @@
-package com.doicare.app
+package com.focusflow.app
 
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -9,6 +10,7 @@ import android.util.Log
 class AutoActivationReceiver : BroadcastReceiver() {
     private val TAG = "AutoActivation"
 
+    @SuppressLint("MissingPermission")
     override fun onReceive(context: Context, intent: Intent) {
         val action = intent.action
         Log.d(TAG, "Received action: $action")
@@ -20,7 +22,6 @@ class AutoActivationReceiver : BroadcastReceiver() {
                 val device: BluetoothDevice? = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
                 val deviceName = device?.name
                 Log.d(TAG, "Bluetooth connected: $deviceName")
-                // Simplified auto-activation logic for MVP
                 if (deviceName?.contains("Car", ignoreCase = true) == true) {
                     prefs.edit().putString("current_mode", "Commute").apply()
                     Log.d(TAG, "Auto-activated Commute mode")
@@ -28,7 +29,6 @@ class AutoActivationReceiver : BroadcastReceiver() {
             }
             BluetoothDevice.ACTION_ACL_DISCONNECTED -> {
                 Log.d(TAG, "Bluetooth disconnected")
-                // Simplified logic: Revert to Focus
                 prefs.edit().putString("current_mode", "Focus").apply()
                 Log.d(TAG, "Auto-activated Focus mode")
             }

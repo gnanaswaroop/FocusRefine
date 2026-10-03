@@ -1,4 +1,4 @@
-package com.doicare.app
+package com.focusflow.app
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
