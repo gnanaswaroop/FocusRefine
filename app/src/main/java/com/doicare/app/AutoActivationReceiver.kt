@@ -13,7 +13,7 @@ class AutoActivationReceiver : BroadcastReceiver() {
         val action = intent.action
         Log.d(TAG, "Received action: $action")
 
-        val prefs = context.getSharedPreferences("DoICarePrefs", Context.MODE_PRIVATE)
+        val prefs = context.getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
 
         when (action) {
             BluetoothDevice.ACTION_ACL_CONNECTED -> {

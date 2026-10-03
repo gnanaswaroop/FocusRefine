@@ -15,5 +15,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "DoICare"
+rootProject.name = "FocusFlow"
 include(":app")
