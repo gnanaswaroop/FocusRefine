@@ -4,33 +4,20 @@ import android.app.Notification
 import android.content.Context
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
-import android.speech.tts.TextToSpeech
 import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.Locale
 
-class NotificationFilterService : NotificationListenerService(), TextToSpeech.OnInitListener {
+class NotificationFilterService : NotificationListenerService() {
 
     private val TAG = "NotificationFilter"
-    private var tts: TextToSpeech? = null
     private lateinit var database: AppDatabase
 
     override fun onCreate() {
         super.onCreate()
-        tts = TextToSpeech(this, this)
         database = AppDatabase.getDatabase(this)
         Log.d(TAG, "Service Created")
-    }
-
-    override fun onInit(status: Int) {
-        if (status == TextToSpeech.SUCCESS) {
-            tts?.language = Locale.US
-            Log.d(TAG, "TTS Initialized")
-        } else {
-            Log.e(TAG, "TTS Initialization Failed")
-        }
     }
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
@@ -58,10 +45,8 @@ class NotificationFilterService : NotificationListenerService(), TextToSpeech.On
         val isUrgent = analyzeContent(title, text, currentMode)
 
         if (isUrgent) {
-            // Read it out loud
-            val speechText = "Urgent notification from $title: $text"
-            tts?.speak(speechText, TextToSpeech.QUEUE_ADD, null, null)
-            Log.d(TAG, "Shown (Urgent) notification: ${sbn.key}")
+            // Allowed / Not suppressed: leave notification visible in system shade, record as Shown
+            Log.d(TAG, "Allowed (Shown) notification: ${sbn.key}")
 
             CoroutineScope(Dispatchers.IO).launch {
                 val entity = NotificationEntity(
@@ -74,12 +59,11 @@ class NotificationFilterService : NotificationListenerService(), TextToSpeech.On
                 database.notificationDao().insert(entity)
             }
         } else {
-            // Archive it
+            // Suppressed / Muted: cancel system notification, record in Muted inbox
             if (sbn.isClearable) {
                 cancelNotification(sbn.key)
-                Log.d(TAG, "Archived notification: ${sbn.key}")
+                Log.d(TAG, "Suppressed/Muted notification: ${sbn.key}")
 
-                // Save to Room DB (Inbox)
                 CoroutineScope(Dispatchers.IO).launch {
                     val entity = NotificationEntity(
                         title = title,
@@ -99,8 +83,6 @@ class NotificationFilterService : NotificationListenerService(), TextToSpeech.On
     }
 
     override fun onDestroy() {
-        tts?.stop()
-        tts?.shutdown()
         super.onDestroy()
     }
 
