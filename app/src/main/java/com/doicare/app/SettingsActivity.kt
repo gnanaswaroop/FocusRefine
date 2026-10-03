@@ -2,23 +2,41 @@ package com.doicare.app
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var prefs: SharedPreferences
     private lateinit var tvCustomModesList: TextView
+    private lateinit var spinnerTheme: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
         prefs = getSharedPreferences("FocusFlowPrefs", MODE_PRIVATE)
+
+        spinnerTheme = findViewById(R.id.spinnerTheme)
+        val themes = arrayOf("System Default", "Light", "Dark")
+        val themeAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, themes)
+        themeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerTheme.adapter = themeAdapter
+
+        val savedThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        val themeIndex = when (savedThemeMode) {
+            AppCompatDelegate.MODE_NIGHT_NO -> 1
+            AppCompatDelegate.MODE_NIGHT_YES -> 2
+            else -> 0
+        }
+        spinnerTheme.setSelection(themeIndex)
 
         val cbCommute = findViewById<CheckBox>(R.id.cbCommuteEnabled)
         val cbFocus = findViewById<CheckBox>(R.id.cbFocusEnabled)
@@ -85,6 +103,13 @@ class SettingsActivity : AppCompatActivity() {
 
         val btnSave = findViewById<Button>(R.id.btnSaveSettings)
         btnSave.setOnClickListener {
+            val selectedThemeIndex = spinnerTheme.selectedItemPosition
+            val newThemeMode = when (selectedThemeIndex) {
+                1 -> AppCompatDelegate.MODE_NIGHT_NO
+                2 -> AppCompatDelegate.MODE_NIGHT_YES
+                else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            }
+
             prefs.edit()
                 .putBoolean("mode_commute_enabled", cbCommute.isChecked)
                 .putBoolean("mode_focus_enabled", cbFocus.isChecked)
@@ -92,7 +117,10 @@ class SettingsActivity : AppCompatActivity() {
                 .putString("prompt_commute", etCommute.text.toString())
                 .putString("prompt_focus", etFocus.text.toString())
                 .putString("prompt_reading", etReading.text.toString())
+                .putInt("theme_mode", newThemeMode)
                 .apply()
+
+            AppCompatDelegate.setDefaultNightMode(newThemeMode)
 
             Toast.makeText(this, "Settings saved successfully", Toast.LENGTH_SHORT).show()
             finish()

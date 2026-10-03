@@ -20,7 +20,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="FocusFlow Modes &amp; Prompts"
+                android:text="FocusFlow Settings"
                 android:textSize="22sp"
                 android:textStyle="bold"/>
 
@@ -31,6 +31,36 @@
                 android:layout_height="wrap_content"
                 android:text="Home"/>
         </LinearLayout>
+
+        <!-- Appearance / Theme Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Appearance"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Theme Mode"
+            android:textSize="14sp"/>
+
+        <Spinner
+            android:id="@+id/spinnerTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="16dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:layout_marginBottom="16dp"/>
 
         <!-- Commute Mode Section -->
         <CheckBox
