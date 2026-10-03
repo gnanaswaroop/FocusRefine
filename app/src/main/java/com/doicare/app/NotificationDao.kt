@@ -9,9 +9,12 @@ interface NotificationDao {
     @Insert
     fun insert(notification: NotificationEntity)
 
-    @Query("SELECT * FROM archived_notifications ORDER BY timestamp DESC")
+    @Query("SELECT * FROM notifications ORDER BY timestamp DESC")
     fun getAll(): List<NotificationEntity>
 
-    @Query("DELETE FROM archived_notifications")
+    @Query("SELECT * FROM notifications WHERE isUrgent = :isUrgent ORDER BY timestamp DESC")
+    fun getByUrgency(isUrgent: Boolean): List<NotificationEntity>
+
+    @Query("DELETE FROM notifications")
     fun deleteAll()
 }

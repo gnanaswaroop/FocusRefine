@@ -47,7 +47,7 @@ class NotificationFilterService : NotificationListenerService(), TextToSpeech.On
             return
         }
 
-        val prefs = getSharedPreferences("DoICarePrefs", Context.MODE_PRIVATE)
+        val prefs = getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
         val isRunning = prefs.getBoolean("service_running", true)
         if (!isRunning) {
             return
@@ -61,6 +61,18 @@ class NotificationFilterService : NotificationListenerService(), TextToSpeech.On
             // Read it out loud
             val speechText = "Urgent notification from $title: $text"
             tts?.speak(speechText, TextToSpeech.QUEUE_ADD, null, null)
+            Log.d(TAG, "Shown (Urgent) notification: ${sbn.key}")
+
+            CoroutineScope(Dispatchers.IO).launch {
+                val entity = NotificationEntity(
+                    title = title,
+                    text = text,
+                    packageName = packageName,
+                    timestamp = System.currentTimeMillis(),
+                    isUrgent = true
+                )
+                database.notificationDao().insert(entity)
+            }
         } else {
             // Archive it
             if (sbn.isClearable) {
@@ -73,7 +85,8 @@ class NotificationFilterService : NotificationListenerService(), TextToSpeech.On
                         title = title,
                         text = text,
                         packageName = packageName,
-                        timestamp = System.currentTimeMillis()
+                        timestamp = System.currentTimeMillis(),
+                        isUrgent = false
                     )
                     database.notificationDao().insert(entity)
                 }
@@ -82,7 +95,7 @@ class NotificationFilterService : NotificationListenerService(), TextToSpeech.On
     }
 
     override fun onNotificationRemoved(sbn: StatusBarNotification) {
-        Log.d(TAG, "Notification Removed: \${sbn.key}")
+        Log.d(TAG, "Notification Removed: ${sbn.key}")
     }
 
     override fun onDestroy() {
@@ -92,27 +105,19 @@ class NotificationFilterService : NotificationListenerService(), TextToSpeech.On
     }
 
     private fun analyzeContent(title: String?, text: String?, mode: String): Boolean {
-        // Mocking AI Content Analysis via basic keywords based on selected mode.
         val content = "${title ?: ""} ${text ?: ""}".lowercase()
+        val prefs = getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
 
-        return when (mode) {
-            "Commute" -> {
-                // Focus on navigation, transit, meetings
-                content.contains("navigation") || content.contains("turn left") ||
-                content.contains("turn right") || content.contains("meeting") ||
-                content.contains("traffic") || content.contains("call")
-            }
-            "Focus" -> {
-                // Suppress almost everything except explicit calls or VIPs (mocked as 'boss')
-                content.contains("call") || content.contains("boss") || content.contains("emergency")
-            }
-            "Reading" -> {
-                // Extremely strict, only emergencies
-                content.contains("emergency") || content.contains("hospital")
-            }
-            else -> {
-                content.contains("urgent")
-            }
+        val prompt = when (mode) {
+            "Commute" -> prefs.getString("prompt_commute", "navigation, turn left, turn right, meeting, traffic, call") ?: ""
+            "Focus" -> prefs.getString("prompt_focus", "call, boss, emergency") ?: ""
+            "Reading" -> prefs.getString("prompt_reading", "emergency, hospital") ?: ""
+            else -> prefs.getString("custom_mode_prompt_$mode", "urgent") ?: ""
         }
+
+        val keywords = prompt.lowercase().split(",", " ").map { it.trim() }.filter { it.isNotEmpty() }
+        if (keywords.isEmpty()) return content.contains("urgent")
+
+        return keywords.any { keyword -> content.contains(keyword) }
     }
 }

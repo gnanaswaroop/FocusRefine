@@ -1,6 +1,7 @@
 package com.doicare.app
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
@@ -8,12 +9,12 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
+import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.switchmaterial.SwitchMaterial
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -24,22 +25,32 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: NotificationAdapter
     private lateinit var database: AppDatabase
     private lateinit var modeSpinner: Spinner
-    private lateinit var switchFiltering: SwitchMaterial
+    private lateinit var switchFiltering: Switch
     private lateinit var settingsBtn: Button
+    private lateinit var btnTabArchived: Button
+    private lateinit var btnTabShown: Button
+    private lateinit var prefs: SharedPreferences
+
+    private var currentTabUrgent = false // false = Archived, true = Shown
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         database = AppDatabase.getDatabase(this)
+        prefs = getSharedPreferences("FocusFlowPrefs", MODE_PRIVATE)
 
         settingsBtn = findViewById(R.id.btnEnableNotification)
         settingsBtn.setOnClickListener {
             startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
         }
 
+        val btnSettingsOpen = findViewById<Button>(R.id.btnSettings)
+        btnSettingsOpen.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
+
         switchFiltering = findViewById(R.id.switchFiltering)
-        val prefs = getSharedPreferences("DoICarePrefs", MODE_PRIVATE)
         val isRunning = prefs.getBoolean("service_running", true)
         switchFiltering.isChecked = isRunning
 
@@ -52,26 +63,24 @@ class MainActivity : AppCompatActivity() {
         adapter = NotificationAdapter(emptyList())
         recyclerView.adapter = adapter
 
+        btnTabArchived = findViewById(R.id.btnTabArchived)
+        btnTabShown = findViewById(R.id.btnTabShown)
+
+        btnTabArchived.setOnClickListener {
+            currentTabUrgent = false
+            updateTabStyles()
+            loadNotifications()
+        }
+
+        btnTabShown.setOnClickListener {
+            currentTabUrgent = true
+            updateTabStyles()
+            loadNotifications()
+        }
+
+        updateTabStyles()
         modeSpinner = findViewById(R.id.modeSpinner)
-        val modes = arrayOf("Commute", "Focus", "Reading")
-        val spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, modes)
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        modeSpinner.adapter = spinnerAdapter
-
-        // Restore saved mode
-        val savedMode = prefs.getString("current_mode", "Commute")
-        val modeIndex = modes.indexOf(savedMode)
-        if (modeIndex >= 0) {
-            modeSpinner.setSelection(modeIndex)
-        }
-
-        modeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                val selectedMode = modes[position]
-                prefs.edit().putString("current_mode", selectedMode).apply()
-            }
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
+        setupModeSpinner()
 
         // Start observing Android Auto connection
         val autoDetector = AndroidAutoDetector(this)
@@ -82,6 +91,55 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         loadNotifications()
         updateNotificationAccessStatus()
+        setupModeSpinner()
+    }
+
+    private fun setupModeSpinner() {
+        val modes = mutableListOf<String>()
+        if (prefs.getBoolean("mode_commute_enabled", true)) modes.add("Commute")
+        if (prefs.getBoolean("mode_focus_enabled", true)) modes.add("Focus")
+        if (prefs.getBoolean("mode_reading_enabled", true)) modes.add("Reading")
+
+        val customList = prefs.getString("custom_modes_list", "") ?: ""
+        if (customList.isNotEmpty()) {
+            modes.addAll(customList.split(","))
+        }
+
+        if (modes.isEmpty()) {
+            modes.add("Default")
+        }
+
+        val spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, modes)
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        modeSpinner.adapter = spinnerAdapter
+
+        val savedMode = prefs.getString("current_mode", modes.first())
+        val modeIndex = modes.indexOf(savedMode)
+        if (modeIndex >= 0) {
+            modeSpinner.setSelection(modeIndex)
+        } else {
+            modeSpinner.setSelection(0)
+        }
+
+        modeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                if (position < modes.size) {
+                    val selectedMode = modes[position]
+                    prefs.edit().putString("current_mode", selectedMode).apply()
+                }
+            }
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+    }
+
+    private fun updateTabStyles() {
+        if (!currentTabUrgent) {
+            btnTabArchived.alpha = 1.0f
+            btnTabShown.alpha = 0.5f
+        } else {
+            btnTabArchived.alpha = 0.5f
+            btnTabShown.alpha = 1.0f
+        }
     }
 
     private fun updateNotificationAccessStatus() {
@@ -105,7 +163,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadNotifications() {
         lifecycleScope.launch(Dispatchers.IO) {
-            val notifications = database.notificationDao().getAll()
+            val notifications = database.notificationDao().getByUrgency(currentTabUrgent)
             withContext(Dispatchers.Main) {
                 adapter.updateData(notifications)
             }

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="FocusFlow Modes &amp; Prompts"
+                android:textSize="22sp"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/btnHome"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home"/>
+        </LinearLayout>
+
+        <!-- Commute Mode Section -->
+        <CheckBox
+            android:id="@+id/cbCommuteEnabled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Enable Commute Mode"
+            android:textStyle="bold"/>
+        <EditText
+            android:id="@+id/etCommutePrompt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="Commute Mode Prompt / Keywords"
+            android:textSize="14sp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Focus Mode Section -->
+        <CheckBox
+            android:id="@+id/cbFocusEnabled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Enable Focus Mode"
+            android:textStyle="bold"/>
+        <EditText
+            android:id="@+id/etFocusPrompt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="Focus Mode Prompt / Keywords"
+            android:textSize="14sp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Reading Mode Section -->
+        <CheckBox
+            android:id="@+id/cbReadingEnabled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Enable Reading Mode"
+            android:textStyle="bold"/>
+        <EditText
+            android:id="@+id/etReadingPrompt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="Reading Mode Prompt / Keywords"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Custom Modes Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Custom Mode"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/etNewCustomModeName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Custom Mode Name (e.g. Workout)"
+            android:minHeight="48dp"
+            android:textSize="14sp"/>
+
+        <EditText
+            android:id="@+id/etNewCustomModePrompt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Custom Mode Prompt / Filtering Rules"
+            android:minHeight="60dp"
+            android:textSize="14sp"/>
+
+        <Button
+            android:id="@+id/btnAddCustomMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Add Custom Mode"/>
+
+        <TextView
+            android:id="@+id/tvCustomModesList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Custom Modes: None"
+            android:textSize="14sp"
+            android:textColor="?android:attr/textColorSecondary"/>
+
+        <Button
+            android:id="@+id/btnClearCustomModes"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Clear All Custom Modes"/>
+
+        <Button
+            android:id="@+id/btnSaveSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Save All Settings"/>
+
+    </LinearLayout>
+</ScrollView>
