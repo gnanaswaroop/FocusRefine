@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnTabShown: Button
     private lateinit var prefs: SharedPreferences
 
-    private var currentTabUrgent = false // false = Archived, true = Shown
+    private var currentTabUrgent = false // false = Archived (Muted), true = Shown (Urgent)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -134,11 +134,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateTabStyles() {
         if (!currentTabUrgent) {
-            btnTabArchived.alpha = 1.0f
-            btnTabShown.alpha = 0.5f
+            btnTabArchived.setTypeface(null, android.graphics.Typeface.BOLD)
+            btnTabShown.setTypeface(null, android.graphics.Typeface.NORMAL)
         } else {
-            btnTabArchived.alpha = 0.5f
-            btnTabShown.alpha = 1.0f
+            btnTabArchived.setTypeface(null, android.graphics.Typeface.NORMAL)
+            btnTabShown.setTypeface(null, android.graphics.Typeface.BOLD)
         }
     }
 
