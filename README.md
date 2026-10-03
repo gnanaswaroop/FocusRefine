@@ -24,7 +24,7 @@ In an era of relentless notification spam (promotional alerts, social media ping
 - **Muted vs. Shown Tabs**: Switch between **Muted (Archived)** notifications and **Shown (Urgent)** notifications.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/gnanaswaroop/focusflow/feature/modern-ui-and-controls/assets/main_screen.png" width="300" alt="FocusFlow Main Dashboard">
+  <img src="assets/main_screen.png" width="300" alt="FocusFlow Main Dashboard">
 </p>
 
 ---
@@ -35,7 +35,7 @@ In an era of relentless notification spam (promotional alerts, social media ping
 - **Local Model Prompt Integration**: Fine-tune natural language classification rules on-device.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/gnanaswaroop/focusflow/feature/modern-ui-and-controls/assets/settings_screen.png" width="300" alt="FocusFlow Settings Screen">
+  <img src="assets/settings_screen.png" width="300" alt="FocusFlow Settings Screen">
 </p>
 
 ---
