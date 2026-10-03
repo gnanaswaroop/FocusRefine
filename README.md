@@ -1,6 +1,6 @@
 # FocusFlow
 
-**FocusFlow** is a modern, lightweight, privacy-focused Android application designed to intelligently filter and triage incoming notifications based on your current activity mode (Commute, Focus, Reading).
+**FocusFlow** is a modern, lightweight, privacy-focused Android application designed to intelligently filter and triage incoming notifications based on your current activity mode (Commute, Focus, Reading, and custom modes).
 
 ---
 
@@ -19,26 +19,39 @@ In an era of relentless notification spam (promotional alerts, social media ping
 
 ### 1. Main Dashboard & Master Control
 - **START / STOP Master Switch**: Instantly toggle notification filtering on or off. When stopped, notifications pass through normally.
-- **Context Modes**: Switch between **Commute**, **Focus**, and **Reading** modes to adjust filtering strictness.
+- **Context Modes**: Switch between **Commute**, **Focus**, **Reading**, and your own **Custom Modes** to adjust filtering strictness.
 - **Dynamic Notification Access**: Automatically detects notification access permissions, hiding the setup button and displaying a green checkmark once granted.
-- **Archived vs. Shown Tabs**: Switch between **Archived (Muted)** notifications and **Shown (Urgent)** notifications.
+- **Muted vs. Shown Tabs**: Switch between **Muted (Archived)** notifications and **Shown (Urgent)** notifications.
 
 <p align="center">
-  <img src="assets/main_screen.png" width="300" alt="FocusFlow Main Dashboard">
+  <img src="https://raw.githubusercontent.com/gnanaswaroop/focusflow/feature/modern-ui-and-controls/assets/main_screen.png" width="300" alt="FocusFlow Main Dashboard">
 </p>
 
 ---
 
 ### 2. Configuration & Custom Prompt Settings
-- **System Prompts**: View and customize out-of-the-box system instructions for Commute, Focus, and Reading modes.
-- **Custom Local Model Prompt**: Provide custom natural language instructions to tailor the local AI filtering model to your personal workflow.
+- **System Prompts & Toggles**: View, edit, enable, or disable out-of-the-box system instructions for Commute, Focus, and Reading modes.
+- **Custom Modes Management**: Create one or more custom modes with dedicated custom prompts.
+- **Local Model Prompt Integration**: Fine-tune natural language classification rules on-device.
 
 <p align="center">
-  <img src="assets/settings_screen.png" width="300" alt="FocusFlow Settings Screen">
+  <img src="https://raw.githubusercontent.com/gnanaswaroop/focusflow/feature/modern-ui-and-controls/assets/settings_screen.png" width="300" alt="FocusFlow Settings Screen">
 </p>
 
 ---
 
-## Architecture & Privacy
-- **Local-First**: 100% on-device processing; no data is ever transmitted to the cloud.
-- **Lightweight**: Built with Kotlin coroutines and Room database, fully optimized for older and modern Android devices (`minSdk = 28`+).
+## Technical Implementation Overview
+
+1. **Notification Interception (`NotificationFilterService`)**:
+   - Extends `NotificationListenerService` to intercept system-wide `StatusBarNotification` events in real-time.
+   - Evaluates whether filtering is active (`service_running` in `SharedPreferences`) and analyzes notification content against the active mode prompt.
+   - If urgent (`isUrgent = true`), speaks aloud via `TextToSpeech` and stores the record in Room DB with `isUrgent = true`.
+   - If non-urgent, cancels/dismisses the notification from the system tray and stores the record in Room DB with `isUrgent = false`.
+
+2. **Local Persistence (`Room Database`)**:
+   - `NotificationEntity` stores notification metadata (`title`, `text`, `packageName`, `timestamp`, `isUrgent`).
+   - `NotificationDao` provides asynchronous queries (`getAll()`, `getByUrgency()`).
+
+3. **Hyper-Minimalist UI & Theme Adaptability**:
+   - Built with Material Components DayNight theme (`Theme.Material3.DayNight.NoActionBar`).
+   - Digital minimalism design principles: ample whitespace, high-contrast typography, flat hierarchy, and seamless Light/Dark mode compatibility (`minSdk = 28`+).
