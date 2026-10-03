@@ -1,7 +1,10 @@
 package com.focusflow.app
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
@@ -11,7 +14,9 @@ import android.widget.Button
 import android.widget.Spinner
 import android.widget.Switch
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -50,6 +55,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
+        val btnSendSamples = findViewById<Button>(R.id.btnSendSamples)
+        btnSendSamples.setOnClickListener {
+            sendSampleNotifications()
+        }
+
         switchFiltering = findViewById(R.id.switchFiltering)
         val isRunning = prefs.getBoolean("service_running", true)
         switchFiltering.isChecked = isRunning
@@ -84,6 +94,40 @@ class MainActivity : AppCompatActivity() {
 
         val autoDetector = AndroidAutoDetector(this)
         autoDetector.observeConnection(this)
+    }
+
+    private fun sendSampleNotifications() {
+        val notificationManager = getSystemService(NotificationManager::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                "sample_channel",
+                "Sample Notifications",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        // Sample 1: Urgent (Google Maps navigation - matches Commute mode prompt)
+        val notif1 = NotificationCompat.Builder(this, "sample_channel")
+            .setSmallIcon(android.R.drawable.ic_menu_compass)
+            .setContentTitle("Google Maps")
+            .setContentText("Turn right on Oak Street in 200 feet")
+            .setAutoCancel(true)
+            .build()
+        notificationManager.notify(2001, notif1)
+
+        // Sample 2: Suppressed / Muted (WhatsApp message - does not match Commute mode prompt)
+        val notif2 = NotificationCompat.Builder(this, "sample_channel")
+            .setSmallIcon(android.R.drawable.ic_menu_send)
+            .setContentTitle("WhatsApp")
+            .setContentText("Hey! Want to grab coffee later today?")
+            .setAutoCancel(true)
+            .build()
+        notificationManager.notify(2002, notif2)
+
+        Toast.makeText(this, "Sample notifications sent! Check Shown & Muted tabs.", Toast.LENGTH_LONG).show()
+
+        recyclerView.postDelayed({ loadNotifications() }, 1000)
     }
 
     override fun onResume() {

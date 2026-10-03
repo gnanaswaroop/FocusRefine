@@ -29,16 +29,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:textSize="14sp"
             android:textColor="?android:attr/textColorSecondary" />
 
-        <TextView
-            android:id="@+id/itemPackage"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:textSize="11sp"
-            android:textColor="?android:attr/textColorTertiary" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/itemPackage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="11sp"
+                android:textColor="?android:attr/textColorTertiary" />
+
+            <Button
+                android:id="@+id/btnOpenApp"
+                style="?attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:text="Open App"
+                android:textAllCaps="false"
+                android:textSize="12sp" />
+        </LinearLayout>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
