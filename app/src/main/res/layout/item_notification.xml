@@ -76,6 +76,16 @@
                 android:textColor="?android:attr/textColorTertiary" />
 
             <ImageButton
+                android:id="@+id/btnReclassify"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Reclassify / Toggle Urgency"
+                android:scaleType="centerInside"
+                android:src="@android:drawable/ic_menu_edit" />
+
+            <ImageButton
                 android:id="@+id/btnOpenApp"
                 android:layout_width="32dp"
                 android:layout_height="32dp"

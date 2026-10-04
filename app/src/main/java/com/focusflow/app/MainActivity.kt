@@ -127,8 +127,8 @@ class MainActivity : AppCompatActivity() {
 
             val currentMode = prefs.getString("current_mode", "Commute") ?: "Commute"
             val prompt = when (currentMode) {
-                "Commute" -> prefs.getString("prompt_commute", "navigation, maps, turn left, turn right, traffic, call, vip, boss") ?: ""
-                "Do Not Disturb (DND)" -> prefs.getString("prompt_dnd", "emergency, hospital, 911, critical") ?: ""
+                "Commute" -> prefs.getString("prompt_commute", PromptManager.getOotbPrompt(this@MainActivity, "commute", "navigation, maps, turn left, turn right, traffic, call, vip, boss")) ?: ""
+                "Do Not Disturb (DND)" -> prefs.getString("prompt_dnd", PromptManager.getOotbPrompt(this@MainActivity, "dnd", "emergency, hospital, 911, critical")) ?: ""
                 else -> prefs.getString("custom_mode_prompt_$currentMode", "urgent") ?: ""
             }
             val keywords = prompt.lowercase().split(",", " ").map { it.trim() }.filter { it.isNotEmpty() }
