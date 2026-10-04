@@ -1,7 +1,22 @@
 {
-  "Commute": "navigation, maps, turn left, turn right, traffic, call, vip, boss, uber, lyft, transit, bus, train, flight, boarding, driving, eta",
-  "Do Not Disturb (DND)": "emergency, hospital, 911, critical, urgent, police, fire, alert",
-  "Deep Work / Focus": "meeting, deadline, urgent, boss, manager, project, code, build, deploy, calendar, ping",
-  "Sleeping / Rest": "family, kids, school, emergency, medical, spouse, parent, vital",
-  "Workout / Gym": "timer, stop, interval, workout, fitness, health, emergency"
+  "Commute": {
+    "prompt": "Active navigation alerts, transit arrivals, real-time traffic updates, urgent calls from family members or VIP contacts, rideshare arrival notices, and flight boarding gates.",
+    "enabled": true
+  },
+  "Do Not Disturb (DND)": {
+    "prompt": "Critical safety emergencies, hospital notifications, emergency services, urgent family distress calls, and critical system alarms.",
+    "enabled": true
+  },
+  "Deep Work / Focus": {
+    "prompt": "Urgent meeting pings, project deadlines, critical build/deploy failures, manager escalations, and calendar reminders.",
+    "enabled": false
+  },
+  "Sleeping / Rest": {
+    "prompt": "Family distress calls, school alerts, medical notifications, immediate family member messages, and vital health updates.",
+    "enabled": false
+  },
+  "Workout / Gym": {
+    "prompt": "Workout timer completion, fitness intervals, health tracking notifications, and emergency alerts.",
+    "enabled": false
+  }
 }

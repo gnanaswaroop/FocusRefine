@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/colorBackground"
-    android:padding="20dp"
+    android:paddingStart="6dp"
+    android:paddingEnd="6dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
     tools:context=".MainActivity">
 
     <!-- Top Header with App Icon and Title -->
@@ -66,13 +69,13 @@
         app:layout_constraintTop_toBottomOf="@+id/tvNotificationStatus" />
 
     <!-- Controls Card (FoxyNotes Style) -->
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/controlsCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:cardCornerRadius="16dp"
-        app:cardElevation="2dp"
+        app:cardElevation="1dp"
         app:cardUseCompatPadding="false"
         app:layout_constraintTop_toBottomOf="@+id/btnEnableNotification">
 
@@ -132,7 +135,7 @@
 
 
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
     <!-- Inbox Header & Tabs -->
     <LinearLayout

@@ -35,22 +35,14 @@ class NotificationFilterService : NotificationListenerService() {
                 val newState = !current
                 prefs.edit().putBoolean("service_running", newState).apply()
                 val count = prefs.getInt("suppressed_count", 0)
-                if (newState) {
-                    updateForegroundNotification(true, count)
-                } else {
-                    try {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            stopForeground(STOP_FOREGROUND_REMOVE)
-                        } else {
-                            @Suppress("DEPRECATION")
-                            stopForeground(true)
-                        }
-                        val manager = getSystemService(NotificationManager::class.java)
-                        manager.cancel(NOTIFICATION_ID)
-                    } catch (_: Exception) {
-                    }
-                    stopSelf()
+
+                val stateIntent = Intent(ACTION_SERVICE_STATE_CHANGED).apply {
+                    setPackage(context.packageName)
+                    putExtra("is_running", newState)
                 }
+                context.sendBroadcast(stateIntent)
+
+                updateForegroundNotification(newState, count)
                 Log.d(TAG, "Service toggled from notification bar: running = $newState")
             } else if (intent.action == ACTION_UPDATE_COUNT) {
                 val isRunning = prefs.getBoolean("service_running", true)
@@ -64,6 +56,7 @@ class NotificationFilterService : NotificationListenerService() {
     companion object {
         const val ACTION_TOGGLE_SERVICE = "com.focusflow.app.ACTION_TOGGLE_SERVICE"
         const val ACTION_UPDATE_COUNT = "com.focusflow.app.ACTION_UPDATE_COUNT"
+        const val ACTION_SERVICE_STATE_CHANGED = "com.focusflow.app.ACTION_SERVICE_STATE_CHANGED"
     }
 
     override fun onCreate() {
@@ -80,8 +73,8 @@ class NotificationFilterService : NotificationListenerService() {
                 val options = TextClassifier.TextClassifierOptions.builder().setBaseOptions(baseOptions).build()
                 textClassifier = TextClassifier.createFromOptions(this, options)
                 Log.d(TAG, "MediaPipe TextClassifier initialized successfully")
-            } catch (e: Exception) {
-                Log.d(TAG, "MediaPipe model asset not found; using semantic prompt heuristic engine: ${e.message}")
+            } catch (e: Throwable) {
+                Log.d(TAG, "MediaPipe model asset or JNI native library not found (x86_64/emulator); using semantic prompt heuristic engine: ${e.message}")
             }
         } else {
             Log.d(TAG, "MediaPipe AI Model disabled by user settings")

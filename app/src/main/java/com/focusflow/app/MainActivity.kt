@@ -97,6 +97,38 @@ class MainActivity : AppCompatActivity() {
         adapter = NotificationAdapter(emptyList())
         recyclerView.adapter = adapter
 
+        val touchHelper = androidx.recyclerview.widget.ItemTouchHelper(object : androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback(0, androidx.recyclerview.widget.ItemTouchHelper.RIGHT) {
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder) = false
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.bindingAdapterPosition
+                if (position == RecyclerView.NO_POSITION) return
+                val notif = adapter.getItemAt(position)
+                val newUrgency = !notif.isUrgent
+                
+                val sanitizedText = sanitizeNotification(notif.text)
+                val sanitizedTitle = sanitizeNotification(notif.title)
+
+                lifecycleScope.launch(Dispatchers.IO) {
+                    val db = AppDatabase.getDatabase(this@MainActivity)
+                    val updated = notif.copy(isUrgent = newUrgency, text = sanitizedText, title = sanitizedTitle)
+                    db.notificationDao().insert(updated)
+
+                    val currentMode = prefs.getString("current_mode", "Commute") ?: "Commute"
+                    val existingPrompt = prefs.getString("prompt_$currentMode", "") ?: ""
+                    val newPrompt = if (existingPrompt.isNotEmpty()) "$existingPrompt, ${sanitizedTitle.lowercase()} ${sanitizedText.lowercase()}" else "${sanitizedTitle.lowercase()} ${sanitizedText.lowercase()}"
+                    prefs.edit().putString("prompt_$currentMode", newPrompt).apply()
+
+                    val newList = db.notificationDao().getByUrgency(currentTabUrgent)
+                    withContext(Dispatchers.Main) {
+                        adapter.updateData(newList)
+                        Toast.makeText(this@MainActivity, if (newUrgency) "Right Swiped: Unhidden & Learned for $currentMode!" else "Right Swiped: Hidden & Learned for $currentMode!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
+        touchHelper.attachToRecyclerView(recyclerView)
+
         btnTabArchived = findViewById(R.id.btnTabArchived)
         btnTabShown = findViewById(R.id.btnTabShown)
 
@@ -262,5 +294,12 @@ class MainActivity : AppCompatActivity() {
                 adapter.updateData(notifications)
             }
         }
+    }
+
+    private fun sanitizeNotification(text: String?): String {
+        if (text.isNullOrEmpty()) return ""
+        return text.replace(Regex("\\b\\d+\\b"), "###")
+            .replace(Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}"), "[EMAIL]")
+            .replace(Regex("\\b\\+?[0-9]{10,13}\\b"), "[PHONE]")
     }
 }
