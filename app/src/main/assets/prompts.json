@@ -1,0 +1,7 @@
+{
+  "Commute": "navigation, maps, turn left, turn right, traffic, call, vip, boss, uber, lyft, transit, bus, train, flight, boarding, driving, eta",
+  "Do Not Disturb (DND)": "emergency, hospital, 911, critical, urgent, police, fire, alert",
+  "Deep Work / Focus": "meeting, deadline, urgent, boss, manager, project, code, build, deploy, calendar, ping",
+  "Sleeping / Rest": "family, kids, school, emergency, medical, spouse, parent, vital",
+  "Workout / Gym": "timer, stop, interval, workout, fitness, health, emergency"
+}

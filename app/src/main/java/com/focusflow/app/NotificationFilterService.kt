@@ -29,20 +29,41 @@ class NotificationFilterService : NotificationListenerService() {
 
     private val toggleReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
+            val prefs = context.getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
             if (intent.action == ACTION_TOGGLE_SERVICE) {
-                val prefs = context.getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
                 val current = prefs.getBoolean("service_running", true)
                 val newState = !current
                 prefs.edit().putBoolean("service_running", newState).apply()
                 val count = prefs.getInt("suppressed_count", 0)
-                updateForegroundNotification(newState, count)
+                if (newState) {
+                    updateForegroundNotification(true, count)
+                } else {
+                    try {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            stopForeground(STOP_FOREGROUND_REMOVE)
+                        } else {
+                            @Suppress("DEPRECATION")
+                            stopForeground(true)
+                        }
+                        val manager = getSystemService(NotificationManager::class.java)
+                        manager.cancel(NOTIFICATION_ID)
+                    } catch (_: Exception) {
+                    }
+                    stopSelf()
+                }
                 Log.d(TAG, "Service toggled from notification bar: running = $newState")
+            } else if (intent.action == ACTION_UPDATE_COUNT) {
+                val isRunning = prefs.getBoolean("service_running", true)
+                val count = prefs.getInt("suppressed_count", 0)
+                updateForegroundNotification(isRunning, count)
+                Log.d(TAG, "Foreground notification updated with count: $count")
             }
         }
     }
 
     companion object {
         const val ACTION_TOGGLE_SERVICE = "com.focusflow.app.ACTION_TOGGLE_SERVICE"
+        const val ACTION_UPDATE_COUNT = "com.focusflow.app.ACTION_UPDATE_COUNT"
     }
 
     override fun onCreate() {
@@ -66,27 +87,47 @@ class NotificationFilterService : NotificationListenerService() {
             Log.d(TAG, "MediaPipe AI Model disabled by user settings")
         }
 
-        val filter = IntentFilter(ACTION_TOGGLE_SERVICE)
+        val filter = IntentFilter().apply {
+            addAction(ACTION_TOGGLE_SERVICE)
+            addAction(ACTION_UPDATE_COUNT)
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             registerReceiver(toggleReceiver, filter, RECEIVER_NOT_EXPORTED)
         } else {
             registerReceiver(toggleReceiver, filter)
         }
 
+        try {
+            val isRunning = prefs.getBoolean("service_running", true)
+            val count = prefs.getInt("suppressed_count", 0)
+            startForeground(NOTIFICATION_ID, buildForegroundNotification(isRunning, count))
+            Log.d(TAG, "Service Created & Started in Foreground")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to start foreground service: ${e.message}")
+        }
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val prefs = getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
         val isRunning = prefs.getBoolean("service_running", true)
         val count = prefs.getInt("suppressed_count", 0)
-        startForeground(NOTIFICATION_ID, buildForegroundNotification(isRunning, count))
-        Log.d(TAG, "Service Created & Started in Foreground")
+        try {
+            startForeground(NOTIFICATION_ID, buildForegroundNotification(isRunning, count))
+            Log.d(TAG, "Service onStartCommand Started in Foreground: running=$isRunning")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to start foreground in onStartCommand: ${e.message}")
+        }
+        return START_STICKY
     }
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
-                "FocusFlow Background Service",
-                NotificationManager.IMPORTANCE_LOW
+                "FocusFlow Live Update & Filtering Service",
+                NotificationManager.IMPORTANCE_DEFAULT
             ).apply {
-                description = "Persistent notification showing suppression count and quick STOP/START toggle."
+                description = "Ongoing Live Update notification showing suppression count and quick STOP/START toggle."
             }
             val manager = getSystemService(NotificationManager::class.java)
             manager.createNotificationChannel(channel)
@@ -121,7 +162,8 @@ class NotificationFilterService : NotificationListenerService() {
             .setContentIntent(openAppPendingIntent)
             .addAction(android.R.drawable.ic_menu_close_clear_cancel, actionText, togglePendingIntent)
             .setOngoing(true)
-            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setCategory(NotificationCompat.CATEGORY_SERVICE)
             .build()
     }
 
@@ -196,6 +238,17 @@ class NotificationFilterService : NotificationListenerService() {
             unregisterReceiver(toggleReceiver)
         } catch (_: Exception) {
         }
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                stopForeground(STOP_FOREGROUND_REMOVE)
+            } else {
+                @Suppress("DEPRECATION")
+                stopForeground(true)
+            }
+            val manager = getSystemService(NotificationManager::class.java)
+            manager.cancel(NOTIFICATION_ID)
+        } catch (_: Exception) {
+        }
         textClassifier?.close()
         super.onDestroy()
     }
@@ -221,8 +274,8 @@ class NotificationFilterService : NotificationListenerService() {
         }
 
         val prompt = when (mode) {
-            "Commute" -> prefs.getString("prompt_commute", "navigation, maps, turn left, turn right, traffic, call, vip, boss") ?: ""
-            "Do Not Disturb (DND)" -> prefs.getString("prompt_dnd", "emergency, hospital, 911, critical") ?: ""
+            "Commute" -> prefs.getString("prompt_commute", PromptManager.getOotbPrompt(this, "commute", "navigation, maps, turn left, turn right, traffic, call, vip, boss")) ?: ""
+            "Do Not Disturb (DND)" -> prefs.getString("prompt_dnd", PromptManager.getOotbPrompt(this, "dnd", "emergency, hospital, 911, critical")) ?: ""
             else -> prefs.getString("custom_mode_prompt_$mode", "urgent") ?: ""
         }
 

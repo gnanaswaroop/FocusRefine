@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -114,6 +115,8 @@ class SettingsActivity : AppCompatActivity() {
         etCommute.setText(prefs.getString("prompt_commute", "navigation, maps, turn left, turn right, traffic, call, vip, boss"))
         etDnd.setText(prefs.getString("prompt_dnd", "emergency, hospital, 911, critical"))
 
+        // TODO: Change the prompts to be comma separated and free form text when AI is enabled as that will mean better accurate classification. Also users might likely add more specific wording, keyword.
+
         etCommute.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
@@ -174,6 +177,48 @@ class SettingsActivity : AppCompatActivity() {
                 editor.apply()
                 updateCustomModesDisplay()
                 Toast.makeText(this, "All custom modes cleared", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        val btnSendSamples = findViewById<Button>(R.id.btnSendSamples)
+        btnSendSamples.setOnClickListener {
+            lifecycleScope.launch(Dispatchers.IO) {
+                val dao = AppDatabase.getDatabase(this@SettingsActivity).notificationDao()
+                val currentMode = prefs.getString("current_mode", "Commute") ?: "Commute"
+                val prompt = when (currentMode) {
+                    "Commute" -> prefs.getString("prompt_commute", "navigation, maps, turn left, turn right, traffic, call, vip, boss") ?: ""
+                    "Do Not Disturb (DND)" -> prefs.getString("prompt_dnd", "emergency, hospital, 911, critical") ?: ""
+                    else -> prefs.getString("custom_mode_prompt_$currentMode", "urgent") ?: ""
+                }
+                val keywords = prompt.lowercase().split(",", " ").map { it.trim() }.filter { it.isNotEmpty() }
+
+                val samples = listOf(
+                    NotificationEntity(title = "Google Maps", text = "Turn right on Oak Street in 200 feet", packageName = "com.google.android.apps.maps", timestamp = System.currentTimeMillis(), isUrgent = true),
+                    NotificationEntity(title = "WhatsApp", text = "Hey! Want to grab coffee later today?", packageName = "com.whatsapp", timestamp = System.currentTimeMillis() - 1000, isUrgent = false),
+                    NotificationEntity(title = "Phone", text = "Incoming call from Boss", packageName = "com.android.phone", timestamp = System.currentTimeMillis() - 2000, isUrgent = true),
+                    NotificationEntity(title = "Instagram", text = "Liked your photo", packageName = "com.instagram.android", timestamp = System.currentTimeMillis() - 3000, isUrgent = false)
+                )
+
+                dao.deleteAll()
+                var mutedCount = 0
+                for (s in samples) {
+                    val content = "${s.title} ${s.text}".lowercase()
+                    val isUrgent = if (keywords.isEmpty()) content.contains("urgent") else keywords.any { content.contains(it) }
+                    dao.insert(s.copy(isUrgent = isUrgent))
+                    if (!isUrgent) {
+                        mutedCount++
+                    }
+                }
+
+                val currentSuppressed = prefs.getInt("suppressed_count", 0) + mutedCount
+                prefs.edit().putInt("suppressed_count", currentSuppressed).apply()
+
+                val updateIntent = android.content.Intent(NotificationFilterService.ACTION_UPDATE_COUNT)
+                sendBroadcast(updateIntent)
+
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@SettingsActivity, "✨ 4 sample notifications added and evaluated! (Suppressed: $mutedCount)", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
