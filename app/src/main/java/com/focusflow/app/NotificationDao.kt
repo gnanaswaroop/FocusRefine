@@ -21,4 +21,7 @@ interface NotificationDao {
 
     @Query("DELETE FROM notifications")
     fun deleteAll()
+
+    @androidx.room.Delete
+    fun delete(notification: NotificationEntity)
 }

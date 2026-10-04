@@ -18,3 +18,4 @@ tmp/
 tools/
 tools/config.json
 .tg.env
+.artifacts/

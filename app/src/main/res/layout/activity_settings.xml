@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/colorBackground"
@@ -10,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Unified Header with App Icon -->
+        <!-- Header -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,7 +30,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="FocusFlow Settings"
+                android:text="Settings"
                 android:textSize="24sp"
                 android:textStyle="bold"/>
 
@@ -42,188 +43,218 @@
                 android:textAllCaps="false"/>
         </LinearLayout>
 
-        <!-- AI Support Status Note -->
-        <TextView
-            android:id="@+id/tvAiStatus"
+        <!-- Configure Modes Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardConfigureModes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:background="#FFF3E0"
-            android:padding="12dp"
-            android:textSize="13sp"
-            android:textColor="#E65100" />
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="1dp"
+            app:cardUseCompatPadding="false">
 
-        <!-- MediaPipe AI Engine Toggle Switch -->
-        <Switch
-            android:id="@+id/switchUseAiModel"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Configure Modes"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View, edit, or add filtering modes and natural language rules"
+                    android:textSize="13sp"
+                    android:textColor="?android:attr/textColorSecondary"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Learned Rules & Customizations Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardConfigureRules"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:checked="true"
-            android:text="Use MediaPipe On-Device AI Engine"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="1dp"
+            app:cardUseCompatPadding="false">
 
-        <!-- Appearance / Theme Section -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Appearance"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Theme Mode"
-            android:textSize="14sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Learned Rules &amp; Customizations"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp"/>
 
-        <Spinner
-            android:id="@+id/spinnerTheme"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Review, correct, or delete rules learned from your swipes and reclassifications"
+                    android:textSize="13sp"
+                    android:textColor="?android:attr/textColorSecondary"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Classification Engine Section Card -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="1dp"
+            app:cardUseCompatPadding="false">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider"
-            android:layout_marginBottom="16dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        <!-- Retention Cleanup Section -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Data Retention"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:layout_marginBottom="4dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Classification Engine"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Clear history older than X days"
-            android:textSize="14sp"/>
+                <TextView
+                    android:id="@+id/tvAiStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:background="#FFF3E0"
+                    android:padding="10dp"
+                    android:textSize="13sp"
+                    android:textColor="#E65100" />
 
-        <EditText
-            android:id="@+id/etRetentionDays"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:inputType="number"
-            android:hint="Retention in days (e.g. 7)"
-            android:textSize="14sp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="16dp"/>
+                <Switch
+                    android:id="@+id/switchUseAiModel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Use On-Device AI (Fallback to On-Device Semantic Match)"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider"
-            android:layout_marginBottom="16dp"/>
-
-        <!-- Commute Mode Section -->
-        <CheckBox
-            android:id="@+id/cbCommuteEnabled"
+        <!-- Appearance / Theme Section Card -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="Enable Commute Mode"
-            android:textStyle="bold"/>
-        <EditText
-            android:id="@+id/etCommutePrompt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:hint="Commute Mode Prompt / Keywords"
-            android:textSize="14sp"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="1dp"
+            app:cardUseCompatPadding="false">
 
-        <!-- Do Not Disturb Mode Section -->
-        <CheckBox
-            android:id="@+id/cbDndEnabled"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="Enable Do Not Disturb (DND) Mode"
-            android:textStyle="bold"/>
-        <EditText
-            android:id="@+id/etDndPrompt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:hint="DND Mode Prompt / Keywords"
-            android:textSize="14sp"
-            android:layout_marginBottom="16dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider"
-            android:layout_marginBottom="16dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Appearance"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp"/>
 
-        <!-- Custom Modes Section -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add Custom Mode"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:layout_marginBottom="8dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Theme Mode"
+                    android:textSize="14sp"/>
 
-        <EditText
-            android:id="@+id/etNewCustomModeName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Custom Mode Name (e.g. Workout)"
-            android:minHeight="48dp"
-            android:textSize="14sp"/>
+                <Spinner
+                    android:id="@+id/spinnerTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        <EditText
-            android:id="@+id/etNewCustomModePrompt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Custom Mode Prompt / Filtering Rules"
-            android:minHeight="60dp"
-            android:textSize="14sp"/>
-
-        <Button
-            android:id="@+id/btnAddCustomMode"
+        <!-- Data Retention & Testing Section Card -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Add Custom Mode"/>
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="1dp"
+            app:cardUseCompatPadding="false">
 
-        <TextView
-            android:id="@+id/tvCustomModesList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Custom Modes: None"
-            android:textSize="14sp"
-            android:textColor="?android:attr/textColorSecondary"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        <Button
-            android:id="@+id/btnClearCustomModes"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Clear All Custom Modes"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Data Retention &amp; Testing"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp"/>
 
-        <Button
-            android:id="@+id/btnSendSamples"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Send Sample Notifications"
-            android:textAllCaps="false"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Clear history older than X days"
+                    android:textSize="14sp"/>
+
+                <EditText
+                    android:id="@+id/etRetentionDays"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:inputType="number"
+                    android:hint="Retention in days (e.g. 7)"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="12dp"
+                    android:autofillHints="number" />
+
+                <Button
+                    android:id="@+id/btnSendSamples"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Send Sample Notifications from JSON"
+                    android:textAllCaps="false"/>
+
+                <Button
+                    android:id="@+id/btnClearAllNotifications"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Clear All Inbox Notifications"
+                    android:textColor="#C62828"
+                    android:textAllCaps="false"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 </ScrollView>

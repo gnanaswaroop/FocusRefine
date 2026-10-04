@@ -126,6 +126,8 @@ class NotificationAdapter(private var notifications: List<NotificationEntity>) :
 
     override fun getItemCount() = notifications.size
 
+    fun getItemAt(position: Int): NotificationEntity = notifications[position]
+
     fun updateData(newNotifications: List<NotificationEntity>) {
         notifications = newNotifications
         expandedPositions.clear()

@@ -1,0 +1,146 @@
+[
+  {
+    "title": "Google Maps",
+    "text": "Turn right on Oak Street in 200 feet, then merge onto I-95 North toward downtown.",
+    "packageName": "com.google.android.apps.maps",
+    "expectedUrgent": true
+  },
+  {
+    "title": "WhatsApp - Wife",
+    "text": "Emergency! The kitchen sink pipe burst and water is flooding the floor, please call me immediately when you see this!",
+    "packageName": "com.whatsapp",
+    "expectedUrgent": true
+  },
+  {
+    "title": "Telegram - Sister",
+    "text": "Hey, Dad had a sudden fall and we are rushing to City General Hospital. Please meet us there as soon as you can. Do not panic, but hurry.",
+    "packageName": "org.telegram.messenger",
+    "expectedUrgent": true
+  },
+  {
+    "title": "Phone",
+    "text": "Incoming call from Boss",
+    "packageName": "com.android.phone",
+    "expectedUrgent": true
+  },
+  {
+    "title": "Calendar",
+    "text": "Urgent meeting starting now: Q3 Project Architecture Sync & Deployment Blockers Review",
+    "packageName": "com.google.android.calendar",
+    "expectedUrgent": true
+  },
+  {
+    "title": "Messages",
+    "text": "Mom: Are you safe? Please call me back as soon as you read this message.",
+    "packageName": "com.google.android.apps.messaging",
+    "expectedUrgent": true
+  },
+  {
+    "title": "Slack",
+    "text": "Production server deployment failed in US-East with database connection timeout errors across all nodes.",
+    "packageName": "com.Slack",
+    "expectedUrgent": true
+  },
+  {
+    "title": "Email",
+    "text": "CEO: Critical security patch required immediately for all internal microservices before Monday morning audit.",
+    "packageName": "com.google.android.gm",
+    "expectedUrgent": true
+  },
+  {
+    "title": "Weather",
+    "text": "Severe thunderstorm warning in your county until 11 PM. Seek shelter immediately.",
+    "packageName": "com.weather.Weather",
+    "expectedUrgent": true
+  },
+  {
+    "title": "Uber",
+    "text": "Your driver is arriving in 1 minute at the main lobby entrance.",
+    "packageName": "com.ubercab",
+    "expectedUrgent": true
+  },
+  {
+    "title": "Airline",
+    "text": "Flight 404 boarding now at Gate B12. Final call for all remaining passengers.",
+    "packageName": "com.airline.app",
+    "expectedUrgent": true
+  },
+  {
+    "title": "Bank",
+    "text": "Fraud alert: Confirm transaction of $500 at Electronics Superstore if this was you.",
+    "packageName": "com.bank.app",
+    "expectedUrgent": true
+  },
+  {
+    "title": "WhatsApp - Wife",
+    "text": "Hey honey, can you pick up some fresh organic milk and sourdough bread on your way back home? Love you!",
+    "packageName": "com.whatsapp",
+    "expectedUrgent": false
+  },
+  {
+    "title": "Telegram - Sister",
+    "text": "Look at this hilarious meme I found online regarding our childhood vacation 😂😂😂",
+    "packageName": "org.telegram.messenger",
+    "expectedUrgent": false
+  },
+  {
+    "title": "WhatsApp - Friend",
+    "text": "Hey! Want to grab coffee later today around 4 PM at that new café downtown?",
+    "packageName": "com.whatsapp",
+    "expectedUrgent": false
+  },
+  {
+    "title": "Instagram",
+    "text": "Liked your photo from vacation",
+    "packageName": "com.instagram.android",
+    "expectedUrgent": false
+  },
+  {
+    "title": "TikTok",
+    "text": "New viral cooking video from your favorite creator you might enjoy watching",
+    "packageName": "com.zhiliaoapp.musically",
+    "expectedUrgent": false
+  },
+  {
+    "title": "Twitter",
+    "text": "Trending in Technology: Top 10 things to expect at the upcoming developer conference next week.",
+    "packageName": "com.twitter.android",
+    "expectedUrgent": false
+  },
+  {
+    "title": "YouTube",
+    "text": "Check out this new comprehensive tech review video comparing all flagship smartphones of 2026.",
+    "packageName": "com.google.android.youtube",
+    "expectedUrgent": false
+  },
+  {
+    "title": "Duolingo",
+    "text": "Don't let your 30-day streak go to waste! Complete your daily Spanish lesson now.",
+    "packageName": "com.duolingo",
+    "expectedUrgent": false
+  },
+  {
+    "title": "Tinder",
+    "text": "You have a new match! Say hello and start a conversation.",
+    "packageName": "com.tinder",
+    "expectedUrgent": false
+  },
+  {
+    "title": "Shopping",
+    "text": "Flash sale! 50% off all shoes and apparel today only with free shipping.",
+    "packageName": "com.shopping.app",
+    "expectedUrgent": false
+  },
+  {
+    "title": "News",
+    "text": "Daily briefing: Global markets close higher today following positive economic data releases.",
+    "packageName": "com.news.app",
+    "expectedUrgent": false
+  },
+  {
+    "title": "Spotify",
+    "text": "Your weekly discovery playlist is ready with 30 fresh tracks tailored to your listening habits.",
+    "packageName": "com.spotify.music",
+    "expectedUrgent": false
+  }
+]
