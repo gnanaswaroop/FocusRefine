@@ -115,6 +115,8 @@ class SettingsActivity : AppCompatActivity() {
         etCommute.setText(prefs.getString("prompt_commute", "navigation, maps, turn left, turn right, traffic, call, vip, boss"))
         etDnd.setText(prefs.getString("prompt_dnd", "emergency, hospital, 911, critical"))
 
+        // TODO: Change the prompts to be comma separated and free form text when AI is enabled as that will mean better accurate classification. Also users might likely add more specific wording, keyword.
+
         etCommute.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
