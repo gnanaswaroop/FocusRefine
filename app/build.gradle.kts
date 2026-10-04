@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.doicare.app"
+    namespace = "com.focusflow.app"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.doicare.app"
+        applicationId = "com.focusflow.app"
         minSdk = 28
         targetSdk = 34
         versionCode = 1
@@ -24,6 +24,11 @@ android {
     }
     buildFeatures {
         viewBinding = true
+    }
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
     }
     lint {
         abortOnError = false
@@ -48,4 +53,11 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation("com.google.mediapipe:tasks-text:0.10.14")
+
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.room:room-testing:2.6.1")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
 }

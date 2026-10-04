@@ -1,4 +1,4 @@
-package com.doicare.app
+package com.focusflow.app
 
 import android.content.Context
 import android.util.Log
@@ -12,7 +12,7 @@ class AndroidAutoDetector(private val context: Context) {
 
     fun observeConnection(lifecycleOwner: LifecycleOwner) {
         carConnection.type.observe(lifecycleOwner) { connectionType ->
-            val prefs = context.getSharedPreferences("DoICarePrefs", Context.MODE_PRIVATE)
+            val prefs = context.getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
 
             when (connectionType) {
                 CarConnection.CONNECTION_TYPE_PROJECTION -> {
