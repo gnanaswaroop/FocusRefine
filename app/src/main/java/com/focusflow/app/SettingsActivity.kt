@@ -198,14 +198,24 @@ class SettingsActivity : AppCompatActivity() {
                 )
 
                 dao.deleteAll()
+                var mutedCount = 0
                 for (s in samples) {
                     val content = "${s.title} ${s.text}".lowercase()
                     val isUrgent = if (keywords.isEmpty()) content.contains("urgent") else keywords.any { content.contains(it) }
                     dao.insert(s.copy(isUrgent = isUrgent))
+                    if (!isUrgent) {
+                        mutedCount++
+                    }
                 }
 
+                val currentSuppressed = prefs.getInt("suppressed_count", 0) + mutedCount
+                prefs.edit().putInt("suppressed_count", currentSuppressed).apply()
+
+                val updateIntent = android.content.Intent(NotificationFilterService.ACTION_UPDATE_COUNT)
+                sendBroadcast(updateIntent)
+
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@SettingsActivity, "✨ 4 sample notifications added and evaluated!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@SettingsActivity, "✨ 4 sample notifications added and evaluated! (Suppressed: $mutedCount)", Toast.LENGTH_SHORT).show()
                 }
             }
         }
