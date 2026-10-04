@@ -50,14 +50,20 @@ class NotificationFilterService : NotificationListenerService() {
         database = AppDatabase.getDatabase(this)
         createNotificationChannel()
 
-        // Initialize MediaPipe TextClassifier (Google AI Edge Text Classification architecture)
-        try {
-            val baseOptions = BaseOptions.builder().setModelAssetPath("text_classifier.tflite").build()
-            val options = TextClassifier.TextClassifierOptions.builder().setBaseOptions(baseOptions).build()
-            textClassifier = TextClassifier.createFromOptions(this, options)
-            Log.d(TAG, "MediaPipe TextClassifier initialized successfully")
-        } catch (e: Exception) {
-            Log.d(TAG, "MediaPipe model asset not found; using semantic prompt heuristic engine: ${e.message}")
+        val prefs = getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
+        val useAi = prefs.getBoolean("use_ai_model", true)
+
+        if (useAi) {
+            try {
+                val baseOptions = BaseOptions.builder().setModelAssetPath("text_classifier.tflite").build()
+                val options = TextClassifier.TextClassifierOptions.builder().setBaseOptions(baseOptions).build()
+                textClassifier = TextClassifier.createFromOptions(this, options)
+                Log.d(TAG, "MediaPipe TextClassifier initialized successfully")
+            } catch (e: Exception) {
+                Log.d(TAG, "MediaPipe model asset not found; using semantic prompt heuristic engine: ${e.message}")
+            }
+        } else {
+            Log.d(TAG, "MediaPipe AI Model disabled by user settings")
         }
 
         val filter = IntentFilter(ACTION_TOGGLE_SERVICE)
@@ -67,7 +73,6 @@ class NotificationFilterService : NotificationListenerService() {
             registerReceiver(toggleReceiver, filter)
         }
 
-        val prefs = getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
         val isRunning = prefs.getBoolean("service_running", true)
         val count = prefs.getInt("suppressed_count", 0)
         startForeground(NOTIFICATION_ID, buildForegroundNotification(isRunning, count))
@@ -134,7 +139,6 @@ class NotificationFilterService : NotificationListenerService() {
 
         Log.d(TAG, "Received Notification: Title=$title, Text=$text")
 
-        // Don't intercept own app or system UI to prevent loops
         if (packageName == this.packageName || packageName == "com.android.systemui") {
             return
         }
@@ -149,9 +153,7 @@ class NotificationFilterService : NotificationListenerService() {
         val isUrgent = analyzeContent(title, text, currentMode)
 
         if (isUrgent) {
-            // Allowed / Not suppressed: leave notification visible in system shade, record as Shown
             Log.d(TAG, "Allowed (Shown) notification: ${sbn.key}")
-
             CoroutineScope(Dispatchers.IO).launch {
                 val entity = NotificationEntity(
                     title = title,
@@ -163,7 +165,6 @@ class NotificationFilterService : NotificationListenerService() {
                 database.notificationDao().insert(entity)
             }
         } else {
-            // Suppressed / Muted: cancel system notification, record in Muted inbox, increment count
             if (sbn.isClearable) {
                 cancelNotification(sbn.key)
                 Log.d(TAG, "Suppressed/Muted notification: ${sbn.key}")
@@ -201,9 +202,10 @@ class NotificationFilterService : NotificationListenerService() {
 
     private fun analyzeContent(title: String?, text: String?, mode: String): Boolean {
         val content = "${title ?: ""} ${text ?: ""}".lowercase()
+        val prefs = getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
+        val useAi = prefs.getBoolean("use_ai_model", true)
 
-        // 1. MediaPipe Text Classification on-device inference (Google AI Edge Text Classification sample style)
-        if (textClassifier != null) {
+        if (useAi && textClassifier != null) {
             try {
                 val result = textClassifier!!.classify(content)
                 for (classification in result.classificationResult().classifications()) {
@@ -218,12 +220,9 @@ class NotificationFilterService : NotificationListenerService() {
             }
         }
 
-        // 2. Semantic prompt keyword matching fallback
-        val prefs = getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
         val prompt = when (mode) {
-            "Commute" -> prefs.getString("prompt_commute", "navigation, turn left, turn right, meeting, traffic, call") ?: ""
-            "Focus" -> prefs.getString("prompt_focus", "call, boss, emergency") ?: ""
-            "Reading" -> prefs.getString("prompt_reading", "emergency, hospital") ?: ""
+            "Commute" -> prefs.getString("prompt_commute", "navigation, maps, turn left, turn right, traffic, call, vip, boss") ?: ""
+            "Do Not Disturb (DND)" -> prefs.getString("prompt_dnd", "emergency, hospital, 911, critical") ?: ""
             else -> prefs.getString("custom_mode_prompt_$mode", "urgent") ?: ""
         }
 

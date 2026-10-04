@@ -46,11 +46,22 @@
             android:id="@+id/tvAiStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="12dp"
             android:background="#FFF3E0"
             android:padding="12dp"
             android:textSize="13sp"
             android:textColor="#E65100" />
+
+        <!-- MediaPipe AI Engine Toggle Switch -->
+        <Switch
+            android:id="@+id/switchUseAiModel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:checked="true"
+            android:text="Use MediaPipe On-Device AI Engine"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <!-- Appearance / Theme Section -->
         <TextView
@@ -59,7 +70,7 @@
             android:text="Appearance"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp"/>
 
         <TextView
@@ -73,6 +84,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="16dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Retention Cleanup Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data Retention"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear history older than X days"
+            android:textSize="14sp"/>
+
+        <EditText
+            android:id="@+id/etRetentionDays"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:inputType="number"
+            android:hint="Retention in days (e.g. 7)"
+            android:textSize="14sp"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="16dp"/>
 
@@ -99,37 +142,20 @@
             android:textSize="14sp"
             android:layout_marginBottom="12dp"/>
 
-        <!-- Focus Mode Section -->
+        <!-- Do Not Disturb Mode Section -->
         <CheckBox
-            android:id="@+id/cbFocusEnabled"
+            android:id="@+id/cbDndEnabled"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="Enable Focus Mode"
+            android:text="Enable Do Not Disturb (DND) Mode"
             android:textStyle="bold"/>
         <EditText
-            android:id="@+id/etFocusPrompt"
+            android:id="@+id/etDndPrompt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
-            android:hint="Focus Mode Prompt / Keywords"
-            android:textSize="14sp"
-            android:layout_marginBottom="12dp"/>
-
-        <!-- Reading Mode Section -->
-        <CheckBox
-            android:id="@+id/cbReadingEnabled"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="Enable Reading Mode"
-            android:textStyle="bold"/>
-        <EditText
-            android:id="@+id/etReadingPrompt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:hint="Reading Mode Prompt / Keywords"
+            android:hint="DND Mode Prompt / Keywords"
             android:textSize="14sp"
             android:layout_marginBottom="16dp"/>
 
@@ -188,13 +214,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Clear All Custom Modes"/>
-
-        <Button
-            android:id="@+id/btnSaveSettings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Save All Settings"/>
 
     </LinearLayout>
 </ScrollView>

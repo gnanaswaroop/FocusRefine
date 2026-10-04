@@ -10,14 +10,13 @@ This document provides a comprehensive technical breakdown of the architecture, 
 graph TD
     A[System Notifications] -->|onNotificationPosted| B[NotificationFilterService]
     B -->|Read State & Prompts| C[SharedPreferences]
-    B -->|Check Urgency| D[analyzeContent Engine]
-    D -->|Urgent| E[TextToSpeech Announcement]
-    D -->|Urgent| F[Room DB: isUrgent = true]
-    D -->|Non-Urgent| G[Cancel System Notification]
-    D -->|Non-Urgent| H[Room DB: isUrgent = false]
-    I[MainActivity] -->|Observe & Render| J[RecyclerView Adapter]
-    I -->|Query by Urgency| K[NotificationDao]
-    L[SettingsActivity] -->|Manage Modes & Prompts| C
+    B -->|Check Urgency| D[MediaPipe / Semantic Heuristic Engine]
+    D -->|Urgent| E[Room DB: isUrgent = true]
+    D -->|Non-Urgent| F[Cancel System Notification & Increment Counter]
+    D -->|Non-Urgent| G[Room DB: isUrgent = false]
+    H[MainActivity] -->|Auto-refresh Polling| I[RecyclerView Adapter]
+    H -->|Query by Urgency| J[NotificationDao]
+    K[SettingsActivity] -->|Retention Cleanup & Modes| C
 ```
 
 ---
@@ -25,14 +24,15 @@ graph TD
 ## 2. Core Technical Components
 
 ### A. Background Notification Listening (`NotificationFilterService`)
-- **Lifecycle**: Started as a bound system service when granted `BIND_NOTIFICATION_LISTENER_SERVICE` permission.
+- **Lifecycle**: Runs persistently in the background as a Foreground Service (`startForeground`) implementing `NotificationListenerService`.
 - **Processing Flow**:
   1. Intercepts `StatusBarNotification` via `onNotificationPosted(sbn)`.
-  2. Ignores self-notifications and system UI notifications to prevent loops.
-  3. Checks `service_running` in `SharedPreferences` (START/STOP master switch).
-  4. Retrieves the active mode and evaluates its associated prompt (OOTB or custom) against notification `title` and `text`.
-  5. **Urgent Route**: Speaks aloud via `TextToSpeech` (TTS) and persists to Room DB (`isUrgent = true`).
-  6. **Muted Route**: Cancels the notification (`cancelNotification(sbn.key)`) and persists to Room DB (`isUrgent = false`).
+  2. Ignores self-notifications and system UI notifications.
+  3. Checks `service_running` in `SharedPreferences`.
+  4. Evaluates notification `title` and `text` against **MediaPipe Text Classification** and **Semantic Heuristic Prompt Rules**.
+  5. **Urgent Route**: Keeps system notification visible and persists to Room DB (`isUrgent = true`).
+  6. **Muted Route**: Cancels the system notification (`cancelNotification`), increments the live suppression counter, and persists to Room DB (`isUrgent = false`).
+- **Live-Updating Status Bar Notification**: Provides an ongoing (`.setOngoing(true)`) foreground notification with a live suppression count and a **STOP/START** action button for quick control.
 
 ### B. Local Persistence Layer (`Room Database`)
 - **`NotificationEntity`**:
@@ -44,24 +44,18 @@ graph TD
       val text: String?,
       val packageName: String,
       val timestamp: Long,
-      val isUrgent: Boolean = false // false = Muted, true = Shown (Urgent)
+      val isUrgent: Boolean = false
   )
   ```
 - **`NotificationDao`**:
-  - `getByUrgency(isUrgent: Boolean): List<NotificationEntity>` powers the Muted vs. Shown tab filtering in the UI.
+  - `getByUrgency(isUrgent: Boolean): List<NotificationEntity>` powers the Muted vs. Shown tab filtering.
+  - `deleteOlderThan(cutoffTimestamp: Long)` powers the automated data retention cleanup.
 
 ### C. Dynamic Mode Management & Settings (`SettingsActivity`)
-- **OOTB Mode Toggles**: Users can enable/disable Commute, Focus, and Reading modes, hiding unused modes from the home screen spinner.
-- **Prompt Customization**: Users can edit system prompts for OOTB modes or create custom modes with dedicated rules.
-- **Storage**: All configurations are persisted locally in `FocusFlowPrefs` (`SharedPreferences`).
+- **OOTB Modes**: Commute, Focus & Reading (merged), and Sleep modes.
+- **Data Retention**: Configurable history retention in days (clears older records on save).
+- **Theme Switcher**: In-app DayNight Material 3 theme switching (System Default, Light, Dark).
 
-### D. Hyper-Minimalist UI Design
-- **Theme**: `Theme.Material3.DayNight.NoActionBar` ensuring native, crisp Light and Dark mode adaptation.
-- **Layouts**: ConstraintLayout and RecyclerView with zero hardcoded shadows, flat styling, and generous whitespace.
-- **Compatibility**: Targets `minSdk = 28` (Android 9.0 Pie) upwards, running smoothly on older and newer devices alike.
-
----
-
-## 3. Git & GitHub CLI Workflow
-- Managed via GitHub CLI (`gh`).
-- Pushed on branch `feature/modern-ui-and-controls` under repository `gnanaswaroop/focusflow`.
+### D. Hyper-Minimalist UI Design & Auto-Refresh
+- **Inbox Auto-Refresh**: Coroutine polling loop in `onResume` automatically refreshes Shown and Muted tabs in real-time.
+- **Expandable Cards & Open App**: Tap to expand/collapse notification cards and launch target apps directly.

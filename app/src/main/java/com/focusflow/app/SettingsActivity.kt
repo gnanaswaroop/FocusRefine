@@ -2,21 +2,30 @@ package com.focusflow.app
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var prefs: SharedPreferences
     private lateinit var tvCustomModesList: TextView
     private lateinit var spinnerTheme: Spinner
+    private lateinit var switchUseAiModel: Switch
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +46,13 @@ class SettingsActivity : AppCompatActivity() {
             tvAiStatus.setTextColor(android.graphics.Color.parseColor("#2E7D32"))
         }
 
+        switchUseAiModel = findViewById(R.id.switchUseAiModel)
+        switchUseAiModel.isChecked = prefs.getBoolean("use_ai_model", true)
+        switchUseAiModel.setOnCheckedChangeListener { _, isChecked ->
+            prefs.edit().putBoolean("use_ai_model", isChecked).apply()
+            Toast.makeText(this, "AI Engine setting updated", Toast.LENGTH_SHORT).show()
+        }
+
         spinnerTheme = findViewById(R.id.spinnerTheme)
         val themes = arrayOf("System Default", "Light", "Dark")
         val themeAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, themes)
@@ -51,21 +67,68 @@ class SettingsActivity : AppCompatActivity() {
         }
         spinnerTheme.setSelection(themeIndex)
 
+        spinnerTheme.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val newThemeMode = when (position) {
+                    1 -> AppCompatDelegate.MODE_NIGHT_NO
+                    2 -> AppCompatDelegate.MODE_NIGHT_YES
+                    else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                }
+                prefs.edit().putInt("theme_mode", newThemeMode).apply()
+                AppCompatDelegate.setDefaultNightMode(newThemeMode)
+            }
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+
+        val etRetentionDays = findViewById<EditText>(R.id.etRetentionDays)
+        etRetentionDays.setText(prefs.getInt("retention_days", 7).toString())
+        etRetentionDays.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                val days = s.toString().toIntOrNull() ?: 7
+                prefs.edit().putInt("retention_days", days).apply()
+                val cutoff = System.currentTimeMillis() - (days * 24L * 60 * 60 * 1000)
+                lifecycleScope.launch(Dispatchers.IO) {
+                    AppDatabase.getDatabase(this@SettingsActivity).notificationDao().deleteOlderThan(cutoff)
+                }
+            }
+        })
+
         val cbCommute = findViewById<CheckBox>(R.id.cbCommuteEnabled)
-        val cbFocus = findViewById<CheckBox>(R.id.cbFocusEnabled)
-        val cbReading = findViewById<CheckBox>(R.id.cbReadingEnabled)
+        val cbDnd = findViewById<CheckBox>(R.id.cbDndEnabled)
 
         val etCommute = findViewById<EditText>(R.id.etCommutePrompt)
-        val etFocus = findViewById<EditText>(R.id.etFocusPrompt)
-        val etReading = findViewById<EditText>(R.id.etReadingPrompt)
+        val etDnd = findViewById<EditText>(R.id.etDndPrompt)
 
         cbCommute.isChecked = prefs.getBoolean("mode_commute_enabled", true)
-        cbFocus.isChecked = prefs.getBoolean("mode_focus_enabled", true)
-        cbReading.isChecked = prefs.getBoolean("mode_reading_enabled", true)
+        cbDnd.isChecked = prefs.getBoolean("mode_dnd_enabled", true)
 
-        etCommute.setText(prefs.getString("prompt_commute", "Focus on navigation, turn left/right, meetings, traffic, and calls."))
-        etFocus.setText(prefs.getString("prompt_focus", "Suppress almost everything except explicit calls, boss, or emergencies."))
-        etReading.setText(prefs.getString("prompt_reading", "Extremely strict, only allow emergencies or hospital alerts."))
+        cbCommute.setOnCheckedChangeListener { _, isChecked ->
+            prefs.edit().putBoolean("mode_commute_enabled", isChecked).apply()
+        }
+        cbDnd.setOnCheckedChangeListener { _, isChecked ->
+            prefs.edit().putBoolean("mode_dnd_enabled", isChecked).apply()
+        }
+
+        etCommute.setText(prefs.getString("prompt_commute", "navigation, maps, turn left, turn right, traffic, call, vip, boss"))
+        etDnd.setText(prefs.getString("prompt_dnd", "emergency, hospital, 911, critical"))
+
+        etCommute.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                prefs.edit().putString("prompt_commute", s.toString()).apply()
+            }
+        })
+
+        etDnd.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                prefs.edit().putString("prompt_dnd", s.toString()).apply()
+            }
+        })
 
         val etNewName = findViewById<EditText>(R.id.etNewCustomModeName)
         val etNewPrompt = findViewById<EditText>(R.id.etNewCustomModePrompt)
@@ -112,31 +175,6 @@ class SettingsActivity : AppCompatActivity() {
                 updateCustomModesDisplay()
                 Toast.makeText(this, "All custom modes cleared", Toast.LENGTH_SHORT).show()
             }
-        }
-
-        val btnSave = findViewById<Button>(R.id.btnSaveSettings)
-        btnSave.setOnClickListener {
-            val selectedThemeIndex = spinnerTheme.selectedItemPosition
-            val newThemeMode = when (selectedThemeIndex) {
-                1 -> AppCompatDelegate.MODE_NIGHT_NO
-                2 -> AppCompatDelegate.MODE_NIGHT_YES
-                else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-            }
-
-            prefs.edit()
-                .putBoolean("mode_commute_enabled", cbCommute.isChecked)
-                .putBoolean("mode_focus_enabled", cbFocus.isChecked)
-                .putBoolean("mode_reading_enabled", cbReading.isChecked)
-                .putString("prompt_commute", etCommute.text.toString())
-                .putString("prompt_focus", etFocus.text.toString())
-                .putString("prompt_reading", etReading.text.toString())
-                .putInt("theme_mode", newThemeMode)
-                .apply()
-
-            AppCompatDelegate.setDefaultNightMode(newThemeMode)
-
-            Toast.makeText(this, "Settings saved successfully", Toast.LENGTH_SHORT).show()
-            finish()
         }
 
         val btnHome = findViewById<Button>(R.id.btnHome)

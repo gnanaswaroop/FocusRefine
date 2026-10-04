@@ -1,5 +1,8 @@
 package com.focusflow.app
 
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,16 +10,21 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class NotificationAdapter(private var notifications: List<NotificationEntity>) :
     RecyclerView.Adapter<NotificationAdapter.ViewHolder>() {
 
     private val expandedPositions = mutableSetOf<Int>()
+    private val timeFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val title: TextView = view.findViewById(R.id.itemTitle)
         val text: TextView = view.findViewById(R.id.itemText)
         val packageName: TextView = view.findViewById(R.id.itemPackage)
+        val timestamp: TextView = view.findViewById(R.id.itemTimestamp)
         val btnOpenApp: Button = view.findViewById(R.id.btnOpenApp)
     }
 
@@ -31,6 +39,7 @@ class NotificationAdapter(private var notifications: List<NotificationEntity>) :
         holder.title.text = notification.title ?: "No Title"
         holder.text.text = notification.text ?: "No Text"
         holder.packageName.text = notification.packageName
+        holder.timestamp.text = timeFormat.format(Date(notification.timestamp))
 
         val isExpanded = expandedPositions.contains(position)
         if (isExpanded) {
@@ -50,11 +59,18 @@ class NotificationAdapter(private var notifications: List<NotificationEntity>) :
 
         holder.btnOpenApp.setOnClickListener {
             val context = holder.itemView.context
-            val intent = context.packageManager.getLaunchIntentForPackage(notification.packageName)
-            if (intent != null) {
-                context.startActivity(intent)
-            } else {
-                Toast.makeText(context, "Cannot launch ${notification.packageName}", Toast.LENGTH_SHORT).show()
+            try {
+                val intent = context.packageManager.getLaunchIntentForPackage(notification.packageName)
+                if (intent != null) {
+                    context.startActivity(intent)
+                } else {
+                    val settingsIntent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                        data = Uri.parse("package:${notification.packageName}")
+                    }
+                    context.startActivity(settingsIntent)
+                }
+            } catch (_: Exception) {
+                Toast.makeText(context, "Cannot open app: ${notification.packageName}", Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -15,6 +15,9 @@ interface NotificationDao {
     @Query("SELECT * FROM notifications WHERE isUrgent = :isUrgent ORDER BY timestamp DESC")
     fun getByUrgency(isUrgent: Boolean): List<NotificationEntity>
 
+    @Query("DELETE FROM notifications WHERE timestamp < :cutoffTimestamp")
+    fun deleteOlderThan(cutoffTimestamp: Long)
+
     @Query("DELETE FROM notifications")
     fun deleteAll()
 }
