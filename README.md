@@ -1,57 +1,38 @@
 # FocusFlow
 
-**FocusFlow** is a modern, lightweight, privacy-focused Android application designed to intelligently filter and triage incoming notifications based on your current activity mode (Commute, Focus, Reading, and custom modes).
+**FocusFlow** is a modern, lightweight, privacy-first Android application designed to intelligently filter and triage incoming notifications based on your current activity mode (**Commute** or **Do Not Disturb (DND)**, plus customizable modes). By combining **MediaPipe Tasks Text Classification** with local semantic heuristics, FocusFlow ensures that urgent alerts (such as navigation, emergency calls, and VIP messages) get through while suppressing digital distractions entirely on-device.
 
 ---
 
-## Why This Was Built
+## Application Overview & Screens
 
-In an era of relentless notification spam (promotional alerts, social media pings, group chats), staying focused during deep work, driving, or reading is difficult. Traditional Do Not Disturb modes are often all-or-nothing and cause you to miss critical alerts. 
+FocusFlow consists of two primary screens designed with a **dark-mode first** aesthetic, featuring a shared unified header bar with the custom brand app icon and title:
 
-**FocusFlow** solves this by:
-1. **Analyzing content locally on-device** using context-aware heuristics and on-device models.
-2. **Reading urgent notifications aloud** via Text-To-Speech (TTS) if they match your active mode criteria (e.g. navigation updates, work meetings, emergencies).
-3. **Silently archiving non-urgent notifications** into a local Room database inbox so they are out of sight, yet accessible whenever you want.
+1. **Main Dashboard (`MainActivity`)**:
+   - Features the master filtering toggle switch, live notification access status indicator, and mode selection dropdown (**Commute**, **DND**, and **Custom Modes**).
+   - Houses a dual-tab inbox (**Shown** vs. **Muted**) powered by modern notification cards. Each card displays the corresponding **application icon**, timestamps, expandable/collapsible text views, package identifiers, and a compact **external link icon button** to launch target applications instantly (with robust fallback handling for Telegram variants like `org.telegram.messenger` and `org.telegram.plus`).
 
----
-
-## Key Functionality & UI Walkthrough
-
-### 1. Main Dashboard & Master Control
-- **START / STOP Master Switch**: Instantly toggle notification filtering on or off. When stopped, notifications pass through normally.
-- **Context Modes**: Switch between **Commute**, **Focus**, **Reading**, and your own **Custom Modes** to adjust filtering strictness.
-- **Dynamic Notification Access**: Automatically detects notification access permissions, hiding the setup button and displaying a green checkmark once granted.
-- **Muted vs. Shown Tabs**: Switch between **Muted (Archived)** notifications and **Shown (Urgent)** notifications.
-
-<p align="center">
-  <img src="assets/main_screen.png" width="300" alt="FocusFlow Main Dashboard">
-</p>
+2. **Settings & Configuration Screen (`SettingsActivity`)**:
+   - Displays a live **AI Support Status Banner** indicating whether MediaPipe Gemini Nano is supported or running on the high-performance local semantic heuristic engine.
+   - Features an **AI Engine Toggle Switch** to switch between MediaPipe On-Device AI and semantic heuristics.
+   - Provides an in-app **Theme Mode Switcher** (System Default, Light, Dark — **Dark-Mode First** by default).
+   - Includes **Data Retention** configuration to automatically clear history older than X days.
+   - Allows enabling/disabling OOTB modes (**Commute** and **DND**) with inline prompt editing, plus creation and management of **Custom Modes**.
+   - Contains the **"Send Sample Notifications"** action to test AI/heuristic classification and update live statistics.
 
 ---
 
-### 2. Configuration & Custom Prompt Settings
-- **System Prompts & Toggles**: View, edit, enable, or disable out-of-the-box system instructions for Commute, Focus, and Reading modes.
-- **Custom Modes Management**: Create one or more custom modes with dedicated custom prompts.
-- **Local Model Prompt Integration**: Fine-tune natural language classification rules on-device.
+## Key Architecture & Recent Upgrades
 
-<p align="center">
-  <img src="assets/settings_screen.png" width="300" alt="FocusFlow Settings Screen">
-</p>
+1. **Live Update Ongoing Notification Service (`NotificationFilterService`)**:
+   - Upgraded to comply with Android **Live Update / Ongoing Notification** specifications (`IMPORTANCE_DEFAULT`, `CATEGORY_SERVICE`, ongoing status).
+   - Displays a live-updating suppression counter (`"Suppressed: X notifications"`) that updates instantly when notifications are filtered or when sample notifications are sent from Settings (via `ACTION_UPDATE_COUNT` broadcast).
+   - Includes a quick **STOP/START** action button in the notification shade. Stopping the service explicitly dismisses the live notification and removes foreground status.
 
----
+2. **Externalized OOTB Prompts (`PromptManager` & `prompts.json`)**:
+   - Out-of-the-box prompts are externalized into `assets/prompts.json` and loaded via `PromptManager`, enabling prompt updates without modifying Kotlin source code.
+   - *TODO*: Planned enhancement to support comma-separated free-form text prompting when AI is enabled for more precise keyword matching.
 
-## Technical Implementation Overview
-
-1. **Notification Interception (`NotificationFilterService`)**:
-   - Extends `NotificationListenerService` to intercept system-wide `StatusBarNotification` events in real-time.
-   - Evaluates whether filtering is active (`service_running` in `SharedPreferences`) and analyzes notification content against the active mode prompt.
-   - If urgent (`isUrgent = true`), speaks aloud via `TextToSpeech` and stores the record in Room DB with `isUrgent = true`.
-   - If non-urgent, cancels/dismisses the notification from the system tray and stores the record in Room DB with `isUrgent = false`.
-
-2. **Local Persistence (`Room Database`)**:
-   - `NotificationEntity` stores notification metadata (`title`, `text`, `packageName`, `timestamp`, `isUrgent`).
-   - `NotificationDao` provides asynchronous queries (`getAll()`, `getByUrgency()`).
-
-3. **Hyper-Minimalist UI & Theme Adaptability**:
-   - Built with Material Components DayNight theme (`Theme.Material3.DayNight.NoActionBar`).
-   - Digital minimalism design principles: ample whitespace, high-contrast typography, flat hierarchy, and seamless Light/Dark mode compatibility (`minSdk = 28`+).
+3. **Permission Minimization & Security**:
+   - Minimized application permissions in `AndroidManifest.xml` to include strictly notification listening, foreground service, and post notifications.
+   - **Zero internet permissions**: All classification and storage occur 100% locally on-device.

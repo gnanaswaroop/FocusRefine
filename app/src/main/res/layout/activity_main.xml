@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?android:attr/colorBackground"
     android:padding="20dp"
     tools:context=".MainActivity">
 
@@ -129,20 +130,7 @@
                     android:layout_marginStart="16dp" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                android:background="?android:attr/listDivider" />
 
-            <Button
-                android:id="@+id/btnSendSamples"
-                style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Send Sample Notifications"
-                android:textAllCaps="false" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?android:attr/colorBackground"
     android:padding="16dp">
 
     <LinearLayout
@@ -28,7 +29,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Settings"
+                android:text="FocusFlow Settings"
                 android:textSize="24sp"
                 android:textStyle="bold"/>
 
@@ -214,6 +215,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Clear All Custom Modes"/>
+
+        <Button
+            android:id="@+id/btnSendSamples"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Send Sample Notifications"
+            android:textAllCaps="false"/>
 
     </LinearLayout>
 </ScrollView>

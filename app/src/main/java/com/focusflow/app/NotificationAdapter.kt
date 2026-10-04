@@ -6,10 +6,15 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -21,11 +26,13 @@ class NotificationAdapter(private var notifications: List<NotificationEntity>) :
     private val timeFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val appIcon: ImageView = view.findViewById(R.id.itemAppIcon)
         val title: TextView = view.findViewById(R.id.itemTitle)
         val text: TextView = view.findViewById(R.id.itemText)
         val packageName: TextView = view.findViewById(R.id.itemPackage)
         val timestamp: TextView = view.findViewById(R.id.itemTimestamp)
-        val btnOpenApp: Button = view.findViewById(R.id.btnOpenApp)
+        val btnReclassify: ImageButton = view.findViewById(R.id.btnReclassify)
+        val btnOpenApp: ImageButton = view.findViewById(R.id.btnOpenApp)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,6 +47,15 @@ class NotificationAdapter(private var notifications: List<NotificationEntity>) :
         holder.text.text = notification.text ?: "No Text"
         holder.packageName.text = notification.packageName
         holder.timestamp.text = timeFormat.format(Date(notification.timestamp))
+
+        val context = holder.itemView.context
+        try {
+            val pm = context.packageManager
+            val icon = pm.getApplicationIcon(notification.packageName)
+            holder.appIcon.setImageDrawable(icon)
+        } catch (_: Exception) {
+            holder.appIcon.setImageResource(R.mipmap.ic_launcher)
+        }
 
         val isExpanded = expandedPositions.contains(position)
         if (isExpanded) {
@@ -57,10 +73,43 @@ class NotificationAdapter(private var notifications: List<NotificationEntity>) :
             notifyItemChanged(position)
         }
 
+        holder.btnReclassify.setOnClickListener {
+            val db = AppDatabase.getDatabase(context)
+            val newUrgent = !notification.isUrgent
+            val updated = notification.copy(isUrgent = newUrgent)
+            CoroutineScope(Dispatchers.IO).launch {
+                db.notificationDao().insert(updated)
+                val newList = db.notificationDao().getByUrgency(notification.isUrgent)
+                withContext(Dispatchers.Main) {
+                    updateData(newList)
+                    Toast.makeText(context, if (newUrgent) "Reclassified: Moved to Shown tab" else "Reclassified: Moved to Archived tab", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
         holder.btnOpenApp.setOnClickListener {
-            val context = holder.itemView.context
             try {
-                val intent = context.packageManager.getLaunchIntentForPackage(notification.packageName)
+                var intent = context.packageManager.getLaunchIntentForPackage(notification.packageName)
+                if (intent == null) {
+                    val pkg = notification.packageName.lowercase()
+                    val title = notification.title?.lowercase() ?: ""
+                    val altPackages = mutableListOf<String>()
+                    if (pkg.contains("telegram") || title.contains("telegram")) {
+                        altPackages.addAll(listOf("org.telegram.messenger", "org.telegram.plus", "org.telegram.messenger.web", "org.telegram.aka"))
+                    } else if (pkg.contains("whatsapp") || title.contains("whatsapp")) {
+                        altPackages.add("com.whatsapp")
+                    } else if (pkg.contains("maps") || title.contains("maps")) {
+                        altPackages.add("com.google.android.apps.maps")
+                    } else {
+                        altPackages.add(notification.packageName)
+                    }
+
+                    for (altPkg in altPackages) {
+                        intent = context.packageManager.getLaunchIntentForPackage(altPkg)
+                        if (intent != null) break
+                    }
+                }
+
                 if (intent != null) {
                     context.startActivity(intent)
                 } else {
