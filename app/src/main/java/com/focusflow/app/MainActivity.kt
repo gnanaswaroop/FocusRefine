@@ -63,10 +63,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
-        val btnSendSamples = findViewById<Button>(R.id.btnSendSamples)
-        btnSendSamples.setOnClickListener {
-            processNotificationHistoryOrSamples()
-        }
+
 
         switchFiltering = findViewById(R.id.switchFiltering)
         val isRunning = prefs.getBoolean("service_running", true)

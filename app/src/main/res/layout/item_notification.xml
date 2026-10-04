@@ -6,21 +6,30 @@
     android:layout_marginStart="12dp"
     android:layout_marginEnd="12dp"
     android:layout_marginBottom="10dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="1dp"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="3dp"
+    app:cardBackgroundColor="?android:attr/colorBackground"
     app:cardUseCompatPadding="false">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="14dp">
+        android:padding="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/itemAppIcon"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="10dp"
+                android:contentDescription="App Icon"
+                android:src="@mipmap/ic_launcher" />
 
             <TextView
                 android:id="@+id/itemTitle"
@@ -43,7 +52,8 @@
             android:id="@+id/itemText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="38dp"
             android:ellipsize="end"
             android:maxLines="2"
             android:textSize="13sp"
@@ -53,6 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginStart="38dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -64,16 +75,14 @@
                 android:textSize="10sp"
                 android:textColor="?android:attr/textColorTertiary" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btnOpenApp"
-                style="?attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:text="Open App"
-                android:textAllCaps="false"
-                android:textSize="11sp" />
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Open App"
+                android:scaleType="centerInside"
+                android:src="@android:drawable/ic_menu_send" />
         </LinearLayout>
 
     </LinearLayout>

@@ -83,6 +83,19 @@ class NotificationFilterService : NotificationListenerService() {
         }
     }
 
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val prefs = getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
+        val isRunning = prefs.getBoolean("service_running", true)
+        val count = prefs.getInt("suppressed_count", 0)
+        try {
+            startForeground(NOTIFICATION_ID, buildForegroundNotification(isRunning, count))
+            Log.d(TAG, "Service onStartCommand Started in Foreground: running=$isRunning")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to start foreground in onStartCommand: ${e.message}")
+        }
+        return START_STICKY
+    }
+
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
