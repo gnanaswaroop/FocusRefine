@@ -35,7 +35,22 @@ class NotificationFilterService : NotificationListenerService() {
                 val newState = !current
                 prefs.edit().putBoolean("service_running", newState).apply()
                 val count = prefs.getInt("suppressed_count", 0)
-                updateForegroundNotification(newState, count)
+                if (newState) {
+                    updateForegroundNotification(true, count)
+                } else {
+                    try {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            stopForeground(STOP_FOREGROUND_REMOVE)
+                        } else {
+                            @Suppress("DEPRECATION")
+                            stopForeground(true)
+                        }
+                        val manager = getSystemService(NotificationManager::class.java)
+                        manager.cancel(NOTIFICATION_ID)
+                    } catch (_: Exception) {
+                    }
+                    stopSelf()
+                }
                 Log.d(TAG, "Service toggled from notification bar: running = $newState")
             } else if (intent.action == ACTION_UPDATE_COUNT) {
                 val isRunning = prefs.getBoolean("service_running", true)
@@ -221,6 +236,17 @@ class NotificationFilterService : NotificationListenerService() {
     override fun onDestroy() {
         try {
             unregisterReceiver(toggleReceiver)
+        } catch (_: Exception) {
+        }
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                stopForeground(STOP_FOREGROUND_REMOVE)
+            } else {
+                @Suppress("DEPRECATION")
+                stopForeground(true)
+            }
+            val manager = getSystemService(NotificationManager::class.java)
+            manager.cancel(NOTIFICATION_ID)
         } catch (_: Exception) {
         }
         textClassifier?.close()
