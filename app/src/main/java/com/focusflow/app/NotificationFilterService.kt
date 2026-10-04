@@ -29,20 +29,26 @@ class NotificationFilterService : NotificationListenerService() {
 
     private val toggleReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
+            val prefs = context.getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
             if (intent.action == ACTION_TOGGLE_SERVICE) {
-                val prefs = context.getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
                 val current = prefs.getBoolean("service_running", true)
                 val newState = !current
                 prefs.edit().putBoolean("service_running", newState).apply()
                 val count = prefs.getInt("suppressed_count", 0)
                 updateForegroundNotification(newState, count)
                 Log.d(TAG, "Service toggled from notification bar: running = $newState")
+            } else if (intent.action == ACTION_UPDATE_COUNT) {
+                val isRunning = prefs.getBoolean("service_running", true)
+                val count = prefs.getInt("suppressed_count", 0)
+                updateForegroundNotification(isRunning, count)
+                Log.d(TAG, "Foreground notification updated with count: $count")
             }
         }
     }
 
     companion object {
         const val ACTION_TOGGLE_SERVICE = "com.focusflow.app.ACTION_TOGGLE_SERVICE"
+        const val ACTION_UPDATE_COUNT = "com.focusflow.app.ACTION_UPDATE_COUNT"
     }
 
     override fun onCreate() {
@@ -66,7 +72,10 @@ class NotificationFilterService : NotificationListenerService() {
             Log.d(TAG, "MediaPipe AI Model disabled by user settings")
         }
 
-        val filter = IntentFilter(ACTION_TOGGLE_SERVICE)
+        val filter = IntentFilter().apply {
+            addAction(ACTION_TOGGLE_SERVICE)
+            addAction(ACTION_UPDATE_COUNT)
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             registerReceiver(toggleReceiver, filter, RECEIVER_NOT_EXPORTED)
         } else {
