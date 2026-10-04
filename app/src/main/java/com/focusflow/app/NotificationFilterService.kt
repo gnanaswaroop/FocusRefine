@@ -73,10 +73,14 @@ class NotificationFilterService : NotificationListenerService() {
             registerReceiver(toggleReceiver, filter)
         }
 
-        val isRunning = prefs.getBoolean("service_running", true)
-        val count = prefs.getInt("suppressed_count", 0)
-        startForeground(NOTIFICATION_ID, buildForegroundNotification(isRunning, count))
-        Log.d(TAG, "Service Created & Started in Foreground")
+        try {
+            val isRunning = prefs.getBoolean("service_running", true)
+            val count = prefs.getInt("suppressed_count", 0)
+            startForeground(NOTIFICATION_ID, buildForegroundNotification(isRunning, count))
+            Log.d(TAG, "Service Created & Started in Foreground")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to start foreground service: ${e.message}")
+        }
     }
 
     private fun createNotificationChannel() {
