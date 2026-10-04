@@ -274,8 +274,8 @@ class NotificationFilterService : NotificationListenerService() {
         }
 
         val prompt = when (mode) {
-            "Commute" -> prefs.getString("prompt_commute", "navigation, maps, turn left, turn right, traffic, call, vip, boss") ?: ""
-            "Do Not Disturb (DND)" -> prefs.getString("prompt_dnd", "emergency, hospital, 911, critical") ?: ""
+            "Commute" -> prefs.getString("prompt_commute", PromptManager.getOotbPrompt(this, "commute", "navigation, maps, turn left, turn right, traffic, call, vip, boss")) ?: ""
+            "Do Not Disturb (DND)" -> prefs.getString("prompt_dnd", PromptManager.getOotbPrompt(this, "dnd", "emergency, hospital, 911, critical")) ?: ""
             else -> prefs.getString("custom_mode_prompt_$mode", "urgent") ?: ""
         }
 

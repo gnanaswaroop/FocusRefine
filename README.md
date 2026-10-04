@@ -6,32 +6,33 @@
 
 ## Application Overview & Screens
 
-FocusFlow consists of two primary screens designed with a clean, FoxyNotes-inspired minimalist aesthetic, featuring a shared unified header bar with the custom brand app icon and title:
+FocusFlow consists of two primary screens designed with a **dark-mode first** aesthetic, featuring a shared unified header bar with the custom brand app icon and title:
 
 1. **Main Dashboard (`MainActivity`)**:
    - Features the master filtering toggle switch, live notification access status indicator, and mode selection dropdown (**Commute**, **DND**, and **Custom Modes**).
-   - Includes a **"Send Sample Notifications / Analyze"** action button that tests notification classification, runs AI accuracy analysis reports, and re-evaluates notification history against current mode prompt rules.
-   - Houses a dual-tab inbox (**Shown** vs. **Muted**) powered by compact, narrow notification cards. Each card features timestamps, expandable/collapsible text views, package identifiers, and a direct **"Open App"** action button to launch target applications instantly.
+   - Houses a dual-tab inbox (**Shown** vs. **Muted**) powered by modern notification cards. Each card displays the corresponding **application icon**, timestamps, expandable/collapsible text views, package identifiers, and a compact **external link icon button** to launch target applications instantly (with robust fallback handling for Telegram variants like `org.telegram.messenger` and `org.telegram.plus`).
 
 2. **Settings & Configuration Screen (`SettingsActivity`)**:
    - Displays a live **AI Support Status Banner** indicating whether MediaPipe Gemini Nano is supported or running on the high-performance local semantic heuristic engine.
    - Features an **AI Engine Toggle Switch** to switch between MediaPipe On-Device AI and semantic heuristics.
-   - Provides an in-app Material 3 **Theme Mode Switcher** (System Default, Light, Dark).
+   - Provides an in-app **Theme Mode Switcher** (System Default, Light, Dark — **Dark-Mode First** by default).
    - Includes **Data Retention** configuration to automatically clear history older than X days.
    - Allows enabling/disabling OOTB modes (**Commute** and **DND**) with inline prompt editing, plus creation and management of **Custom Modes**.
+   - Contains the **"Send Sample Notifications"** action to test AI/heuristic classification and update live statistics.
 
 ---
 
-## Key Functionality & Architecture
+## Key Architecture & Recent Upgrades
 
-1. **Dual-Engine On-Device AI (`NotificationFilterService`)**:
-   - Integrates **MediaPipe Tasks Text Classification** (`text_classifier.tflite`) for intelligent, offline intent classification.
-   - Automatically falls back to a high-performance **Semantic Heuristic Engine** when model assets or NPU hardware are unavailable.
-   - Operates persistently in the background as a compliant **Foreground Service** (`startForeground`) with an ongoing `.setOngoing(true)` status bar notification displaying a **live-updating suppression counter** (`"Suppressed: X notifications"`) and a **STOP/START** quick-control action button.
+1. **Live Update Ongoing Notification Service (`NotificationFilterService`)**:
+   - Upgraded to comply with Android **Live Update / Ongoing Notification** specifications (`IMPORTANCE_DEFAULT`, `CATEGORY_SERVICE`, ongoing status).
+   - Displays a live-updating suppression counter (`"Suppressed: X notifications"`) that updates instantly when notifications are filtered or when sample notifications are sent from Settings (via `ACTION_UPDATE_COUNT` broadcast).
+   - Includes a quick **STOP/START** action button in the notification shade. Stopping the service explicitly dismisses the live notification and removes foreground status.
 
-2. **Local Persistence & Data Retention (`Room Database`)**:
-   - `NotificationEntity` stores notification metadata (`title`, `text`, `packageName`, `timestamp`, `isUrgent`).
-   - Automated data retention cleanup purges records older than user-configured days on save.
+2. **Externalized OOTB Prompts (`PromptManager` & `prompts.json`)**:
+   - Out-of-the-box prompts are externalized into `assets/prompts.json` and loaded via `PromptManager`, enabling prompt updates without modifying Kotlin source code.
+   - *TODO*: Planned enhancement to support comma-separated free-form text prompting when AI is enabled for more precise keyword matching.
 
-3. **Privacy & Security Guarantee**:
-   - FocusFlow declares **zero internet permissions**. All processing, AI classification, and storage occur 100% locally on-device.
+3. **Permission Minimization & Security**:
+   - Minimized application permissions in `AndroidManifest.xml` to include strictly notification listening, foreground service, and post notifications.
+   - **Zero internet permissions**: All classification and storage occur 100% locally on-device.

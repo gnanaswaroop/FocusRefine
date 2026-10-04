@@ -11,6 +11,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -27,6 +31,7 @@ class NotificationAdapter(private var notifications: List<NotificationEntity>) :
         val text: TextView = view.findViewById(R.id.itemText)
         val packageName: TextView = view.findViewById(R.id.itemPackage)
         val timestamp: TextView = view.findViewById(R.id.itemTimestamp)
+        val btnReclassify: ImageButton = view.findViewById(R.id.btnReclassify)
         val btnOpenApp: ImageButton = view.findViewById(R.id.btnOpenApp)
     }
 
@@ -68,6 +73,20 @@ class NotificationAdapter(private var notifications: List<NotificationEntity>) :
             notifyItemChanged(position)
         }
 
+        holder.btnReclassify.setOnClickListener {
+            val db = AppDatabase.getDatabase(context)
+            val newUrgent = !notification.isUrgent
+            val updated = notification.copy(isUrgent = newUrgent)
+            CoroutineScope(Dispatchers.IO).launch {
+                db.notificationDao().insert(updated)
+                val newList = db.notificationDao().getByUrgency(notification.isUrgent)
+                withContext(Dispatchers.Main) {
+                    updateData(newList)
+                    Toast.makeText(context, if (newUrgent) "Reclassified: Moved to Shown tab" else "Reclassified: Moved to Archived tab", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
         holder.btnOpenApp.setOnClickListener {
             try {
                 var intent = context.packageManager.getLaunchIntentForPackage(notification.packageName)
@@ -107,7 +126,7 @@ class NotificationAdapter(private var notifications: List<NotificationEntity>) :
 
     override fun getItemCount() = notifications.size
 
-        fun updateData(newNotifications: List<NotificationEntity>) {
+    fun updateData(newNotifications: List<NotificationEntity>) {
         notifications = newNotifications
         expandedPositions.clear()
         notifyDataSetChanged()
