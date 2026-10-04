@@ -100,10 +100,10 @@ class NotificationFilterService : NotificationListenerService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
-                "FocusFlow Background Service",
-                NotificationManager.IMPORTANCE_LOW
+                "FocusFlow Live Update & Filtering Service",
+                NotificationManager.IMPORTANCE_DEFAULT
             ).apply {
-                description = "Persistent notification showing suppression count and quick STOP/START toggle."
+                description = "Ongoing Live Update notification showing suppression count and quick STOP/START toggle."
             }
             val manager = getSystemService(NotificationManager::class.java)
             manager.createNotificationChannel(channel)
@@ -138,7 +138,8 @@ class NotificationFilterService : NotificationListenerService() {
             .setContentIntent(openAppPendingIntent)
             .addAction(android.R.drawable.ic_menu_close_clear_cancel, actionText, togglePendingIntent)
             .setOngoing(true)
-            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setCategory(NotificationCompat.CATEGORY_SERVICE)
             .build()
     }
 
