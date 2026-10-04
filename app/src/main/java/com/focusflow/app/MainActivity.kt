@@ -1,7 +1,9 @@
 package com.focusflow.app
 
+import android.Manifest
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -43,6 +45,13 @@ class MainActivity : AppCompatActivity() {
 
         database = AppDatabase.getDatabase(this)
         prefs = getSharedPreferences("FocusFlowPrefs", MODE_PRIVATE)
+
+        // Request POST_NOTIFICATIONS permission on Android 13+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 101)
+            }
+        }
 
         settingsBtn = findViewById(R.id.btnEnableNotification)
         settingsBtn.setOnClickListener {
@@ -121,9 +130,8 @@ class MainActivity : AppCompatActivity() {
 
             val currentMode = prefs.getString("current_mode", "Commute") ?: "Commute"
             val prompt = when (currentMode) {
-                "Commute" -> prefs.getString("prompt_commute", "navigation, turn left, turn right, meeting, traffic, call") ?: ""
-                "Focus & Reading" -> prefs.getString("prompt_focus_reading", "call, boss, emergency, hospital") ?: ""
-                "Sleep" -> prefs.getString("prompt_sleep", "emergency, family, call") ?: ""
+                "Commute" -> prefs.getString("prompt_commute", "navigation, maps, turn left, turn right, traffic, call, vip, boss") ?: ""
+                "Do Not Disturb (DND)" -> prefs.getString("prompt_dnd", "emergency, hospital, 911, critical") ?: ""
                 else -> prefs.getString("custom_mode_prompt_$currentMode", "urgent") ?: ""
             }
             val keywords = prompt.lowercase().split(",", " ").map { it.trim() }.filter { it.isNotEmpty() }
@@ -187,8 +195,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupModeSpinner() {
         val modes = mutableListOf<String>()
         if (prefs.getBoolean("mode_commute_enabled", true)) modes.add("Commute")
-        if (prefs.getBoolean("mode_focus_reading_enabled", true)) modes.add("Focus & Reading")
-        if (prefs.getBoolean("mode_sleep_enabled", true)) modes.add("Sleep")
+        if (prefs.getBoolean("mode_dnd_enabled", true)) modes.add("Do Not Disturb (DND)")
 
         val customList = prefs.getString("custom_modes_list", "") ?: ""
         if (customList.isNotEmpty()) {

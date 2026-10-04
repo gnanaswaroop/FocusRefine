@@ -13,3 +13,8 @@ local.properties
 app/build/
 build/
 tmp/
+
+# Local credentials & configs
+tools/
+tools/config.json
+.tg.env
