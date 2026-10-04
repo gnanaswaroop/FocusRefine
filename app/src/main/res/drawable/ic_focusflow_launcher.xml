@@ -1,0 +1,24 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+  <!-- Background blue rounded squircle -->
+  <path
+      android:fillColor="#3A9BE8"
+      android:pathData="M34,8C18.5,8 8,18.5 8,34v40c0,15.5 10.5,26 26,26h40c15.5,0 26,-10.5 26,-26V34c0,-15.5 -10.5,-26 -26,-26H34z"/>
+  <!-- White Outer Ring -->
+  <path
+      android:fillColor="#FFFFFF"
+      android:pathData="M54,22c17.67,0 32,14.33 32,32s-14.33,32 -32,32s-32,-14.33 -32,-32s14.33,-32 32,-32m0,-4c-19.88,0 -36,16.12 -36,36s16.12,36 36,36s36,-16.12 36,-36s-16.12,-36 -36,-36Z"/>
+  <!-- Upward Arrow and Dynamic Swirls -->
+  <path
+      android:fillColor="#FFFFFF"
+      android:pathData="M61,43l13,-13l-4,-4l-13,13c-2.4,-1.2 -5.2,-1.8 -8,-1.8c-9.94,0 -18,8.06 -18,18c0,2.1 0.36,4.1 1,6c-2.4,-3.2 -3.8,-7.2 -3.8,-11.5c0,-10.49 8.51,-19 19,-19c3.9,0 7.5,1.2 10.5,3.3z"/>
+  <path
+      android:fillColor="#FFFFFF"
+      android:pathData="M70,30l4,4l-11.7,11.7c-0.8,0.8 -2.1,0.8 -2.9,0c-0.8,-0.8 -0.8,-2.1 0,-2.9L70,30z"/>
+  <path
+      android:fillColor="#FFFFFF"
+      android:pathData="M47,65c-2.4,1.2 -5.2,1.8 -8,1.8c-9.94,0 -18,-8.06 -18,-18c0,-2.1 0.36,-4.1 1,-6c-2.4,3.2 -3.8,7.2 -3.8,11.5c0,10.49 8.51,19 19,19c3.9,0 7.5,-1.2 10.5,-3.3l-4.7,-4.7z"/>
+</vector>
