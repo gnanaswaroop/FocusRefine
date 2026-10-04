@@ -1,57 +1,37 @@
 # FocusFlow
 
-**FocusFlow** is a modern, lightweight, privacy-focused Android application designed to intelligently filter and triage incoming notifications based on your current activity mode (Commute, Focus, Reading, and custom modes).
+**FocusFlow** is a modern, lightweight, privacy-first Android application designed to intelligently filter and triage incoming notifications based on your current activity mode (**Commute** or **Do Not Disturb (DND)**, plus customizable modes). By combining **MediaPipe Tasks Text Classification** with local semantic heuristics, FocusFlow ensures that urgent alerts (such as navigation, emergency calls, and VIP messages) get through while suppressing digital distractions entirely on-device.
 
 ---
 
-## Why This Was Built
+## Application Overview & Screens
 
-In an era of relentless notification spam (promotional alerts, social media pings, group chats), staying focused during deep work, driving, or reading is difficult. Traditional Do Not Disturb modes are often all-or-nothing and cause you to miss critical alerts. 
+FocusFlow consists of two primary screens designed with a clean, FoxyNotes-inspired minimalist aesthetic, featuring a shared unified header bar with the custom brand app icon and title:
 
-**FocusFlow** solves this by:
-1. **Analyzing content locally on-device** using context-aware heuristics and on-device models.
-2. **Reading urgent notifications aloud** via Text-To-Speech (TTS) if they match your active mode criteria (e.g. navigation updates, work meetings, emergencies).
-3. **Silently archiving non-urgent notifications** into a local Room database inbox so they are out of sight, yet accessible whenever you want.
+1. **Main Dashboard (`MainActivity`)**:
+   - Features the master filtering toggle switch, live notification access status indicator, and mode selection dropdown (**Commute**, **DND**, and **Custom Modes**).
+   - Includes a **"Send Sample Notifications / Analyze"** action button that tests notification classification, runs AI accuracy analysis reports, and re-evaluates notification history against current mode prompt rules.
+   - Houses a dual-tab inbox (**Shown** vs. **Muted**) powered by compact, narrow notification cards. Each card features timestamps, expandable/collapsible text views, package identifiers, and a direct **"Open App"** action button to launch target applications instantly.
 
----
-
-## Key Functionality & UI Walkthrough
-
-### 1. Main Dashboard & Master Control
-- **START / STOP Master Switch**: Instantly toggle notification filtering on or off. When stopped, notifications pass through normally.
-- **Context Modes**: Switch between **Commute**, **Focus**, **Reading**, and your own **Custom Modes** to adjust filtering strictness.
-- **Dynamic Notification Access**: Automatically detects notification access permissions, hiding the setup button and displaying a green checkmark once granted.
-- **Muted vs. Shown Tabs**: Switch between **Muted (Archived)** notifications and **Shown (Urgent)** notifications.
-
-<p align="center">
-  <img src="assets/main_screen.png" width="300" alt="FocusFlow Main Dashboard">
-</p>
+2. **Settings & Configuration Screen (`SettingsActivity`)**:
+   - Displays a live **AI Support Status Banner** indicating whether MediaPipe Gemini Nano is supported or running on the high-performance local semantic heuristic engine.
+   - Features an **AI Engine Toggle Switch** to switch between MediaPipe On-Device AI and semantic heuristics.
+   - Provides an in-app Material 3 **Theme Mode Switcher** (System Default, Light, Dark).
+   - Includes **Data Retention** configuration to automatically clear history older than X days.
+   - Allows enabling/disabling OOTB modes (**Commute** and **DND**) with inline prompt editing, plus creation and management of **Custom Modes**.
 
 ---
 
-### 2. Configuration & Custom Prompt Settings
-- **System Prompts & Toggles**: View, edit, enable, or disable out-of-the-box system instructions for Commute, Focus, and Reading modes.
-- **Custom Modes Management**: Create one or more custom modes with dedicated custom prompts.
-- **Local Model Prompt Integration**: Fine-tune natural language classification rules on-device.
+## Key Functionality & Architecture
 
-<p align="center">
-  <img src="assets/settings_screen.png" width="300" alt="FocusFlow Settings Screen">
-</p>
+1. **Dual-Engine On-Device AI (`NotificationFilterService`)**:
+   - Integrates **MediaPipe Tasks Text Classification** (`text_classifier.tflite`) for intelligent, offline intent classification.
+   - Automatically falls back to a high-performance **Semantic Heuristic Engine** when model assets or NPU hardware are unavailable.
+   - Operates persistently in the background as a compliant **Foreground Service** (`startForeground`) with an ongoing `.setOngoing(true)` status bar notification displaying a **live-updating suppression counter** (`"Suppressed: X notifications"`) and a **STOP/START** quick-control action button.
 
----
-
-## Technical Implementation Overview
-
-1. **Notification Interception (`NotificationFilterService`)**:
-   - Extends `NotificationListenerService` to intercept system-wide `StatusBarNotification` events in real-time.
-   - Evaluates whether filtering is active (`service_running` in `SharedPreferences`) and analyzes notification content against the active mode prompt.
-   - If urgent (`isUrgent = true`), speaks aloud via `TextToSpeech` and stores the record in Room DB with `isUrgent = true`.
-   - If non-urgent, cancels/dismisses the notification from the system tray and stores the record in Room DB with `isUrgent = false`.
-
-2. **Local Persistence (`Room Database`)**:
+2. **Local Persistence & Data Retention (`Room Database`)**:
    - `NotificationEntity` stores notification metadata (`title`, `text`, `packageName`, `timestamp`, `isUrgent`).
-   - `NotificationDao` provides asynchronous queries (`getAll()`, `getByUrgency()`).
+   - Automated data retention cleanup purges records older than user-configured days on save.
 
-3. **Hyper-Minimalist UI & Theme Adaptability**:
-   - Built with Material Components DayNight theme (`Theme.Material3.DayNight.NoActionBar`).
-   - Digital minimalism design principles: ample whitespace, high-contrast typography, flat hierarchy, and seamless Light/Dark mode compatibility (`minSdk = 28`+).
+3. **Privacy & Security Guarantee**:
+   - FocusFlow declares **zero internet permissions**. All processing, AI classification, and storage occur 100% locally on-device.
