@@ -25,6 +25,16 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.getByName("debug")
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
     packaging {
         jniLibs {
             useLegacyPackaging = true
