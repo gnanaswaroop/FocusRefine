@@ -16,11 +16,17 @@ interface NotificationDao {
     @Query("SELECT * FROM notifications WHERE isUrgent = :isUrgent ORDER BY timestamp DESC")
     fun getByUrgency(isUrgent: Boolean): List<NotificationEntity>
 
+    @Query("SELECT * FROM notifications WHERE isLearned = 1 ORDER BY timestamp DESC")
+    fun getLearnedRules(): List<NotificationEntity>
+
     @Query("DELETE FROM notifications WHERE timestamp < :cutoffTimestamp")
     fun deleteOlderThan(cutoffTimestamp: Long)
 
     @Query("DELETE FROM notifications")
     fun deleteAll()
+
+    @Query("DELETE FROM notifications WHERE isLearned = 1")
+    fun deleteLearnedRules()
 
     @androidx.room.Delete
     fun delete(notification: NotificationEntity)

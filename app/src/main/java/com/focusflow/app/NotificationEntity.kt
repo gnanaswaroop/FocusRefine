@@ -10,5 +10,6 @@ data class NotificationEntity(
     val text: String?,
     val packageName: String,
     val timestamp: Long,
-    val isUrgent: Boolean = false // false = Archived, true = Shown (Urgent)
+    val isUrgent: Boolean = false, // false = Archived, true = Shown (Urgent)
+    val isLearned: Boolean = false // true when explicitly customized/actioned by user
 )

@@ -45,15 +45,13 @@ class ConfigureModesActivity : AppCompatActivity() {
     private fun loadModes() {
         val list = mutableListOf<ModeItem>()
 
-        // Commute
-        val commuteEnabled = prefs.getBoolean("mode_commute_enabled", true)
-        val commutePrompt = prefs.getString("prompt_commute", "Active navigation alerts, transit arrivals, real-time traffic updates, urgent calls from family members or VIP contacts.") ?: ""
-        list.add(ModeItem("Commute", commutePrompt, commuteEnabled, false))
-
-        // DND
-        val dndEnabled = prefs.getBoolean("mode_dnd_enabled", true)
-        val dndPrompt = prefs.getString("prompt_dnd", "Critical safety emergencies, hospital notifications, emergency services, urgent family distress calls.") ?: ""
-        list.add(ModeItem("Do Not Disturb (DND)", dndPrompt, dndEnabled, false))
+        // OOTB modes dynamically loaded from PromptManager
+        val ootbConfigs = PromptManager.getAllOotbConfigs(this)
+        for ((name, config) in ootbConfigs) {
+            val enabled = prefs.getBoolean("mode_${name}_enabled", config.enabled)
+            val prompt = prefs.getString("prompt_${name}", config.prompt) ?: config.prompt
+            list.add(ModeItem(name, prompt, enabled, false))
+        }
 
         // Custom modes
         val customStr = prefs.getString("custom_modes_list", "") ?: ""
@@ -70,11 +68,7 @@ class ConfigureModesActivity : AppCompatActivity() {
         adapter = ModesAdapter(list,
             onToggle = { mode, isEnabled ->
                 if (!mode.isCustom) {
-                    if (mode.name == "Commute") {
-                        prefs.edit().putBoolean("mode_commute_enabled", isEnabled).apply()
-                    } else if (mode.name == "Do Not Disturb (DND)") {
-                        prefs.edit().putBoolean("mode_dnd_enabled", isEnabled).apply()
-                    }
+                    prefs.edit().putBoolean("mode_${mode.name}_enabled", isEnabled).apply()
                 } else {
                     prefs.edit().putBoolean("custom_mode_enabled_${mode.name}", isEnabled).apply()
                 }
@@ -82,6 +76,27 @@ class ConfigureModesActivity : AppCompatActivity() {
             },
             onEdit = { mode ->
                 showEditModeDialog(mode.name, mode.prompt, mode.isCustom)
+            },
+            onDelete = { mode ->
+                if (mode.isCustom) {
+                    AlertDialog.Builder(this)
+                        .setTitle("Delete Custom Mode")
+                        .setMessage("Are you sure you want to delete '${mode.name}'?")
+                        .setPositiveButton("Delete") { _, _ ->
+                            val existing = prefs.getString("custom_modes_list", "") ?: ""
+                            val listCustom = if (existing.isEmpty()) mutableListOf() else existing.split(",").toMutableList()
+                            listCustom.remove(mode.name)
+                            prefs.edit()
+                                .putString("custom_modes_list", listCustom.joinToString(","))
+                                .remove("custom_mode_prompt_${mode.name}")
+                                .remove("custom_mode_enabled_${mode.name}")
+                                .apply()
+                            loadModes()
+                            Toast.makeText(this, "Mode '${mode.name}' deleted", Toast.LENGTH_SHORT).show()
+                        }
+                        .setNegativeButton("Cancel", null)
+                        .show()
+                }
             }
         )
         recyclerViewModes.adapter = adapter
@@ -89,7 +104,7 @@ class ConfigureModesActivity : AppCompatActivity() {
 
     private fun showEditModeDialog(modeName: String?, modePrompt: String?, isCustom: Boolean) {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle(if (modeName == null) "Add Custom Mode" else "Edit Mode: $modeName")
+        builder.setTitle(if (modeName == null) "Add Custom Mode" else "Edit Prompt: $modeName")
 
         val view = LayoutInflater.from(this).inflate(R.layout.dialog_edit_mode, null)
         val etName = view.findViewById<EditText>(R.id.etDialogModeName)
@@ -97,7 +112,7 @@ class ConfigureModesActivity : AppCompatActivity() {
 
         if (modeName != null) {
             etName.setText(modeName)
-            etName.isEnabled = isCustom // only custom names can be changed or new
+            etName.isEnabled = isCustom // only custom names can be changed
             etPrompt.setText(modePrompt)
         }
 
@@ -123,16 +138,14 @@ class ConfigureModesActivity : AppCompatActivity() {
                         Toast.makeText(this, "Mode name already exists", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    // Update existing
-                    if (modeName == "Commute") {
-                        prefs.edit().putString("prompt_commute", prompt).apply()
-                    } else if (modeName == "Do Not Disturb (DND)") {
-                        prefs.edit().putString("prompt_dnd", prompt).apply()
-                    } else {
+                    // Update prompt for OOTB or custom
+                    if (isCustom) {
                         prefs.edit().putString("custom_mode_prompt_$modeName", prompt).apply()
+                    } else {
+                        prefs.edit().putString("prompt_$modeName", prompt).apply()
                     }
                     loadModes()
-                    Toast.makeText(this, "Mode '$modeName' updated", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Prompt for '$modeName' updated", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 Toast.makeText(this, "Name and prompt cannot be empty", Toast.LENGTH_SHORT).show()
@@ -145,13 +158,15 @@ class ConfigureModesActivity : AppCompatActivity() {
     class ModesAdapter(
         private val modes: List<ModeItem>,
         private val onToggle: (ModeItem, Boolean) -> Unit,
-        private val onEdit: (ModeItem) -> Unit
+        private val onEdit: (ModeItem) -> Unit,
+        private val onDelete: (ModeItem) -> Unit
     ) : RecyclerView.Adapter<ModesAdapter.ViewHolder>() {
 
         class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val tvName: TextView = view.findViewById(R.id.tvModeName)
             val tvPrompt: TextView = view.findViewById(R.id.tvModePrompt)
             val switchEnabled: Switch = view.findViewById(R.id.switchModeEnabled)
+            val btnDelete: Button? = view.findViewById(R.id.btnDeleteModeItem)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -171,6 +186,15 @@ class ConfigureModesActivity : AppCompatActivity() {
 
             holder.itemView.setOnClickListener {
                 onEdit(mode)
+            }
+
+            if (holder.btnDelete != null) {
+                if (mode.isCustom) {
+                    holder.btnDelete.visibility = View.VISIBLE
+                    holder.btnDelete.setOnClickListener { onDelete(mode) }
+                } else {
+                    holder.btnDelete.visibility = View.GONE
+                }
             }
         }
 

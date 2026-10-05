@@ -62,11 +62,17 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         switchUseAiModel = findViewById(R.id.switchUseAiModel)
-        switchUseAiModel.isChecked = prefs.getBoolean("use_ai_model", true)
-        switchUseAiModel.setOnCheckedChangeListener { _, isChecked ->
-            prefs.edit().putBoolean("use_ai_model", isChecked).apply()
-            val engineName = if (isChecked) "On-Device AI" else "On-Device Semantic Match"
-            Toast.makeText(this, "Engine set to: $engineName", Toast.LENGTH_SHORT).show()
+        if (isEmulator) {
+            switchUseAiModel.isEnabled = false
+            switchUseAiModel.isChecked = false
+            prefs.edit().putBoolean("use_ai_model", false).apply()
+        } else {
+            switchUseAiModel.isChecked = prefs.getBoolean("use_ai_model", true)
+            switchUseAiModel.setOnCheckedChangeListener { _, isChecked ->
+                prefs.edit().putBoolean("use_ai_model", isChecked).apply()
+                val engineName = if (isChecked) "On-Device AI" else "On-Device Semantic Match"
+                Toast.makeText(this, "Engine set to: $engineName", Toast.LENGTH_SHORT).show()
+            }
         }
 
         spinnerTheme = findViewById(R.id.spinnerTheme)

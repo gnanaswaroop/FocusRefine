@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
 
                 lifecycleScope.launch(Dispatchers.IO) {
                     val db = AppDatabase.getDatabase(this@MainActivity)
-                    val updated = notif.copy(isUrgent = newUrgency, text = sanitizedText, title = sanitizedTitle)
+                    val updated = notif.copy(isUrgent = newUrgency, isLearned = true, text = sanitizedText, title = sanitizedTitle)
                     db.notificationDao().insert(updated)
 
                     val currentMode = prefs.getString("current_mode", "Commute") ?: "Commute"
@@ -223,12 +223,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupModeSpinner() {
         val modes = mutableListOf<String>()
-        if (prefs.getBoolean("mode_commute_enabled", true)) modes.add("Commute")
-        if (prefs.getBoolean("mode_dnd_enabled", true)) modes.add("Do Not Disturb (DND)")
+        val ootbConfigs = PromptManager.getAllOotbConfigs(this)
+        for ((name, config) in ootbConfigs) {
+            val enabled = prefs.getBoolean("mode_${name}_enabled", config.enabled)
+            if (enabled) {
+                modes.add(name)
+            }
+        }
 
         val customList = prefs.getString("custom_modes_list", "") ?: ""
         if (customList.isNotEmpty()) {
-            modes.addAll(customList.split(","))
+            for (name in customList.split(",")) {
+                if (name.isNotBlank() && prefs.getBoolean("custom_mode_enabled_$name", true)) {
+                    modes.add(name)
+                }
+            }
         }
 
         if (modes.isEmpty()) {
@@ -261,10 +270,14 @@ class MainActivity : AppCompatActivity() {
     private fun updateTabStyles() {
         if (!currentTabUrgent) {
             btnTabArchived.setTypeface(null, android.graphics.Typeface.BOLD)
+            btnTabArchived.setTextColor(android.graphics.Color.parseColor("#BB86FC"))
             btnTabShown.setTypeface(null, android.graphics.Typeface.NORMAL)
+            btnTabShown.setTextColor(android.graphics.Color.parseColor("#808080"))
         } else {
             btnTabArchived.setTypeface(null, android.graphics.Typeface.NORMAL)
+            btnTabArchived.setTextColor(android.graphics.Color.parseColor("#808080"))
             btnTabShown.setTypeface(null, android.graphics.Typeface.BOLD)
+            btnTabShown.setTextColor(android.graphics.Color.parseColor("#BB86FC"))
         }
     }
 
