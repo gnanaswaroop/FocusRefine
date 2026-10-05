@@ -241,7 +241,7 @@
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Send Sample Notifications from JSON"
+                    android:text="Send sample notifications"
                     android:textAllCaps="false"/>
 
                 <Button

@@ -41,7 +41,7 @@ class LearnedRulesActivity : AppCompatActivity() {
         btnClearAll.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
                 val db = AppDatabase.getDatabase(this@LearnedRulesActivity)
-                db.notificationDao().deleteAll()
+                db.notificationDao().deleteLearnedRules()
                 withContext(Dispatchers.Main) {
                     loadRules()
                     Toast.makeText(this@LearnedRulesActivity, "All learned rules cleared", Toast.LENGTH_SHORT).show()
@@ -53,7 +53,7 @@ class LearnedRulesActivity : AppCompatActivity() {
     private fun loadRules() {
         lifecycleScope.launch(Dispatchers.IO) {
             val db = AppDatabase.getDatabase(this@LearnedRulesActivity)
-            val notifications = db.notificationDao().getAll()
+            val notifications = db.notificationDao().getLearnedRules()
             withContext(Dispatchers.Main) {
                 adapter = RulesAdapter(notifications,
                     onToggle = { notif ->
@@ -107,10 +107,10 @@ class LearnedRulesActivity : AppCompatActivity() {
             holder.tvPattern.text = pattern
 
             if (item.isUrgent) {
-                holder.tvStatus.text = "Status: Shown (Unhidden)"
+                holder.tvStatus.text = "Status: Shown"
                 holder.tvStatus.setTextColor(Color.parseColor("#2E7D32"))
             } else {
-                holder.tvStatus.text = "Status: Muted (Hidden)"
+                holder.tvStatus.text = "Status: Hidden"
                 holder.tvStatus.setTextColor(Color.parseColor("#C62828"))
             }
 
