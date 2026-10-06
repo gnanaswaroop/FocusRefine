@@ -18,6 +18,12 @@
     "expectedUrgent": true
   },
   {
+    "title": "SMS - Bank OTP",
+    "text": "Your secure verification code is 849201. Do not share this code with anyone.",
+    "packageName": "com.google.android.apps.messaging",
+    "expectedUrgent": true
+  },
+  {
     "title": "Phone",
     "text": "Incoming call from Boss",
     "packageName": "com.android.phone",
@@ -102,9 +108,15 @@
     "expectedUrgent": false
   },
   {
-    "title": "Twitter",
+    "title": "X (Twitter)",
     "text": "Trending in Technology: Top 10 things to expect at the upcoming developer conference next week.",
-    "packageName": "com.twitter.android",
+    "packageName": "com.x.android",
+    "expectedUrgent": false
+  },
+  {
+    "title": "SMS - Promotional",
+    "text": "Get 70% off your next meal delivery order with code TASTY70 valid until midnight.",
+    "packageName": "com.google.android.apps.messaging",
     "expectedUrgent": false
   },
   {

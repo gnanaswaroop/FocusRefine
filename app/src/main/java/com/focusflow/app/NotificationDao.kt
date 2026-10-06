@@ -16,6 +16,9 @@ interface NotificationDao {
     @Query("SELECT * FROM notifications WHERE isUrgent = :isUrgent ORDER BY timestamp DESC")
     fun getByUrgency(isUrgent: Boolean): List<NotificationEntity>
 
+    @Query("SELECT * FROM notifications WHERE isUrgent = :isUrgent AND (title LIKE :query OR text LIKE :query) ORDER BY timestamp DESC")
+    fun searchByUrgency(isUrgent: Boolean, query: String): List<NotificationEntity>
+
     @Query("SELECT * FROM notifications WHERE isLearned = 1 ORDER BY timestamp DESC")
     fun getLearnedRules(): List<NotificationEntity>
 

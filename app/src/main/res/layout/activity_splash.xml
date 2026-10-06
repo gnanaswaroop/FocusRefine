@@ -35,6 +35,15 @@
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminate="true" />
+        android:indeterminate="true"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/tvSplashVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="v1.0"
+        android:textSize="12sp"
+        android:textColor="?android:attr/textColorTertiary" />
 
 </LinearLayout>

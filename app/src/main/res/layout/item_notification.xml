@@ -91,7 +91,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Open App"
                 android:scaleType="centerInside"
-                android:src="@android:drawable/ic_menu_send" />
+                android:src="@android:drawable/ic_menu_view" />
         </LinearLayout>
 
     </LinearLayout>

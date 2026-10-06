@@ -89,34 +89,11 @@ class NotificationAdapter(private var notifications: List<NotificationEntity>) :
 
         holder.btnOpenApp.setOnClickListener {
             try {
-                var intent = context.packageManager.getLaunchIntentForPackage(notification.packageName)
-                if (intent == null) {
-                    val pkg = notification.packageName.lowercase()
-                    val title = notification.title?.lowercase() ?: ""
-                    val altPackages = mutableListOf<String>()
-                    if (pkg.contains("telegram") || title.contains("telegram")) {
-                        altPackages.addAll(listOf("org.telegram.messenger", "org.telegram.plus", "org.telegram.messenger.web", "org.telegram.aka"))
-                    } else if (pkg.contains("whatsapp") || title.contains("whatsapp")) {
-                        altPackages.add("com.whatsapp")
-                    } else if (pkg.contains("maps") || title.contains("maps")) {
-                        altPackages.add("com.google.android.apps.maps")
-                    } else {
-                        altPackages.add(notification.packageName)
-                    }
-
-                    for (altPkg in altPackages) {
-                        intent = context.packageManager.getLaunchIntentForPackage(altPkg)
-                        if (intent != null) break
-                    }
-                }
-
+                val intent = context.packageManager.getLaunchIntentForPackage(notification.packageName)
                 if (intent != null) {
                     context.startActivity(intent)
                 } else {
-                    val settingsIntent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                        data = Uri.parse("package:${notification.packageName}")
-                    }
-                    context.startActivity(settingsIntent)
+                    Toast.makeText(context, "App not installed on this device: ${notification.packageName}", Toast.LENGTH_SHORT).show()
                 }
             } catch (_: Exception) {
                 Toast.makeText(context, "Cannot open app: ${notification.packageName}", Toast.LENGTH_SHORT).show()

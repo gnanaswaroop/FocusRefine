@@ -289,4 +289,13 @@ class NotificationFilterService : NotificationListenerService() {
 
         return keywords.any { keyword -> content.contains(keyword) }
     }
+
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        try {
+            val manager = getSystemService(NotificationManager::class.java)
+            manager.cancel(NOTIFICATION_ID)
+            stopSelf()
+        } catch (_: Exception) {}
+        super.onTaskRemoved(rootIntent)
+    }
 }
