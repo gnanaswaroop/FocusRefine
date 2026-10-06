@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
     private var currentTabUrgent = false // false = Archived (Muted), true = Shown (Urgent)
     private var isAutoRefreshing = false
+    private var isUpdatingSwitch = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,16 +80,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         switchFiltering.setOnCheckedChangeListener { _, isChecked ->
+            if (isUpdatingSwitch) return@setOnCheckedChangeListener
             prefs.edit().putBoolean("service_running", isChecked).apply()
+
+            val toggleIntent = Intent(NotificationFilterService.ACTION_TOGGLE_SERVICE).apply {
+                setPackage(packageName)
+            }
+            sendBroadcast(toggleIntent)
+
             val serviceIntent = Intent(this, NotificationFilterService::class.java)
-            if (isChecked) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    startForegroundService(serviceIntent)
-                } else {
-                    startService(serviceIntent)
-                }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(serviceIntent)
             } else {
-                stopService(serviceIntent)
+                startService(serviceIntent)
             }
         }
 

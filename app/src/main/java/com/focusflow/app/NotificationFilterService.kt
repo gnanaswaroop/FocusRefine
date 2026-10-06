@@ -43,6 +43,16 @@ class NotificationFilterService : NotificationListenerService() {
                 context.sendBroadcast(stateIntent)
 
                 updateForegroundNotification(newState, count)
+                try {
+                    val manager = getSystemService(NotificationManager::class.java)
+                    if (manager.isNotificationPolicyAccessGranted) {
+                        if (newState) {
+                            manager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_PRIORITY)
+                        } else {
+                            manager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL)
+                        }
+                    }
+                } catch (_: Exception) {}
                 Log.d(TAG, "Service toggled from notification bar: running = $newState")
             } else if (intent.action == ACTION_UPDATE_COUNT) {
                 val isRunning = prefs.getBoolean("service_running", true)
