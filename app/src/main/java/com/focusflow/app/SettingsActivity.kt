@@ -18,6 +18,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
+import com.focusflow.app.BuildConfig
 import com.google.android.material.card.MaterialCardView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -158,8 +159,21 @@ class SettingsActivity : AppCompatActivity() {
                 val currentSuppressed = prefs.getInt("suppressed_count", 0) + mutedCount
                 prefs.edit().putInt("suppressed_count", currentSuppressed).apply()
 
-                val updateIntent = Intent(NotificationFilterService.ACTION_UPDATE_COUNT)
+                val updateIntent = Intent(NotificationFilterService.ACTION_UPDATE_COUNT).apply {
+                    setPackage(packageName)
+                }
                 sendBroadcast(updateIntent)
+
+                if (prefs.getBoolean("service_running", true)) {
+                    val serviceIntent = Intent(this@SettingsActivity, NotificationFilterService::class.java).apply {
+                        action = NotificationFilterService.ACTION_UPDATE_COUNT
+                    }
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                        startForegroundService(serviceIntent)
+                    } else {
+                        startService(serviceIntent)
+                    }
+                }
 
                 withContext(Dispatchers.Main) {
                     Toast.makeText(this@SettingsActivity, "✨ 20 sample notifications added and evaluated! (Suppressed: $mutedCount)", Toast.LENGTH_SHORT).show()
@@ -180,5 +194,10 @@ class SettingsActivity : AppCompatActivity() {
                 }
             }
         }
+
+        try {
+            val tvVersion = findViewById<TextView>(R.id.tvAppVersion)
+            tvVersion.text = "FocusFlow v${BuildConfig.VERSION_NAME} (Build ${BuildConfig.VERSION_CODE})"
+        } catch (_: Exception) {}
     }
 }

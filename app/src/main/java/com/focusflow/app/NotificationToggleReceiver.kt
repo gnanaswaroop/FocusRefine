@@ -11,8 +11,11 @@ class NotificationToggleReceiver : BroadcastReceiver() {
             val prefs = context.getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
             val current = prefs.getBoolean("service_running", true)
             val newState = !current
-            prefs.edit().putBoolean("service_running", newState).apply()
-            val count = prefs.getInt("suppressed_count", 0)
+            val editor = prefs.edit().putBoolean("service_running", newState)
+            if (!newState) {
+                editor.putInt("suppressed_count", 0)
+            }
+            editor.apply()
 
             // Broadcast state change to UI (MainActivity)
             val stateIntent = Intent(NotificationFilterService.ACTION_SERVICE_STATE_CHANGED).apply {

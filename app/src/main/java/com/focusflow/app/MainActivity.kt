@@ -14,6 +14,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Switch
 import android.widget.TextView
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var settingsBtn: Button
     private lateinit var btnTabArchived: Button
     private lateinit var btnTabShown: Button
+    private lateinit var etSearchNotifications: EditText
     private lateinit var prefs: SharedPreferences
 
     private var currentTabUrgent = false // false = Archived (Muted), true = Shown (Urgent)
@@ -145,17 +147,26 @@ class MainActivity : AppCompatActivity() {
 
         btnTabArchived = findViewById(R.id.btnTabArchived)
         btnTabShown = findViewById(R.id.btnTabShown)
+        etSearchNotifications = findViewById(R.id.etSearchNotifications)
+
+        etSearchNotifications.addTextChangedListener(object : android.text.TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: android.text.Editable?) {
+                loadNotifications(s.toString().trim())
+            }
+        })
 
         btnTabArchived.setOnClickListener {
             currentTabUrgent = false
             updateTabStyles()
-            loadNotifications()
+            loadNotifications(etSearchNotifications.text.toString().trim())
         }
 
         btnTabShown.setOnClickListener {
             currentTabUrgent = true
             updateTabStyles()
-            loadNotifications()
+            loadNotifications(etSearchNotifications.text.toString().trim())
         }
 
         updateTabStyles()
@@ -242,7 +253,12 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             while (isAutoRefreshing) {
                 delay(1500)
-                val notifications = database.notificationDao().getByUrgency(currentTabUrgent)
+                val query = if (::etSearchNotifications.isInitialized) etSearchNotifications.text.toString().trim() else ""
+                val notifications = if (query.isEmpty()) {
+                    database.notificationDao().getByUrgency(currentTabUrgent)
+                } else {
+                    database.notificationDao().searchByUrgency(currentTabUrgent, "%$query%")
+                }
                 withContext(Dispatchers.Main) {
                     adapter.updateData(notifications)
                 }
@@ -329,9 +345,13 @@ class MainActivity : AppCompatActivity() {
         return flat != null && flat.contains(packageName)
     }
 
-    private fun loadNotifications() {
+    private fun loadNotifications(query: String = "") {
         lifecycleScope.launch(Dispatchers.IO) {
-            val notifications = database.notificationDao().getByUrgency(currentTabUrgent)
+            val notifications = if (query.isEmpty()) {
+                database.notificationDao().getByUrgency(currentTabUrgent)
+            } else {
+                database.notificationDao().searchByUrgency(currentTabUrgent, "%$query%")
+            }
             withContext(Dispatchers.Main) {
                 adapter.updateData(notifications)
             }

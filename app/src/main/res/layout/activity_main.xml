@@ -174,13 +174,27 @@
             android:textAllCaps="false" />
     </LinearLayout>
 
+    <!-- Search Bar -->
+    <EditText
+        android:id="@+id/etSearchNotifications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:minHeight="48dp"
+        android:hint="Search notifications..."
+        android:textSize="14sp"
+        android:inputType="text"
+        android:imeOptions="actionSearch"
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/inboxHeaderLayout" />
+
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="4dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toBottomOf="@+id/inboxHeaderLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/etSearchNotifications" />
 
     <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView

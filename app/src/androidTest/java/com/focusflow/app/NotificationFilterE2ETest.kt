@@ -122,4 +122,19 @@ class NotificationFilterE2ETest {
         assertEquals(1, muted.size)
         assertEquals("Game Update", muted[0].title)
     }
+
+    @Test
+    fun testNotificationSearchByUrgency() = runBlocking {
+        dao.insert(NotificationEntity(title = "Google Maps", text = "Turn right on Oak Street", packageName = "com.maps", timestamp = System.currentTimeMillis(), isUrgent = true))
+        dao.insert(NotificationEntity(title = "Uber", text = "Driver arriving soon", packageName = "com.uber", timestamp = System.currentTimeMillis() - 100, isUrgent = true))
+        dao.insert(NotificationEntity(title = "WhatsApp", text = "Coffee later?", packageName = "com.whatsapp", timestamp = System.currentTimeMillis() - 200, isUrgent = false))
+
+        val searchShown = dao.searchByUrgency(true, "Maps")
+        assertEquals(1, searchShown.size)
+        assertEquals("Google Maps", searchShown[0].title)
+
+        val searchMuted = dao.searchByUrgency(false, "Coffee")
+        assertEquals(1, searchMuted.size)
+        assertEquals("WhatsApp", searchMuted[0].title)
+    }
 }
