@@ -1,7 +1,10 @@
 package com.focusflow.app
 
 import android.Manifest
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
@@ -39,6 +42,16 @@ class MainActivity : AppCompatActivity() {
     private var currentTabUrgent = false // false = Archived (Muted), true = Shown (Urgent)
     private var isAutoRefreshing = false
     private var isUpdatingSwitch = false
+    private val serviceStateReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            if (intent.action == NotificationFilterService.ACTION_SERVICE_STATE_CHANGED) {
+                val isRunning = intent.getBooleanExtra("is_running", true)
+                isUpdatingSwitch = true
+                switchFiltering.isChecked = isRunning
+                isUpdatingSwitch = false
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,12 +96,9 @@ class MainActivity : AppCompatActivity() {
             if (isUpdatingSwitch) return@setOnCheckedChangeListener
             prefs.edit().putBoolean("service_running", isChecked).apply()
 
-            val toggleIntent = Intent(NotificationFilterService.ACTION_TOGGLE_SERVICE).apply {
-                setPackage(packageName)
+            val serviceIntent = Intent(this, NotificationFilterService::class.java).apply {
+                action = NotificationFilterService.ACTION_UPDATE_COUNT
             }
-            sendBroadcast(toggleIntent)
-
-            val serviceIntent = Intent(this, NotificationFilterService::class.java)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(serviceIntent)
             } else {
@@ -201,6 +211,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        val isRunning = prefs.getBoolean("service_running", true)
+        isUpdatingSwitch = true
+        switchFiltering.isChecked = isRunning
+        isUpdatingSwitch = false
+
+        val filter = IntentFilter(NotificationFilterService.ACTION_SERVICE_STATE_CHANGED)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(serviceStateReceiver, filter, RECEIVER_NOT_EXPORTED)
+        } else {
+            registerReceiver(serviceStateReceiver, filter)
+        }
+
         loadNotifications()
         updateNotificationAccessStatus()
         setupModeSpinner()
@@ -209,6 +231,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
+        try {
+            unregisterReceiver(serviceStateReceiver)
+        } catch (_: Exception) {}
         isAutoRefreshing = false
     }
 

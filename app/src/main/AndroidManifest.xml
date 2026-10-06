@@ -59,5 +59,13 @@
             </intent-filter>
         </receiver>
 
+        <receiver
+            android:name=".NotificationToggleReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.focusflow.app.ACTION_TOGGLE_SERVICE" />
+            </intent-filter>
+        </receiver>
+
     </application>
 </manifest>

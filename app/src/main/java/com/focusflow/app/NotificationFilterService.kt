@@ -138,7 +138,9 @@ class NotificationFilterService : NotificationListenerService() {
     }
 
     private fun buildForegroundNotification(isRunning: Boolean, suppressedCount: Int): Notification {
-        val toggleIntent = Intent(ACTION_TOGGLE_SERVICE)
+        val toggleIntent = Intent(this, NotificationToggleReceiver::class.java).apply {
+            action = ACTION_TOGGLE_SERVICE
+        }
         val flagImmutable = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0
         val togglePendingIntent = PendingIntent.getBroadcast(
             this, 0, toggleIntent,
