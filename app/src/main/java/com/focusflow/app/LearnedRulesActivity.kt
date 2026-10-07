@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -13,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,8 +37,10 @@ class LearnedRulesActivity : ComponentActivity() {
                 var refreshTrigger by remember { mutableStateOf(0) }
 
                 LaunchedEffect(refreshTrigger) {
-                    val db = AppDatabase.getDatabase(this@LearnedRulesActivity)
-                    rules = db.notificationDao().getLearnedRules()
+                    withContext(Dispatchers.IO) {
+                        val db = AppDatabase.getDatabase(this@LearnedRulesActivity)
+                        rules = db.notificationDao().getLearnedRules()
+                    }
                 }
 
                 Surface(
@@ -55,8 +59,14 @@ class LearnedRulesActivity : ComponentActivity() {
                                 .padding(bottom = 16.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_focusflow_logo),
+                                contentDescription = "App Logo",
+                                modifier = Modifier.size(32.dp)
+                            )
+                            Spacer(modifier = Modifier.width(10.dp))
                             Text(
-                                text = "Learned Rules & Customizations",
+                                text = "Learned Rules",
                                 style = MaterialTheme.typography.titleLarge,
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier.weight(1f)

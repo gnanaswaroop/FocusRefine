@@ -161,9 +161,9 @@ class NotificationFilterService : NotificationListenerService() {
         )
 
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("FlowFocus Active")
+            .setContentTitle("FocusRefine Active")
             .setContentText(statusText)
-            .setSmallIcon(R.drawable.ic_focusflow_logo)
+            .setSmallIcon(R.drawable.ic_notification)
             .setContentIntent(openAppPendingIntent)
             .addAction(android.R.drawable.ic_menu_close_clear_cancel, actionText, togglePendingIntent)
             .setOngoing(true)
