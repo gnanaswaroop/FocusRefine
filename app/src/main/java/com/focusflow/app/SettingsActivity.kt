@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatDelegate
+import com.focusflow.app.BuildConfig
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -36,7 +38,15 @@ class SettingsActivity : ComponentActivity() {
                          android.os.Build.MODEL.contains("sdk")
 
         setContent {
-            MaterialTheme {
+            val savedThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_YES)
+            val isDark = when (savedThemeMode) {
+                AppCompatDelegate.MODE_NIGHT_NO -> false
+                AppCompatDelegate.MODE_NIGHT_YES -> true
+                else -> androidx.compose.foundation.isSystemInDarkTheme()
+            }
+            MaterialTheme(
+                colorScheme = if (isDark) darkColorScheme() else lightColorScheme()
+            ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -140,6 +150,63 @@ class SettingsActivity : ComponentActivity() {
                                             }
                                         }
                                     )
+                                }
+                            }
+                        }
+
+                        // Appearance / Theme Card
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 16.dp)
+                        ) {
+                            Column(modifier = Modifier.padding(16.dp)) {
+                                Text("Appearance", fontWeight = FontWeight.Bold, fontSize = 16.sp, modifier = Modifier.padding(bottom = 8.dp))
+                                Text("Theme Mode", fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                Spacer(modifier = Modifier.height(8.dp))
+
+                                val themes = listOf("System Default", "Light", "Dark")
+                                val savedThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                                var selectedThemeIndex by remember {
+                                    mutableStateOf(
+                                        when (savedThemeMode) {
+                                            AppCompatDelegate.MODE_NIGHT_NO -> 1
+                                            AppCompatDelegate.MODE_NIGHT_YES -> 2
+                                            else -> 0
+                                        }
+                                    )
+                                }
+                                var expandedTheme by remember { mutableStateOf(false) }
+
+                                Box(modifier = Modifier.fillMaxWidth()) {
+                                    OutlinedButton(
+                                        onClick = { expandedTheme = true },
+                                        modifier = Modifier.fillMaxWidth()
+                                    ) {
+                                        Text(themes[selectedThemeIndex])
+                                    }
+                                    DropdownMenu(
+                                        expanded = expandedTheme,
+                                        onDismissRequest = { expandedTheme = false }
+                                    ) {
+                                        themes.forEachIndexed { index, themeName ->
+                                            DropdownMenuItem(
+                                                text = { Text(themeName) },
+                                                onClick = {
+                                                    selectedThemeIndex = index
+                                                    val newThemeMode = when (index) {
+                                                        1 -> AppCompatDelegate.MODE_NIGHT_NO
+                                                        2 -> AppCompatDelegate.MODE_NIGHT_YES
+                                                        else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                                                    }
+                                                    prefs.edit().putInt("theme_mode", newThemeMode).apply()
+                                                    AppCompatDelegate.setDefaultNightMode(newThemeMode)
+                                                    expandedTheme = false
+                                                    recreate()
+                                                }
+                                            )
+                                        }
+                                    }
                                 }
                             }
                         }

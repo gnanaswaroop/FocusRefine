@@ -6,6 +6,8 @@ import android.os.Handler
 import android.os.Looper
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import com.focusflow.app.R
+import com.focusflow.app.BuildConfig
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -32,13 +34,13 @@ class SplashActivity : ComponentActivity() {
                         modifier = Modifier.padding(24.dp)
                     ) {
                         Image(
-                            painter = painterResource(id = R.mipmap.ic_launcher),
+                            painter = painterResource(id = R.drawable.adaptive_foreground),
                             contentDescription = "FocusFlow Logo",
                             modifier = Modifier.size(80.dp)
                         )
                         Spacer(modifier = Modifier.height(24.dp))
                         Text(
-                            text = "FocusFlow",
+                            text = "FlowFocus",
                             style = MaterialTheme.typography.headlineLarge,
                             color = MaterialTheme.colorScheme.onBackground
                         )
