@@ -26,6 +26,10 @@
         </activity>
 
         <activity
+            android:name=".OnboardingActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".MainActivity"
             android:exported="true" />
 
@@ -43,7 +47,7 @@
 
         <service
             android:name=".NotificationFilterService"
-            android:label="FocusFlow Notification Filter"
+            android:label="FocusRefine Notification Filter"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
             android:foregroundServiceType="specialUse"
             android:exported="true">
@@ -63,7 +67,7 @@
             android:name=".NotificationToggleReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.focusflow.app.ACTION_TOGGLE_SERVICE" />
+                <action android:name="com.focusrefine.app.ACTION_TOGGLE_SERVICE" />
             </intent-filter>
         </receiver>
 
