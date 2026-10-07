@@ -3,241 +3,129 @@ package com.focusflow.app
 import android.Manifest
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Context.RECEIVER_NOT_EXPORTED
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.Switch
-import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatDelegate
+import com.focusflow.app.R
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Send
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: NotificationAdapter
-    private lateinit var database: AppDatabase
-    private lateinit var modeSpinner: Spinner
-    private lateinit var switchFiltering: Switch
-    private lateinit var settingsBtn: Button
-    private lateinit var btnTabArchived: Button
-    private lateinit var btnTabShown: Button
-    private lateinit var etSearchNotifications: EditText
     private lateinit var prefs: SharedPreferences
+    private lateinit var database: AppDatabase
+    private var isAccessEnabled by mutableStateOf(false)
+    private var lastThemeMode = -99
 
-    private var currentTabUrgent = false // false = Archived (Muted), true = Shown (Urgent)
-    private var isAutoRefreshing = false
-    private var isUpdatingSwitch = false
     private val serviceStateReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             if (intent.action == NotificationFilterService.ACTION_SERVICE_STATE_CHANGED) {
-                val isRunning = intent.getBooleanExtra("is_running", true)
-                isUpdatingSwitch = true
-                switchFiltering.isChecked = isRunning
-                isUpdatingSwitch = false
+                // Trigger state sync if needed
             }
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
         database = AppDatabase.getDatabase(this)
         prefs = getSharedPreferences("FocusFlowPrefs", MODE_PRIVATE)
+        lastThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        AppCompatDelegate.setDefaultNightMode(lastThemeMode)
 
-        // Request POST_NOTIFICATIONS permission on Android 13+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 101)
             }
         }
 
-        settingsBtn = findViewById(R.id.btnEnableNotification)
-        settingsBtn.setOnClickListener {
-            startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
-        }
-
-        val btnSettingsOpen = findViewById<Button>(R.id.btnSettings)
-        btnSettingsOpen.setOnClickListener {
-            startActivity(Intent(this, SettingsActivity::class.java))
-        }
-
-
-
-        switchFiltering = findViewById(R.id.switchFiltering)
-        val isRunning = prefs.getBoolean("service_running", true)
-        switchFiltering.isChecked = isRunning
-
-        if (isRunning) {
-            val serviceIntent = Intent(this, NotificationFilterService::class.java)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startForegroundService(serviceIntent)
-            } else {
-                startService(serviceIntent)
-            }
-        }
-
-        switchFiltering.setOnCheckedChangeListener { _, isChecked ->
-            if (isUpdatingSwitch) return@setOnCheckedChangeListener
-            prefs.edit().putBoolean("service_running", isChecked).apply()
-
-            val serviceIntent = Intent(this, NotificationFilterService::class.java).apply {
-                action = NotificationFilterService.ACTION_UPDATE_COUNT
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startForegroundService(serviceIntent)
-            } else {
-                startService(serviceIntent)
-            }
-        }
-
-        recyclerView = findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = NotificationAdapter(emptyList())
-        recyclerView.adapter = adapter
-
-        val touchHelper = androidx.recyclerview.widget.ItemTouchHelper(object : androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback(0, androidx.recyclerview.widget.ItemTouchHelper.RIGHT) {
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder) = false
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.bindingAdapterPosition
-                if (position == RecyclerView.NO_POSITION) return
-                val notif = adapter.getItemAt(position)
-                val newUrgency = !notif.isUrgent
-                
-                val sanitizedText = sanitizeNotification(notif.text)
-                val sanitizedTitle = sanitizeNotification(notif.title)
-
-                lifecycleScope.launch(Dispatchers.IO) {
-                    val db = AppDatabase.getDatabase(this@MainActivity)
-                    val updated = notif.copy(isUrgent = newUrgency, isLearned = true, text = sanitizedText, title = sanitizedTitle)
-                    db.notificationDao().insert(updated)
-
-                    val currentMode = prefs.getString("current_mode", "Commute") ?: "Commute"
-                    val existingPrompt = prefs.getString("prompt_$currentMode", "") ?: ""
-                    val newPrompt = if (existingPrompt.isNotEmpty()) "$existingPrompt, ${sanitizedTitle.lowercase()} ${sanitizedText.lowercase()}" else "${sanitizedTitle.lowercase()} ${sanitizedText.lowercase()}"
-                    prefs.edit().putString("prompt_$currentMode", newPrompt).apply()
-
-                    val newList = db.notificationDao().getByUrgency(currentTabUrgent)
-                    withContext(Dispatchers.Main) {
-                        adapter.updateData(newList)
-                        Toast.makeText(this@MainActivity, if (newUrgency) "Right Swiped: Unhidden & Learned for $currentMode!" else "Right Swiped: Hidden & Learned for $currentMode!", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        })
-        touchHelper.attachToRecyclerView(recyclerView)
-
-        btnTabArchived = findViewById(R.id.btnTabArchived)
-        btnTabShown = findViewById(R.id.btnTabShown)
-        etSearchNotifications = findViewById(R.id.etSearchNotifications)
-
-        etSearchNotifications.addTextChangedListener(object : android.text.TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: android.text.Editable?) {
-                loadNotifications(s.toString().trim())
-            }
-        })
-
-        btnTabArchived.setOnClickListener {
-            currentTabUrgent = false
-            updateTabStyles()
-            loadNotifications(etSearchNotifications.text.toString().trim())
-        }
-
-        btnTabShown.setOnClickListener {
-            currentTabUrgent = true
-            updateTabStyles()
-            loadNotifications(etSearchNotifications.text.toString().trim())
-        }
-
-        updateTabStyles()
-        modeSpinner = findViewById(R.id.modeSpinner)
-        setupModeSpinner()
-
-        val autoDetector = AndroidAutoDetector(this)
-        autoDetector.observeConnection(this)
-    }
-
-    private fun processNotificationHistoryOrSamples() {
+        // Process startup history or samples if empty
         lifecycleScope.launch(Dispatchers.IO) {
             val dao = database.notificationDao()
-            val history = dao.getAll()
-
-            val currentMode = prefs.getString("current_mode", "Commute") ?: "Commute"
-            val prompt = when (currentMode) {
-                "Commute" -> prefs.getString("prompt_commute", PromptManager.getOotbPrompt(this@MainActivity, "commute", "navigation, maps, turn left, turn right, traffic, call, vip, boss")) ?: ""
-                "Do Not Disturb (DND)" -> prefs.getString("prompt_dnd", PromptManager.getOotbPrompt(this@MainActivity, "dnd", "emergency, hospital, 911, critical")) ?: ""
-                else -> prefs.getString("custom_mode_prompt_$currentMode", "urgent") ?: ""
-            }
-            val keywords = prompt.lowercase().split(",", " ").map { it.trim() }.filter { it.isNotEmpty() }
-
-            val itemsToAnalyze = if (history.isNotEmpty()) {
-                history
-            } else {
+            if (dao.getAll().isEmpty()) {
                 val samples = listOf(
                     NotificationEntity(title = "Google Maps", text = "Turn right on Oak Street in 200 feet", packageName = "com.google.android.apps.maps", timestamp = System.currentTimeMillis(), isUrgent = true),
                     NotificationEntity(title = "WhatsApp", text = "Hey! Want to grab coffee later today?", packageName = "com.whatsapp", timestamp = System.currentTimeMillis() - 1000, isUrgent = false),
                     NotificationEntity(title = "Phone", text = "Incoming call from Boss", packageName = "com.android.phone", timestamp = System.currentTimeMillis() - 2000, isUrgent = true),
                     NotificationEntity(title = "Instagram", text = "Liked your photo", packageName = "com.instagram.android", timestamp = System.currentTimeMillis() - 3000, isUrgent = false)
                 )
-                dao.deleteAll()
                 for (s in samples) dao.insert(s)
-                dao.getAll()
-            }
-
-            dao.deleteAll()
-            for (notif in itemsToAnalyze) {
-                val content = "${notif.title ?: ""} ${notif.text ?: ""}".lowercase()
-                val isUrgent = if (keywords.isEmpty()) content.contains("urgent") else keywords.any { content.contains(it) }
-                dao.insert(notif.copy(isUrgent = isUrgent))
-            }
-
-            val analysisReport = "✨ AI Semantic Search Analysis:\n• Evaluated notifications: ${itemsToAnalyze.size}\n• Active Mode: $currentMode\n• Classification Accuracy: 98.5%\n• Engine: Local MediaPipe / Semantic Heuristic Fallback"
-
-            withContext(Dispatchers.Main) {
-                Toast.makeText(this@MainActivity, analysisReport, Toast.LENGTH_LONG).show()
-                loadNotifications()
             }
         }
+
+        isAccessEnabled = isNotificationServiceEnabled()
+        setContent {
+            val themeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_YES)
+            val isDark = when (themeMode) {
+                AppCompatDelegate.MODE_NIGHT_NO -> false
+                AppCompatDelegate.MODE_NIGHT_YES -> true
+                else -> androidx.compose.foundation.isSystemInDarkTheme()
+            }
+            MaterialTheme(
+                colorScheme = if (isDark) darkColorScheme() else lightColorScheme()
+            ) {
+                MainDashboardContent(
+                    onOpenSettings = { startActivity(Intent(this, SettingsActivity::class.java)) },
+                    onEnableNotificationAccess = { startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)) },
+                    isNotificationAccessEnabled = isAccessEnabled
+                )
+            }
+        }
+
+        val autoDetector = AndroidAutoDetector(this)
+        autoDetector.observeConnection(this)
     }
 
     override fun onResume() {
         super.onResume()
-        val isRunning = prefs.getBoolean("service_running", true)
-        isUpdatingSwitch = true
-        switchFiltering.isChecked = isRunning
-        isUpdatingSwitch = false
+        val currentThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        AppCompatDelegate.setDefaultNightMode(currentThemeMode)
+        if (lastThemeMode != -99 && currentThemeMode != lastThemeMode) {
+            recreate()
+            return
+        }
+        lastThemeMode = currentThemeMode
 
+        isAccessEnabled = isNotificationServiceEnabled()
         val filter = IntentFilter(NotificationFilterService.ACTION_SERVICE_STATE_CHANGED)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            registerReceiver(serviceStateReceiver, filter, RECEIVER_NOT_EXPORTED)
+            registerReceiver(serviceStateReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
         } else {
             registerReceiver(serviceStateReceiver, filter)
         }
-
-        loadNotifications()
-        updateNotificationAccessStatus()
-        setupModeSpinner()
-        startAutoRefresh()
     }
 
     override fun onPause() {
@@ -245,123 +133,308 @@ class MainActivity : AppCompatActivity() {
         try {
             unregisterReceiver(serviceStateReceiver)
         } catch (_: Exception) {}
-        isAutoRefreshing = false
-    }
-
-    private fun startAutoRefresh() {
-        isAutoRefreshing = true
-        lifecycleScope.launch(Dispatchers.IO) {
-            while (isAutoRefreshing) {
-                delay(1500)
-                val query = if (::etSearchNotifications.isInitialized) etSearchNotifications.text.toString().trim() else ""
-                val notifications = if (query.isEmpty()) {
-                    database.notificationDao().getByUrgency(currentTabUrgent)
-                } else {
-                    database.notificationDao().searchByUrgency(currentTabUrgent, "%$query%")
-                }
-                withContext(Dispatchers.Main) {
-                    adapter.updateData(notifications)
-                }
-            }
-        }
-    }
-
-    private fun setupModeSpinner() {
-        val modes = mutableListOf<String>()
-        val ootbConfigs = PromptManager.getAllOotbConfigs(this)
-        for ((name, config) in ootbConfigs) {
-            val enabled = prefs.getBoolean("mode_${name}_enabled", config.enabled)
-            if (enabled) {
-                modes.add(name)
-            }
-        }
-
-        val customList = prefs.getString("custom_modes_list", "") ?: ""
-        if (customList.isNotEmpty()) {
-            for (name in customList.split(",")) {
-                if (name.isNotBlank() && prefs.getBoolean("custom_mode_enabled_$name", true)) {
-                    modes.add(name)
-                }
-            }
-        }
-
-        if (modes.isEmpty()) {
-            modes.add("Default")
-        }
-
-        val spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, modes)
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        modeSpinner.adapter = spinnerAdapter
-
-        val savedMode = prefs.getString("current_mode", modes.first())
-        val modeIndex = modes.indexOf(savedMode)
-        if (modeIndex >= 0) {
-            modeSpinner.setSelection(modeIndex)
-        } else {
-            modeSpinner.setSelection(0)
-        }
-
-        modeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                if (position < modes.size) {
-                    val selectedMode = modes[position]
-                    prefs.edit().putString("current_mode", selectedMode).apply()
-                }
-            }
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
-    }
-
-    private fun updateTabStyles() {
-        if (!currentTabUrgent) {
-            btnTabArchived.setTypeface(null, android.graphics.Typeface.BOLD)
-            btnTabArchived.setTextColor(android.graphics.Color.parseColor("#BB86FC"))
-            btnTabShown.setTypeface(null, android.graphics.Typeface.NORMAL)
-            btnTabShown.setTextColor(android.graphics.Color.parseColor("#808080"))
-        } else {
-            btnTabArchived.setTypeface(null, android.graphics.Typeface.NORMAL)
-            btnTabArchived.setTextColor(android.graphics.Color.parseColor("#808080"))
-            btnTabShown.setTypeface(null, android.graphics.Typeface.BOLD)
-            btnTabShown.setTextColor(android.graphics.Color.parseColor("#BB86FC"))
-        }
-    }
-
-    private fun updateNotificationAccessStatus() {
-        val statusTextView = findViewById<TextView>(R.id.tvNotificationStatus)
-        if (isNotificationServiceEnabled()) {
-            statusTextView.text = "✓ Notification Access Enabled"
-            statusTextView.setTextColor(android.graphics.Color.parseColor("#2E7D32"))
-            settingsBtn.visibility = View.GONE
-        } else {
-            statusTextView.text = "✕ Notification Access Disabled"
-            statusTextView.setTextColor(android.graphics.Color.parseColor("#C62828"))
-            settingsBtn.visibility = View.VISIBLE
-        }
     }
 
     private fun isNotificationServiceEnabled(): Boolean {
-        val packageName = packageName
         val flat = Settings.Secure.getString(contentResolver, "enabled_notification_listeners")
         return flat != null && flat.contains(packageName)
     }
+}
 
-    private fun loadNotifications(query: String = "") {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val notifications = if (query.isEmpty()) {
-                database.notificationDao().getByUrgency(currentTabUrgent)
-            } else {
-                database.notificationDao().searchByUrgency(currentTabUrgent, "%$query%")
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MainDashboardContent(
+    onOpenSettings: () -> Unit,
+    onEnableNotificationAccess: () -> Unit,
+    isNotificationAccessEnabled: Boolean
+) {
+    val context = LocalContext.current
+    val prefs = context.getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
+    val database = AppDatabase.getDatabase(context)
+
+    var isRunning by remember { mutableStateOf(prefs.getBoolean("service_running", true)) }
+    var currentTabUrgent by remember { mutableStateOf(false) } // false = Muted, true = Shown
+    var searchQuery by remember { mutableStateOf("") }
+    var currentMode by remember { mutableStateOf(prefs.getString("current_mode", "Commute") ?: "Commute") }
+    var notifications by remember { mutableStateOf(emptyList<NotificationEntity>()) }
+    var refreshTrigger by remember { mutableStateOf(0) }
+
+    // Load modes
+    val modes = remember {
+        val list = mutableListOf<String>()
+        val ootbConfigs = PromptManager.getAllOotbConfigs(context)
+        for ((name, config) in ootbConfigs) {
+            if (prefs.getBoolean("mode_${name}_enabled", config.enabled)) list.add(name)
+        }
+        val customList = prefs.getString("custom_modes_list", "") ?: ""
+        if (customList.isNotEmpty()) {
+            for (name in customList.split(",")) {
+                if (name.isNotBlank() && prefs.getBoolean("custom_mode_enabled_$name", true)) list.add(name)
             }
-            withContext(Dispatchers.Main) {
-                adapter.updateData(notifications)
+        }
+        if (list.isEmpty()) list.add("Default")
+        list
+    }
+
+    LaunchedEffect(currentTabUrgent, searchQuery, currentMode, refreshTrigger) {
+        withContext(Dispatchers.IO) {
+            val dao = database.notificationDao()
+            notifications = if (searchQuery.isEmpty()) {
+                dao.getByUrgency(currentTabUrgent)
+            } else {
+                dao.searchByUrgency(currentTabUrgent, "%$searchQuery%")
             }
         }
     }
 
-    private fun sanitizeNotification(text: String?): String {
-        if (text.isNullOrEmpty()) return ""
-        return text.replace(Regex("\\b\\d+\\b"), "###")
-            .replace(Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}"), "[EMAIL]")
-            .replace(Regex("\\b\\+?[0-9]{10,13}\\b"), "[PHONE]")
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            // Top Header
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.adaptive_foreground),
+                    contentDescription = "App Logo",
+                    modifier = Modifier.size(32.dp)
+                )
+                Spacer(modifier = Modifier.width(10.dp))
+                Text(
+                    text = "FocusFlow",
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.weight(1f)
+                )
+                Button(onClick = onOpenSettings) {
+                    Text("Settings")
+                }
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            // Notification Access Status
+            if (!isNotificationAccessEnabled) {
+                Text(
+                    text = "✕ Notification Access Disabled",
+                    color = Color(0xFFC62828),
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                OutlinedButton(
+                    onClick = onEnableNotificationAccess,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Enable Notification Access")
+                }
+            } else {
+                Text(
+                    text = "✓ Notification Access Enabled",
+                    color = Color(0xFF2E7D32),
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Controls Card
+            Card(modifier = Modifier.fillMaxWidth()) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Filtering Active",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 15.sp,
+                            modifier = Modifier.weight(1f)
+                        )
+                        Switch(
+                            checked = isRunning,
+                            onCheckedChange = { isChecked ->
+                                isRunning = isChecked
+                                prefs.edit().putBoolean("service_running", isChecked).apply()
+                                val toggleIntent = Intent(NotificationFilterService.ACTION_TOGGLE_SERVICE).apply {
+                                    setPackage(context.packageName)
+                                }
+                                context.sendBroadcast(toggleIntent)
+                            }
+                        )
+                    }
+                    Divider(modifier = Modifier.padding(vertical = 12.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Current Mode",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 15.sp
+                        )
+                        Spacer(modifier = Modifier.width(16.dp))
+                        var expanded by remember { mutableStateOf(false) }
+                        Box(modifier = Modifier.weight(1f)) {
+                            OutlinedButton(
+                                onClick = { expanded = true },
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(currentMode)
+                            }
+                            DropdownMenu(
+                                expanded = expanded,
+                                onDismissRequest = { expanded = false }
+                            ) {
+                                modes.forEach { mode ->
+                                    DropdownMenuItem(
+                                        text = { Text(mode) },
+                                        onClick = {
+                                            currentMode = mode
+                                            prefs.edit().putString("current_mode", mode).apply()
+                                            expanded = false
+                                        }
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Inbox Header & Tabs
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Inbox",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.weight(1f)
+                )
+                TextButton(onClick = { currentTabUrgent = false }) {
+                    Text(
+                        text = "Muted",
+                        fontWeight = if (!currentTabUrgent) FontWeight.Bold else FontWeight.Normal,
+                        color = if (!currentTabUrgent) Color(0xFFBB86FC) else Color.Gray
+                    )
+                }
+                TextButton(onClick = { currentTabUrgent = true }) {
+                    Text(
+                        text = "Shown",
+                        fontWeight = if (currentTabUrgent) FontWeight.Bold else FontWeight.Normal,
+                        color = if (currentTabUrgent) Color(0xFFBB86FC) else Color.Gray
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Search Bar
+            OutlinedTextField(
+                value = searchQuery,
+                onValueChange = { searchQuery = it },
+                placeholder = { Text("Search notifications...") },
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            // Notifications List
+            LazyColumn(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(notifications) { notif ->
+                    var isExpanded by remember { mutableStateOf(false) }
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { isExpanded = !isExpanded }
+                    ) {
+                        Column(modifier = Modifier.padding(16.dp)) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = notif.title ?: "No Title",
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 15.sp,
+                                    modifier = Modifier.weight(1f)
+                                )
+                                Text(
+                                    text = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date(notif.timestamp)),
+                                    fontSize = 11.sp,
+                                    color = MaterialTheme.colorScheme.outline
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = notif.text ?: "No Text",
+                                fontSize = 13.sp,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                maxLines = if (isExpanded) Int.MAX_VALUE else 2,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = notif.packageName,
+                                    fontSize = 10.sp,
+                                    color = MaterialTheme.colorScheme.outline,
+                                    modifier = Modifier.weight(1f)
+                                )
+                                IconButton(onClick = {
+                                    val db = AppDatabase.getDatabase(context)
+                                    val newUrgent = !notif.isUrgent
+                                    val updated = notif.copy(isUrgent = newUrgent)
+                                    CoroutineScope(Dispatchers.IO).launch {
+                                        db.notificationDao().insert(updated)
+                                        refreshTrigger++
+                                        withContext(Dispatchers.Main) {
+                                            Toast.makeText(context, if (newUrgent) "Moved to Shown tab" else "Moved to Muted tab", Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+                                }) {
+                                    Icon(Icons.Default.Refresh, contentDescription = "Reclassify")
+                                }
+                                IconButton(onClick = {
+                                    try {
+                                        val intent = context.packageManager.getLaunchIntentForPackage(notif.packageName)
+                                        if (intent != null) {
+                                            context.startActivity(intent)
+                                        } else {
+                                            Toast.makeText(context, "App not installed: ${notif.packageName}", Toast.LENGTH_SHORT).show()
+                                        }
+                                    } catch (_: Exception) {
+                                        Toast.makeText(context, "Cannot open app", Toast.LENGTH_SHORT).show()
+                                    }
+                                }) {
+                                    Icon(Icons.Default.Send, contentDescription = "Open App")
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
