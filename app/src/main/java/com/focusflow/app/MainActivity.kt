@@ -208,7 +208,7 @@ fun MainDashboardContent(
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
-                    text = "FocusFlow",
+                    text = "FocusRefine",
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.weight(1f)
@@ -222,6 +222,8 @@ fun MainDashboardContent(
 
             // Notification Access Status
             if (!isNotificationAccessEnabled) {
+                var showWhyDialog by remember { mutableStateOf(false) }
+
                 Text(
                     text = "✕ Notification Access Disabled",
                     color = Color(0xFFC62828),
@@ -229,11 +231,47 @@ fun MainDashboardContent(
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                OutlinedButton(
-                    onClick = onEnableNotificationAccess,
-                    modifier = Modifier.fillMaxWidth()
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Text("Enable Notification Access")
+                    OutlinedButton(
+                        onClick = onEnableNotificationAccess,
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text("Enable Access")
+                    }
+                    TextButton(
+                        onClick = { showWhyDialog = true },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text("Why is this required?")
+                    }
+                }
+
+                if (showWhyDialog) {
+                    AlertDialog(
+                        onDismissRequest = { showWhyDialog = false },
+                        title = { Text("Why Notification Access Is Required") },
+                        text = {
+                            Text(
+                                "FocusRefine needs Notification Access to intercept, evaluate, and filter incoming notifications in real-time according to your active modes and learned rules.\n\nYour notifications are processed entirely on-device and never shared, stored externally, or uploaded."
+                            )
+                        },
+                        confirmButton = {
+                            Button(onClick = {
+                                showWhyDialog = false
+                                onEnableNotificationAccess()
+                            }) {
+                                Text("Got it, Enable Now")
+                            }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = { showWhyDialog = false }) {
+                                Text("Cancel")
+                            }
+                        }
+                    )
                 }
             } else {
                 Text(
