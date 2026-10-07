@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatDelegate
 import com.focusflow.app.R
 import com.focusflow.app.BuildConfig
 import androidx.compose.foundation.Image
@@ -21,7 +22,16 @@ class SplashActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MaterialTheme {
+            val prefs = getSharedPreferences("FocusFlowPrefs", MODE_PRIVATE)
+            val savedThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_YES)
+            val isDark = when (savedThemeMode) {
+                AppCompatDelegate.MODE_NIGHT_NO -> false
+                AppCompatDelegate.MODE_NIGHT_YES -> true
+                else -> androidx.compose.foundation.isSystemInDarkTheme()
+            }
+            MaterialTheme(
+                colorScheme = if (isDark) darkColorScheme() else lightColorScheme()
+            ) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -35,12 +45,12 @@ class SplashActivity : ComponentActivity() {
                     ) {
                         Image(
                             painter = painterResource(id = R.drawable.adaptive_foreground),
-                            contentDescription = "FocusFlow Logo",
+                            contentDescription = "FocusRefine Logo",
                             modifier = Modifier.size(80.dp)
                         )
                         Spacer(modifier = Modifier.height(24.dp))
                         Text(
-                            text = "FlowFocus",
+                            text = "FocusRefine",
                             style = MaterialTheme.typography.headlineLarge,
                             color = MaterialTheme.colorScheme.onBackground
                         )
