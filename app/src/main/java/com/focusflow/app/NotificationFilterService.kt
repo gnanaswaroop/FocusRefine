@@ -163,7 +163,7 @@ class NotificationFilterService : NotificationListenerService() {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("FlowFocus Active")
             .setContentText(statusText)
-            .setSmallIcon(android.R.drawable.ic_menu_manage)
+            .setSmallIcon(R.mipmap.ic_launcher)
             .setContentIntent(openAppPendingIntent)
             .addAction(android.R.drawable.ic_menu_close_clear_cancel, actionText, togglePendingIntent)
             .setOngoing(true)
