@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
@@ -160,10 +161,13 @@ class NotificationFilterService : NotificationListenerService() {
             PendingIntent.FLAG_UPDATE_CURRENT or flagImmutable
         )
 
+        val appIconBitmap = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
+
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("FocusRefine Active")
             .setContentText(statusText)
             .setSmallIcon(R.drawable.ic_notification)
+            .setLargeIcon(appIconBitmap)
             .setContentIntent(openAppPendingIntent)
             .addAction(android.R.drawable.ic_menu_close_clear_cancel, actionText, togglePendingIntent)
             .setOngoing(true)

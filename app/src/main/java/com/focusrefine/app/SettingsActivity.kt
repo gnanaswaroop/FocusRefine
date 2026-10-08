@@ -38,15 +38,7 @@ class SettingsActivity : ComponentActivity() {
                          android.os.Build.MODEL.contains("sdk")
 
         setContent {
-            val savedThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_YES)
-            val isDark = when (savedThemeMode) {
-                AppCompatDelegate.MODE_NIGHT_NO -> false
-                AppCompatDelegate.MODE_NIGHT_YES -> true
-                else -> androidx.compose.foundation.isSystemInDarkTheme()
-            }
-            MaterialTheme(
-                colorScheme = if (isDark) darkColorScheme() else lightColorScheme()
-            ) {
+            FocusRefineTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 class SplashActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val prefs = getSharedPreferences("FocusRefinePrefs", MODE_PRIVATE)
-        val savedThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_YES)
+        val savedThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         AppCompatDelegate.setDefaultNightMode(savedThemeMode)
         super.onCreate(savedInstanceState)
 
