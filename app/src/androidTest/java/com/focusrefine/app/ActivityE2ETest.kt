@@ -10,7 +10,7 @@ import org.junit.runner.RunWith
 class ActivityE2ETest {
 
     @Test
-    fun testSplashActivityLaunches() {
+    fun testSplashActivityLaunchesAndTransitions() {
         ActivityScenario.launch(SplashActivity::class.java).use { scenario ->
             assertNotNull(scenario)
         }
