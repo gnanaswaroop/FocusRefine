@@ -432,7 +432,7 @@ fun MainDashboardContent(
                                 IconButton(onClick = {
                                     val db = AppDatabase.getDatabase(context)
                                     val newUrgent = !notif.isUrgent
-                                    val updated = notif.copy(isUrgent = newUrgent)
+                                    val updated = notif.copy(isUrgent = newUrgent, isLearned = true)
                                     CoroutineScope(Dispatchers.IO).launch {
                                         db.notificationDao().insert(updated)
                                         refreshTrigger++
