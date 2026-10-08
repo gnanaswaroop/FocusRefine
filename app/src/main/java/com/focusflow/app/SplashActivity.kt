@@ -22,16 +22,7 @@ class SplashActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val prefs = getSharedPreferences("FocusFlowPrefs", MODE_PRIVATE)
-            val savedThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_YES)
-            val isDark = when (savedThemeMode) {
-                AppCompatDelegate.MODE_NIGHT_NO -> false
-                AppCompatDelegate.MODE_NIGHT_YES -> true
-                else -> androidx.compose.foundation.isSystemInDarkTheme()
-            }
-            MaterialTheme(
-                colorScheme = if (isDark) darkColorScheme() else lightColorScheme()
-            ) {
+            FocusRefineTheme {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()

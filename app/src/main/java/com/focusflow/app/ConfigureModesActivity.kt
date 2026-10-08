@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatDelegate
 import com.focusflow.app.R
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -28,10 +29,10 @@ class ConfigureModesActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        prefs = getSharedPreferences("FocusFlowPrefs", MODE_PRIVATE)
+        prefs = getSharedPreferences("FocusRefinePrefs", MODE_PRIVATE)
 
         setContent {
-            MaterialTheme {
+            FocusRefineTheme {
                 var refreshTrigger by remember { mutableStateOf(0) }
                 val modes = remember(refreshTrigger) { loadModes() }
 
@@ -259,5 +260,11 @@ class ConfigureModesActivity : ComponentActivity() {
             }
         }
         return list
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val savedThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        AppCompatDelegate.setDefaultNightMode(savedThemeMode)
     }
 }

@@ -29,7 +29,7 @@ class NotificationFilterService : NotificationListenerService() {
 
     private val toggleReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            val prefs = context.getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
+            val prefs = context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
             if (intent.action == ACTION_TOGGLE_SERVICE) {
                 val current = prefs.getBoolean("service_running", true)
                 val newState = !current
@@ -74,7 +74,7 @@ class NotificationFilterService : NotificationListenerService() {
         database = AppDatabase.getDatabase(this)
         createNotificationChannel()
 
-        val prefs = getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
+        val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
         val useAi = prefs.getBoolean("use_ai_model", true)
 
         if (useAi) {
@@ -111,7 +111,7 @@ class NotificationFilterService : NotificationListenerService() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val prefs = getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
+        val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
         val isRunning = prefs.getBoolean("service_running", true)
         val count = prefs.getInt("suppressed_count", 0)
         try {
@@ -190,7 +190,7 @@ class NotificationFilterService : NotificationListenerService() {
             return
         }
 
-        val prefs = getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
+        val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
         val isRunning = prefs.getBoolean("service_running", true)
         if (!isRunning) {
             return
@@ -260,7 +260,7 @@ class NotificationFilterService : NotificationListenerService() {
 
     private fun analyzeContent(title: String?, text: String?, mode: String): Boolean {
         val content = "${title ?: ""} ${text ?: ""}".lowercase()
-        val prefs = getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
+        val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
         val useAi = prefs.getBoolean("use_ai_model", true)
 
         if (useAi && textClassifier != null) {

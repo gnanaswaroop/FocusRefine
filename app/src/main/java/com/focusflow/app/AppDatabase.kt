@@ -18,7 +18,7 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "focusflow_database"
+                    "focusrefine_database"
                 ).fallbackToDestructiveMigration().build()
                 INSTANCE = instance
                 instance

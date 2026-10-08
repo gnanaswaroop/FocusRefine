@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         database = AppDatabase.getDatabase(this)
-        prefs = getSharedPreferences("FocusFlowPrefs", MODE_PRIVATE)
+        prefs = getSharedPreferences("FocusRefinePrefs", MODE_PRIVATE)
         lastThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         AppCompatDelegate.setDefaultNightMode(lastThemeMode)
 
@@ -149,7 +149,7 @@ fun MainDashboardContent(
     isNotificationAccessEnabled: Boolean
 ) {
     val context = LocalContext.current
-    val prefs = context.getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
+    val prefs = context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
     val database = AppDatabase.getDatabase(context)
 
     var isRunning by remember { mutableStateOf(prefs.getBoolean("service_running", true)) }

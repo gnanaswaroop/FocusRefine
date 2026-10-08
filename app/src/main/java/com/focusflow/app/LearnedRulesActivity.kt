@@ -29,10 +29,10 @@ class LearnedRulesActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        prefs = getSharedPreferences("FocusFlowPrefs", MODE_PRIVATE)
+        prefs = getSharedPreferences("FocusRefinePrefs", MODE_PRIVATE)
 
         setContent {
-            MaterialTheme {
+            FocusRefineTheme {
                 var rules by remember { mutableStateOf(emptyList<NotificationEntity>()) }
                 var refreshTrigger by remember { mutableStateOf(0) }
 
