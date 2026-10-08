@@ -202,7 +202,7 @@ fun MainDashboardContent(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.adaptive_foreground),
+                    painter = painterResource(id = R.drawable.ic_focusrefine_logo),
                     contentDescription = "App Logo",
                     modifier = Modifier.size(32.dp)
                 )
