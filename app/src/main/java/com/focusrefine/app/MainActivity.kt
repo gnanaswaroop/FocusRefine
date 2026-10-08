@@ -22,9 +22,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -444,7 +441,7 @@ fun MainDashboardContent(
                                         }
                                     }
                                 }) {
-                                    Icon(Icons.Default.Refresh, contentDescription = "Reclassify")
+                                    Icon(painter = painterResource(id = R.drawable.ic_swap_vert), contentDescription = "Reclassify")
                                 }
                                 IconButton(onClick = {
                                     try {
@@ -458,7 +455,7 @@ fun MainDashboardContent(
                                         Toast.makeText(context, "Cannot open app", Toast.LENGTH_SHORT).show()
                                     }
                                 }) {
-                                    Icon(Icons.Default.Send, contentDescription = "Open App")
+                                    Icon(painter = painterResource(id = R.drawable.ic_open_in_new), contentDescription = "Open App")
                                 }
                             }
                         }
