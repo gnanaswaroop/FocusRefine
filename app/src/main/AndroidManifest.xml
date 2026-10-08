@@ -28,11 +28,11 @@
 
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
+            android:exported="false" />
 
         <activity
             android:name=".SettingsActivity"
-            android:exported="true" />
+            android:exported="false" />
 
         <activity
             android:name=".ConfigureModesActivity"
