@@ -44,8 +44,15 @@ FocusRefine declares **zero internet permissions** (`android.permission.INTERNET
 
 ---
 
-## 📂 Documentation Links
-- [Permissions Reference](permissions_reference.md)
-- [Google Play Store Submission Guide](play_store_submission.md)
-- [AI Classification Architecture & Modes](ai_classification_and_modes.md)
-- [Technical Implementation Guide](internals.md)
+## 📚 Table of Contents & Documentation Navigation
+
+Explore the complete technical and operational guides for FocusRefine:
+
+| Document | Description |
+| :--- | :--- |
+| **[Permissions Reference](permissions_reference.md)** | Detailed breakdown of required system permissions (Notification Listener, Foreground Service, Post Notifications) and least-privilege justifications. |
+| **[Google Play Store Submission Guide](play_store_submission.md)** | Store listing metadata, short/full descriptions, data safety disclosures, and pre-publication compliance checklists. |
+| **[AI Classification Architecture & Modes](ai_classification_and_modes.md)** | Dual-engine architecture overview detailing MediaPipe on-device AI classification and semantic heuristic matching. |
+| **[Technical Implementation Guide](internals.md)** | In-depth technical breakdown of `NotificationFilterService`, Room persistence, externalized prompts, and architecture diagrams. |
+| **[Local Database & Security Architecture](database_security.md)** | Detailed documentation on SQLite/Room local storage, Android app sandbox isolation (`chmod 700`), and zero-internet privacy guarantees. |
+| **[Interactive Feature Walkthrough & Demo Guide](demo.md)** | Step-by-step walkthrough covering all app screens, splash flow, inbox triage, settings, and test notification seeding. |
