@@ -39,7 +39,7 @@ class SplashActivity : ComponentActivity() {
                         modifier = Modifier.padding(24.dp)
                     ) {
                         Image(
-                            painter = painterResource(id = R.drawable.ic_focusrefine_logo),
+                            painter = painterResource(id = R.drawable.adaptive_foreground),
                             contentDescription = "FocusRefine Logo",
                             modifier = Modifier.size(80.dp)
                         )
