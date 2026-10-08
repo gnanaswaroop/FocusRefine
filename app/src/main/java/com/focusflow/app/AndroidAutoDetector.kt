@@ -12,7 +12,7 @@ class AndroidAutoDetector(private val context: Context) {
 
     fun observeConnection(lifecycleOwner: LifecycleOwner) {
         carConnection.type.observe(lifecycleOwner) { connectionType ->
-            val prefs = context.getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
+            val prefs = context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
 
             when (connectionType) {
                 CarConnection.CONNECTION_TYPE_PROJECTION -> {

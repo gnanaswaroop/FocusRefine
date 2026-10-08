@@ -8,7 +8,7 @@ import android.util.Log
 class NotificationToggleReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == NotificationFilterService.ACTION_TOGGLE_SERVICE) {
-            val prefs = context.getSharedPreferences("FocusFlowPrefs", Context.MODE_PRIVATE)
+            val prefs = context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
             val current = prefs.getBoolean("service_running", true)
             val newState = !current
             val editor = prefs.edit().putBoolean("service_running", newState)

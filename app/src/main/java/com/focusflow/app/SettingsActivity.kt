@@ -30,7 +30,7 @@ class SettingsActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        prefs = getSharedPreferences("FocusFlowPrefs", MODE_PRIVATE)
+        prefs = getSharedPreferences("FocusRefinePrefs", MODE_PRIVATE)
 
         val isEmulator = android.os.Build.FINGERPRINT.contains("generic") ||
                          android.os.Build.HARDWARE.contains("goldfish") ||
@@ -112,7 +112,7 @@ class SettingsActivity : ComponentActivity() {
                             Column(modifier = Modifier.padding(16.dp)) {
                                 Text("Classification Engine", fontWeight = FontWeight.Bold, fontSize = 16.sp, modifier = Modifier.padding(bottom = 8.dp))
                                 val aiStatusText = if (isEmulator) {
-                                    "💡 On-Device AI Status: Gemini Nano model is not supported on this emulator. FocusFlow is running with On-Device Semantic Match heuristic fallback."
+                                    "💡 On-Device AI Status: Gemini Nano model is not supported on this emulator. FocusRefine is running with On-Device Semantic Match heuristic fallback."
                                 } else {
                                     "✨ On-Device AI Status: Gemini Nano foundation model is active via AICore."
                                 }
