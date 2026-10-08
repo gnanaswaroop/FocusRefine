@@ -1,4 +1,4 @@
-package com.focusflow.app
+package com.focusrefine.app
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -64,9 +64,9 @@ class NotificationFilterService : NotificationListenerService() {
     }
 
     companion object {
-        const val ACTION_TOGGLE_SERVICE = "com.focusflow.app.ACTION_TOGGLE_SERVICE"
-        const val ACTION_UPDATE_COUNT = "com.focusflow.app.ACTION_UPDATE_COUNT"
-        const val ACTION_SERVICE_STATE_CHANGED = "com.focusflow.app.ACTION_SERVICE_STATE_CHANGED"
+        const val ACTION_TOGGLE_SERVICE = "com.focusrefine.app.ACTION_TOGGLE_SERVICE"
+        const val ACTION_UPDATE_COUNT = "com.focusrefine.app.ACTION_UPDATE_COUNT"
+        const val ACTION_SERVICE_STATE_CHANGED = "com.focusrefine.app.ACTION_SERVICE_STATE_CHANGED"
     }
 
     override fun onCreate() {

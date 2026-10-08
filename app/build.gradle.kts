@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.focusflow.app"
+    namespace = "com.focusrefine.app"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.focusflow.app"
+        applicationId = "com.focusrefine.app"
         minSdk = 28
         targetSdk = 34
         versionCode = 1

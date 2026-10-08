@@ -1,4 +1,4 @@
-package com.focusflow.app
+package com.focusrefine.app
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate

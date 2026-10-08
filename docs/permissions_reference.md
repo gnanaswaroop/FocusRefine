@@ -19,7 +19,7 @@ This document provides a comprehensive technical breakdown of all Android permis
 
 ### 1. `BIND_NOTIFICATION_LISTENER_SERVICE`
 - **Why Required**: Android restricts access to incoming device notifications for privacy and security. To listen to, evaluate, and suppress notifications, an application must request the system permission `BIND_NOTIFICATION_LISTENER_SERVICE` and be explicitly enabled by the user in system notification listener settings (`Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS`).
-- **Class / Component**: [NotificationFilterService.kt](file:///E:/Projects/do-i-care-app/app/src/main/java/com/focusflow/app/NotificationFilterService.kt) extending `NotificationListenerService`.
+- **Class / Component**: [NotificationFilterService.kt](file:///E:/Projects/do-i-care-app/app/src/main/java/com/focusrefine/app/NotificationFilterService.kt) extending `NotificationListenerService`.
 - **Code Usage**:
   ```kotlin
   class NotificationFilterService : NotificationListenerService() {

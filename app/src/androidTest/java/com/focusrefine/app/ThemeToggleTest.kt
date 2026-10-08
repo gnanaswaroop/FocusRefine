@@ -1,4 +1,4 @@
-package com.focusflow.app
+package com.focusrefine.app
 
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.test.ext.junit.runners.AndroidJUnit4
