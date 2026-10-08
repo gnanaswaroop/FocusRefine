@@ -47,5 +47,5 @@ FocusRefine declares **zero internet permissions** (`android.permission.INTERNET
 ## 📂 Documentation Links
 - [Permissions Reference](permissions_reference.md)
 - [Google Play Store Submission Guide](play_store_submission.md)
-- [Modes & System Prompts](modes_and_prompts.md)
+- [AI Classification Architecture & Modes](ai_classification_and_modes.md)
 - [Technical Implementation Guide](internals.md)
