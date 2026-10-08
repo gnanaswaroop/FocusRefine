@@ -441,7 +441,7 @@ fun MainDashboardContent(
                                         }
                                     }
                                 }) {
-                                    Icon(painter = painterResource(id = R.drawable.ic_swap_vert), contentDescription = "Reclassify")
+                                    Icon(painter = painterResource(id = R.drawable.ic_swap_horiz), contentDescription = "Reclassify")
                                 }
                                 IconButton(onClick = {
                                     try {
