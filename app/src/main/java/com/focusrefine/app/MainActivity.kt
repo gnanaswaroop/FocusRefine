@@ -88,15 +88,7 @@ class MainActivity : ComponentActivity() {
 
         isAccessEnabled = isNotificationServiceEnabled()
         setContent {
-            val themeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_YES)
-            val isDark = when (themeMode) {
-                AppCompatDelegate.MODE_NIGHT_NO -> false
-                AppCompatDelegate.MODE_NIGHT_YES -> true
-                else -> androidx.compose.foundation.isSystemInDarkTheme()
-            }
-            MaterialTheme(
-                colorScheme = if (isDark) darkColorScheme() else lightColorScheme()
-            ) {
+            FocusRefineTheme {
                 MainDashboardContent(
                     onOpenSettings = { startActivity(Intent(this, SettingsActivity::class.java)) },
                     onEnableNotificationAccess = { startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)) },
