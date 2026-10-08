@@ -50,7 +50,7 @@ This document provides a comprehensive technical breakdown of all Android permis
 
 ### 2. `FOREGROUND_SERVICE`
 - **Why Required**: Modern Android versions (API 28+) aggressively restrict background execution. Without a foreground service permission, background listeners running continuous tasks are prone to being killed under memory pressure. `FOREGROUND_SERVICE` allows FocusRefine to promote its filtering service to foreground status.
-- **Class / Component**: [NotificationFilterService.kt](file:///E:/Projects/do-i-care-app/app/src/main/java/com/focusflow/app/NotificationFilterService.kt) (`onStartCommand` / `startForeground`).
+- **Class / Component**: [NotificationFilterService.kt](file:/E:/Projects/do-i-care-app/app/src/main/java/com/focusflow/app/NotificationFilterService.kt) (`onStartCommand` / `startForeground`).
 - **Code Usage**:
   ```kotlin
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -83,11 +83,18 @@ This document provides a comprehensive technical breakdown of all Android permis
   ```
   - And posting the persistent notification in [NotificationFilterService.kt](file:///E:/Projects/do-i-care-app/app/src/main/java/com/focusflow/app/NotificationFilterService.kt):
     ```kotlin
-    private fun updateForegroundNotification(isRunning: Boolean, suppressedCount: Int) {
-        val manager = getSystemService(NotificationManager::class.java)
-        manager.notify(NOTIFICATION_ID, buildForegroundNotification(isRunning, suppressedCount))
-    }
+    private fun updateFailureNotification(...) { ... }
     ```
+
+---
+
+## 🚫 Clarification on Unused Permissions (Reply & System Do Not Disturb / Set Mode)
+
+### Do we need a "Reply" permission?
+- **Answer**: **No.** FocusRefine **does not** request or use any reply permissions (such as `REMOTE_INPUT` or direct messaging actions). The app only intercepts, evaluates, and filters incoming notifications (reading/suppressing), and provides an "Open App" action button to launch source applications directly. It never sends automated replies or modifies notification direct-reply payloads.
+
+### Do we need a "Set Mode" / System DND permission (`ACCESS_NOTIFICATION_POLICY`)?
+- **Answer**: **No.** FocusRefine **does not** request system-level Do Not Disturb / Zen Mode policy permissions (`ACCESS_NOTIFICATION_POLICY`). Filtering modes (such as *Commute*, *DND*, or *Custom Modes*) operate entirely within the app's local notification evaluation engine and Room database. It filters individual notification visibility locally without overriding the device's system-wide Zen Mode or Do Not Disturb settings.
 
 ---
 
