@@ -24,12 +24,15 @@ import androidx.compose.ui.unit.sp
 class ConfigureModesActivity : ComponentActivity() {
 
     private lateinit var prefs: SharedPreferences
+    private var lastThemeMode = -99
 
     data class ModeItem(val name: String, val prompt: String, val isEnabled: Boolean, val isCustom: Boolean)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         prefs = getSharedPreferences("FocusRefinePrefs", MODE_PRIVATE)
+        lastThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        AppCompatDelegate.setDefaultNightMode(lastThemeMode)
 
         setContent {
             FocusRefineTheme {
@@ -264,7 +267,13 @@ class ConfigureModesActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        val savedThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        AppCompatDelegate.setDefaultNightMode(savedThemeMode)
+        val currentThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        AppCompatDelegate.setDefaultNightMode(currentThemeMode)
+        if (lastThemeMode != -99 && currentThemeMode != lastThemeMode) {
+            lastThemeMode = currentThemeMode
+            recreate()
+            return
+        }
+        lastThemeMode = currentThemeMode
     }
 }
