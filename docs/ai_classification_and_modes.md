@@ -1,6 +1,6 @@
-# FocusFlow - Modes, System Prompts & AI Classification Architecture
+# FocusRefine — AI Classification Architecture, Modes & System Prompts
 
-This document defines the out-of-the-box modes, their system prompts, filtering goals, and how **MediaPipe Tasks Text Classification & Android On-Device AI** are integrated into **FocusFlow**.
+This document defines the out-of-the-box filtering modes, their system prompts, filtering goals, and how **Google AI Edge MediaPipe Tasks Text Classification** and **On-Device Semantic Matching** are integrated into **FocusRefine**.
 
 ---
 
@@ -16,7 +16,7 @@ This document defines the out-of-the-box modes, their system prompts, filtering 
 ### Focus & Reading Mode (Merged)
 - **System Prompt / Heuristic**: `"call, boss, emergency, hospital"`
 - **Goal / Behavior**:
-  - **Show (Shown)**: Direct phone calls, VIP contacts (e.g. "boss"), urgent emergency alerts, and critical hospital notifications.
+  - **Show (Shown)**: Direct phone calls, VIP contacts (e.g., "boss"), urgent emergency alerts, and critical hospital notifications.
   - **Archive (Muted)**: Email notifications, group chats, app updates, general reminders, and reading interruptions.
 - **Why**: Eliminates interruptions during deep work, high-concentration tasks, or quiet reading sessions.
 
@@ -31,7 +31,7 @@ This document defines the out-of-the-box modes, their system prompts, filtering 
 
 ## 2. MediaPipe Text Classification & On-Device AI Integration
 
-FocusFlow harnesses **MediaPipe Tasks Text Classification** and on-device natural language evaluation to perform intelligent, privacy-preserving notification filtering without sending user data to the cloud.
+FocusRefine harnesses **Google AI Edge MediaPipe Tasks Text Classification** (`com.google.mediapipe:tasks-text`) and on-device natural language evaluation to perform intelligent, privacy-preserving notification filtering without sending user data to the cloud.
 
 ### A. Core Architecture
 1. **MediaPipe Text Classifier**:
@@ -45,6 +45,6 @@ FocusFlow harnesses **MediaPipe Tasks Text Classification** and on-device natura
 
 ## 3. Advanced Features & Data Management
 - **Live-Updating Foreground Service Notification**: Shows real-time suppression counters (`"Suppressed: X notifications"`) with an ongoing `.setOngoing(true)` status bar banner and a direct **STOP/START** action button.
-- **Data Retention Cleanup**: Automatically purges historical notifications older than a user-configured number of days (e.g. 7 days) via Settings.
+- **Data Retention Cleanup**: Automatically purges historical notifications older than a user-configured number of days (e.g., 7 days) via Settings.
 - **Auto-Refreshing Inbox**: Real-time polling keeps the Shown and Muted tabs synchronized automatically.
 - **Notification History Re-evaluation**: Re-analyzes existing notification history logs against newly selected mode prompts instantly.
