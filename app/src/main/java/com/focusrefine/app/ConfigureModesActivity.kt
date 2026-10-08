@@ -59,7 +59,7 @@ class ConfigureModesActivity : ComponentActivity() {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Image(
-                                painter = painterResource(id = R.drawable.ic_focusrefine_logo),
+                                painter = painterResource(id = R.drawable.adaptive_foreground),
                                 contentDescription = "App Logo",
                                 modifier = Modifier.size(32.dp)
                             )
