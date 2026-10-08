@@ -23,7 +23,7 @@ class NotificationFilterService : NotificationListenerService() {
 
     private val TAG = "NotificationFilter"
     private lateinit var database: AppDatabase
-    private val CHANNEL_ID = "focusflow_service_channel"
+    private val CHANNEL_ID = "focusrefine_service_channel"
     private val NOTIFICATION_ID = 1001
     private var textClassifier: TextClassifier? = null
 
@@ -127,7 +127,7 @@ class NotificationFilterService : NotificationListenerService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
-                "FocusFlow Live Update & Filtering Service",
+                "FocusRefine Live Update & Filtering Service",
                 NotificationManager.IMPORTANCE_DEFAULT
             ).apply {
                 description = "Ongoing Live Update notification showing suppression count and quick STOP/START toggle."
