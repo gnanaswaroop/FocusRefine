@@ -48,9 +48,12 @@ This document provides a comprehensive technical breakdown of all Android permis
 ## 📱 Understanding the System Notification Access Prompt
 
 When enabling Notification Access in Android Settings (`Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS`), the system prompt displays three bundled capabilities:
-1. **"Read your notifications"**: **Used by FocusRefine.** Required to read incoming notification extras (`title`, `text`, `packageName`) to evaluate them against AI and heuristic filtering rules.
-2. **"Reply to messages"**: **Not used by FocusRefine.** Included automatically by the Android OS because `NotificationListenerService` inherently has the OS-level capability to call `cancelNotification()` or interact with notification action buttons. FocusRefine **never** sends automated replies or injects remote input into messaging apps.
-3. **"Change settings"**: **Not used by FocusRefine.** A generic Android OS description bundled into notification listener access for apps that modify system notification policies. FocusRefine **never** modifies system settings.
+
+### 📷 System Permission Prompt Reference
+*(Reference: System Notification Access Consent Dialog)*
+- **"Read your notifications"**: **Used by FocusRefine.** Required to read incoming notification extras (`title`, `text`, `packageName`) to evaluate them against AI and heuristic filtering rules.
+- **"Reply to messages"**: **Not used by FocusRefine.** Included automatically by the Android OS because `NotificationListenerService` inherently has the OS-level capability to call `cancelNotification()` or interact with notification action buttons. FocusRefine **never** sends automated replies or injects remote input into messaging apps.
+- **"Change settings"**: **Not used by FocusRefine.** A generic Android OS description bundled into notification listener access for apps that modify system notification policies. FocusRefine **never** modifies system settings.
 
 ### Can we request a minimal set without these system bullets?
 **No.** The Android operating system hardcodes these three capability bullet points for **every** notification listener app on the platform. No app can customize or trim the text inside this system dialog. However, FocusRefine uses the absolute minimum required system permission (`NotificationListenerService`) to perform local on-device notification filtering.
