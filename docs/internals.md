@@ -1,6 +1,6 @@
-# FocusFlow - Technical Implementation Guide & Permission Reference
+# FocusRefine - Technical Implementation Guide & Permission Reference
 
-This document provides a comprehensive technical breakdown of the architecture, data flows, core services, persistence layers, and security permissions in **FocusFlow**.
+This document provides a comprehensive technical breakdown of the architecture, data flows, core services, persistence layers, and security permissions in **FocusRefine**.
 
 ---
 
@@ -14,7 +14,7 @@ graph TD
     D -->|Urgent| E[Room DB: isUrgent = true]
     D -->|Non-Urgent| F[Cancel Notification & Update Live Counter]
     D -->|Non-Urgent| G[Room DB: isUrgent = false]
-    H[MainActivity] -->|Auto-refresh Polling| I[RecyclerView Adapter]
+    H[MainActivity] -->|Auto-refresh Polling| I[LazyColumn UI]
     H -->|Query by Urgency| J[NotificationDao]
     K[SettingsActivity] -->|Retention Cleanup, Samples & Modes| C
 ```
@@ -42,20 +42,20 @@ graph TD
 - Out-of-the-box prompts are externalized into `assets/prompts.json` and loaded via `PromptManager`, allowing prompt tuning without recompiling or modifying Kotlin source code.
 
 ### D. Interactive UI & Dark-Mode First Design
-- **Dark-Mode First**: Built with `Theme.MaterialComponents.DayNight` defaulting to `MODE_NIGHT_YES` with custom theme background attributes.
+- **Dark-Mode First**: Built with Jetpack Compose Material 3 supporting Light, Dark, and System Default theme modes.
 - **App Icons & Compact Actions**: Each inbox card displays the corresponding application icon and a clean external link icon button for launching target apps (with robust fallbacks for Telegram variants).
 
 ---
 
 ## 3. Detailed Explanation of Android Permissions
 
-FocusFlow strictly adheres to the principle of least privilege:
+FocusRefine strictly adheres to the principle of least privilege:
 
 1. **`android.permission.BIND_NOTIFICATION_LISTENER_SERVICE`**
-   - **Purpose**: Essential core permission. Grants FocusFlow system-level access to listen to incoming notification events across applications.
+   - **Purpose**: Essential core permission. Grants FocusRefine system-level access to listen to incoming notification events across applications.
 2. **`android.permission.FOREGROUND_SERVICE` & `FOREGROUND_SERVICE_SPECIAL_USE`**
    - **Purpose**: Required to run `NotificationFilterService` persistently in the background as a foreground service with ongoing status.
 3. **`android.permission.POST_NOTIFICATIONS`**
    - **Purpose**: Required on Android 13+ to post foreground service and status bar notifications.
 
-> **🔒 Privacy Guarantee**: FocusFlow declares **zero internet permissions**. All data processing, AI classification, and storage occur 100% locally on-device.
+> **🔒 Privacy Guarantee**: FocusRefine declares **zero internet permissions**. All data processing, AI classification, and storage occur 100% locally on-device.

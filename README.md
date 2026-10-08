@@ -1,12 +1,12 @@
-# FocusFlow
+# FocusRefine
 
-**FocusFlow** is a modern, lightweight, privacy-first Android application designed to intelligently filter and triage incoming notifications based on your current activity mode (**Commute** or **Do Not Disturb (DND)**, plus customizable modes). By combining **MediaPipe Tasks Text Classification** with local semantic heuristics, FocusFlow ensures that urgent alerts (such as navigation, emergency calls, and VIP messages) get through while suppressing digital distractions entirely on-device.
+**FocusRefine** is a modern, lightweight, privacy-first Android application designed to intelligently filter and triage incoming notifications based on your current activity mode (**Commute** or **Do Not Disturb (DND)**, plus customizable modes). By combining **MediaPipe Tasks Text Classification** with local semantic heuristics, FocusRefine ensures that urgent alerts (such as navigation, emergency calls, and VIP messages) get through while suppressing digital distractions entirely on-device.
 
 ---
 
 ## Application Overview & Screens
 
-FocusFlow consists of two primary screens designed with a **dark-mode first** aesthetic, featuring a shared unified header bar with the custom brand app icon and title:
+FocusRefine consists of two primary screens designed with a **dark-mode first** aesthetic, featuring a shared unified header bar with the custom brand app icon and title:
 
 1. **Main Dashboard (`MainActivity`)**:
    - Features the master filtering toggle switch, live notification access status indicator, and mode selection dropdown (**Commute**, **DND**, and **Custom Modes**).
