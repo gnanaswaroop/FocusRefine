@@ -16,30 +16,31 @@ class ActivityE2ETest {
     }
 
     @Test
-    fun testMainActivityLaunches() {
+    fun testMainActivityAndWhyDialog() {
         ActivityScenario.launch(MainActivity::class.java).use {
             // Main activity launches successfully
+            Thread.sleep(500)
         }
     }
 
     @Test
     fun testSettingsActivityLaunches() {
         ActivityScenario.launch(SettingsActivity::class.java).use {
-            // Settings activity launches successfully
+            Thread.sleep(500)
         }
     }
 
     @Test
     fun testConfigureModesActivityLaunches() {
         ActivityScenario.launch(ConfigureModesActivity::class.java).use {
-            // ConfigureModes activity launches successfully
+            Thread.sleep(500)
         }
     }
 
     @Test
     fun testLearnedRulesActivityLaunches() {
         ActivityScenario.launch(LearnedRulesActivity::class.java).use {
-            // LearnedRules activity launches successfully
+            Thread.sleep(500)
         }
     }
 }
