@@ -281,7 +281,7 @@ class SettingsActivity : ComponentActivity() {
 
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
-                            text = "FocusFlow v${BuildConfig.VERSION_NAME} (Build ${BuildConfig.VERSION_CODE})",
+                            text = "FocusRefine v${BuildConfig.VERSION_NAME} (Build ${BuildConfig.VERSION_CODE})",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.outline,
                             modifier = Modifier.align(Alignment.CenterHorizontally)
