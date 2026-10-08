@@ -32,69 +32,28 @@ This document provides a comprehensive technical breakdown of all Android permis
       }
   }
   ```
-  - **Manifest Declaration**:
-    ```xml
-    <service
-        android:name=".NotificationFilterService"
-        android:label="FocusRefine Notification Filter"
-        android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
-        android:foregroundServiceType="specialUse"
-        android:exported="true">
-        <intent-filter>
-            <action android:name="android.service.notification.NotificationListenerService" />
-        </intent-filter>
-    </service>
-    ```
 
 ---
 
-### 2. `FOREGROUND_SERVICE`
-- **Why Required**: Modern Android versions (API 28+) aggressively restrict background execution. Without a foreground service permission, background listeners running continuous tasks are prone to being killed under memory pressure. `FOREGROUND_SERVICE` allows FocusRefine to promote its filtering service to foreground status.
-- **Class / Component**: [NotificationFilterService.kt](file:/E:/Projects/do-i-care-app/app/src/main/java/com/focusflow/app/NotificationFilterService.kt) (`onStartCommand` / `startForeground`).
-- **Code Usage**:
-  ```kotlin
-  override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-      val notification = buildForegroundNotification(isRunning, suppressedCount)
-      startForeground(NOTIFICATION_ID, notification)
-      return START_STICKY
-  }
-  ```
+### 2. `FOREGROUND_SERVICE` & `FOREGROUND_SERVICE_SPECIAL_USE`
+- **Why Required**: Modern Android versions (API 28+ / API 34+) aggressively restrict background execution. Without foreground service permissions and the `specialUse` type, background listeners running continuous tasks are prone to being killed under memory pressure.
 
 ---
 
-### 3. `FOREGROUND_SERVICE_SPECIAL_USE`
-- **Why Required**: Introduced in Android 14 (API 34+), Google Play requires foreground services to declare a specific compliant `foregroundServiceType`. Because notification filtering is a continuous utility task that doesn't fit standard types (like media playback, location, or camera), `specialUse` is required and declared with proper justification.
-- **Class / Component**: [AndroidManifest.xml](file:///E:/Projects/do-i-care-app/app/src/main/AndroidManifest.xml) (`<service android:foregroundServiceType="specialUse" />`).
-- **Code Usage**:
-  Paired with `FOREGROUND_SERVICE` in the service manifest block to satisfy Android 14+ runtime enforcement policies.
+### 3. `POST_NOTIFICATIONS`
+- **Why Required**: Introduced in Android 13 (API 33+), runtime permission is required to post notifications (used for the ongoing foreground status bar notification).
 
 ---
 
-### 4. `POST_NOTIFICATIONS`
-- **Why Required**: Introduced in Android 13 (API 33+), runtime permission is required to post notifications. FocusRefine requires this permission to display its mandatory ongoing foreground notification (`NotificationManager.notify()`), which provides the user with visibility into the filtering engine's status, live suppression count, and a one-tap STOP/START action button.
-- **Class / Component**: [MainActivity.kt](file:///E:/Projects/do-i-care-app/app/src/main/java/com/focusflow/app/MainActivity.kt) (`onCreate` runtime permission check).
-- **Code Usage**:
-  ```kotlin
-  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-      if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-          requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 101)
-      }
-  }
-  ```
-  - And posting the persistent notification in [NotificationFilterService.kt](file:///E:/Projects/do-i-care-app/app/src/main/java/com/focusflow/app/NotificationFilterService.kt):
-    ```kotlin
-    private fun updateFailureNotification(...) { ... }
-    ```
+## 📱 Understanding the System Notification Access Prompt
 
----
+When enabling Notification Access in Android Settings (`Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS`), the system prompt displays three bundled capabilities:
+1. **"Read your notifications"**: **Used by FocusRefine.** Required to read incoming notification extras (`title`, `text`, `packageName`) to evaluate them against AI and heuristic filtering rules.
+2. **"Reply to messages"**: **Not used by FocusRefine.** Included automatically by the Android OS because `NotificationListenerService` inherently has the OS-level capability to call `cancelNotification()` or interact with notification action buttons. FocusRefine **never** sends automated replies or injects remote input into messaging apps.
+3. **"Change settings"**: **Not used by FocusRefine.** A generic Android OS description bundled into notification listener access for apps that modify system notification policies. FocusRefine **never** modifies system settings.
 
-## 🚫 Clarification on Unused Permissions (Reply & System Do Not Disturb / Set Mode)
-
-### Do we need a "Reply" permission?
-- **Answer**: **No.** FocusRefine **does not** request or use any reply permissions (such as `REMOTE_INPUT` or direct messaging actions). The app only intercepts, evaluates, and filters incoming notifications (reading/suppressing), and provides an "Open App" action button to launch source applications directly. It never sends automated replies or modifies notification direct-reply payloads.
-
-### Do we need a "Set Mode" / System DND permission (`ACCESS_NOTIFICATION_POLICY`)?
-- **Answer**: **No.** FocusRefine **does not** request system-level Do Not Disturb / Zen Mode policy permissions (`ACCESS_NOTIFICATION_POLICY`). Filtering modes (such as *Commute*, *DND*, or *Custom Modes*) operate entirely within the app's local notification evaluation engine and Room database. It filters individual notification visibility locally without overriding the device's system-wide Zen Mode or Do Not Disturb settings.
+### Can we request a minimal set without these system bullets?
+**No.** The Android operating system hardcodes these three capability bullet points for **every** notification listener app on the platform. No app can customize or trim the text inside this system dialog. However, FocusRefine uses the absolute minimum required system permission (`NotificationListenerService`) to perform local on-device notification filtering.
 
 ---
 
