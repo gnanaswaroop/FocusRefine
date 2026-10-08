@@ -1,4 +1,4 @@
-package com.focusflow.app
+package com.focusrefine.app
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice

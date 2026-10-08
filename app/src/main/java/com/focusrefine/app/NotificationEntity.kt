@@ -1,4 +1,4 @@
-package com.focusflow.app
+package com.focusrefine.app
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

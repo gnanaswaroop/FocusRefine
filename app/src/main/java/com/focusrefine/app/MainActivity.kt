@@ -1,4 +1,4 @@
-package com.focusflow.app
+package com.focusrefine.app
 
 import android.Manifest
 import android.content.BroadcastReceiver
@@ -16,7 +16,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatDelegate
-import com.focusflow.app.R
+import com.focusrefine.app.R
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

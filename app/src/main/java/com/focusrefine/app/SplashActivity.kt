@@ -1,4 +1,4 @@
-package com.focusflow.app
+package com.focusrefine.app
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,8 +7,8 @@ import android.os.Looper
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatDelegate
-import com.focusflow.app.R
-import com.focusflow.app.BuildConfig
+import com.focusrefine.app.R
+import com.focusrefine.app.BuildConfig
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

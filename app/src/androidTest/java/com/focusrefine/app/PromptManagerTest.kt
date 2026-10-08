@@ -1,4 +1,4 @@
-package com.focusflow.app
+package com.focusrefine.app
 
 import org.json.JSONObject
 import org.junit.Assert.assertEquals

@@ -1,4 +1,4 @@
-package com.focusflow.app
+package com.focusrefine.app
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatDelegate
-import com.focusflow.app.BuildConfig
+import com.focusrefine.app.BuildConfig
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll

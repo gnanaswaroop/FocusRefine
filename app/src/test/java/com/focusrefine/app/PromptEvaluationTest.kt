@@ -1,4 +1,4 @@
-package com.doicare.app
+package com.focusrefine.app
 
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
