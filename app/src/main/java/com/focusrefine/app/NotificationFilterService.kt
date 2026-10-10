@@ -68,6 +68,7 @@ class NotificationFilterService : NotificationListenerService() {
         const val ACTION_TOGGLE_SERVICE = "com.focusrefine.app.ACTION_TOGGLE_SERVICE"
         const val ACTION_UPDATE_COUNT = "com.focusrefine.app.ACTION_UPDATE_COUNT"
         const val ACTION_SERVICE_STATE_CHANGED = "com.focusrefine.app.ACTION_SERVICE_STATE_CHANGED"
+        const val ACTION_NOTIFICATION_ARRIVED = "com.focusrefine.app.ACTION_NOTIFICATION_ARRIVED"
     }
 
     override fun onCreate() {
@@ -214,6 +215,7 @@ class NotificationFilterService : NotificationListenerService() {
                     isUrgent = true
                 )
                 database.notificationDao().insert(entity)
+                sendBroadcast(Intent(ACTION_NOTIFICATION_ARRIVED).setPackage(this@NotificationFilterService.packageName))
             }
         } else {
             if (sbn.isClearable) {
@@ -233,6 +235,7 @@ class NotificationFilterService : NotificationListenerService() {
                         isUrgent = false
                     )
                     database.notificationDao().insert(entity)
+                    sendBroadcast(Intent(ACTION_NOTIFICATION_ARRIVED).setPackage(this@NotificationFilterService.packageName))
                 }
             }
         }
