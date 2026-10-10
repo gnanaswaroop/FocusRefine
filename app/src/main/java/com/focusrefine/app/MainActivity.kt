@@ -101,6 +101,7 @@ class MainActivity : ComponentActivity() {
         lastThemeMode = currentThemeMode
 
         isAccessEnabled = isNotificationServiceEnabled()
+        liveRefreshTrigger++
         val filter = IntentFilter().apply {
             addAction(NotificationFilterService.ACTION_SERVICE_STATE_CHANGED)
             addAction(NotificationFilterService.ACTION_NOTIFICATION_ARRIVED)
@@ -145,7 +146,7 @@ fun MainDashboardContent(
     var refreshTrigger by remember { mutableStateOf(0) }
 
     // Load modes
-    val modes = remember {
+    val modes = remember(refreshTrigger, liveRefreshTrigger) {
         val list = mutableListOf<String>()
         val ootbConfigs = PromptManager.getAllOotbConfigs(context)
         for ((name, config) in ootbConfigs) {
