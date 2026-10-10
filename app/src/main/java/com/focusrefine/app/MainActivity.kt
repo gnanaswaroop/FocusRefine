@@ -47,11 +47,14 @@ class MainActivity : ComponentActivity() {
     private lateinit var database: AppDatabase
     private var isAccessEnabled by mutableStateOf(false)
     private var lastThemeMode = -99
+    private var liveRefreshTrigger by mutableStateOf(0)
 
     private val serviceStateReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             if (intent.action == NotificationFilterService.ACTION_SERVICE_STATE_CHANGED) {
                 // Trigger state sync if needed
+            } else if (intent.action == NotificationFilterService.ACTION_NOTIFICATION_ARRIVED) {
+                liveRefreshTrigger++
             }
         }
     }
@@ -61,25 +64,12 @@ class MainActivity : ComponentActivity() {
         database = AppDatabase.getDatabase(this)
         prefs = getSharedPreferences("FocusRefinePrefs", MODE_PRIVATE)
         lastThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        @Suppress("WrongConstant")
         AppCompatDelegate.setDefaultNightMode(lastThemeMode)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 101)
-            }
-        }
-
-        // Process startup history or samples if empty
-        lifecycleScope.launch(Dispatchers.IO) {
-            val dao = database.notificationDao()
-            if (dao.getAll().isEmpty()) {
-                val samples = listOf(
-                    NotificationEntity(title = "Google Maps", text = "Turn right on Oak Street in 200 feet", packageName = "com.google.android.apps.maps", timestamp = System.currentTimeMillis(), isUrgent = true),
-                    NotificationEntity(title = "WhatsApp", text = "Hey! Want to grab coffee later today?", packageName = "com.whatsapp", timestamp = System.currentTimeMillis() - 1000, isUrgent = false),
-                    NotificationEntity(title = "Phone", text = "Incoming call from Boss", packageName = "com.android.phone", timestamp = System.currentTimeMillis() - 2000, isUrgent = true),
-                    NotificationEntity(title = "Instagram", text = "Liked your photo", packageName = "com.instagram.android", timestamp = System.currentTimeMillis() - 3000, isUrgent = false)
-                )
-                for (s in samples) dao.insert(s)
             }
         }
 
@@ -89,7 +79,8 @@ class MainActivity : ComponentActivity() {
                 MainDashboardContent(
                     onOpenSettings = { startActivity(Intent(this, SettingsActivity::class.java)) },
                     onEnableNotificationAccess = { startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)) },
-                    isNotificationAccessEnabled = isAccessEnabled
+                    isNotificationAccessEnabled = isAccessEnabled,
+                    liveRefreshTrigger = liveRefreshTrigger
                 )
             }
         }
@@ -101,6 +92,7 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         val currentThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        @Suppress("WrongConstant")
         AppCompatDelegate.setDefaultNightMode(currentThemeMode)
         if (lastThemeMode != -99 && currentThemeMode != lastThemeMode) {
             recreate()
@@ -109,7 +101,11 @@ class MainActivity : ComponentActivity() {
         lastThemeMode = currentThemeMode
 
         isAccessEnabled = isNotificationServiceEnabled()
-        val filter = IntentFilter(NotificationFilterService.ACTION_SERVICE_STATE_CHANGED)
+        liveRefreshTrigger++
+        val filter = IntentFilter().apply {
+            addAction(NotificationFilterService.ACTION_SERVICE_STATE_CHANGED)
+            addAction(NotificationFilterService.ACTION_NOTIFICATION_ARRIVED)
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             registerReceiver(serviceStateReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
         } else {
@@ -135,7 +131,8 @@ class MainActivity : ComponentActivity() {
 fun MainDashboardContent(
     onOpenSettings: () -> Unit,
     onEnableNotificationAccess: () -> Unit,
-    isNotificationAccessEnabled: Boolean
+    isNotificationAccessEnabled: Boolean,
+    liveRefreshTrigger: Int = 0
 ) {
     val context = LocalContext.current
     val prefs = context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
@@ -149,7 +146,7 @@ fun MainDashboardContent(
     var refreshTrigger by remember { mutableStateOf(0) }
 
     // Load modes
-    val modes = remember {
+    val modes = remember(refreshTrigger, liveRefreshTrigger) {
         val list = mutableListOf<String>()
         val ootbConfigs = PromptManager.getAllOotbConfigs(context)
         for ((name, config) in ootbConfigs) {
@@ -165,7 +162,14 @@ fun MainDashboardContent(
         list
     }
 
-    LaunchedEffect(currentTabUrgent, searchQuery, currentMode, refreshTrigger) {
+    LaunchedEffect(isNotificationAccessEnabled) {
+        if (!isNotificationAccessEnabled) {
+            isRunning = false
+            prefs.edit().putBoolean("service_running", false).apply()
+        }
+    }
+
+    LaunchedEffect(currentTabUrgent, searchQuery, currentMode, refreshTrigger, liveRefreshTrigger) {
         withContext(Dispatchers.IO) {
             val dao = database.notificationDao()
             notifications = if (searchQuery.isEmpty()) {
@@ -215,7 +219,7 @@ fun MainDashboardContent(
 
                 Text(
                     text = "✕ Notification Access Disabled",
-                    color = Color(0xFFC62828),
+                    color = MaterialTheme.colorScheme.error,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -287,14 +291,21 @@ fun MainDashboardContent(
                             modifier = Modifier.weight(1f)
                         )
                         Switch(
-                            checked = isRunning,
+                            checked = isRunning && isNotificationAccessEnabled,
+                            enabled = isNotificationAccessEnabled,
                             onCheckedChange = { isChecked ->
-                                isRunning = isChecked
-                                prefs.edit().putBoolean("service_running", isChecked).apply()
-                                val toggleIntent = Intent(NotificationFilterService.ACTION_TOGGLE_SERVICE).apply {
-                                    setPackage(context.packageName)
+                                if (!isNotificationAccessEnabled) {
+                                    Toast.makeText(context, "Please enable Notification Access first", Toast.LENGTH_SHORT).show()
+                                    isRunning = false
+                                    prefs.edit().putBoolean("service_running", false).apply()
+                                } else {
+                                    isRunning = isChecked
+                                    prefs.edit().putBoolean("service_running", isChecked).apply()
+                                    val toggleIntent = Intent(NotificationFilterService.ACTION_TOGGLE_SERVICE).apply {
+                                        setPackage(context.packageName)
+                                    }
+                                    context.sendBroadcast(toggleIntent)
                                 }
-                                context.sendBroadcast(toggleIntent)
                             }
                         )
                     }
@@ -347,21 +358,30 @@ fun MainDashboardContent(
                 Text(
                     text = "Inbox",
                     style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.weight(1f)
+                    fontWeight = FontWeight.Bold
                 )
+                IconButton(onClick = {
+                    refreshTrigger++
+                    Toast.makeText(context, "Inbox refreshed", Toast.LENGTH_SHORT).show()
+                }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_refresh),
+                        contentDescription = "Refresh Inbox"
+                    )
+                }
+                Spacer(modifier = Modifier.weight(1f))
                 TextButton(onClick = { currentTabUrgent = false }) {
                     Text(
                         text = "Muted",
                         fontWeight = if (!currentTabUrgent) FontWeight.Bold else FontWeight.Normal,
-                        color = if (!currentTabUrgent) Color(0xFFBB86FC) else Color.Gray
+                        color = if (!currentTabUrgent) MaterialTheme.colorScheme.primary else Color.Gray
                     )
                 }
                 TextButton(onClick = { currentTabUrgent = true }) {
                     Text(
                         text = "Shown",
                         fontWeight = if (currentTabUrgent) FontWeight.Bold else FontWeight.Normal,
-                        color = if (currentTabUrgent) Color(0xFFBB86FC) else Color.Gray
+                        color = if (currentTabUrgent) MaterialTheme.colorScheme.primary else Color.Gray
                     )
                 }
             }
