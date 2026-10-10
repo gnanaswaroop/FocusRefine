@@ -9,16 +9,17 @@
     <application
         android:name=".App"
         android:allowBackup="true"
+        android:extractNativeLibs="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.FocusFlow">
+        android:theme="@style/Theme.FocusRefine">
 
         <activity
             android:name=".SplashActivity"
             android:exported="true"
-            android:theme="@style/Theme.FocusFlow">
+            android:theme="@style/Theme.FocusRefine">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -27,11 +28,11 @@
 
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
+            android:exported="false" />
 
         <activity
             android:name=".SettingsActivity"
-            android:exported="true" />
+            android:exported="false" />
 
         <activity
             android:name=".ConfigureModesActivity"
@@ -43,7 +44,7 @@
 
         <service
             android:name=".NotificationFilterService"
-            android:label="FocusFlow Notification Filter"
+            android:label="FocusRefine Notification Filter"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
             android:foregroundServiceType="specialUse"
             android:exported="true">
@@ -63,7 +64,7 @@
             android:name=".NotificationToggleReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.focusflow.app.ACTION_TOGGLE_SERVICE" />
+                <action android:name="com.focusrefine.app.ACTION_TOGGLE_SERVICE" />
             </intent-filter>
         </receiver>
 

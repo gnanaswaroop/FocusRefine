@@ -1,0 +1,305 @@
+package com.focusrefine.app
+
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.graphics.BitmapFactory
+import android.os.Build
+import android.service.notification.NotificationListenerService
+import android.service.notification.StatusBarNotification
+import android.util.Log
+import androidx.core.app.NotificationCompat
+import com.google.mediapipe.tasks.core.BaseOptions
+import com.google.mediapipe.tasks.text.textclassifier.TextClassifier
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
+class NotificationFilterService : NotificationListenerService() {
+
+    private val TAG = "NotificationFilter"
+    private lateinit var database: AppDatabase
+    private val CHANNEL_ID = "focusrefine_service_channel"
+    private val NOTIFICATION_ID = 1001
+    private var textClassifier: TextClassifier? = null
+
+    private val toggleReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val prefs = context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
+            if (intent.action == ACTION_TOGGLE_SERVICE) {
+                val current = prefs.getBoolean("service_running", true)
+                val newState = !current
+                prefs.edit().putBoolean("service_running", newState).apply()
+                val count = prefs.getInt("suppressed_count", 0)
+
+                val stateIntent = Intent(ACTION_SERVICE_STATE_CHANGED).apply {
+                    setPackage(context.packageName)
+                    putExtra("is_running", newState)
+                }
+                context.sendBroadcast(stateIntent)
+
+                updateForegroundNotification(newState, count)
+                try {
+                    val manager = getSystemService(NotificationManager::class.java)
+                    if (manager.isNotificationPolicyAccessGranted) {
+                        if (newState) {
+                            manager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_PRIORITY)
+                        } else {
+                            manager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL)
+                        }
+                    }
+                } catch (_: Exception) {}
+                Log.d(TAG, "Service toggled from notification bar: running = $newState")
+            } else if (intent.action == ACTION_UPDATE_COUNT) {
+                val isRunning = prefs.getBoolean("service_running", true)
+                val count = prefs.getInt("suppressed_count", 0)
+                updateForegroundNotification(isRunning, count)
+                Log.d(TAG, "Foreground notification updated with count: $count")
+            }
+        }
+    }
+
+    companion object {
+        const val ACTION_TOGGLE_SERVICE = "com.focusrefine.app.ACTION_TOGGLE_SERVICE"
+        const val ACTION_UPDATE_COUNT = "com.focusrefine.app.ACTION_UPDATE_COUNT"
+        const val ACTION_SERVICE_STATE_CHANGED = "com.focusrefine.app.ACTION_SERVICE_STATE_CHANGED"
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        database = AppDatabase.getDatabase(this)
+        createNotificationChannel()
+
+        val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
+        val useAi = prefs.getBoolean("use_ai_model", true)
+
+        if (useAi) {
+            try {
+                val baseOptions = BaseOptions.builder().setModelAssetPath("text_classifier.tflite").build()
+                val options = TextClassifier.TextClassifierOptions.builder().setBaseOptions(baseOptions).build()
+                textClassifier = TextClassifier.createFromOptions(this, options)
+                Log.d(TAG, "MediaPipe TextClassifier initialized successfully")
+            } catch (e: Throwable) {
+                Log.d(TAG, "MediaPipe model asset or JNI native library not found (x86_64/emulator); using semantic prompt heuristic engine: ${e.message}")
+            }
+        } else {
+            Log.d(TAG, "MediaPipe AI Model disabled by user settings")
+        }
+
+        val filter = IntentFilter().apply {
+            addAction(ACTION_TOGGLE_SERVICE)
+            addAction(ACTION_UPDATE_COUNT)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(toggleReceiver, filter, RECEIVER_NOT_EXPORTED)
+        } else {
+            registerReceiver(toggleReceiver, filter)
+        }
+
+        try {
+            val isRunning = prefs.getBoolean("service_running", true)
+            val count = prefs.getInt("suppressed_count", 0)
+            startForeground(NOTIFICATION_ID, buildForegroundNotification(isRunning, count))
+            Log.d(TAG, "Service Created & Started in Foreground")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to start foreground service: ${e.message}")
+        }
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
+        val isRunning = prefs.getBoolean("service_running", true)
+        val count = prefs.getInt("suppressed_count", 0)
+        try {
+            startForeground(NOTIFICATION_ID, buildForegroundNotification(isRunning, count))
+            Log.d(TAG, "Service onStartCommand Started in Foreground: running=$isRunning")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to start foreground in onStartCommand: ${e.message}")
+        }
+        return START_STICKY
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                CHANNEL_ID,
+                "FocusRefine Live Update & Filtering Service",
+                NotificationManager.IMPORTANCE_DEFAULT
+            ).apply {
+                description = "Ongoing Live Update notification showing suppression count and quick STOP/START toggle."
+            }
+            val manager = getSystemService(NotificationManager::class.java)
+            manager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun buildForegroundNotification(isRunning: Boolean, suppressedCount: Int): Notification {
+        val toggleIntent = Intent(this, NotificationToggleReceiver::class.java).apply {
+            action = ACTION_TOGGLE_SERVICE
+        }
+        val flagImmutable = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0
+        val togglePendingIntent = PendingIntent.getBroadcast(
+            this, 0, toggleIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or flagImmutable
+        )
+
+        val actionText = if (isRunning) "STOP" else "START"
+        val statusText = if (isRunning) {
+            "Suppressed: $suppressedCount notifications"
+        } else {
+            "Filtering stopped — showing all notifications"
+        }
+
+        val openAppIntent = Intent(this, MainActivity::class.java)
+        val openAppPendingIntent = PendingIntent.getActivity(
+            this, 0, openAppIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or flagImmutable
+        )
+
+        val appIconBitmap = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
+
+        return NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentTitle("FocusRefine Active")
+            .setContentText(statusText)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setLargeIcon(appIconBitmap)
+            .setContentIntent(openAppPendingIntent)
+            .addAction(android.R.drawable.ic_menu_close_clear_cancel, actionText, togglePendingIntent)
+            .setOngoing(true)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setCategory(NotificationCompat.CATEGORY_SERVICE)
+            .build()
+    }
+
+    private fun updateForegroundNotification(isRunning: Boolean, suppressedCount: Int) {
+        val manager = getSystemService(NotificationManager::class.java)
+        manager.notify(NOTIFICATION_ID, buildForegroundNotification(isRunning, suppressedCount))
+    }
+
+    override fun onNotificationPosted(sbn: StatusBarNotification) {
+        val notification = sbn.notification
+        val extras = notification.extras
+        val title = extras.getString(Notification.EXTRA_TITLE)
+        val text = extras.getCharSequence(Notification.EXTRA_TEXT)?.toString()
+        val packageName = sbn.packageName
+
+        Log.d(TAG, "Received Notification: Title=$title, Text=$text")
+
+        if (packageName == this.packageName || packageName == "com.android.systemui") {
+            return
+        }
+
+        val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
+        val isRunning = prefs.getBoolean("service_running", true)
+        if (!isRunning) {
+            return
+        }
+
+        val currentMode = prefs.getString("current_mode", "Commute") ?: "Commute"
+        val isUrgent = analyzeContent(title, text, currentMode)
+
+        if (isUrgent) {
+            Log.d(TAG, "Allowed (Shown) notification: ${sbn.key}")
+            CoroutineScope(Dispatchers.IO).launch {
+                val entity = NotificationEntity(
+                    title = title,
+                    text = text,
+                    packageName = packageName,
+                    timestamp = System.currentTimeMillis(),
+                    isUrgent = true
+                )
+                database.notificationDao().insert(entity)
+            }
+        } else {
+            if (sbn.isClearable) {
+                cancelNotification(sbn.key)
+                Log.d(TAG, "Suppressed/Muted notification: ${sbn.key}")
+
+                val count = prefs.getInt("suppressed_count", 0) + 1
+                prefs.edit().putInt("suppressed_count", count).apply()
+                updateForegroundNotification(true, count)
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    val entity = NotificationEntity(
+                        title = title,
+                        text = text,
+                        packageName = packageName,
+                        timestamp = System.currentTimeMillis(),
+                        isUrgent = false
+                    )
+                    database.notificationDao().insert(entity)
+                }
+            }
+        }
+    }
+
+    override fun onNotificationRemoved(sbn: StatusBarNotification) {
+        Log.d(TAG, "Notification Removed: ${sbn.key}")
+    }
+
+    override fun onDestroy() {
+        try {
+            unregisterReceiver(toggleReceiver)
+        } catch (_: Exception) {
+        }
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                stopForeground(STOP_FOREGROUND_REMOVE)
+            } else {
+                @Suppress("DEPRECATION")
+                stopForeground(true)
+            }
+            val manager = getSystemService(NotificationManager::class.java)
+            manager.cancel(NOTIFICATION_ID)
+        } catch (_: Exception) {
+        }
+        textClassifier?.close()
+        super.onDestroy()
+    }
+
+    private fun analyzeContent(title: String?, text: String?, mode: String): Boolean {
+        val content = "${title ?: ""} ${text ?: ""}".lowercase()
+        val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
+        val useAi = prefs.getBoolean("use_ai_model", true)
+
+        if (useAi && textClassifier != null) {
+            try {
+                val result = textClassifier!!.classify(content)
+                for (classification in result.classificationResult().classifications()) {
+                    for (category in classification.categories()) {
+                        if (category.categoryName().equals("urgent", ignoreCase = true) && category.score() > 0.6f) {
+                            return true
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "MediaPipe classification error: ${e.message}")
+            }
+        }
+
+        val prompt = when (mode) {
+            "Commute" -> prefs.getString("prompt_commute", PromptManager.getOotbPrompt(this, "commute", "navigation, maps, turn left, turn right, traffic, call, vip, boss")) ?: ""
+            "Do Not Disturb (DND)" -> prefs.getString("prompt_dnd", PromptManager.getOotbPrompt(this, "dnd", "emergency, hospital, 911, critical")) ?: ""
+            else -> prefs.getString("custom_mode_prompt_$mode", "urgent") ?: ""
+        }
+
+        val keywords = prompt.lowercase().split(",", " ").map { it.trim() }.filter { it.isNotEmpty() }
+        if (keywords.isEmpty()) return content.contains("urgent")
+
+        return keywords.any { keyword -> content.contains(keyword) }
+    }
+
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        try {
+            val manager = getSystemService(NotificationManager::class.java)
+            manager.cancel(NOTIFICATION_ID)
+            stopSelf()
+        } catch (_: Exception) {}
+        super.onTaskRemoved(rootIntent)
+    }
+}
