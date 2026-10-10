@@ -7,6 +7,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -136,5 +137,53 @@ class NotificationFilterE2ETest {
         val searchMuted = dao.searchByUrgency(false, "%Coffee%")
         assertEquals(1, searchMuted.size)
         assertEquals("WhatsApp", searchMuted[0].title)
+    }
+
+    @Test
+    fun testLearnedRuleMutedToShownOverride() = runBlocking {
+        // 1. Initially muted notification
+        val initialMuted = NotificationEntity(
+            title = "WhatsApp",
+            text = "Coffee later?",
+            packageName = "com.whatsapp",
+            timestamp = System.currentTimeMillis(),
+            isUrgent = false,
+            isLearned = false
+        )
+        dao.insert(initialMuted)
+
+        // 2. User toggles/swaps to Shown (isUrgent = true, isLearned = true)
+        val toggledShown = initialMuted.copy(isUrgent = true, isLearned = true)
+        dao.insert(toggledShown)
+
+        // 3. Verify learned rule lookup overrides future classification to SHOWN
+        val matchedRule = dao.findMatchingLearnedRule("WhatsApp", "%Coffee%")
+        assertNotNull(matchedRule)
+        assertEquals(true, matchedRule?.isUrgent)
+        assertEquals(true, matchedRule?.isLearned)
+    }
+
+    @Test
+    fun testLearnedRuleShownToMutedOverride() = runBlocking {
+        // 1. Initially shown notification
+        val initialShown = NotificationEntity(
+            title = "Google Maps",
+            text = "Turn right on Oak Street",
+            packageName = "com.maps",
+            timestamp = System.currentTimeMillis(),
+            isUrgent = true,
+            isLearned = false
+        )
+        dao.insert(initialShown)
+
+        // 2. User toggles/swaps to Muted (isUrgent = false, isLearned = true)
+        val toggledMuted = initialShown.copy(isUrgent = false, isLearned = true)
+        dao.insert(toggledMuted)
+
+        // 3. Verify learned rule lookup overrides future classification to MUTED
+        val matchedRule = dao.findMatchingLearnedRule("Google Maps", "%Oak Street%")
+        assertNotNull(matchedRule)
+        assertEquals(false, matchedRule?.isUrgent)
+        assertEquals(true, matchedRule?.isLearned)
     }
 }

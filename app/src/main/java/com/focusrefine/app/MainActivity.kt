@@ -64,25 +64,12 @@ class MainActivity : ComponentActivity() {
         database = AppDatabase.getDatabase(this)
         prefs = getSharedPreferences("FocusRefinePrefs", MODE_PRIVATE)
         lastThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        @Suppress("WrongConstant")
         AppCompatDelegate.setDefaultNightMode(lastThemeMode)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 101)
-            }
-        }
-
-        // Process startup history or samples if empty
-        lifecycleScope.launch(Dispatchers.IO) {
-            val dao = database.notificationDao()
-            if (dao.getAll().isEmpty()) {
-                val samples = listOf(
-                    NotificationEntity(title = "Google Maps", text = "Turn right on Oak Street in 200 feet", packageName = "com.google.android.apps.maps", timestamp = System.currentTimeMillis(), isUrgent = true),
-                    NotificationEntity(title = "WhatsApp", text = "Hey! Want to grab coffee later today?", packageName = "com.whatsapp", timestamp = System.currentTimeMillis() - 1000, isUrgent = false),
-                    NotificationEntity(title = "Phone", text = "Incoming call from Boss", packageName = "com.android.phone", timestamp = System.currentTimeMillis() - 2000, isUrgent = true),
-                    NotificationEntity(title = "Instagram", text = "Liked your photo", packageName = "com.instagram.android", timestamp = System.currentTimeMillis() - 3000, isUrgent = false)
-                )
-                for (s in samples) dao.insert(s)
             }
         }
 
@@ -105,6 +92,7 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         val currentThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        @Suppress("WrongConstant")
         AppCompatDelegate.setDefaultNightMode(currentThemeMode)
         if (lastThemeMode != -99 && currentThemeMode != lastThemeMode) {
             recreate()
@@ -171,6 +159,13 @@ fun MainDashboardContent(
         }
         if (list.isEmpty()) list.add("Default")
         list
+    }
+
+    LaunchedEffect(isNotificationAccessEnabled) {
+        if (!isNotificationAccessEnabled) {
+            isRunning = false
+            prefs.edit().putBoolean("service_running", false).apply()
+        }
     }
 
     LaunchedEffect(currentTabUrgent, searchQuery, currentMode, refreshTrigger, liveRefreshTrigger) {
@@ -295,14 +290,21 @@ fun MainDashboardContent(
                             modifier = Modifier.weight(1f)
                         )
                         Switch(
-                            checked = isRunning,
+                            checked = isRunning && isNotificationAccessEnabled,
+                            enabled = isNotificationAccessEnabled,
                             onCheckedChange = { isChecked ->
-                                isRunning = isChecked
-                                prefs.edit().putBoolean("service_running", isChecked).apply()
-                                val toggleIntent = Intent(NotificationFilterService.ACTION_TOGGLE_SERVICE).apply {
-                                    setPackage(context.packageName)
+                                if (!isNotificationAccessEnabled) {
+                                    Toast.makeText(context, "Please enable Notification Access first", Toast.LENGTH_SHORT).show()
+                                    isRunning = false
+                                    prefs.edit().putBoolean("service_running", false).apply()
+                                } else {
+                                    isRunning = isChecked
+                                    prefs.edit().putBoolean("service_running", isChecked).apply()
+                                    val toggleIntent = Intent(NotificationFilterService.ACTION_TOGGLE_SERVICE).apply {
+                                        setPackage(context.packageName)
+                                    }
+                                    context.sendBroadcast(toggleIntent)
                                 }
-                                context.sendBroadcast(toggleIntent)
                             }
                         )
                     }
