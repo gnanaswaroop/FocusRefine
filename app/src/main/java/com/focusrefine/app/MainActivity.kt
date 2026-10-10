@@ -364,7 +364,7 @@ fun MainDashboardContent(
                     Toast.makeText(context, "Inbox refreshed", Toast.LENGTH_SHORT).show()
                 }) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_swap_horiz),
+                        painter = painterResource(id = R.drawable.ic_refresh),
                         contentDescription = "Refresh Inbox"
                     )
                 }

@@ -242,6 +242,7 @@ class SettingsActivity : ComponentActivity() {
                                             val currentSuppressed = prefs.getInt("suppressed_count", 0) + mutedCount
                                             prefs.edit().putInt("suppressed_count", currentSuppressed).apply()
                                             sendBroadcast(Intent(NotificationFilterService.ACTION_UPDATE_COUNT))
+                                            sendBroadcast(Intent(NotificationFilterService.ACTION_NOTIFICATION_ARRIVED).setPackage(packageName))
                                             withContext(Dispatchers.Main) {
                                                 Toast.makeText(this@SettingsActivity, "✨ 20 sample notifications added! ($mutedCount muted)", Toast.LENGTH_SHORT).show()
                                             }
@@ -275,6 +276,8 @@ class SettingsActivity : ComponentActivity() {
                                                         AppDatabase.getDatabase(this@SettingsActivity).notificationDao().deleteAll()
                                                         prefs.edit().putInt("suppressed_count", 0).apply()
                                                         sendBroadcast(Intent(NotificationFilterService.ACTION_UPDATE_COUNT))
+                                                        sendBroadcast(Intent(NotificationFilterService.ACTION_NOTIFICATION_ARRIVED).setPackage(packageName))
+                                            sendBroadcast(Intent(NotificationFilterService.ACTION_NOTIFICATION_ARRIVED).setPackage(packageName))
                                                         withContext(Dispatchers.Main) {
                                                             Toast.makeText(this@SettingsActivity, "All inbox notifications cleared", Toast.LENGTH_SHORT).show()
                                                         }
