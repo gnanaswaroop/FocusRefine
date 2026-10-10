@@ -22,6 +22,9 @@ interface NotificationDao {
     @Query("SELECT * FROM notifications WHERE isLearned = 1 ORDER BY timestamp DESC")
     fun getLearnedRules(): List<NotificationEntity>
 
+    @Query("SELECT * FROM notifications WHERE isLearned = 1 AND (title = :title OR text LIKE :textQuery) ORDER BY timestamp DESC LIMIT 1")
+    fun findMatchingLearnedRule(title: String, textQuery: String): NotificationEntity?
+
     @Query("DELETE FROM notifications WHERE timestamp < :cutoffTimestamp")
     fun deleteOlderThan(cutoffTimestamp: Long)
 

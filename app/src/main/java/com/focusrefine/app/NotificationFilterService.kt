@@ -266,6 +266,13 @@ class NotificationFilterService : NotificationListenerService() {
     }
 
     private fun analyzeContent(title: String?, text: String?, mode: String): Boolean {
+        // Check for matching user learned rule first
+        val learnedRule = database.notificationDao().findMatchingLearnedRule(title ?: "", "%${text ?: ""}%")
+        if (learnedRule != null) {
+            Log.d(TAG, "Learned rule override matched: isUrgent = ${learnedRule.isUrgent}")
+            return learnedRule.isUrgent
+        }
+
         val content = "${title ?: ""} ${text ?: ""}".lowercase()
         val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
         val useAi = prefs.getBoolean("use_ai_model", true)
