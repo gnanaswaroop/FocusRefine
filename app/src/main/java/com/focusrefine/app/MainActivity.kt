@@ -47,11 +47,14 @@ class MainActivity : ComponentActivity() {
     private lateinit var database: AppDatabase
     private var isAccessEnabled by mutableStateOf(false)
     private var lastThemeMode = -99
+    private var liveRefreshTrigger by mutableStateOf(0)
 
     private val serviceStateReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             if (intent.action == NotificationFilterService.ACTION_SERVICE_STATE_CHANGED) {
                 // Trigger state sync if needed
+            } else if (intent.action == NotificationFilterService.ACTION_NOTIFICATION_ARRIVED) {
+                liveRefreshTrigger++
             }
         }
     }
@@ -89,7 +92,8 @@ class MainActivity : ComponentActivity() {
                 MainDashboardContent(
                     onOpenSettings = { startActivity(Intent(this, SettingsActivity::class.java)) },
                     onEnableNotificationAccess = { startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)) },
-                    isNotificationAccessEnabled = isAccessEnabled
+                    isNotificationAccessEnabled = isAccessEnabled,
+                    liveRefreshTrigger = liveRefreshTrigger
                 )
             }
         }
@@ -109,7 +113,10 @@ class MainActivity : ComponentActivity() {
         lastThemeMode = currentThemeMode
 
         isAccessEnabled = isNotificationServiceEnabled()
-        val filter = IntentFilter(NotificationFilterService.ACTION_SERVICE_STATE_CHANGED)
+        val filter = IntentFilter().apply {
+            addAction(NotificationFilterService.ACTION_SERVICE_STATE_CHANGED)
+            addAction(NotificationFilterService.ACTION_NOTIFICATION_ARRIVED)
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             registerReceiver(serviceStateReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
         } else {
@@ -135,7 +142,8 @@ class MainActivity : ComponentActivity() {
 fun MainDashboardContent(
     onOpenSettings: () -> Unit,
     onEnableNotificationAccess: () -> Unit,
-    isNotificationAccessEnabled: Boolean
+    isNotificationAccessEnabled: Boolean,
+    liveRefreshTrigger: Int = 0
 ) {
     val context = LocalContext.current
     val prefs = context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
@@ -165,7 +173,7 @@ fun MainDashboardContent(
         list
     }
 
-    LaunchedEffect(currentTabUrgent, searchQuery, currentMode, refreshTrigger) {
+    LaunchedEffect(currentTabUrgent, searchQuery, currentMode, refreshTrigger, liveRefreshTrigger) {
         withContext(Dispatchers.IO) {
             val dao = database.notificationDao()
             notifications = if (searchQuery.isEmpty()) {
@@ -215,7 +223,7 @@ fun MainDashboardContent(
 
                 Text(
                     text = "✕ Notification Access Disabled",
-                    color = Color(0xFFC62828),
+                    color = MaterialTheme.colorScheme.error,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -347,21 +355,30 @@ fun MainDashboardContent(
                 Text(
                     text = "Inbox",
                     style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.weight(1f)
+                    fontWeight = FontWeight.Bold
                 )
+                IconButton(onClick = {
+                    refreshTrigger++
+                    Toast.makeText(context, "Inbox refreshed", Toast.LENGTH_SHORT).show()
+                }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_swap_horiz),
+                        contentDescription = "Refresh Inbox"
+                    )
+                }
+                Spacer(modifier = Modifier.weight(1f))
                 TextButton(onClick = { currentTabUrgent = false }) {
                     Text(
                         text = "Muted",
                         fontWeight = if (!currentTabUrgent) FontWeight.Bold else FontWeight.Normal,
-                        color = if (!currentTabUrgent) Color(0xFFBB86FC) else Color.Gray
+                        color = if (!currentTabUrgent) MaterialTheme.colorScheme.primary else Color.Gray
                     )
                 }
                 TextButton(onClick = { currentTabUrgent = true }) {
                     Text(
                         text = "Shown",
                         fontWeight = if (currentTabUrgent) FontWeight.Bold else FontWeight.Normal,
-                        color = if (currentTabUrgent) Color(0xFFBB86FC) else Color.Gray
+                        color = if (currentTabUrgent) MaterialTheme.colorScheme.primary else Color.Gray
                     )
                 }
             }

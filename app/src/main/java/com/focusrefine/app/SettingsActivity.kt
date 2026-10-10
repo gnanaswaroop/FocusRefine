@@ -252,21 +252,45 @@ class SettingsActivity : ComponentActivity() {
                                     Text("Send sample notifications")
                                 }
 
+                                var showClearInboxConfirmDialog by remember { mutableStateOf(false) }
+
                                 OutlinedButton(
-                                    onClick = {
-                                        lifecycleScope.launch(Dispatchers.IO) {
-                                            AppDatabase.getDatabase(this@SettingsActivity).notificationDao().deleteAll()
-                                            prefs.edit().putInt("suppressed_count", 0).apply()
-                                            sendBroadcast(Intent(NotificationFilterService.ACTION_UPDATE_COUNT))
-                                            withContext(Dispatchers.Main) {
-                                                Toast.makeText(this@SettingsActivity, "All inbox notifications cleared", Toast.LENGTH_SHORT).show()
-                                            }
-                                        }
-                                    },
+                                    onClick = { showClearInboxConfirmDialog = true },
                                     modifier = Modifier.fillMaxWidth(),
-                                    colors = ButtonDefaults.outlinedButtonColors(contentColor = androidx.compose.ui.graphics.Color(0xFFC62828))
+                                    colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
                                 ) {
                                     Text("Clear All Inbox Notifications")
+                                }
+
+                                if (showClearInboxConfirmDialog) {
+                                    AlertDialog(
+                                        onDismissRequest = { showClearInboxConfirmDialog = false },
+                                        title = { Text("Clear All Inbox Notifications?") },
+                                        text = { Text("Are you sure you want to delete all inbox notifications? This action cannot be undone.") },
+                                        confirmButton = {
+                                            Button(
+                                                onClick = {
+                                                    showClearInboxConfirmDialog = false
+                                                    lifecycleScope.launch(Dispatchers.IO) {
+                                                        AppDatabase.getDatabase(this@SettingsActivity).notificationDao().deleteAll()
+                                                        prefs.edit().putInt("suppressed_count", 0).apply()
+                                                        sendBroadcast(Intent(NotificationFilterService.ACTION_UPDATE_COUNT))
+                                                        withContext(Dispatchers.Main) {
+                                                            Toast.makeText(this@SettingsActivity, "All inbox notifications cleared", Toast.LENGTH_SHORT).show()
+                                                        }
+                                                    }
+                                                },
+                                                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
+                                            ) {
+                                                Text("Delete All")
+                                            }
+                                        },
+                                        dismissButton = {
+                                            TextButton(onClick = { showClearInboxConfirmDialog = false }) {
+                                                Text("Cancel")
+                                            }
+                                        }
+                                    )
                                 }
                             }
                         }

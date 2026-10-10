@@ -139,7 +139,7 @@ class ConfigureModesActivity : ComponentActivity() {
                                                     refreshTrigger++
                                                     Toast.makeText(this@ConfigureModesActivity, "Mode '${mode.name}' deleted", Toast.LENGTH_SHORT).show()
                                                 },
-                                                colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFFC62828))
+                                                colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
                                             ) {
                                                 Text("Delete Mode", fontSize = 12.sp)
                                             }
