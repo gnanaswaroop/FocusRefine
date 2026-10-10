@@ -167,7 +167,7 @@ class NotificationFilterService : NotificationListenerService() {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("FocusRefine Active")
             .setContentText(statusText)
-            .setSmallIcon(R.drawable.adaptive_foreground)
+            .setSmallIcon(R.drawable.ic_notification)
             .setLargeIcon(appIconBitmap)
             .setContentIntent(openAppPendingIntent)
             .addAction(android.R.drawable.ic_menu_close_clear_cancel, actionText, togglePendingIntent)
