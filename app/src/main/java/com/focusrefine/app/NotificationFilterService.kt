@@ -68,6 +68,7 @@ class NotificationFilterService : NotificationListenerService() {
         const val ACTION_TOGGLE_SERVICE = "com.focusrefine.app.ACTION_TOGGLE_SERVICE"
         const val ACTION_UPDATE_COUNT = "com.focusrefine.app.ACTION_UPDATE_COUNT"
         const val ACTION_SERVICE_STATE_CHANGED = "com.focusrefine.app.ACTION_SERVICE_STATE_CHANGED"
+        const val ACTION_NOTIFICATION_ARRIVED = "com.focusrefine.app.ACTION_NOTIFICATION_ARRIVED"
     }
 
     override fun onCreate() {
@@ -166,7 +167,7 @@ class NotificationFilterService : NotificationListenerService() {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("FocusRefine Active")
             .setContentText(statusText)
-            .setSmallIcon(R.drawable.ic_notification)
+            .setSmallIcon(R.drawable.adaptive_foreground)
             .setLargeIcon(appIconBitmap)
             .setContentIntent(openAppPendingIntent)
             .addAction(android.R.drawable.ic_menu_close_clear_cancel, actionText, togglePendingIntent)
@@ -214,6 +215,7 @@ class NotificationFilterService : NotificationListenerService() {
                     isUrgent = true
                 )
                 database.notificationDao().insert(entity)
+                sendBroadcast(Intent(ACTION_NOTIFICATION_ARRIVED).setPackage(this@NotificationFilterService.packageName))
             }
         } else {
             if (sbn.isClearable) {
@@ -233,6 +235,7 @@ class NotificationFilterService : NotificationListenerService() {
                         isUrgent = false
                     )
                     database.notificationDao().insert(entity)
+                    sendBroadcast(Intent(ACTION_NOTIFICATION_ARRIVED).setPackage(this@NotificationFilterService.packageName))
                 }
             }
         }
@@ -263,6 +266,13 @@ class NotificationFilterService : NotificationListenerService() {
     }
 
     private fun analyzeContent(title: String?, text: String?, mode: String): Boolean {
+        // Check for matching user learned rule first
+        val learnedRule = database.notificationDao().findMatchingLearnedRule(title ?: "", "%${text ?: ""}%")
+        if (learnedRule != null) {
+            Log.d(TAG, "Learned rule override matched: isUrgent = ${learnedRule.isUrgent}")
+            return learnedRule.isUrgent
+        }
+
         val content = "${title ?: ""} ${text ?: ""}".lowercase()
         val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
         val useAi = prefs.getBoolean("use_ai_model", true)

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -26,15 +27,20 @@ import kotlinx.coroutines.withContext
 class LearnedRulesActivity : ComponentActivity() {
 
     private lateinit var prefs: SharedPreferences
+    private var lastThemeMode = -99
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         prefs = getSharedPreferences("FocusRefinePrefs", MODE_PRIVATE)
+        lastThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        @Suppress("WrongConstant")
+        AppCompatDelegate.setDefaultNightMode(lastThemeMode)
 
         setContent {
             FocusRefineTheme {
                 var rules by remember { mutableStateOf(emptyList<NotificationEntity>()) }
                 var refreshTrigger by remember { mutableStateOf(0) }
+                var showClearConfirmDialog by remember { mutableStateOf(false) }
 
                 LaunchedEffect(refreshTrigger) {
                     withContext(Dispatchers.IO) {
@@ -107,7 +113,7 @@ class LearnedRulesActivity : ComponentActivity() {
                                                 text = if (rule.isUrgent) "Status: Shown" else "Status: Hidden",
                                                 fontWeight = FontWeight.Bold,
                                                 fontSize = 13.sp,
-                                                color = if (rule.isUrgent) Color(0xFF2E7D32) else Color(0xFFC62828)
+                                                color = if (rule.isUrgent) Color(0xFF2E7D32) else MaterialTheme.colorScheme.error
                                             )
                                         }
                                         Spacer(modifier = Modifier.height(12.dp))
@@ -142,7 +148,7 @@ class LearnedRulesActivity : ComponentActivity() {
                                                         }
                                                     }
                                                 },
-                                                colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFFC62828))
+                                                colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
                                             ) {
                                                 Text("Delete", fontSize = 12.sp)
                                             }
@@ -154,24 +160,58 @@ class LearnedRulesActivity : ComponentActivity() {
 
                         Spacer(modifier = Modifier.height(12.dp))
                         OutlinedButton(
-                            onClick = {
-                                lifecycleScope.launch(Dispatchers.IO) {
-                                    val db = AppDatabase.getDatabase(this@LearnedRulesActivity)
-                                    db.notificationDao().deleteLearnedRules()
-                                    refreshTrigger++
-                                    withContext(Dispatchers.Main) {
-                                        Toast.makeText(this@LearnedRulesActivity, "All learned rules cleared", Toast.LENGTH_SHORT).show()
-                                    }
-                                }
-                            },
+                            onClick = { showClearConfirmDialog = true },
                             modifier = Modifier.fillMaxWidth(),
-                            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFFC62828))
+                            colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
                         ) {
                             Text("Clear All Learned Rules")
+                        }
+
+                        if (showClearConfirmDialog) {
+                            AlertDialog(
+                                onDismissRequest = { showClearConfirmDialog = false },
+                                title = { Text("Clear All Learned Rules?") },
+                                text = { Text("Are you sure you want to clear all learned rules? FocusRefine will reset its learned preferences.") },
+                                confirmButton = {
+                                    Button(
+                                        onClick = {
+                                            showClearConfirmDialog = false
+                                            lifecycleScope.launch(Dispatchers.IO) {
+                                                val db = AppDatabase.getDatabase(this@LearnedRulesActivity)
+                                                db.notificationDao().deleteLearnedRules()
+                                                refreshTrigger++
+                                                withContext(Dispatchers.Main) {
+                                                    Toast.makeText(this@LearnedRulesActivity, "All learned rules cleared", Toast.LENGTH_SHORT).show()
+                                                }
+                                            }
+                                        },
+                                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
+                                    ) {
+                                        Text("Clear All")
+                                    }
+                                },
+                                dismissButton = {
+                                    TextButton(onClick = { showClearConfirmDialog = false }) {
+                                        Text("Cancel")
+                                    }
+                                }
+                            )
                         }
                     }
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val currentThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        AppCompatDelegate.setDefaultNightMode(currentThemeMode)
+        if (lastThemeMode != -99 && currentThemeMode != lastThemeMode) {
+            lastThemeMode = currentThemeMode
+            recreate()
+            return
+        }
+        lastThemeMode = currentThemeMode
     }
 }
