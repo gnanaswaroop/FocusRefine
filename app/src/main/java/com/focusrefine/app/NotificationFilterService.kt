@@ -167,7 +167,7 @@ class NotificationFilterService : NotificationListenerService() {
         val appIconBitmap = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
 
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("FocusRefine Active")
+            .setContentTitle("Focus Refine Active")
             .setContentText(statusText)
             .setSmallIcon(R.drawable.ic_notification)
             .setLargeIcon(appIconBitmap)
