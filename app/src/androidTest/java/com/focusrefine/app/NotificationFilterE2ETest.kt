@@ -1,6 +1,7 @@
 package com.focusrefine.app
 
 import android.content.Context
+import android.content.Intent
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -33,6 +34,32 @@ class NotificationFilterE2ETest {
     @Throws(IOException::class)
     fun closeDb() {
         db.close()
+    }
+
+    @Test
+    fun testNotificationBarToggleStartStopSync() = runBlocking {
+        val prefs = context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
+
+        // 1. Start with service_running = true
+        prefs.edit().putBoolean("service_running", true).putInt("suppressed_count", 5).apply()
+        assertEquals(true, prefs.getBoolean("service_running", false))
+
+        // 2. Simulate notification bar STOP toggle
+        val toggleReceiver = NotificationToggleReceiver()
+        val toggleIntent = Intent(NotificationFilterService.ACTION_TOGGLE_SERVICE).apply {
+            setPackage(context.packageName)
+        }
+        toggleReceiver.onReceive(context, toggleIntent)
+
+        // 3. Verify application state toggled to STOP (false) and suppressed count reset
+        assertEquals(false, prefs.getBoolean("service_running", true))
+        assertEquals(0, prefs.getInt("suppressed_count", -1))
+
+        // 4. Simulate notification bar START toggle
+        toggleReceiver.onReceive(context, toggleIntent)
+
+        // 5. Verify application state toggled back to START (true)
+        assertEquals(true, prefs.getBoolean("service_running", false))
     }
 
     @Test
