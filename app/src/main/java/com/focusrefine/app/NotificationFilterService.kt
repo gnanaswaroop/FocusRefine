@@ -118,26 +118,9 @@ class NotificationFilterService : NotificationListenerService() {
         val isRunning = prefs.getBoolean("service_running", true)
         val count = prefs.getInt("suppressed_count", 0)
 
-        if (!isRunning || intent?.action == ACTION_STOP_SERVICE) {
-            try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    stopForeground(STOP_FOREGROUND_REMOVE)
-                } else {
-                    @Suppress("DEPRECATION")
-                    stopForeground(true)
-                }
-                val manager = getSystemService(NotificationManager::class.java)
-                manager.cancel(NOTIFICATION_ID)
-                Log.d(TAG, "Service stopped foreground notification")
-            } catch (e: Exception) {
-                Log.e(TAG, "Failed to stop foreground: ${e.message}")
-            }
-            return START_NOT_STICKY
-        }
-
         try {
-            startForeground(NOTIFICATION_ID, buildForegroundNotification(true, count))
-            Log.d(TAG, "Service onStartCommand Started in Foreground: running=true")
+            startForeground(NOTIFICATION_ID, buildForegroundNotification(isRunning, count))
+            Log.d(TAG, "Service onStartCommand Started in Foreground: running=$isRunning, count=$count")
         } catch (e: Exception) {
             Log.e(TAG, "Failed to start foreground in onStartCommand: ${e.message}")
         }
