@@ -24,18 +24,18 @@ class NotificationToggleReceiver : BroadcastReceiver() {
             }
             context.sendBroadcast(stateIntent)
 
-            // Trigger service to update foreground notification
+            // Trigger service to update or stop foreground notification
             val serviceIntent = Intent(context, NotificationFilterService::class.java).apply {
-                action = NotificationFilterService.ACTION_UPDATE_COUNT
+                action = if (newState) NotificationFilterService.ACTION_UPDATE_COUNT else NotificationFilterService.ACTION_STOP_SERVICE
             }
             try {
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                if (newState && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                     context.startForegroundService(serviceIntent)
                 } else {
                     context.startService(serviceIntent)
                 }
             } catch (e: Exception) {
-                Log.e("NotificationToggleReceiver", "Failed to start service: ${e.message}")
+                Log.e("NotificationToggleReceiver", "Failed to send intent to service: ${e.message}")
             }
             Log.d("NotificationToggleReceiver", "Toggled service state via notification bar to: $newState")
         }
