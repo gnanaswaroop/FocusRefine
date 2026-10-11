@@ -68,7 +68,7 @@ class LearnedRulesActivity : ComponentActivity() {
                             Image(
                                 painter = painterResource(id = R.drawable.adaptive_foreground),
                                 contentDescription = "App Logo",
-                                modifier = Modifier.size(32.dp)
+                                modifier = Modifier.size(24.dp)
                             )
                             Spacer(modifier = Modifier.width(10.dp))
                             Text(

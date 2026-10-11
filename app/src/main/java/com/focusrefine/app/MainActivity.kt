@@ -46,13 +46,15 @@ class MainActivity : ComponentActivity() {
     private lateinit var prefs: SharedPreferences
     private lateinit var database: AppDatabase
     private var isAccessEnabled by mutableStateOf(false)
+    private var isFilteringActive by mutableStateOf(true)
     private var lastThemeMode = -99
     private var liveRefreshTrigger by mutableStateOf(0)
 
     private val serviceStateReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             if (intent.action == NotificationFilterService.ACTION_SERVICE_STATE_CHANGED) {
-                // Trigger state sync if needed
+                val newState = intent.getBooleanExtra("is_running", prefs.getBoolean("service_running", true))
+                isFilteringActive = newState
             } else if (intent.action == NotificationFilterService.ACTION_NOTIFICATION_ARRIVED) {
                 liveRefreshTrigger++
             }
@@ -74,12 +76,14 @@ class MainActivity : ComponentActivity() {
         }
 
         isAccessEnabled = isNotificationServiceEnabled()
+        isFilteringActive = prefs.getBoolean("service_running", true)
         setContent {
             FocusRefineTheme {
                 MainDashboardContent(
                     onOpenSettings = { startActivity(Intent(this, SettingsActivity::class.java)) },
                     onEnableNotificationAccess = { startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)) },
                     isNotificationAccessEnabled = isAccessEnabled,
+                    isFilteringActive = isFilteringActive,
                     liveRefreshTrigger = liveRefreshTrigger
                 )
             }
@@ -132,13 +136,14 @@ fun MainDashboardContent(
     onOpenSettings: () -> Unit,
     onEnableNotificationAccess: () -> Unit,
     isNotificationAccessEnabled: Boolean,
+    isFilteringActive: Boolean = true,
     liveRefreshTrigger: Int = 0
 ) {
     val context = LocalContext.current
     val prefs = context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
     val database = AppDatabase.getDatabase(context)
 
-    var isRunning by remember { mutableStateOf(prefs.getBoolean("service_running", true)) }
+    var isRunning by remember(isFilteringActive) { mutableStateOf(isFilteringActive) }
     var currentTabUrgent by remember { mutableStateOf(false) } // false = Muted, true = Shown
     var searchQuery by remember { mutableStateOf("") }
     var currentMode by remember { mutableStateOf(prefs.getString("current_mode", "Commute") ?: "Commute") }
@@ -197,11 +202,11 @@ fun MainDashboardContent(
                 Image(
                     painter = painterResource(id = R.drawable.adaptive_foreground),
                     contentDescription = "App Logo",
-                    modifier = Modifier.size(32.dp)
+                    modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
-                    text = "FocusRefine",
+                    text = "Focus Refine",
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.weight(1f)
