@@ -42,6 +42,18 @@
             android:name=".LearnedRulesActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".NotificationDetailActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ContextModesActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".PrivacyInsightsActivity"
+            android:exported="false" />
+
         <service
             android:name=".NotificationFilterService"
             android:label="FocusRefine Notification Filter"
