@@ -26,6 +26,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
@@ -114,7 +115,7 @@ class SettingsActivity : ComponentActivity() {
 @Composable
 fun SettingsStudioScreen(
     isEmulator: Boolean,
-    prefs: SharedPreferences,
+    prefs: SharedPreferences?,
     onBack: () -> Unit,
     onNavigateToAppRules: () -> Unit,
     onNavigateToContextModes: () -> Unit,
@@ -125,12 +126,12 @@ fun SettingsStudioScreen(
 ) {
     val context = androidx.compose.ui.platform.LocalContext.current
     val defaultMode = remember { PromptManager.getDefaultModeName(context) }
-    var currentMode by remember { mutableStateOf(prefs.getString("current_mode", defaultMode) ?: defaultMode) }
-    var filterStrengthIndex by remember { mutableStateOf(prefs.getInt("filter_strength", 1)) } // 0=Gentle, 1=Balanced, 2=Strict
-    var navPromptsAllowed by remember { mutableStateOf(prefs.getBoolean("exception_nav_prompts", true)) }
-    var callsAllowed by remember { mutableStateOf(prefs.getBoolean("exception_calls", true)) }
-    var learnFromChoices by remember { mutableStateOf(prefs.getBoolean("learn_from_choices", true)) }
-    var useAiModel by remember { mutableStateOf(prefs.getBoolean("use_ai_model", !isEmulator)) }
+    var currentMode by remember { mutableStateOf(prefs?.getString("current_mode", defaultMode) ?: defaultMode) }
+    var filterStrengthIndex by remember { mutableStateOf(prefs?.getInt("filter_strength", 1) ?: 1) } // 0=Gentle, 1=Balanced, 2=Strict
+    var navPromptsAllowed by remember { mutableStateOf(prefs?.getBoolean("exception_nav_prompts", true) ?: true) }
+    var callsAllowed by remember { mutableStateOf(prefs?.getBoolean("exception_calls", true) ?: true) }
+    var learnFromChoices by remember { mutableStateOf(prefs?.getBoolean("learn_from_choices", true) ?: true) }
+    var useAiModel by remember { mutableStateOf(prefs?.getBoolean("use_ai_model", !isEmulator) ?: !isEmulator) }
 
     val modeOptions = listOf("Commute", "Deep Focus", "Sleep", "Gaming")
 
@@ -242,7 +243,7 @@ fun SettingsStudioScreen(
                         selectedIndex = filterStrengthIndex,
                         onOptionSelected = { idx ->
                             filterStrengthIndex = idx
-                            prefs.edit().putInt("filter_strength", idx).apply()
+                            prefs?.edit()?.putInt("filter_strength", idx)?.apply()
                         }
                     )
                 }
@@ -279,7 +280,7 @@ fun SettingsStudioScreen(
                             checked = navPromptsAllowed,
                             onCheckedChange = {
                                 navPromptsAllowed = it
-                                prefs.edit().putBoolean("exception_nav_prompts", it).apply()
+                                prefs?.edit()?.putBoolean("exception_nav_prompts", it)?.apply()
                             },
                             colors = SwitchDefaults.colors(checkedTrackColor = StudioColors.ActiveViolet)
                         )
@@ -304,7 +305,7 @@ fun SettingsStudioScreen(
                             checked = callsAllowed,
                             onCheckedChange = {
                                 callsAllowed = it
-                                prefs.edit().putBoolean("exception_calls", it).apply()
+                                prefs?.edit()?.putBoolean("exception_calls", it)?.apply()
                             },
                             colors = SwitchDefaults.colors(checkedTrackColor = StudioColors.ActiveViolet)
                         )
@@ -344,7 +345,7 @@ fun SettingsStudioScreen(
                             Surface(
                                 onClick = {
                                     currentMode = modeName
-                                    prefs.edit().putString("current_mode", modeName).apply()
+                                    prefs?.edit()?.putString("current_mode", modeName)?.apply()
                                 },
                                 shape = CircleShape,
                                 color = if (isSelected) StudioColors.ActiveViolet else StudioColors.CardSurfaceHighlight,
@@ -388,7 +389,7 @@ fun SettingsStudioScreen(
                             checked = learnFromChoices,
                             onCheckedChange = {
                                 learnFromChoices = it
-                                prefs.edit().putBoolean("learn_from_choices", it).apply()
+                                prefs?.edit()?.putBoolean("learn_from_choices", it)?.apply()
                             },
                             colors = SwitchDefaults.colors(checkedTrackColor = StudioColors.ActiveViolet)
                         )
@@ -400,7 +401,7 @@ fun SettingsStudioScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-                                prefs.edit().putInt("suppressed_count", 0).apply()
+                                prefs?.edit()?.putInt("suppressed_count", 0)?.apply()
                                 Toast.makeText(context, "Local learning data reset", Toast.LENGTH_SHORT).show()
                             },
                         verticalAlignment = Alignment.CenterVertically,
@@ -491,3 +492,24 @@ fun SettingsStudioScreen(
         }
     }
 }
+
+@Preview(showBackground = true, widthDp = 380, heightDp = 800)
+@Composable
+fun SettingsStudioPreview() {
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val prefs = context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
+    FocusRefineTheme {
+        SettingsStudioScreen(
+            isEmulator = false,
+            prefs = prefs,
+            onBack = {},
+            onNavigateToAppRules = {},
+            onNavigateToContextModes = {},
+            onNavigateToPrivacy = {},
+            onNavigateToLearnedRules = {},
+            onSendSampleNotifications = {},
+            onClearAllNotifications = {}
+        )
+    }
+}
+

@@ -35,6 +35,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.CoroutineScope
@@ -581,3 +582,17 @@ fun MainDashboardContent(
         }
     }
 }
+
+@Preview(showBackground = true, widthDp = 380, heightDp = 800)
+@Composable
+fun MainDashboardPreview() {
+    FocusRefineTheme {
+        MainDashboardContent(
+            onOpenSettings = {},
+            onEnableNotificationAccess = {},
+            isNotificationAccessEnabled = true,
+            isFilteringActive = true
+        )
+    }
+}
+

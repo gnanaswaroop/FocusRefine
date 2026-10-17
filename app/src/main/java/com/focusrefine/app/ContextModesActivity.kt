@@ -20,6 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -56,7 +57,7 @@ fun ContextModesScreen(
 ) {
     val context = androidx.compose.ui.platform.LocalContext.current
     val prefs = context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
-    val defaultMode = remember { PromptManager.getDefaultModeName(context) }
+    val defaultMode = remember { try { PromptManager.getDefaultModeName(context) } catch(_: Exception) { "Commute" } }
     var activeMode by remember { mutableStateOf(prefs.getString("current_mode", defaultMode) ?: defaultMode) }
     var manualSwitchOnly by remember { mutableStateOf(prefs.getBoolean("manual_mode_switch", true)) }
 
@@ -261,3 +262,12 @@ fun ContextModesScreen(
         }
     }
 }
+
+@Preview(showBackground = true, widthDp = 380, heightDp = 800)
+@Composable
+fun ContextModesPreview() {
+    FocusRefineTheme {
+        ContextModesScreen(onBack = {})
+    }
+}
+

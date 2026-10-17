@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.CoroutineScope
@@ -408,3 +409,20 @@ fun NotificationDetailScreen(
         }
     }
 }
+
+@Preview(showBackground = true, widthDp = 380, heightDp = 800)
+@Composable
+fun NotificationDetailPreview() {
+    FocusRefineTheme {
+        NotificationDetailScreen(
+            notifId = 1,
+            title = "WhatsApp",
+            text = "Hey! Want to grab coffee before the meeting?",
+            packageName = "com.whatsapp",
+            timestamp = System.currentTimeMillis(),
+            initialUrgent = false,
+            onBack = {}
+        )
+    }
+}
+
