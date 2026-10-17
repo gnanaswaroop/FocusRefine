@@ -267,7 +267,7 @@ class NotificationFilterService : NotificationListenerService() {
     }
 
     private fun analyzeContent(title: String?, text: String?, mode: String): Boolean {
-        // Check for matching user learned rule first
+        // 1. Check for matching user learned rule first
         val learnedRule = database.notificationDao().findMatchingLearnedRule(title ?: "", "%${text ?: ""}%")
         if (learnedRule != null) {
             Log.d(TAG, "Learned rule override matched: isUrgent = ${learnedRule.isUrgent}")
@@ -276,14 +276,34 @@ class NotificationFilterService : NotificationListenerService() {
 
         val content = "${title ?: ""} ${text ?: ""}".lowercase()
         val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
+
+        // 2. Check JSON-driven exceptions from exceptions.json
+        val exceptions = ExceptionManager.getAllExceptions(this)
+        for (exc in exceptions) {
+            val isEnabled = prefs.getBoolean(exc.prefKey, exc.defaultEnabled)
+            if (isEnabled) {
+                if (exc.keywords.any { keyword -> content.contains(keyword.lowercase()) }) {
+                    Log.d(TAG, "Matched user-enabled exception '${exc.title}': showing notification")
+                    return true
+                }
+            }
+        }
+
+        // 3. AI / Filtering Strength Evaluation
         val useAi = prefs.getBoolean("use_ai_model", true)
+        val filterStrength = prefs.getInt("filter_strength", 1) // 0=Gentle, 1=Balanced, 2=Strict
+        val scoreThreshold = when (filterStrength) {
+            0 -> 0.4f // Gentle (Lenient)
+            2 -> 0.8f // Strict (Restricted)
+            else -> 0.6f // Balanced
+        }
 
         if (useAi && textClassifier != null) {
             try {
                 val result = textClassifier!!.classify(content)
                 for (classification in result.classificationResult().classifications()) {
                     for (category in classification.categories()) {
-                        if (category.categoryName().equals("urgent", ignoreCase = true) && category.score() > 0.6f) {
+                        if (category.categoryName().equals("urgent", ignoreCase = true) && category.score() >= scoreThreshold) {
                             return true
                         }
                     }
@@ -293,10 +313,19 @@ class NotificationFilterService : NotificationListenerService() {
             }
         }
 
-        val prompt = when (mode) {
-            "Commute" -> prefs.getString("prompt_commute", PromptManager.getOotbPrompt(this, "commute", "navigation, maps, turn left, turn right, traffic, call, vip, boss")) ?: ""
-            "Do Not Disturb (DND)" -> prefs.getString("prompt_dnd", PromptManager.getOotbPrompt(this, "dnd", "emergency, hospital, 911, critical")) ?: ""
-            else -> prefs.getString("custom_mode_prompt_$mode", "urgent") ?: ""
+        // 4. Prompt Keywords Evaluation
+        val ootbPrompts = PromptManager.getAllOotbPrompts(this)
+        val prompt = when {
+            mode.contains("Commute", ignoreCase = true) ->
+                prefs.getString("prompt_Commute", ootbPrompts["Commute"] ?: "navigation, maps, turn left, turn right, traffic, call, vip, boss, route") ?: ""
+            mode.contains("Focus", ignoreCase = true) ->
+                prefs.getString("prompt_Deep Work / Focus", ootbPrompts["Deep Work / Focus"] ?: "urgent, call, boss, meeting, build, outage, deadline") ?: ""
+            mode.contains("Sleep", ignoreCase = true) ->
+                prefs.getString("prompt_Sleeping / Rest", ootbPrompts["Sleeping / Rest"] ?: "emergency, family, hospital, call, alarm") ?: ""
+            mode.contains("DND", ignoreCase = true) ->
+                prefs.getString("prompt_Do Not Disturb (DND)", ootbPrompts["Do Not Disturb (DND)"] ?: "emergency, hospital, 911, critical") ?: ""
+            else ->
+                prefs.getString("custom_mode_prompt_$mode", "urgent, call, emergency, navigation, meeting") ?: "urgent, call, emergency, navigation, meeting"
         }
 
         val keywords = prompt.lowercase().split(",", " ").map { it.trim() }.filter { it.isNotEmpty() }
