@@ -159,46 +159,108 @@ fun SettingsStudioScreen(
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Settings & Studio",
+                    text = "Settings",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
             }
 
-            // 1. AI Engine Active Banner Card
+            // 1. Classification Engine Toggle Card (On-Device AI vs Semantic Matcher)
             StudioCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(text = "✨", fontSize = 16.sp)
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = if (isEmulator) "On-Device Semantic Engine Active" else "Gemini Nano AI Active (AICore)",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 15.sp,
-                            color = Color.White,
-                            modifier = Modifier.weight(1f)
-                        )
+                    Text(
+                        text = "Classification Engine",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 15.sp,
+                        color = Color.White
+                    )
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    // Active Engine Status Banner
+                    Surface(
+                        shape = MaterialTheme.shapes.small,
+                        color = if (useAiModel) StudioColors.ActiveViolet.copy(alpha = 0.2f) else StudioColors.CardSurfaceHighlight,
+                        border = BorderStroke(1.dp, if (useAiModel) StudioColors.ActiveViolet else StudioColors.StudioBorder),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(12.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = if (useAiModel) "✨" else "🔍",
+                                fontSize = 16.sp
+                            )
+                            Spacer(modifier = Modifier.width(10.dp))
+                            Column {
+                                Text(
+                                    text = if (useAiModel) "On-Device AI Engine Active" else "On-Device Semantic Matcher Active",
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 13.sp,
+                                    color = if (useAiModel) StudioColors.ActiveVioletLight else Color.White
+                                )
+                                Text(
+                                    text = if (useAiModel)
+                                        "Deep intent classification via Gemini Nano / AICore."
+                                    else
+                                        "Local tokenization & prompt heuristic matching.",
+                                    fontSize = 11.sp,
+                                    color = StudioColors.TextMuted
+                                )
+                            }
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = "Use On-Device AI Engine",
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                            Text(
+                                text = "Toggle off to use On-Device Semantic Matcher",
+                                fontSize = 11.sp,
+                                color = StudioColors.TextMuted
+                            )
+                        }
+
                         Switch(
                             checked = useAiModel,
-                            onCheckedChange = {
-                                useAiModel = it
-                                prefs?.edit()?.putBoolean("use_ai_model", it)?.apply()
-                                Toast.makeText(context, "AI Model set to: ${if(it) "Active" else "Semantic Match"}", Toast.LENGTH_SHORT).show()
+                            onCheckedChange = { isChecked ->
+                                useAiModel = isChecked
+                                prefs?.edit()?.putBoolean("use_ai_model", isChecked)?.apply()
+                                Toast.makeText(
+                                    context,
+                                    "Engine set to: ${if (isChecked) "On-Device AI" else "On-Device Semantic Matcher"}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             },
-                            colors = SwitchDefaults.colors(checkedTrackColor = StudioColors.ActiveViolet)
+                            colors = SwitchDefaults.colors(
+                                checkedThumbColor = Color.White,
+                                checkedTrackColor = StudioColors.ActiveViolet
+                            )
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(8.dp))
+                    HorizontalDivider(modifier = Modifier.padding(vertical = 10.dp), color = StudioColors.StudioBorder)
 
-                    Row(verticalAlignment = Alignment.Top) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(text = "🛡️", fontSize = 13.sp)
                         Spacer(modifier = Modifier.width(8.dp))
                         Column {
                             Text(
-                                text = "Processing stays on your device.",
-                                fontSize = 13.sp,
+                                text = "Processing stays 100% on your device.",
+                                fontSize = 12.sp,
                                 fontWeight = FontWeight.Medium,
                                 color = StudioColors.TextPrimary
                             )
@@ -310,7 +372,7 @@ fun SettingsStudioScreen(
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            // 4. Context Modes Card
+            // 4. Unified Context Modes Card
             StudioCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
@@ -324,19 +386,26 @@ fun SettingsStudioScreen(
                             fontSize = 15.sp,
                             color = Color.White
                         )
-                        Text(
-                            text = "$currentMode · Active",
-                            fontSize = 11.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = StudioColors.ActiveVioletLight
-                        )
+                        Surface(
+                            shape = CircleShape,
+                            color = StudioColors.ActiveViolet.copy(alpha = 0.2f),
+                            border = BorderStroke(1.dp, StudioColors.ActiveViolet)
+                        ) {
+                            Text(
+                                text = "$currentMode · Active",
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = StudioColors.ActiveVioletLight,
+                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+                            )
+                        }
                     }
 
-                    Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
 
                     LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         items(modeOptions) { modeName ->
-                            val isSelected = currentMode.contains(modeName, ignoreCase = true)
+                            val isSelected = currentMode.equals(modeName, ignoreCase = true)
                             Surface(
                                 onClick = {
                                     currentMode = modeName
@@ -357,12 +426,42 @@ fun SettingsStudioScreen(
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    val modeSummaryText = when {
+                        currentMode.contains("Commute", ignoreCase = true) ->
+                            "Allows navigation, transit alerts & priority calls; quiets casual chat."
+                        currentMode.contains("Focus", ignoreCase = true) ->
+                            "Allows urgent calls, boss pings & deadlines; quiets routine social alerts."
+                        currentMode.contains("Sleep", ignoreCase = true) ->
+                            "Allows emergency alerts & family calls; quiets all non-critical notifications."
+                        currentMode.contains("Gaming", ignoreCase = true) ->
+                            "Allows calls & priority contacts; quiets routine emails & social pings."
+                        else ->
+                            "Filtering tailored to your custom mode rules."
+                    }
+
                     Text(
-                        text = "Choose a mode to tune what gets through.",
+                        text = modeSummaryText,
                         fontSize = 11.sp,
-                        color = StudioColors.TextMuted
+                        color = StudioColors.TextSecondary
                     )
+
+                    HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), color = StudioColors.StudioBorder)
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { onNavigateToContextModes() },
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Column {
+                            Text("Manage mode definitions & rules", fontWeight = FontWeight.Bold, fontSize = 13.sp, color = StudioColors.ActiveVioletLight)
+                            Text("Custom prompts, allow/mute rule summaries", fontSize = 11.sp, color = StudioColors.TextMuted)
+                        }
+                        Text("›", fontSize = 18.sp, color = StudioColors.ActiveVioletLight)
+                    }
                 }
             }
 
@@ -422,24 +521,6 @@ fun SettingsStudioScreen(
                     Column {
                         Text("App Rules", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color.White)
                         Text("Per-app exceptions and filtering rules", fontSize = 11.sp, color = StudioColors.TextMuted)
-                    }
-                    Text("›", fontSize = 20.sp, color = StudioColors.TextSecondary)
-                }
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            StudioCard(onClick = onNavigateToContextModes, modifier = Modifier.fillMaxWidth()) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column {
-                        Text("Context Modes", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color.White)
-                        Text("Manage mode definitions and rules", fontSize = 11.sp, color = StudioColors.TextMuted)
                     }
                     Text("›", fontSize = 20.sp, color = StudioColors.TextSecondary)
                 }

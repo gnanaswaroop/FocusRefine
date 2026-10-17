@@ -71,6 +71,9 @@ fun PrivacyInsightsScreen(
     var urgentCount by remember { mutableStateOf(0) }
     var showClearDataDialog by remember { mutableStateOf(false) }
 
+    val totalCount = mutedCount + urgentCount
+    val noiseFilteredPercent = if (totalCount > 0) (mutedCount * 100 / totalCount) else 0
+
     LaunchedEffect(Unit) {
         withContext(Dispatchers.IO) {
             val dao = database.notificationDao()
@@ -191,7 +194,7 @@ fun PrivacyInsightsScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = "84% Noise Filtered",
+                        text = "${noiseFilteredPercent}% Noise Filtered",
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White
@@ -218,7 +221,58 @@ fun PrivacyInsightsScreen(
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            // 3. Private by Design Card
+            // 3. Local Learning & Data Card
+            StudioCard(modifier = Modifier.fillMaxWidth()) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(
+                        text = "Local learning & data",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 15.sp,
+                        color = Color.White
+                    )
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text("Learn from my choices", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                            Text("Improve filtering using local feedback.", fontSize = 11.sp, color = StudioColors.TextMuted)
+                        }
+                        Switch(
+                            checked = learnFromChoices,
+                            onCheckedChange = {
+                                learnFromChoices = it
+                                prefs.edit().putBoolean("learn_from_choices", it).apply()
+                            },
+                            colors = SwitchDefaults.colors(checkedTrackColor = StudioColors.ActiveViolet)
+                        )
+                    }
+
+                    HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), color = StudioColors.StudioBorder)
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { showClearDataDialog = true },
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text("Clear local learning data", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = StudioColors.RedText)
+                            Text("Resets learned feedback on this device. Your app rules and context preferences stay unchanged.", fontSize = 11.sp, color = StudioColors.TextMuted)
+                        }
+                        Text("🔄", fontSize = 16.sp)
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(14.dp))
+
+            // 4. Private by Design Card (At Bottom)
             StudioCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -269,57 +323,6 @@ fun PrivacyInsightsScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(14.dp))
-
-            // 4. Local Learning & Data Card
-            StudioCard(modifier = Modifier.fillMaxWidth()) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        text = "Local learning & data",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 15.sp,
-                        color = Color.White
-                    )
-
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text("Learn from my choices", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                            Text("Improve filtering using local feedback.", fontSize = 11.sp, color = StudioColors.TextMuted)
-                        }
-                        Switch(
-                            checked = learnFromChoices,
-                            onCheckedChange = {
-                                learnFromChoices = it
-                                prefs.edit().putBoolean("learn_from_choices", it).apply()
-                            },
-                            colors = SwitchDefaults.colors(checkedTrackColor = StudioColors.ActiveViolet)
-                        )
-                    }
-
-                    HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), color = StudioColors.StudioBorder)
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { showClearDataDialog = true },
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text("Clear local learning data", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = StudioColors.RedText)
-                            Text("Resets learned feedback on this device. Your app rules and context preferences stay unchanged.", fontSize = 11.sp, color = StudioColors.TextMuted)
-                        }
-                        Text("🔄", fontSize = 16.sp)
-                    }
-                }
-            }
-
             if (showClearDataDialog) {
                 AlertDialog(
                     onDismissRequest = { showClearDataDialog = false },
@@ -365,4 +368,3 @@ fun PrivacyInsightsPreview() {
         )
     }
 }
-
