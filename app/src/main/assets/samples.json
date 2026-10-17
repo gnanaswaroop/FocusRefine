@@ -26,7 +26,7 @@
   {
     "title": "Phone",
     "text": "Incoming call from Boss",
-    "packageName": "com.android.phone",
+    "packageName": "com.google.android.dialer",
     "expectedUrgent": true
   },
   {
@@ -48,7 +48,7 @@
     "expectedUrgent": true
   },
   {
-    "title": "Email",
+    "title": "Gmail",
     "text": "CEO: Critical security patch required immediately for all internal microservices before Monday morning audit.",
     "packageName": "com.google.android.gm",
     "expectedUrgent": true
@@ -56,7 +56,7 @@
   {
     "title": "Weather",
     "text": "Severe thunderstorm warning in your county until 11 PM. Seek shelter immediately.",
-    "packageName": "com.weather.Weather",
+    "packageName": "com.google.android.apps.messaging",
     "expectedUrgent": true
   },
   {
@@ -68,13 +68,13 @@
   {
     "title": "Airline",
     "text": "Flight 404 boarding now at Gate B12. Final call for all remaining passengers.",
-    "packageName": "com.airline.app",
+    "packageName": "com.delta.mobile.android",
     "expectedUrgent": true
   },
   {
-    "title": "Bank",
+    "title": "Chase Bank",
     "text": "Fraud alert: Confirm transaction of $500 at Electronics Superstore if this was you.",
-    "packageName": "com.bank.app",
+    "packageName": "com.chase.sig.android",
     "expectedUrgent": true
   },
   {
@@ -110,7 +110,7 @@
   {
     "title": "X (Twitter)",
     "text": "Trending in Technology: Top 10 things to expect at the upcoming developer conference next week.",
-    "packageName": "com.x.android",
+    "packageName": "com.twitter.android",
     "expectedUrgent": false
   },
   {
@@ -132,21 +132,15 @@
     "expectedUrgent": false
   },
   {
-    "title": "Tinder",
-    "text": "You have a new match! Say hello and start a conversation.",
-    "packageName": "com.tinder",
-    "expectedUrgent": false
-  },
-  {
-    "title": "Shopping",
+    "title": "Amazon",
     "text": "Flash sale! 50% off all shoes and apparel today only with free shipping.",
-    "packageName": "com.shopping.app",
+    "packageName": "com.amazon.mShop.android.shopping",
     "expectedUrgent": false
   },
   {
-    "title": "News",
+    "title": "Google News",
     "text": "Daily briefing: Global markets close higher today following positive economic data releases.",
-    "packageName": "com.news.app",
+    "packageName": "com.google.android.apps.magazines",
     "expectedUrgent": false
   },
   {
