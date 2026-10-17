@@ -206,49 +206,26 @@ fun MainDashboardContent(
                     .padding(vertical = 4.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Box(
-                    modifier = Modifier
-                        .size(32.dp)
-                        .clip(CircleShape)
-                        .background(StudioColors.CardSurfaceHighlight),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.adaptive_foreground),
-                        contentDescription = "App Logo",
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
-                Spacer(modifier = Modifier.width(10.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.adaptive_foreground),
+                    contentDescription = "App Logo",
+                    modifier = Modifier.size(26.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = "FocusRefine",
-                    fontSize = 22.sp,
+                    fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    modifier = Modifier.weight(1f)
+                    color = Color.White
                 )
-                IconButton(onClick = onOpenSettings) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_settings),
-                        contentDescription = "Settings",
-                        tint = StudioColors.TextPrimary,
-                        modifier = Modifier.size(22.dp)
-                    )
-                }
-            }
-
-            // Sub-badge: On-Device Protection Active
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(bottom = 12.dp)
-            ) {
+                Spacer(modifier = Modifier.width(8.dp))
                 Surface(
                     shape = CircleShape,
                     color = StudioColors.GreenSurface,
                     border = BorderStroke(1.dp, StudioColors.GreenAccent.copy(alpha = 0.3f))
                 ) {
                     Row(
-                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Box(
@@ -257,16 +234,30 @@ fun MainDashboardContent(
                                 .clip(CircleShape)
                                 .background(StudioColors.GreenAccent)
                         )
-                        Spacer(modifier = Modifier.width(6.dp))
+                        Spacer(modifier = Modifier.width(4.dp))
                         Text(
-                            text = "On-Device Protection Active",
-                            fontSize = 11.sp,
-                            fontWeight = FontWeight.Medium,
+                            text = "On-Device",
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Bold,
                             color = StudioColors.GreenText
                         )
                     }
                 }
+                Spacer(modifier = Modifier.weight(1f))
+                IconButton(
+                    onClick = onOpenSettings,
+                    modifier = Modifier.size(32.dp)
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_settings),
+                        contentDescription = "Settings",
+                        tint = StudioColors.TextPrimary,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
             }
+
+            Spacer(modifier = Modifier.height(10.dp))
 
             // 2. Stat / Filter Summary Card
             StudioCard(
@@ -296,12 +287,11 @@ fun MainDashboardContent(
                         Column(horizontalAlignment = Alignment.End) {
                             Switch(
                                 checked = isRunning && isNotificationAccessEnabled,
-                                enabled = isNotificationAccessEnabled,
+                                enabled = true,
                                 onCheckedChange = { isChecked ->
                                     if (!isNotificationAccessEnabled) {
                                         Toast.makeText(context, "Please enable Notification Access first", Toast.LENGTH_SHORT).show()
-                                        isRunning = false
-                                        prefs.edit().putBoolean("service_running", false).apply()
+                                        onEnableNotificationAccess()
                                     } else {
                                         isRunning = isChecked
                                         prefs.edit().putBoolean("service_running", isChecked).apply()
