@@ -9,7 +9,6 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -64,7 +63,6 @@ fun AppRulesScreen(
     val context = androidx.compose.ui.platform.LocalContext.current
     var searchQuery by remember { mutableStateOf("") }
     var expandedAppPackage by remember { mutableStateOf("com.whatsapp") }
-    var showAddCustomModeDialog by remember { mutableStateOf(false) }
 
     val defaultMode = remember { PromptManager.getDefaultModeName(context) }
     val activeMode = remember { prefs.getString("current_mode", defaultMode) ?: defaultMode }
@@ -109,7 +107,7 @@ fun AppRulesScreen(
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "App Rules & Custom Modes",
+                    text = "App Rules",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
@@ -126,7 +124,7 @@ fun AppRulesScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = "Balanced filtering",
+                            text = "Per-App Rule Tuning",
                             fontWeight = FontWeight.Bold,
                             fontSize = 15.sp,
                             color = Color.White
@@ -138,7 +136,7 @@ fun AppRulesScreen(
                             border = BorderStroke(1.dp, StudioColors.ActiveViolet)
                         ) {
                             Text(
-                                text = "AI ON",
+                                text = "$activeMode Active",
                                 fontSize = 10.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = StudioColors.ActiveVioletLight,
@@ -150,23 +148,11 @@ fun AppRulesScreen(
                     Spacer(modifier = Modifier.height(6.dp))
 
                     Text(
-                        text = "$activeMode is active. App rules tune what gets through; urgent exceptions stay allowed.",
+                        text = "App rules tune per-application filtering levels (Use AI, Allow all, Mute all) and exceptions.",
                         fontSize = 12.sp,
                         color = StudioColors.TextSecondary
                     )
                 }
-            }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            // Add Custom Mode Quick Action Button
-            Button(
-                onClick = { showAddCustomModeDialog = true },
-                modifier = Modifier.fillMaxWidth(),
-                shape = CircleShape,
-                colors = ButtonDefaults.buttonColors(containerColor = StudioColors.ActiveViolet)
-            ) {
-                Text("➕ Add Custom Mode", fontSize = 13.sp, fontWeight = FontWeight.Bold)
             }
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -350,71 +336,6 @@ fun AppRulesScreen(
                     )
                 }
             }
-        }
-
-        // Add Custom Mode Dialog
-        if (showAddCustomModeDialog) {
-            var nameInput by remember { mutableStateOf("") }
-            var promptInput by remember { mutableStateOf("") }
-
-            AlertDialog(
-                onDismissRequest = { showAddCustomModeDialog = false },
-                title = { Text("Add Custom Mode", color = Color.White, fontWeight = FontWeight.Bold) },
-                text = {
-                    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                        OutlinedTextField(
-                            value = nameInput,
-                            onValueChange = { nameInput = it },
-                            label = { Text("Mode Name (e.g. Study, Workout)") },
-                            singleLine = true,
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                        OutlinedTextField(
-                            value = promptInput,
-                            onValueChange = { promptInput = it },
-                            label = { Text("Natural Language Rules / Prompt") },
-                            placeholder = { Text("e.g., Exam reminders, professor emails, study partner calls") },
-                            modifier = Modifier.fillMaxWidth(),
-                            minLines = 3
-                        )
-                    }
-                },
-                confirmButton = {
-                    Button(
-                        onClick = {
-                            val name = nameInput.trim()
-                            val prompt = promptInput.trim()
-                            if (name.isNotEmpty() && prompt.isNotEmpty()) {
-                                val existing = prefs.getString("custom_modes_list", "") ?: ""
-                                val customList = if (existing.isEmpty()) mutableListOf() else existing.split(",").toMutableList()
-                                if (!customList.contains(name)) {
-                                    customList.add(name)
-                                    prefs.edit()
-                                        .putString("custom_modes_list", customList.joinToString(","))
-                                        .putString("custom_mode_prompt_$name", prompt)
-                                        .putBoolean("custom_mode_enabled_$name", true)
-                                        .apply()
-                                    Toast.makeText(context, "Custom mode '$name' added!", Toast.LENGTH_SHORT).show()
-                                    showAddCustomModeDialog = false
-                                } else {
-                                    Toast.makeText(context, "Mode name already exists", Toast.LENGTH_SHORT).show()
-                                }
-                            } else {
-                                Toast.makeText(context, "Name and prompt rules cannot be empty", Toast.LENGTH_SHORT).show()
-                            }
-                        },
-                        colors = ButtonDefaults.buttonColors(containerColor = StudioColors.ActiveViolet)
-                    ) {
-                        Text("Save Custom Mode")
-                    }
-                },
-                dismissButton = {
-                    TextButton(onClick = { showAddCustomModeDialog = false }) {
-                        Text("Cancel", color = StudioColors.TextSecondary)
-                    }
-                },
-                containerColor = StudioColors.CardSurface
-            )
         }
     }
 }

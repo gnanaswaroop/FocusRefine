@@ -9,20 +9,17 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -46,6 +43,10 @@ class SettingsActivity : ComponentActivity() {
                          android.os.Build.HARDWARE.contains("goldfish") ||
                          android.os.Build.HARDWARE.contains("ranchu") ||
                          android.os.Build.MODEL.contains("sdk")
+
+        if (isEmulator) {
+            prefs.edit().putBoolean("use_ai_model", false).apply()
+        }
 
         setContent {
             FocusRefineTheme {
@@ -129,7 +130,14 @@ fun SettingsStudioScreen(
     var currentMode by remember { mutableStateOf(prefs?.getString("current_mode", defaultMode) ?: defaultMode) }
     var filterStrengthIndex by remember { mutableStateOf(prefs?.getInt("filter_strength", 1) ?: 1) } // 0=Gentle, 1=Balanced, 2=Strict
     var learnFromChoices by remember { mutableStateOf(prefs?.getBoolean("learn_from_choices", true) ?: true) }
-    var useAiModel by remember { mutableStateOf(prefs?.getBoolean("use_ai_model", !isEmulator) ?: !isEmulator) }
+    var useAiModel by remember { mutableStateOf(if (isEmulator) false else (prefs?.getBoolean("use_ai_model", true) ?: true)) }
+
+    // Collapsible Card States (Open/Expanded by default)
+    var isEngineExpanded by remember { mutableStateOf(true) }
+    var isStrengthExpanded by remember { mutableStateOf(true) }
+    var isExceptionsExpanded by remember { mutableStateOf(true) }
+    var isModesExpanded by remember { mutableStateOf(true) }
+    var isLearnExpanded by remember { mutableStateOf(true) }
 
     val modeOptions = listOf("Commute", "Deep Focus", "Sleep", "Gaming")
 
@@ -166,109 +174,135 @@ fun SettingsStudioScreen(
                 )
             }
 
-            // 1. Classification Engine Toggle Card (On-Device AI vs Semantic Matcher)
+            // 1. Classification Engine Toggle Card (Collapsible)
             StudioCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        text = "Classification Engine",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 15.sp,
-                        color = Color.White
-                    )
-
-                    Spacer(modifier = Modifier.height(10.dp))
-
-                    // Active Engine Status Banner
-                    Surface(
-                        shape = MaterialTheme.shapes.small,
-                        color = if (useAiModel) StudioColors.ActiveViolet.copy(alpha = 0.2f) else StudioColors.CardSurfaceHighlight,
-                        border = BorderStroke(1.dp, if (useAiModel) StudioColors.ActiveViolet else StudioColors.StudioBorder),
-                        modifier = Modifier.fillMaxWidth()
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { isEngineExpanded = !isEngineExpanded },
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Row(
-                            modifier = Modifier.padding(12.dp),
-                            verticalAlignment = Alignment.CenterVertically
+                        Text(
+                            text = "Classification Engine",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 15.sp,
+                            color = Color.White
+                        )
+                        Text(
+                            text = if (isEngineExpanded) "˅" else "›",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = StudioColors.TextSecondary
+                        )
+                    }
+
+                    if (isEngineExpanded) {
+                        Spacer(modifier = Modifier.height(10.dp))
+
+                        // Active Engine Status Banner
+                        Surface(
+                            shape = MaterialTheme.shapes.small,
+                            color = if (useAiModel && !isEmulator) StudioColors.ActiveViolet.copy(alpha = 0.2f) else StudioColors.CardSurfaceHighlight,
+                            border = BorderStroke(1.dp, if (useAiModel && !isEmulator) StudioColors.ActiveViolet else StudioColors.StudioBorder),
+                            modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text(
-                                text = if (useAiModel) "✨" else "🔍",
-                                fontSize = 16.sp
-                            )
-                            Spacer(modifier = Modifier.width(10.dp))
-                            Column {
+                            Row(
+                                modifier = Modifier.padding(12.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
                                 Text(
-                                    text = if (useAiModel) "On-Device AI Engine Active" else "On-Device Semantic Matcher Active",
+                                    text = if (useAiModel && !isEmulator) "✨" else "🔍",
+                                    fontSize = 16.sp
+                                )
+                                Spacer(modifier = Modifier.width(10.dp))
+                                Column {
+                                    Text(
+                                        text = if (useAiModel && !isEmulator) "On-Device AI Engine Active" else "On-Device Semantic Matcher Active",
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 13.sp,
+                                        color = if (useAiModel && !isEmulator) StudioColors.ActiveVioletLight else Color.White
+                                    )
+                                    Text(
+                                        text = if (useAiModel && !isEmulator)
+                                            "Deep intent classification via Gemini Nano / AICore."
+                                        else if (isEmulator)
+                                            "Emulator mode: MediaPipe native JNI disabled. Using local semantic prompt matcher."
+                                        else
+                                            "Local tokenization & prompt heuristic matching.",
+                                        fontSize = 11.sp,
+                                        color = if (isEmulator) StudioColors.GoldAccent else StudioColors.TextMuted
+                                    )
+                                }
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                    text = "Use On-Device AI Engine",
+                                    fontSize = 14.sp,
                                     fontWeight = FontWeight.Bold,
-                                    fontSize = 13.sp,
-                                    color = if (useAiModel) StudioColors.ActiveVioletLight else Color.White
+                                    color = if (isEmulator) StudioColors.TextMuted else Color.White
                                 )
                                 Text(
-                                    text = if (useAiModel)
-                                        "Deep intent classification via Gemini Nano / AICore."
+                                    text = if (isEmulator)
+                                        "Disabled on emulator (MediaPipe model requires device hardware)"
                                     else
-                                        "Local tokenization & prompt heuristic matching.",
+                                        "Toggle off to use On-Device Semantic Matcher",
+                                    fontSize = 11.sp,
+                                    color = if (isEmulator) StudioColors.GoldAccent else StudioColors.TextMuted
+                                )
+                            }
+
+                            Switch(
+                                enabled = !isEmulator,
+                                checked = if (isEmulator) false else useAiModel,
+                                onCheckedChange = { isChecked ->
+                                    if (!isEmulator) {
+                                        useAiModel = isChecked
+                                        prefs?.edit()?.putBoolean("use_ai_model", isChecked)?.apply()
+                                        Toast.makeText(
+                                            context,
+                                            "Engine set to: ${if (isChecked) "On-Device AI" else "On-Device Semantic Matcher"}",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                },
+                                colors = SwitchDefaults.colors(
+                                    checkedThumbColor = Color.White,
+                                    checkedTrackColor = StudioColors.ActiveViolet,
+                                    disabledUncheckedTrackColor = StudioColors.CardSurfaceHighlight,
+                                    disabledUncheckedThumbColor = StudioColors.TextMuted
+                                )
+                            )
+                        }
+
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 10.dp), color = StudioColors.StudioBorder)
+
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(text = "🛡️", fontSize = 13.sp)
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Column {
+                                Text(
+                                    text = "Processing stays 100% on your device.",
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.Medium,
+                                    color = StudioColors.TextPrimary
+                                )
+                                Text(
+                                    text = "No cloud uploads. No notification history shared.",
                                     fontSize = 11.sp,
                                     color = StudioColors.TextMuted
                                 )
                             }
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text(
-                                text = "Use On-Device AI Engine",
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White
-                            )
-                            Text(
-                                text = "Toggle off to use On-Device Semantic Matcher",
-                                fontSize = 11.sp,
-                                color = StudioColors.TextMuted
-                            )
-                        }
-
-                        Switch(
-                            checked = useAiModel,
-                            onCheckedChange = { isChecked ->
-                                useAiModel = isChecked
-                                prefs?.edit()?.putBoolean("use_ai_model", isChecked)?.apply()
-                                Toast.makeText(
-                                    context,
-                                    "Engine set to: ${if (isChecked) "On-Device AI" else "On-Device Semantic Matcher"}",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            },
-                            colors = SwitchDefaults.colors(
-                                checkedThumbColor = Color.White,
-                                checkedTrackColor = StudioColors.ActiveViolet
-                            )
-                        )
-                    }
-
-                    HorizontalDivider(modifier = Modifier.padding(vertical = 10.dp), color = StudioColors.StudioBorder)
-
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(text = "🛡️", fontSize = 13.sp)
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Column {
-                            Text(
-                                text = "Processing stays 100% on your device.",
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Medium,
-                                color = StudioColors.TextPrimary
-                            )
-                            Text(
-                                text = "No cloud uploads. No notification history shared.",
-                                fontSize = 11.sp,
-                                color = StudioColors.TextMuted
-                            )
                         }
                     }
                 }
@@ -276,11 +310,13 @@ fun SettingsStudioScreen(
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            // 2. Filtering Strength Card
+            // 2. Filtering Strength Card (Collapsible)
             StudioCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { isStrengthExpanded = !isStrengthExpanded },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
@@ -291,80 +327,107 @@ fun SettingsStudioScreen(
                             color = Color.White
                         )
 
-                        Surface(
-                            shape = CircleShape,
-                            color = StudioColors.ActiveViolet.copy(alpha = 0.2f),
-                            border = BorderStroke(1.dp, StudioColors.ActiveViolet)
-                        ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Surface(
+                                shape = CircleShape,
+                                color = StudioColors.ActiveViolet.copy(alpha = 0.2f),
+                                border = BorderStroke(1.dp, StudioColors.ActiveViolet)
+                            ) {
+                                Text(
+                                    text = listOf("Gentle", "Balanced", "Strict")[filterStrengthIndex],
+                                    fontSize = 10.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = StudioColors.ActiveVioletLight,
+                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+                                )
+                            }
+                            Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "AI ON",
-                                fontSize = 10.sp,
+                                text = if (isStrengthExpanded) "˅" else "›",
+                                fontSize = 18.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = StudioColors.ActiveVioletLight,
-                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+                                color = StudioColors.TextSecondary
                             )
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(12.dp))
+                    if (isStrengthExpanded) {
+                        Spacer(modifier = Modifier.height(12.dp))
 
-                    StudioSegmentedControl(
-                        options = listOf("Gentle", "Balanced", "Strict"),
-                        selectedIndex = filterStrengthIndex,
-                        onOptionSelected = { idx ->
-                            filterStrengthIndex = idx
-                            prefs?.edit()?.putInt("filter_strength", idx)?.apply()
-                        }
-                    )
+                        StudioSegmentedControl(
+                            options = listOf("Gentle", "Balanced", "Strict"),
+                            selectedIndex = filterStrengthIndex,
+                            onOptionSelected = { idx ->
+                                filterStrengthIndex = idx
+                                prefs?.edit()?.putInt("filter_strength", idx)?.apply()
+                            }
+                        )
+                    }
                 }
             }
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            // 3. Urgent Notification Exceptions Card
+            // 3. Urgent Notification Exceptions Card (Collapsible)
             val exceptionsList = remember { ExceptionManager.getAllExceptions(context) }
 
             StudioCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        text = "Urgent notification exceptions",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 15.sp,
-                        color = Color.White
-                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { isExceptionsExpanded = !isExceptionsExpanded },
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Urgent notification exceptions",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 15.sp,
+                            color = Color.White
+                        )
+                        Text(
+                            text = if (isExceptionsExpanded) "˅" else "›",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = StudioColors.TextSecondary
+                        )
+                    }
 
-                    Spacer(modifier = Modifier.height(12.dp))
+                    if (isExceptionsExpanded) {
+                        Spacer(modifier = Modifier.height(12.dp))
 
-                    exceptionsList.forEachIndexed { index, exc ->
-                        var isChecked by remember {
-                            mutableStateOf(prefs?.getBoolean(exc.prefKey, exc.defaultEnabled) ?: exc.defaultEnabled)
-                        }
-
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(1f)) {
-                                Text(text = exc.icon, fontSize = 16.sp)
-                                Spacer(modifier = Modifier.width(10.dp))
-                                Column {
-                                    Text(exc.title, fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                                    Text(exc.description, fontSize = 11.sp, color = StudioColors.TextMuted)
-                                }
+                        exceptionsList.forEachIndexed { index, exc ->
+                            var isChecked by remember {
+                                mutableStateOf(prefs?.getBoolean(exc.prefKey, exc.defaultEnabled) ?: exc.defaultEnabled)
                             }
-                            Switch(
-                                checked = isChecked,
-                                onCheckedChange = { newValue ->
-                                    isChecked = newValue
-                                    prefs?.edit()?.putBoolean(exc.prefKey, newValue)?.apply()
-                                },
-                                colors = SwitchDefaults.colors(checkedTrackColor = StudioColors.ActiveViolet)
-                            )
-                        }
 
-                        if (index < exceptionsList.size - 1) {
-                            HorizontalDivider(modifier = Modifier.padding(vertical = 10.dp), color = StudioColors.StudioBorder)
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(1f)) {
+                                    Text(text = exc.icon, fontSize = 16.sp)
+                                    Spacer(modifier = Modifier.width(10.dp))
+                                    Column {
+                                        Text(exc.title, fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                                        Text(exc.description, fontSize = 11.sp, color = StudioColors.TextMuted)
+                                    }
+                                }
+                                Switch(
+                                    checked = isChecked,
+                                    onCheckedChange = { newValue ->
+                                        isChecked = newValue
+                                        prefs?.edit()?.putBoolean(exc.prefKey, newValue)?.apply()
+                                    },
+                                    colors = SwitchDefaults.colors(checkedTrackColor = StudioColors.ActiveViolet)
+                                )
+                            }
+
+                            if (index < exceptionsList.size - 1) {
+                                HorizontalDivider(modifier = Modifier.padding(vertical = 10.dp), color = StudioColors.StudioBorder)
+                            }
                         }
                     }
                 }
@@ -372,11 +435,13 @@ fun SettingsStudioScreen(
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            // 4. Unified Context Modes Card
+            // 4. Unified Context Modes Card (Collapsible)
             StudioCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { isModesExpanded = !isModesExpanded },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
@@ -386,123 +451,175 @@ fun SettingsStudioScreen(
                             fontSize = 15.sp,
                             color = Color.White
                         )
-                        Surface(
-                            shape = CircleShape,
-                            color = StudioColors.ActiveViolet.copy(alpha = 0.2f),
-                            border = BorderStroke(1.dp, StudioColors.ActiveViolet)
-                        ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Surface(
+                                shape = CircleShape,
+                                color = StudioColors.ActiveViolet.copy(alpha = 0.2f),
+                                border = BorderStroke(1.dp, StudioColors.ActiveViolet)
+                            ) {
+                                Text(
+                                    text = "$currentMode · Active",
+                                    fontSize = 10.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = StudioColors.ActiveVioletLight,
+                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+                                )
+                            }
+                            Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "$currentMode · Active",
-                                fontSize = 10.sp,
+                                text = if (isModesExpanded) "˅" else "›",
+                                fontSize = 18.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = StudioColors.ActiveVioletLight,
-                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+                                color = StudioColors.TextSecondary
                             )
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(12.dp))
+                    if (isModesExpanded) {
+                        Spacer(modifier = Modifier.height(12.dp))
 
-                    LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        items(modeOptions) { modeName ->
-                            val isSelected = currentMode.equals(modeName, ignoreCase = true)
-                            Surface(
-                                onClick = {
-                                    currentMode = modeName
-                                    prefs?.edit()?.putString("current_mode", modeName)?.apply()
-                                },
-                                shape = CircleShape,
-                                color = if (isSelected) StudioColors.ActiveViolet else StudioColors.CardSurfaceHighlight,
-                                border = BorderStroke(1.dp, StudioColors.StudioBorder)
-                            ) {
-                                Text(
-                                    text = modeName,
-                                    fontSize = 12.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color.White,
-                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
-                                )
+                        LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            items(modeOptions) { modeName ->
+                                val isSelected = currentMode.equals(modeName, ignoreCase = true)
+                                Surface(
+                                    onClick = {
+                                        currentMode = modeName
+                                        prefs?.edit()?.putString("current_mode", modeName)?.apply()
+                                    },
+                                    shape = CircleShape,
+                                    color = if (isSelected) StudioColors.ActiveViolet else StudioColors.CardSurfaceHighlight,
+                                    border = BorderStroke(1.dp, StudioColors.StudioBorder)
+                                ) {
+                                    Text(
+                                        text = modeName,
+                                        fontSize = 12.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = Color.White,
+                                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+                                    )
+                                }
                             }
                         }
-                    }
 
-                    Spacer(modifier = Modifier.height(10.dp))
+                        Spacer(modifier = Modifier.height(10.dp))
 
-                    val modeSummaryText = when {
-                        currentMode.contains("Commute", ignoreCase = true) ->
-                            "Allows navigation, transit alerts & priority calls; quiets casual chat."
-                        currentMode.contains("Focus", ignoreCase = true) ->
-                            "Allows urgent calls, boss pings & deadlines; quiets routine social alerts."
-                        currentMode.contains("Sleep", ignoreCase = true) ->
-                            "Allows emergency alerts & family calls; quiets all non-critical notifications."
-                        currentMode.contains("Gaming", ignoreCase = true) ->
-                            "Allows calls & priority contacts; quiets routine emails & social pings."
-                        else ->
-                            "Filtering tailored to your custom mode rules."
-                    }
-
-                    Text(
-                        text = modeSummaryText,
-                        fontSize = 11.sp,
-                        color = StudioColors.TextSecondary
-                    )
-
-                    HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), color = StudioColors.StudioBorder)
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { onNavigateToContextModes() },
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Column {
-                            Text("Manage mode definitions & rules", fontWeight = FontWeight.Bold, fontSize = 13.sp, color = StudioColors.ActiveVioletLight)
-                            Text("Custom prompts, allow/mute rule summaries", fontSize = 11.sp, color = StudioColors.TextMuted)
+                        val modeSummaryText = when {
+                            currentMode.contains("Commute", ignoreCase = true) ->
+                                "Allows navigation, transit alerts & priority calls; quiets casual chat."
+                            currentMode.contains("Focus", ignoreCase = true) ->
+                                "Allows urgent calls, boss pings & deadlines; quiets routine social alerts."
+                            currentMode.contains("Sleep", ignoreCase = true) ->
+                                "Allows emergency alerts & family calls; quiets all non-critical notifications."
+                            currentMode.contains("Gaming", ignoreCase = true) ->
+                                "Allows calls & priority contacts; quiets routine emails & social pings."
+                            else ->
+                                "Filtering tailored to your custom mode rules."
                         }
-                        Text("›", fontSize = 18.sp, color = StudioColors.ActiveVioletLight)
+
+                        Text(
+                            text = modeSummaryText,
+                            fontSize = 11.sp,
+                            color = StudioColors.TextSecondary
+                        )
+
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), color = StudioColors.StudioBorder)
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { onNavigateToContextModes() },
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column {
+                                Text("Manage mode definitions & custom modes", fontWeight = FontWeight.Bold, fontSize = 13.sp, color = StudioColors.ActiveVioletLight)
+                                Text("Custom prompts, allow/mute rule summaries", fontSize = 11.sp, color = StudioColors.TextMuted)
+                            }
+                            Text("›", fontSize = 18.sp, color = StudioColors.ActiveVioletLight)
+                        }
                     }
                 }
             }
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            // 5. Learn & Reset Card
+            // 5. Learn & Reset Card (Collapsible)
             StudioCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { isLearnExpanded = !isLearnExpanded },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text("Learn from my choices", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                            Text("Improve filtering using local feedback.", fontSize = 11.sp, color = StudioColors.TextMuted)
-                        }
-                        Switch(
-                            checked = learnFromChoices,
-                            onCheckedChange = {
-                                learnFromChoices = it
-                                prefs?.edit()?.putBoolean("learn_from_choices", it)?.apply()
-                            },
-                            colors = SwitchDefaults.colors(checkedTrackColor = StudioColors.ActiveViolet)
+                        Text(
+                            text = "Learning & Feedback",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 15.sp,
+                            color = Color.White
+                        )
+                        Text(
+                            text = if (isLearnExpanded) "˅" else "›",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = StudioColors.TextSecondary
                         )
                     }
 
-                    Divider(modifier = Modifier.padding(vertical = 12.dp), color = StudioColors.StudioBorder)
+                    if (isLearnExpanded) {
+                        Spacer(modifier = Modifier.height(12.dp))
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                prefs?.edit()?.putInt("suppressed_count", 0)?.apply()
-                                Toast.makeText(context, "Local learning data reset", Toast.LENGTH_SHORT).show()
-                            },
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text("Reset local learning data", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = StudioColors.RedText)
-                        Text("🔄", fontSize = 14.sp)
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("Learn from my choices", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                                Text("Improve filtering using local feedback.", fontSize = 11.sp, color = StudioColors.TextMuted)
+                            }
+                            Switch(
+                                checked = learnFromChoices,
+                                onCheckedChange = {
+                                    learnFromChoices = it
+                                    prefs?.edit()?.putBoolean("learn_from_choices", it)?.apply()
+                                },
+                                colors = SwitchDefaults.colors(checkedTrackColor = StudioColors.ActiveViolet)
+                            )
+                        }
+
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), color = StudioColors.StudioBorder)
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { onNavigateToLearnedRules() },
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column {
+                                Text("View & Manage Learned Rules", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = StudioColors.ActiveVioletLight)
+                                Text("Review AI rules generated from your feedback", fontSize = 11.sp, color = StudioColors.TextMuted)
+                            }
+                            Text("›", fontSize = 18.sp, color = StudioColors.ActiveVioletLight)
+                        }
+
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), color = StudioColors.StudioBorder)
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    prefs?.edit()?.putInt("suppressed_count", 0)?.apply()
+                                    Toast.makeText(context, "Local learning data reset", Toast.LENGTH_SHORT).show()
+                                },
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text("Reset local learning data", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = StudioColors.RedText)
+                            Text("🔄", fontSize = 14.sp)
+                        }
                     }
                 }
             }
@@ -510,6 +627,24 @@ fun SettingsStudioScreen(
             Spacer(modifier = Modifier.height(14.dp))
 
             // 6. Navigation Hub Cards
+            StudioCard(onClick = onNavigateToLearnedRules, modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column {
+                        Text("Learned Rules", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color.White)
+                        Text("Manage AI rules learned from swipes & choices", fontSize = 11.sp, color = StudioColors.TextMuted)
+                    }
+                    Text("›", fontSize = 20.sp, color = StudioColors.TextSecondary)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
             StudioCard(onClick = onNavigateToAppRules, modifier = Modifier.fillMaxWidth()) {
                 Row(
                     modifier = Modifier
@@ -594,4 +729,3 @@ fun SettingsStudioPreview() {
         )
     }
 }
-

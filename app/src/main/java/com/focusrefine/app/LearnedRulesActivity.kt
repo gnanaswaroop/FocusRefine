@@ -116,6 +116,23 @@ class LearnedRulesActivity : ComponentActivity() {
                                                 color = if (rule.isUrgent) Color(0xFF2E7D32) else MaterialTheme.colorScheme.error
                                             )
                                         }
+
+                                        if (!rule.synthesizedRule.isNullOrBlank()) {
+                                            Spacer(modifier = Modifier.height(6.dp))
+                                            Surface(
+                                                shape = androidx.compose.foundation.shape.RoundedCornerShape(4.dp),
+                                                color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f)
+                                            ) {
+                                                Text(
+                                                    text = "✨ AI Rule: ${rule.synthesizedRule}",
+                                                    fontSize = 12.sp,
+                                                    fontWeight = FontWeight.Medium,
+                                                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                                                )
+                                            }
+                                        }
+
                                         Spacer(modifier = Modifier.height(12.dp))
                                         Row(
                                             modifier = Modifier.fillMaxWidth(),

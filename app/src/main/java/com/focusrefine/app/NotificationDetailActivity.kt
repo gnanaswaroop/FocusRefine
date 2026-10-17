@@ -1,14 +1,12 @@
 package com.focusrefine.app
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -17,7 +15,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -46,6 +43,7 @@ class NotificationDetailActivity : ComponentActivity() {
         val packageName = intent.getStringExtra("package_name") ?: "com.app"
         val timestamp = intent.getLongExtra("timestamp", System.currentTimeMillis())
         val initialUrgent = intent.getBooleanExtra("is_urgent", false)
+        val explanation = intent.getStringExtra("explanation")
 
         setContent {
             FocusRefineTheme {
@@ -56,6 +54,7 @@ class NotificationDetailActivity : ComponentActivity() {
                     packageName = packageName,
                     timestamp = timestamp,
                     initialUrgent = initialUrgent,
+                    explanation = explanation,
                     onBack = { finish() }
                 )
             }
@@ -71,6 +70,7 @@ fun NotificationDetailScreen(
     packageName: String,
     timestamp: Long,
     initialUrgent: Boolean,
+    explanation: String?,
     onBack: () -> Unit
 ) {
     val context = androidx.compose.ui.platform.LocalContext.current
@@ -83,14 +83,17 @@ fun NotificationDetailScreen(
     var learnFromChoice by remember { mutableStateOf(true) }
     var feedbackSubmitted by remember { mutableStateOf<Boolean?>(null) }
 
-    val appLabel = when {
-        packageName.contains("whatsapp", ignoreCase = true) -> "WhatsApp"
-        packageName.contains("maps", ignoreCase = true) -> "Google Maps"
-        packageName.contains("gmail", ignoreCase = true) -> "Gmail"
-        packageName.contains("instagram", ignoreCase = true) -> "Instagram"
-        packageName.contains("slack", ignoreCase = true) -> "Slack"
-        else -> packageName.substringAfterLast(".").replaceFirstChar { it.uppercase() }
+    val appLabel = remember(packageName) {
+        val segments = packageName.split(".").filter { it.length > 2 && it !in setOf("com", "org", "net", "android", "apps", "app") }
+        val rawName = segments.lastOrNull() ?: packageName.substringAfterLast(".")
+        rawName.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
     }
+
+    val displayExplanation = explanation.takeIf { !it.isNullOrBlank() }
+        ?: (if (!isUrgent)
+            "This looks like a casual conversation or social invitation, not an urgent time-sensitive request. $activeMode quiets non-essential chat so directions and emergency calls stay in focus."
+        else
+            "This notification contains time-sensitive navigation, security verification, or VIP contact details matching your active $activeMode rules.")
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -170,7 +173,7 @@ fun NotificationDetailScreen(
                         border = BorderStroke(1.dp, if (!isUrgent) StudioColors.RedAccent.copy(alpha = 0.3f) else StudioColors.GreenAccent.copy(alpha = 0.3f))
                     ) {
                         Text(
-                            text = if (!isUrgent) "Muted: Chat Distraction" else "High Urgency: Priority Prompt",
+                            text = if (!isUrgent) "Muted: Routine Communication" else "High Urgency: Priority Prompt",
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold,
                             color = if (!isUrgent) StudioColors.RedText else StudioColors.GreenText,
@@ -215,7 +218,7 @@ fun NotificationDetailScreen(
                             border = BorderStroke(1.dp, StudioColors.ActiveViolet)
                         ) {
                             Text(
-                                text = "🚗 $activeMode · Active",
+                                text = "$activeMode · Active",
                                 fontSize = 10.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = StudioColors.ActiveVioletLight,
@@ -227,21 +230,10 @@ fun NotificationDetailScreen(
                     Spacer(modifier = Modifier.height(10.dp))
 
                     Text(
-                        text = if (!isUrgent)
-                            "This looks like a casual conversation or social invitation, not an urgent time-sensitive request. $activeMode quiets non-essential chat so directions and emergency calls stay in focus."
-                        else
-                            "This notification contains time-sensitive navigation, security verification, or VIP contact details matching your active $activeMode rules.",
+                        text = displayExplanation,
                         fontSize = 13.sp,
                         color = StudioColors.TextSecondary,
                         lineHeight = 18.sp
-                    )
-
-                    Spacer(modifier = Modifier.height(10.dp))
-
-                    Text(
-                        text = "Navigation prompts and priority contacts can still get through.",
-                        fontSize = 11.sp,
-                        color = StudioColors.TextMuted
                     )
                 }
             }
@@ -255,13 +247,21 @@ fun NotificationDetailScreen(
                     CoroutineScope(Dispatchers.IO).launch {
                         val dao = database.notificationDao()
                         if (notifId != -1) {
-                            val notif = dao.getLearnedRules().find { it.id == notifId }
+                            val notif = dao.getLearnedRules().find { it.id == notifId } ?: dao.getAll().find { it.id == notifId }
                             if (notif != null) {
-                                dao.insert(notif.copy(isUrgent = isUrgent, isLearned = learnFromChoice))
+                                val ruleText = if (learnFromChoice) AiRuleSynthesizer.synthesizeRule(
+                                    packageName = notif.packageName,
+                                    title = notif.title,
+                                    text = notif.text,
+                                    isUrgent = isUrgent,
+                                    activeMode = activeMode
+                                ) else notif.synthesizedRule
+
+                                dao.insert(notif.copy(isUrgent = isUrgent, isLearned = learnFromChoice, synthesizedRule = ruleText))
                             }
                         }
                         withContext(Dispatchers.Main) {
-                            Toast.makeText(context, if (isUrgent) "Status updated: Shown" else "Status updated: Muted", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, if (isUrgent) "Preference saved: Show in future" else "Preference saved: Hide in future", Toast.LENGTH_SHORT).show()
                         }
                     }
                 },
@@ -270,9 +270,9 @@ fun NotificationDetailScreen(
                 colors = ButtonDefaults.buttonColors(containerColor = StudioColors.ActiveViolet)
             ) {
                 Text(
-                    text = if (!isUrgent) "🔔 Show notification" else "🔕 Keep muted",
+                    text = if (!isUrgent) "🔔 Show notifications like these in the future" else "🔕 Hide notifications like these in the future",
                     fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp
+                    fontSize = 13.sp
                 )
             }
 
@@ -284,14 +284,17 @@ fun NotificationDetailScreen(
             ) {
                 OutlinedButton(
                     onClick = {
-                        isUrgent = false
-                        Toast.makeText(context, "Notification kept muted", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Preference kept", Toast.LENGTH_SHORT).show()
                     },
                     modifier = Modifier.weight(1f),
                     shape = CircleShape,
                     border = BorderStroke(1.dp, StudioColors.StudioBorder)
                 ) {
-                    Text("🔕 Keep muted", color = Color.White, fontSize = 12.sp)
+                    Text(
+                        text = if (!isUrgent) "🔕 Keep hiding these" else "🔔 Keep showing these",
+                        color = Color.White,
+                        fontSize = 12.sp
+                    )
                 }
 
                 OutlinedButton(
@@ -416,8 +419,8 @@ fun NotificationDetailPreview() {
             packageName = "com.whatsapp",
             timestamp = System.currentTimeMillis(),
             initialUrgent = false,
+            explanation = "Did not contain urgent keywords or high AI confidence for Deep Work mode.",
             onBack = {}
         )
     }
 }
-
