@@ -10,6 +10,7 @@ FocusRefine utilizes **Android Room** (an SQLite-based object-mapping persistenc
 
 ### Database File Details
 - **Database Name:** `focusrefine_database`
+- **Database Version:** `5`
 - **Storage Path:** Private application internal storage (`/data/data/com.focusrefine.app/databases/focusrefine_database`)
 - **Core Entity (`NotificationEntity`):**
   - `id`: Auto-generated primary key (`INTEGER`)
@@ -17,8 +18,10 @@ FocusRefine utilizes **Android Room** (an SQLite-based object-mapping persistenc
   - `text`: Notification body content text (nullable)
   - `packageName`: Originating app package identifier (`TEXT`, e.g., `com.whatsapp`)
   - `timestamp`: Epoch millisecond timestamp of receipt (`LONG`)
-  - `isUrgent`: Boolean flag determining classification (`true` = Shown/Urgent feed, `false` = Muted/Archived feed)
+  - `isUrgent`: Recommended Action flag (`true` = Shown/Urgent feed, `false` = Muted/Archived feed)
   - `isLearned`: Boolean flag indicating explicit user-defined correction or rule (`BOOLEAN`)
+  - `synthesizedRule`: AI-synthesized rule tag string (`TEXT`, e.g., `"[MUTE] Whatsapp: grab coffee later"`)
+  - `explanation`: Detailed classification explanation string (`TEXT`, e.g., `"🤖 [AI Pipeline] MediaPipe model score 88% exceeded threshold"`)
 
 ---
 
@@ -38,6 +41,6 @@ FocusRefine relies on Android's foundational security model to ensure that notif
 
 ## 3. Privacy & Data Lifecycle Management
 
-1. **100% On-Device Processing:** All notification inspection, classification (via MediaPipe or local heuristics), and persistence occur entirely on-device. No notification text or metadata ever leaves the physical device.
+1. **100% On-Device Processing:** All notification inspection, classification (via MediaPipe AI or local heuristics), and persistence occur entirely on-device. No notification text or metadata ever leaves the physical device.
 2. **Data Retention Controls:** Users can configure automatic data purging in `SettingsActivity` to delete database records older than a specified threshold (e.g., 1, 3, or 7 days), limiting data retention.
 3. **Manual Clearing:** Users have full control to clear all inbox items or reset learned rules instantly via the in-app settings interface.

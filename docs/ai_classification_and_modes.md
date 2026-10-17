@@ -1,18 +1,20 @@
-# FocusRefine — AI Classification Architecture, Modes, Exceptions & Filtering Strength
+# FocusRefine — AI Classification Architecture, Modes, Exceptions & AI Prompt Synthesis
 
-This document defines out-of-the-box filtering modes, system prompts, filtering strength thresholds, JSON-driven pre-configured exceptions, and the integration of **Google AI Edge MediaPipe Tasks Text Classification** in **FocusRefine**.
+This document defines out-of-the-box filtering modes, system prompts, filtering strength thresholds, JSON-driven pre-configured exceptions, AI prompt synthesis learning, and the integration of **Google AI Edge MediaPipe Tasks Text Classification** in **FocusRefine**.
 
 ---
 
 ## 1. Out-of-the-Box Modes & System Prompts
 
-### Commute Mode
+FocusRefine includes dynamic context modes. By default, **Commute** and **Deep Focus** are enabled on the Home screen, while other modes can be toggled on/off in Context Modes settings:
+
+### Commute Mode (Enabled by Default)
 - **System Prompt / Heuristic**: `"navigation, maps, turn left, turn right, traffic, call, vip, boss, route"`
 - **Behavior**:
   - **Shown**: Real-time navigation prompts (Google Maps, Waze), incoming phone calls, calendar meeting reminders, and traffic hazard alerts.
   - **Muted**: Social media pings, promotional offers, news updates, casual chat messages.
 
-### Deep Focus Mode
+### Deep Focus Mode (Enabled by Default)
 - **System Prompt / Heuristic**: `"urgent, call, boss, meeting, build, outage, deadline"`
 - **Behavior**:
   - **Shown**: Incoming phone calls, VIP contacts (e.g. "boss"), manager escalations, critical build/deploy failures.
@@ -80,14 +82,34 @@ Pre-configured exceptions are externalized into `assets/exceptions.json` and par
 ]
 ```
 
-When `NotificationFilterService.onNotificationPosted()` runs, enabled exceptions are evaluated first. If notification text matches any user-enabled exception keyword, the notification is immediately allowed as Shown.
+---
+
+## 4. MediaPipe AI Pipeline vs. Semantic Search Inputs
+
+FocusRefine clearly distinguishes between the **MediaPipe On-Device AI Pipeline** and **Semantic Search / Prompt Matcher** inputs:
+
+```
+Incoming Notification
+         │
+         ├─► 🔍 [Semantic Search] User Learned Rules & AI Synthesized Rules (AiRuleSynthesizer)
+         │
+         ├─► 🔍 [Semantic Search] JSON Exceptions (exceptions.json)
+         │
+         ├─► 🤖 [AI Pipeline] On-Device MediaPipe TextClassifier (tflite model confidence score)
+         │
+         └─► 🔍 [Semantic Search] Mode System Prompts & Keyword Tokens (prompts.json)
+```
+
+1. **`🤖 [AI Pipeline]`**: On-device MediaPipe deep intent classification model (`text_classifier.tflite`). Evaluates deep semantics and returns confidence scores (e.g. `🤖 [AI Pipeline] MediaPipe model score 88% exceeded Deep Focus threshold 0.6`). On emulator environments where native JNI is unavailable, the AI pipeline automatically disables and falls back to local semantic search.
+2. **`🔍 [Semantic Search]`**: Token-based keyword matching, user exception rules, and dynamic AI-synthesized preference rules.
 
 ---
 
-## 4. MediaPipe Text Classification & On-Device AI Integration
+## 5. AI-Driven Dynamic Prompt Synthesis (`AiRuleSynthesizer.kt`)
 
-FocusRefine harnesses **Google AI Edge MediaPipe Tasks Text Classification** (`com.google.mediapipe:tasks-text`) and on-device natural language evaluation:
+When a user reclassifies a notification (e.g., clicking *"Show notifications like these in the future"* or *"Hide notifications like these in the future"*):
 
-1. **MediaPipe Text Classifier**: Evaluates incoming notifications against on-device classification models (`text_classifier.tflite`).
-2. **Semantic Heuristic Fallback Engine**: Automatically falls back to token matching when model assets are not present or on emulator environments.
-3. **100% Offline Execution**: All classification and exception checking happen locally on-device with zero network traffic.
+1. **Dynamic Token Extraction**: `AiRuleSynthesizer` extracts significant semantic tokens from title and body text without hardcoded keyword or app rules.
+2. **Rule Synthesis**: Generates a dynamic, human-readable rule string (e.g., `"[MUTE] Whatsapp: grab coffee later"` or `"[ALLOW] Jenkins: build failed main"`).
+3. **Dynamic Token Overlap Matching (`matchesRule`)**: Future incoming notifications are matched against synthesized rules using dynamic token overlap ratios.
+4. **Opposite Classification Adaptation**: When a user reclassifies a notification that was originally classified as Muted, the synthesized rule flips subsequent similar notifications to **Shown** (and vice-versa).

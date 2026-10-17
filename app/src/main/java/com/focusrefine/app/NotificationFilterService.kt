@@ -206,16 +206,17 @@ class NotificationFilterService : NotificationListenerService() {
         CoroutineScope(Dispatchers.IO).launch {
             val defaultMode = PromptManager.getDefaultModeName(this@NotificationFilterService)
             val currentMode = prefs.getString("current_mode", defaultMode) ?: defaultMode
-            val isUrgent = analyzeContent(title, text, currentMode)
+            val classification = analyzeContentWithDetails(title, text, currentMode)
 
-            if (isUrgent) {
+            if (classification.isUrgent) {
                 Log.d(TAG, "Allowed (Shown) notification: ${sbn.key}")
                 val entity = NotificationEntity(
                     title = title,
                     text = text,
                     packageName = packageName,
                     timestamp = System.currentTimeMillis(),
-                    isUrgent = true
+                    isUrgent = true,
+                    explanation = classification.explanation
                 )
                 database.notificationDao().insert(entity)
                 sendBroadcast(Intent(ACTION_NOTIFICATION_ARRIVED).setPackage(this@NotificationFilterService.packageName))
@@ -233,7 +234,8 @@ class NotificationFilterService : NotificationListenerService() {
                         text = text,
                         packageName = packageName,
                         timestamp = System.currentTimeMillis(),
-                        isUrgent = false
+                        isUrgent = false,
+                        explanation = classification.explanation
                     )
                     database.notificationDao().insert(entity)
                     sendBroadcast(Intent(ACTION_NOTIFICATION_ARRIVED).setPackage(this@NotificationFilterService.packageName))
@@ -266,12 +268,34 @@ class NotificationFilterService : NotificationListenerService() {
         super.onDestroy()
     }
 
-    private fun analyzeContent(title: String?, text: String?, mode: String): Boolean {
-        // 1. Check for matching user learned rule first
+    data class ClassificationResult(
+        val isUrgent: Boolean,
+        val explanation: String
+    )
+
+    private fun analyzeContentWithDetails(title: String?, text: String?, mode: String): ClassificationResult {
+        // 1. Check for matching user learned rule (exact match or synthesized rule match)
         val learnedRule = database.notificationDao().findMatchingLearnedRule(title ?: "", "%${text ?: ""}%")
         if (learnedRule != null) {
-            Log.d(TAG, "Learned rule override matched: isUrgent = ${learnedRule.isUrgent}")
-            return learnedRule.isUrgent
+            val ruleTag = learnedRule.synthesizedRule ?: "Direct user preference"
+            Log.d(TAG, "🔍 [Semantic Search] Learned rule override matched: isUrgent = ${learnedRule.isUrgent}")
+            return ClassificationResult(
+                isUrgent = learnedRule.isUrgent,
+                explanation = "🔍 [Semantic Search] Matched user learned preference rule '$ruleTag'. Action: ${if (learnedRule.isUrgent) "Shown" else "Muted"}."
+            )
+        }
+
+        // 1b. Check all AI Synthesized semantic rules
+        val synthesizedRules = database.notificationDao().getSynthesizedRules()
+        for (ruleNotif in synthesizedRules) {
+            val ruleText = ruleNotif.synthesizedRule ?: continue
+            if (AiRuleSynthesizer.matchesRule(ruleText, title, text)) {
+                Log.d(TAG, "🔍 [Semantic Search] Matched AI Synthesized rule '$ruleText': isUrgent = ${ruleNotif.isUrgent}")
+                return ClassificationResult(
+                    isUrgent = ruleNotif.isUrgent,
+                    explanation = "🔍 [Semantic Search] Matched AI synthesized preference rule '$ruleText'. Action: ${if (ruleNotif.isUrgent) "Shown" else "Muted"}."
+                )
+            }
         }
 
         val content = "${title ?: ""} ${text ?: ""}".lowercase()
@@ -283,18 +307,21 @@ class NotificationFilterService : NotificationListenerService() {
             val isEnabled = prefs.getBoolean(exc.prefKey, exc.defaultEnabled)
             if (isEnabled) {
                 if (exc.keywords.any { keyword -> content.contains(keyword.lowercase()) }) {
-                    Log.d(TAG, "Matched user-enabled exception '${exc.title}': showing notification")
-                    return true
+                    Log.d(TAG, "🔍 [Semantic Search] Matched user-enabled exception '${exc.title}': showing notification")
+                    return ClassificationResult(
+                        isUrgent = true,
+                        explanation = "🔍 [Semantic Search] Matched user exception '${exc.title}'. Priority override allowed notification."
+                    )
                 }
             }
         }
 
-        // 3. AI / Filtering Strength Evaluation
+        // 3. MediaPipe On-Device AI Pipeline Evaluation
         val useAi = prefs.getBoolean("use_ai_model", true)
         val filterStrength = prefs.getInt("filter_strength", 1) // 0=Gentle, 1=Balanced, 2=Strict
         val scoreThreshold = when (filterStrength) {
-            0 -> 0.4f // Gentle (Lenient)
-            2 -> 0.8f // Strict (Restricted)
+            0 -> 0.4f // Gentle
+            2 -> 0.8f // Strict
             else -> 0.6f // Balanced
         }
 
@@ -303,19 +330,26 @@ class NotificationFilterService : NotificationListenerService() {
                 val result = textClassifier!!.classify(content)
                 for (classification in result.classificationResult().classifications()) {
                     for (category in classification.categories()) {
-                        if (category.categoryName().equals("urgent", ignoreCase = true) && category.score() >= scoreThreshold) {
-                            return true
+                        if (category.categoryName().equals("urgent", ignoreCase = true)) {
+                            val score = category.score()
+                            if (score >= scoreThreshold) {
+                                Log.d(TAG, "🤖 [AI Pipeline] MediaPipe model urgent score: $score")
+                                return ClassificationResult(
+                                    isUrgent = true,
+                                    explanation = "🤖 [AI Pipeline] MediaPipe model classified notification as urgent with ${(score * 100).toInt()}% confidence (exceeded $mode threshold $scoreThreshold)."
+                                )
+                            }
                         }
                     }
                 }
             } catch (e: Exception) {
-                Log.e(TAG, "MediaPipe classification error: ${e.message}")
+                Log.e(TAG, "MediaPipe AI Pipeline classification error: ${e.message}")
             }
         }
 
-        // 4. Prompt Keywords Evaluation
+        // 4. Semantic Prompt Search & Keyword Matching
         val ootbPrompts = PromptManager.getAllOotbPrompts(this)
-        val prompt = when {
+        val basePrompt = when {
             mode.contains("Commute", ignoreCase = true) ->
                 prefs.getString("prompt_Commute", ootbPrompts["Commute"] ?: "navigation, maps, turn left, turn right, traffic, call, vip, boss, route") ?: ""
             mode.contains("Focus", ignoreCase = true) ->
@@ -328,10 +362,23 @@ class NotificationFilterService : NotificationListenerService() {
                 prefs.getString("custom_mode_prompt_$mode", "urgent, call, emergency, navigation, meeting") ?: "urgent, call, emergency, navigation, meeting"
         }
 
-        val keywords = prompt.lowercase().split(",", " ").map { it.trim() }.filter { it.isNotEmpty() }
-        if (keywords.isEmpty()) return content.contains("urgent")
+        val enrichedPrompt = PromptManager.getEnrichedModePrompt(basePrompt, synthesizedRules.mapNotNull { it.synthesizedRule })
+        val keywords = enrichedPrompt.lowercase().split(",", " ", ";", "[", "]", ":").map { it.trim() }.filter { it.isNotEmpty() }
+        val matchedKeyword = keywords.firstOrNull { keyword -> content.contains(keyword) }
 
-        return keywords.any { keyword -> content.contains(keyword) }
+        if (matchedKeyword != null) {
+            Log.d(TAG, "🔍 [Semantic Search] Matched $mode prompt token: $matchedKeyword")
+            return ClassificationResult(
+                isUrgent = true,
+                explanation = "🔍 [Semantic Search] Matched active $mode system prompt token '$matchedKeyword'."
+            )
+        }
+
+        Log.d(TAG, "🔍 [Semantic Search] Notification muted under $mode mode")
+        return ClassificationResult(
+            isUrgent = false,
+            explanation = "🔍 [Semantic Search] Did not contain urgent prompt tokens or high AI confidence for $mode mode; muted as casual communication."
+        )
     }
 
     override fun onTaskRemoved(rootIntent: Intent?) {

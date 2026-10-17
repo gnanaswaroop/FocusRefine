@@ -270,4 +270,104 @@ class NotificationFilterE2ETest {
         assertEquals(0, urgent)
         assertEquals(0, percent)
     }
+
+    @Test
+    fun testAiRuleSynthesizerAndSemanticMatching() = runBlocking {
+        val synthesizedRule = AiRuleSynthesizer.synthesizeRule(
+            packageName = "com.whatsapp",
+            title = "WhatsApp",
+            text = "Want to grab coffee later?",
+            isUrgent = false,
+            activeMode = "Deep Work / Focus"
+        )
+
+        assertEquals(true, synthesizedRule.contains("[MUTE]"))
+        assertEquals(true, synthesizedRule.lowercase().contains("coffee") || synthesizedRule.lowercase().contains("grab"))
+
+        // Test token matching on similar notification text ("coffee tomorrow")
+        val matchesCoffee = AiRuleSynthesizer.matchesRule(synthesizedRule, "WhatsApp", "Free for coffee tomorrow?")
+        assertEquals(true, matchesCoffee)
+
+        // Insert entity with synthesized rule into Room DB and query getSynthesizedRules()
+        val entity = NotificationEntity(
+            title = "WhatsApp",
+            text = "Want to grab coffee later?",
+            packageName = "com.whatsapp",
+            timestamp = System.currentTimeMillis(),
+            isUrgent = false,
+            isLearned = true,
+            synthesizedRule = synthesizedRule
+        )
+        dao.insert(entity)
+
+        val activeRules = dao.getSynthesizedRules()
+        assertEquals(1, activeRules.size)
+        assertEquals(synthesizedRule, activeRules[0].synthesizedRule)
+    }
+
+    @Test
+    fun testAiLearningFlow_MutedToShown_OppositeClassification() = runBlocking {
+        // 1. Initial Notification originally classified as MUTED
+        val pkg = "com.devops.monitoring"
+        val initialNotif = NotificationEntity(
+            title = "Pipeline Alert",
+            text = "Build #101 deploy finished",
+            packageName = pkg,
+            timestamp = System.currentTimeMillis(),
+            isUrgent = false,
+            isLearned = false
+        )
+        dao.insert(initialNotif)
+        assertEquals(false, dao.getAll().first { it.title == "Pipeline Alert" }.isUrgent)
+
+        // 2. User reclassifies to SHOWN: AI rule synthesized
+        val aiRule = AiRuleSynthesizer.synthesizeRule(pkg, "Pipeline Alert", "Build #101 deploy finished", true, "Deep Focus")
+        val reclassifiedNotif = initialNotif.copy(isUrgent = true, isLearned = true, synthesizedRule = aiRule)
+        dao.insert(reclassifiedNotif)
+
+        // 3. New incoming similar notification arrives
+        val newTitle = "Pipeline Alert"
+        val newText = "Build #102 deploy finished"
+
+        // 4. Verify AI Synthesized rule matches and opposite classification (SHOWN) is applied
+        val activeRules = dao.getSynthesizedRules()
+        val matchingRule = activeRules.find { AiRuleSynthesizer.matchesRule(it.synthesizedRule ?: "", newTitle, newText) }
+
+        assertNotNull(matchingRule)
+        assertEquals(true, matchingRule?.isUrgent)
+        assertEquals(true, aiRule.contains("[ALLOW]"))
+    }
+
+    @Test
+    fun testAiLearningFlow_ShownToMuted_OppositeClassification() = runBlocking {
+        // 1. Initial Notification originally classified as SHOWN
+        val pkg = "com.service.notifier"
+        val initialNotif = NotificationEntity(
+            title = "System Alert",
+            text = "Routine backup sync finished",
+            packageName = pkg,
+            timestamp = System.currentTimeMillis(),
+            isUrgent = true,
+            isLearned = false
+        )
+        dao.insert(initialNotif)
+        assertEquals(true, dao.getAll().first { it.title == "System Alert" }.isUrgent)
+
+        // 2. User reclassifies to MUTED: AI rule synthesized
+        val aiRule = AiRuleSynthesizer.synthesizeRule(pkg, "System Alert", "Routine backup sync finished", false, "Deep Focus")
+        val reclassifiedNotif = initialNotif.copy(isUrgent = false, isLearned = true, synthesizedRule = aiRule)
+        dao.insert(reclassifiedNotif)
+
+        // 3. New incoming similar notification arrives
+        val newTitle = "System Alert"
+        val newText = "Routine backup sync #2 finished"
+
+        // 4. Verify AI Synthesized rule matches and opposite classification (MUTED) is applied
+        val activeRules = dao.getSynthesizedRules()
+        val matchingRule = activeRules.find { AiRuleSynthesizer.matchesRule(it.synthesizedRule ?: "", newTitle, newText) }
+
+        assertNotNull(matchingRule)
+        assertEquals(false, matchingRule?.isUrgent)
+        assertEquals(true, aiRule.contains("[MUTE]"))
+    }
 }
