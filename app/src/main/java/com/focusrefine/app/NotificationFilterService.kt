@@ -203,12 +203,13 @@ class NotificationFilterService : NotificationListenerService() {
             return
         }
 
-        val currentMode = prefs.getString("current_mode", "Commute") ?: "Commute"
-        val isUrgent = analyzeContent(title, text, currentMode)
+        CoroutineScope(Dispatchers.IO).launch {
+            val defaultMode = PromptManager.getDefaultModeName(this@NotificationFilterService)
+            val currentMode = prefs.getString("current_mode", defaultMode) ?: defaultMode
+            val isUrgent = analyzeContent(title, text, currentMode)
 
-        if (isUrgent) {
-            Log.d(TAG, "Allowed (Shown) notification: ${sbn.key}")
-            CoroutineScope(Dispatchers.IO).launch {
+            if (isUrgent) {
+                Log.d(TAG, "Allowed (Shown) notification: ${sbn.key}")
                 val entity = NotificationEntity(
                     title = title,
                     text = text,
@@ -218,17 +219,15 @@ class NotificationFilterService : NotificationListenerService() {
                 )
                 database.notificationDao().insert(entity)
                 sendBroadcast(Intent(ACTION_NOTIFICATION_ARRIVED).setPackage(this@NotificationFilterService.packageName))
-            }
-        } else {
-            if (sbn.isClearable) {
-                cancelNotification(sbn.key)
-                Log.d(TAG, "Suppressed/Muted notification: ${sbn.key}")
+            } else {
+                if (sbn.isClearable) {
+                    cancelNotification(sbn.key)
+                    Log.d(TAG, "Suppressed/Muted notification: ${sbn.key}")
 
-                val count = prefs.getInt("suppressed_count", 0) + 1
-                prefs.edit().putInt("suppressed_count", count).apply()
-                updateForegroundNotification(true, count)
+                    val count = prefs.getInt("suppressed_count", 0) + 1
+                    prefs.edit().putInt("suppressed_count", count).apply()
+                    updateForegroundNotification(true, count)
 
-                CoroutineScope(Dispatchers.IO).launch {
                     val entity = NotificationEntity(
                         title = title,
                         text = text,

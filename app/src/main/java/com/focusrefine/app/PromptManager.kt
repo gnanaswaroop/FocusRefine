@@ -54,4 +54,11 @@ object PromptManager {
         val configs = getAllOotbConfigs(context)
         return configs[modeKey]?.enabled ?: false
     }
+
+    fun getDefaultModeName(context: Context): String {
+        val configs = getAllOotbConfigs(context)
+        return configs.entries.firstOrNull { it.value.enabled }?.key
+            ?: configs.keys.firstOrNull()
+            ?: "Default"
+    }
 }
