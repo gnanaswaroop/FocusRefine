@@ -134,15 +134,10 @@ fun NotificationDetailScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Box(
-                                modifier = Modifier
-                                    .size(24.dp)
-                                    .clip(CircleShape)
-                                    .background(if (!isUrgent) StudioColors.RedSurface else StudioColors.GreenSurface),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(text = if (packageName.contains("maps")) "🗺️" else if (packageName.contains("whatsapp")) "💬" else "📩", fontSize = 12.sp)
-                            }
+                            AppIconImage(
+                                packageName = packageName,
+                                modifier = Modifier.size(24.dp)
+                            )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
                                 text = appLabel,

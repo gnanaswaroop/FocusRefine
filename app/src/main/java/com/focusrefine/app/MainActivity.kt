@@ -38,6 +38,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -156,7 +158,10 @@ fun MainDashboardContent(
     var mutedCount by remember { mutableStateOf(0) }
     var urgentCount by remember { mutableStateOf(0) }
     var refreshTrigger by remember { mutableStateOf(0) }
-    var selectedNotifForDetail by remember { mutableStateOf<NotificationEntity?>(null) }
+    var isFullScreenInbox by remember { mutableStateOf(false) }
+
+    val totalCount = mutedCount + urgentCount
+    val noiseFilteredPercent = if (totalCount > 0) (mutedCount * 100 / totalCount) else 0
 
     val modeOptions = listOf(
         Pair("Commute", "🚗"),
@@ -196,27 +201,38 @@ fun MainDashboardContent(
         ) {
             // 1. Top Bar Header
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.adaptive_foreground),
-                    contentDescription = "App Logo",
-                    modifier = Modifier.size(28.dp)
-                )
+                Box(
+                    modifier = Modifier
+                        .size(32.dp)
+                        .clip(CircleShape)
+                        .background(StudioColors.CardSurfaceHighlight),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.adaptive_foreground),
+                        contentDescription = "App Logo",
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = "FocusRefine",
-                    fontSize = 20.sp,
+                    fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
                     modifier = Modifier.weight(1f)
                 )
                 IconButton(onClick = onOpenSettings) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_notification),
+                        painter = painterResource(id = R.drawable.ic_settings),
                         contentDescription = "Settings",
-                        tint = StudioColors.TextSecondary
+                        tint = StudioColors.TextPrimary,
+                        modifier = Modifier.size(22.dp)
                     )
                 }
             }
@@ -265,7 +281,7 @@ fun MainDashboardContent(
                     ) {
                         Column {
                             Text(
-                                text = "84% Noise Filtered",
+                                text = "${noiseFilteredPercent}% Noise Filtered",
                                 fontSize = 22.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = Color.White
@@ -374,12 +390,21 @@ fun MainDashboardContent(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(
-                    text = "Smart Inbox",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "Smart Inbox",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+                    Spacer(modifier = Modifier.width(6.dp))
+                    IconButton(
+                        onClick = { isFullScreenInbox = true },
+                        modifier = Modifier.size(28.dp)
+                    ) {
+                        Text(text = "⛶", fontSize = 14.sp, color = StudioColors.TextSecondary)
+                    }
+                }
 
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Surface(
@@ -469,18 +494,10 @@ fun MainDashboardContent(
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Box(
-                                        modifier = Modifier
-                                            .size(20.dp)
-                                            .clip(CircleShape)
-                                            .background(if (isMuted) StudioColors.RedSurface else StudioColors.GreenSurface),
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        Text(
-                                            text = if (notif.packageName.contains("maps")) "🗺️" else if (notif.packageName.contains("whatsapp")) "💬" else "📩",
-                                            fontSize = 11.sp
-                                        )
-                                    }
+                                    AppIconImage(
+                                        packageName = notif.packageName,
+                                        modifier = Modifier.size(24.dp)
+                                    )
                                     Spacer(modifier = Modifier.width(8.dp))
                                     Text(
                                         text = notif.title ?: "Notification",
@@ -513,7 +530,6 @@ fun MainDashboardContent(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                // Urgency Badge Tag
                                 Surface(
                                     shape = CircleShape,
                                     color = if (isMuted) StudioColors.RedSurface else StudioColors.GreenSurface,
@@ -575,10 +591,242 @@ fun MainDashboardContent(
                         }
                     }
                 }
-            }
 
-            // 5. Studio Footer
-            StudioFooter(text = "🔒 Your notifications stay on this device.")
+                item {
+                    StudioFooter(
+                        text = "🔒 Your notifications stay on this device.",
+                        modifier = Modifier.padding(top = 12.dp, bottom = 16.dp)
+                    )
+                }
+            }
+        }
+
+        // Full Screen Smart Inbox Dialog
+        if (isFullScreenInbox) {
+            Dialog(
+                onDismissRequest = { isFullScreenInbox = false },
+                properties = DialogProperties(usePlatformDefaultWidth = false)
+            ) {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = StudioColors.DarkBackground
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = "Smart Inbox (Full Screen)",
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+
+                            IconButton(onClick = { isFullScreenInbox = false }) {
+                                Text(text = "✕", fontSize = 18.sp, color = Color.White)
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Surface(
+                                onClick = { currentTabUrgent = false },
+                                shape = CircleShape,
+                                modifier = Modifier.weight(1f),
+                                color = if (!currentTabUrgent) StudioColors.ActiveViolet else StudioColors.CardSurface,
+                                border = BorderStroke(1.dp, StudioColors.StudioBorder)
+                            ) {
+                                Box(modifier = Modifier.padding(vertical = 10.dp), contentAlignment = Alignment.Center) {
+                                    Text(text = "🔕 Muted ($mutedCount)", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                                }
+                            }
+
+                            Surface(
+                                onClick = { currentTabUrgent = true },
+                                shape = CircleShape,
+                                modifier = Modifier.weight(1f),
+                                color = if (currentTabUrgent) StudioColors.GoldAccent else StudioColors.CardSurface,
+                                border = BorderStroke(1.dp, StudioColors.StudioBorder)
+                            ) {
+                                Box(modifier = Modifier.padding(vertical = 10.dp), contentAlignment = Alignment.Center) {
+                                    Text(
+                                        text = "🔔 Shown ($urgentCount)",
+                                        fontSize = 12.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = if (currentTabUrgent) Color.Black else Color.White
+                                    )
+                                }
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        OutlinedTextField(
+                            value = searchQuery,
+                            onValueChange = { searchQuery = it },
+                            placeholder = { Text("Search notifications...", color = StudioColors.TextMuted, fontSize = 13.sp) },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = CircleShape,
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedContainerColor = StudioColors.CardSurface,
+                                unfocusedContainerColor = StudioColors.CardSurface,
+                                focusedBorderColor = StudioColors.ActiveViolet,
+                                unfocusedBorderColor = StudioColors.StudioBorder,
+                                focusedTextColor = Color.White,
+                                unfocusedTextColor = Color.White
+                            )
+                        )
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        LazyColumn(
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxWidth(),
+                            verticalArrangement = Arrangement.spacedBy(10.dp)
+                        ) {
+                            items(notifications) { notif ->
+                                val isMuted = !notif.isUrgent
+                                StudioCard(
+                                    onClick = {
+                                        val intent = Intent(context, NotificationDetailActivity::class.java).apply {
+                                            putExtra("notif_id", notif.id)
+                                            putExtra("title", notif.title)
+                                            putExtra("text", notif.text)
+                                            putExtra("package_name", notif.packageName)
+                                            putExtra("timestamp", notif.timestamp)
+                                            putExtra("is_urgent", notif.isUrgent)
+                                        }
+                                        context.startActivity(intent)
+                                    },
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    Column(modifier = Modifier.padding(14.dp)) {
+                                        Row(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.SpaceBetween
+                                        ) {
+                                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                                AppIconImage(
+                                                    packageName = notif.packageName,
+                                                    modifier = Modifier.size(24.dp)
+                                                )
+                                                Spacer(modifier = Modifier.width(8.dp))
+                                                Text(
+                                                    text = notif.title ?: "Notification",
+                                                    fontWeight = FontWeight.Bold,
+                                                    fontSize = 14.sp,
+                                                    color = Color.White
+                                                )
+                                            }
+                                            Text(
+                                                text = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date(notif.timestamp)),
+                                                fontSize = 11.sp,
+                                                color = StudioColors.TextMuted
+                                            )
+                                        }
+
+                                        Spacer(modifier = Modifier.height(6.dp))
+
+                                        Text(
+                                            text = notif.text ?: "No content",
+                                            fontSize = 13.sp,
+                                            color = StudioColors.TextSecondary,
+                                            maxLines = 3,
+                                            overflow = TextOverflow.Ellipsis
+                                        )
+
+                                        Spacer(modifier = Modifier.height(10.dp))
+
+                                        Row(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.SpaceBetween
+                                        ) {
+                                            Surface(
+                                                shape = CircleShape,
+                                                color = if (isMuted) StudioColors.RedSurface else StudioColors.GreenSurface,
+                                                border = BorderStroke(1.dp, if (isMuted) StudioColors.RedAccent.copy(alpha = 0.3f) else StudioColors.GreenAccent.copy(alpha = 0.3f))
+                                            ) {
+                                                Text(
+                                                    text = if (isMuted) "Muted: Routine Alert" else "High Urgency: Priority Prompt",
+                                                    fontSize = 10.sp,
+                                                    fontWeight = FontWeight.Bold,
+                                                    color = if (isMuted) StudioColors.RedText else StudioColors.GreenText,
+                                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+                                                )
+                                            }
+
+                                            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                                                IconButton(
+                                                    onClick = {
+                                                        val db = AppDatabase.getDatabase(context)
+                                                        val newUrgent = !notif.isUrgent
+                                                        val updated = notif.copy(isUrgent = newUrgent, isLearned = true)
+                                                        CoroutineScope(Dispatchers.IO).launch {
+                                                            db.notificationDao().insert(updated)
+                                                            refreshTrigger++
+                                                            withContext(Dispatchers.Main) {
+                                                                Toast.makeText(context, if (newUrgent) "Moved to Shown" else "Moved to Muted", Toast.LENGTH_SHORT).show()
+                                                            }
+                                                        }
+                                                    },
+                                                    modifier = Modifier.size(28.dp)
+                                                ) {
+                                                    Icon(
+                                                        painter = painterResource(id = R.drawable.ic_swap_horiz),
+                                                        contentDescription = "Swap Tab",
+                                                        tint = StudioColors.TextSecondary,
+                                                        modifier = Modifier.size(16.dp)
+                                                    )
+                                                }
+                                                IconButton(
+                                                    onClick = {
+                                                        try {
+                                                            val intent = context.packageManager.getLaunchIntentForPackage(notif.packageName)
+                                                            if (intent != null) context.startActivity(intent)
+                                                            else Toast.makeText(context, "App not installed", Toast.LENGTH_SHORT).show()
+                                                        } catch (_: Exception) {
+                                                            Toast.makeText(context, "Cannot open app", Toast.LENGTH_SHORT).show()
+                                                        }
+                                                    },
+                                                    modifier = Modifier.size(28.dp)
+                                                ) {
+                                                    Icon(
+                                                        painter = painterResource(id = R.drawable.ic_open_in_new),
+                                                        contentDescription = "Open App",
+                                                        tint = StudioColors.TextSecondary,
+                                                        modifier = Modifier.size(16.dp)
+                                                    )
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            item {
+                                StudioFooter(
+                                    text = "🔒 Your notifications stay on this device.",
+                                    modifier = Modifier.padding(top = 12.dp, bottom = 16.dp)
+                                )
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -595,4 +843,3 @@ fun MainDashboardPreview() {
         )
     }
 }
-
