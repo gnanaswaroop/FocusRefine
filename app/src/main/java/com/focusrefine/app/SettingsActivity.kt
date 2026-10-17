@@ -128,8 +128,6 @@ fun SettingsStudioScreen(
     val defaultMode = remember { PromptManager.getDefaultModeName(context) }
     var currentMode by remember { mutableStateOf(prefs?.getString("current_mode", defaultMode) ?: defaultMode) }
     var filterStrengthIndex by remember { mutableStateOf(prefs?.getInt("filter_strength", 1) ?: 1) } // 0=Gentle, 1=Balanced, 2=Strict
-    var navPromptsAllowed by remember { mutableStateOf(prefs?.getBoolean("exception_nav_prompts", true) ?: true) }
-    var callsAllowed by remember { mutableStateOf(prefs?.getBoolean("exception_calls", true) ?: true) }
     var learnFromChoices by remember { mutableStateOf(prefs?.getBoolean("learn_from_choices", true) ?: true) }
     var useAiModel by remember { mutableStateOf(prefs?.getBoolean("use_ai_model", !isEmulator) ?: !isEmulator) }
 
@@ -262,6 +260,8 @@ fun SettingsStudioScreen(
             Spacer(modifier = Modifier.height(14.dp))
 
             // 3. Urgent Notification Exceptions Card
+            val exceptionsList = remember { ExceptionManager.getAllExceptions(context) }
+
             StudioCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
@@ -273,52 +273,37 @@ fun SettingsStudioScreen(
 
                     Spacer(modifier = Modifier.height(12.dp))
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(1f)) {
-                            Text(text = "🚀", fontSize = 16.sp)
-                            Spacer(modifier = Modifier.width(10.dp))
-                            Column {
-                                Text("Navigation prompts", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                                Text("Directions while you're on the move", fontSize = 11.sp, color = StudioColors.TextMuted)
-                            }
+                    exceptionsList.forEachIndexed { index, exc ->
+                        var isChecked by remember {
+                            mutableStateOf(prefs?.getBoolean(exc.prefKey, exc.defaultEnabled) ?: exc.defaultEnabled)
                         }
-                        Switch(
-                            checked = navPromptsAllowed,
-                            onCheckedChange = {
-                                navPromptsAllowed = it
-                                prefs?.edit()?.putBoolean("exception_nav_prompts", it)?.apply()
-                            },
-                            colors = SwitchDefaults.colors(checkedTrackColor = StudioColors.ActiveViolet)
-                        )
-                    }
 
-                    Divider(modifier = Modifier.padding(vertical = 10.dp), color = StudioColors.StudioBorder)
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(1f)) {
-                            Text(text = "📞", fontSize = 16.sp)
-                            Spacer(modifier = Modifier.width(10.dp))
-                            Column {
-                                Text("Calls & priority contacts", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                                Text("Let important people reach you", fontSize = 11.sp, color = StudioColors.TextMuted)
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(1f)) {
+                                Text(text = exc.icon, fontSize = 16.sp)
+                                Spacer(modifier = Modifier.width(10.dp))
+                                Column {
+                                    Text(exc.title, fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                                    Text(exc.description, fontSize = 11.sp, color = StudioColors.TextMuted)
+                                }
                             }
+                            Switch(
+                                checked = isChecked,
+                                onCheckedChange = { newValue ->
+                                    isChecked = newValue
+                                    prefs?.edit()?.putBoolean(exc.prefKey, newValue)?.apply()
+                                },
+                                colors = SwitchDefaults.colors(checkedTrackColor = StudioColors.ActiveViolet)
+                            )
                         }
-                        Switch(
-                            checked = callsAllowed,
-                            onCheckedChange = {
-                                callsAllowed = it
-                                prefs?.edit()?.putBoolean("exception_calls", it)?.apply()
-                            },
-                            colors = SwitchDefaults.colors(checkedTrackColor = StudioColors.ActiveViolet)
-                        )
+
+                        if (index < exceptionsList.size - 1) {
+                            HorizontalDivider(modifier = Modifier.padding(vertical = 10.dp), color = StudioColors.StudioBorder)
+                        }
                     }
                 }
             }

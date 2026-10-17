@@ -236,7 +236,7 @@ fun MainDashboardContent(
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
-                            text = "On-Device",
+                            text = "On Device AI",
                             fontSize = 10.sp,
                             fontWeight = FontWeight.Bold,
                             color = StudioColors.GreenText
