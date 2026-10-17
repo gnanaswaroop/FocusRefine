@@ -69,6 +69,7 @@ class NotificationFilterService : NotificationListenerService() {
         const val ACTION_UPDATE_COUNT = "com.focusrefine.app.ACTION_UPDATE_COUNT"
         const val ACTION_SERVICE_STATE_CHANGED = "com.focusrefine.app.ACTION_SERVICE_STATE_CHANGED"
         const val ACTION_NOTIFICATION_ARRIVED = "com.focusrefine.app.ACTION_NOTIFICATION_ARRIVED"
+        const val ACTION_STOP_SERVICE = "com.focusrefine.app.ACTION_STOP_SERVICE"
     }
 
     override fun onCreate() {
@@ -116,9 +117,10 @@ class NotificationFilterService : NotificationListenerService() {
         val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
         val isRunning = prefs.getBoolean("service_running", true)
         val count = prefs.getInt("suppressed_count", 0)
+
         try {
             startForeground(NOTIFICATION_ID, buildForegroundNotification(isRunning, count))
-            Log.d(TAG, "Service onStartCommand Started in Foreground: running=$isRunning")
+            Log.d(TAG, "Service onStartCommand Started in Foreground: running=$isRunning, count=$count")
         } catch (e: Exception) {
             Log.e(TAG, "Failed to start foreground in onStartCommand: ${e.message}")
         }
@@ -165,7 +167,7 @@ class NotificationFilterService : NotificationListenerService() {
         val appIconBitmap = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
 
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("FocusRefine Active")
+            .setContentTitle("Focus Refine Active")
             .setContentText(statusText)
             .setSmallIcon(R.drawable.ic_notification)
             .setLargeIcon(appIconBitmap)
@@ -201,12 +203,13 @@ class NotificationFilterService : NotificationListenerService() {
             return
         }
 
-        val currentMode = prefs.getString("current_mode", "Commute") ?: "Commute"
-        val isUrgent = analyzeContent(title, text, currentMode)
+        CoroutineScope(Dispatchers.IO).launch {
+            val defaultMode = PromptManager.getDefaultModeName(this@NotificationFilterService)
+            val currentMode = prefs.getString("current_mode", defaultMode) ?: defaultMode
+            val isUrgent = analyzeContent(title, text, currentMode)
 
-        if (isUrgent) {
-            Log.d(TAG, "Allowed (Shown) notification: ${sbn.key}")
-            CoroutineScope(Dispatchers.IO).launch {
+            if (isUrgent) {
+                Log.d(TAG, "Allowed (Shown) notification: ${sbn.key}")
                 val entity = NotificationEntity(
                     title = title,
                     text = text,
@@ -216,17 +219,15 @@ class NotificationFilterService : NotificationListenerService() {
                 )
                 database.notificationDao().insert(entity)
                 sendBroadcast(Intent(ACTION_NOTIFICATION_ARRIVED).setPackage(this@NotificationFilterService.packageName))
-            }
-        } else {
-            if (sbn.isClearable) {
-                cancelNotification(sbn.key)
-                Log.d(TAG, "Suppressed/Muted notification: ${sbn.key}")
+            } else {
+                if (sbn.isClearable) {
+                    cancelNotification(sbn.key)
+                    Log.d(TAG, "Suppressed/Muted notification: ${sbn.key}")
 
-                val count = prefs.getInt("suppressed_count", 0) + 1
-                prefs.edit().putInt("suppressed_count", count).apply()
-                updateForegroundNotification(true, count)
+                    val count = prefs.getInt("suppressed_count", 0) + 1
+                    prefs.edit().putInt("suppressed_count", count).apply()
+                    updateForegroundNotification(true, count)
 
-                CoroutineScope(Dispatchers.IO).launch {
                     val entity = NotificationEntity(
                         title = title,
                         text = text,

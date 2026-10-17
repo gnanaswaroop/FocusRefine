@@ -24,7 +24,7 @@ class NotificationToggleReceiver : BroadcastReceiver() {
             }
             context.sendBroadcast(stateIntent)
 
-            // Trigger service to update foreground notification
+            // Trigger service to update foreground notification state
             val serviceIntent = Intent(context, NotificationFilterService::class.java).apply {
                 action = NotificationFilterService.ACTION_UPDATE_COUNT
             }
@@ -35,7 +35,7 @@ class NotificationToggleReceiver : BroadcastReceiver() {
                     context.startService(serviceIntent)
                 }
             } catch (e: Exception) {
-                Log.e("NotificationToggleReceiver", "Failed to start service: ${e.message}")
+                Log.e("NotificationToggleReceiver", "Failed to send intent to service: ${e.message}")
             }
             Log.d("NotificationToggleReceiver", "Toggled service state via notification bar to: $newState")
         }

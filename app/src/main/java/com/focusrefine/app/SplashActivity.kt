@@ -45,7 +45,7 @@ class SplashActivity : ComponentActivity() {
                         )
                         Spacer(modifier = Modifier.height(24.dp))
                         Text(
-                            text = "FocusRefine",
+                            text = "Focus Refine",
                             style = MaterialTheme.typography.headlineLarge,
                             color = MaterialTheme.colorScheme.onBackground
                         )
