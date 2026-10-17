@@ -154,7 +154,7 @@ fun SettingsStudioScreen(
             ) {
                 IconButton(onClick = onBack) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_refresh),
+                        painter = painterResource(id = R.drawable.ic_arrow_back),
                         contentDescription = "Back",
                         tint = Color.White
                     )
@@ -178,7 +178,17 @@ fun SettingsStudioScreen(
                             text = if (isEmulator) "On-Device Semantic Engine Active" else "Gemini Nano AI Active (AICore)",
                             fontWeight = FontWeight.Bold,
                             fontSize = 15.sp,
-                            color = Color.White
+                            color = Color.White,
+                            modifier = Modifier.weight(1f)
+                        )
+                        Switch(
+                            checked = useAiModel,
+                            onCheckedChange = {
+                                useAiModel = it
+                                prefs?.edit()?.putBoolean("use_ai_model", it)?.apply()
+                                Toast.makeText(context, "AI Model set to: ${if(it) "Active" else "Semantic Match"}", Toast.LENGTH_SHORT).show()
+                            },
+                            colors = SwitchDefaults.colors(checkedTrackColor = StudioColors.ActiveViolet)
                         )
                     }
 

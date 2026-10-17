@@ -213,4 +213,61 @@ class NotificationFilterE2ETest {
         assertEquals(false, matchedRule?.isUrgent)
         assertEquals(true, matchedRule?.isLearned)
     }
+
+    @Test
+    fun testFilteringStrengthAndExceptionsPreferences() = runBlocking {
+        val prefs = context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
+        prefs.edit()
+            .putInt("filter_strength", 2)
+            .putBoolean("exception_nav_prompts", true)
+            .putBoolean("exception_calls", false)
+            .apply()
+
+        assertEquals(2, prefs.getInt("filter_strength", 0))
+        assertEquals(true, prefs.getBoolean("exception_nav_prompts", false))
+        assertEquals(false, prefs.getBoolean("exception_calls", true))
+    }
+
+    @Test
+    fun testManualModeSwitchAndAppRulePreferences() = runBlocking {
+        val prefs = context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
+        prefs.edit()
+            .putBoolean("manual_mode_switch", true)
+            .putInt("app_rule_type_whatsapp", 0)
+            .putBoolean("app_mute_casual_whatsapp", true)
+            .apply()
+
+        assertEquals(true, prefs.getBoolean("manual_mode_switch", false))
+        assertEquals(0, prefs.getInt("app_rule_type_whatsapp", -1))
+        assertEquals(true, prefs.getBoolean("app_mute_casual_whatsapp", false))
+    }
+
+    @Test
+    fun testNoiseFilteredPercentageResetOnClear() = runBlocking {
+        val prefs = context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
+        dao.insert(NotificationEntity(title = "Maps", text = "Turn left", packageName = "com.maps", timestamp = System.currentTimeMillis(), isUrgent = true))
+        dao.insert(NotificationEntity(title = "WhatsApp", text = "Coffee?", packageName = "com.whatsapp", timestamp = System.currentTimeMillis(), isUrgent = false))
+
+        var muted = dao.getByUrgency(false).size
+        var urgent = dao.getByUrgency(true).size
+        var total = muted + urgent
+        var percent = if (total > 0) (muted * 100 / total) else 0
+
+        assertEquals(1, muted)
+        assertEquals(1, urgent)
+        assertEquals(50, percent)
+
+        // Clear inbox data
+        dao.deleteAll()
+        prefs.edit().putInt("suppressed_count", 0).apply()
+
+        muted = dao.getByUrgency(false).size
+        urgent = dao.getByUrgency(true).size
+        total = muted + urgent
+        percent = if (total > 0) (muted * 100 / total) else 0
+
+        assertEquals(0, muted)
+        assertEquals(0, urgent)
+        assertEquals(0, percent)
+    }
 }

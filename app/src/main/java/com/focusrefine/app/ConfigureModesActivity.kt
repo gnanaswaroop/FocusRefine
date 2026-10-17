@@ -101,7 +101,7 @@ fun AppRulesScreen(
             ) {
                 IconButton(onClick = onBack) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_refresh),
+                        painter = painterResource(id = R.drawable.ic_arrow_back),
                         contentDescription = "Back",
                         tint = Color.White
                     )

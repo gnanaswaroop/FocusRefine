@@ -293,10 +293,18 @@ class NotificationFilterService : NotificationListenerService() {
             }
         }
 
-        val prompt = when (mode) {
-            "Commute" -> prefs.getString("prompt_commute", PromptManager.getOotbPrompt(this, "commute", "navigation, maps, turn left, turn right, traffic, call, vip, boss")) ?: ""
-            "Do Not Disturb (DND)" -> prefs.getString("prompt_dnd", PromptManager.getOotbPrompt(this, "dnd", "emergency, hospital, 911, critical")) ?: ""
-            else -> prefs.getString("custom_mode_prompt_$mode", "urgent") ?: ""
+        val ootbPrompts = PromptManager.getAllOotbPrompts(this)
+        val prompt = when {
+            mode.contains("Commute", ignoreCase = true) ->
+                prefs.getString("prompt_Commute", ootbPrompts["Commute"] ?: "navigation, maps, turn left, turn right, traffic, call, vip, boss, route") ?: ""
+            mode.contains("Focus", ignoreCase = true) ->
+                prefs.getString("prompt_Deep Work / Focus", ootbPrompts["Deep Work / Focus"] ?: "urgent, call, boss, meeting, build, outage, deadline") ?: ""
+            mode.contains("Sleep", ignoreCase = true) ->
+                prefs.getString("prompt_Sleeping / Rest", ootbPrompts["Sleeping / Rest"] ?: "emergency, family, hospital, call, alarm") ?: ""
+            mode.contains("DND", ignoreCase = true) ->
+                prefs.getString("prompt_Do Not Disturb (DND)", ootbPrompts["Do Not Disturb (DND)"] ?: "emergency, hospital, 911, critical") ?: ""
+            else ->
+                prefs.getString("custom_mode_prompt_$mode", "urgent, call, emergency, navigation, meeting") ?: "urgent, call, emergency, navigation, meeting"
         }
 
         val keywords = prompt.lowercase().split(",", " ").map { it.trim() }.filter { it.isNotEmpty() }
