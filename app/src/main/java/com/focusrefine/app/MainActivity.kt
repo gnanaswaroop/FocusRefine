@@ -270,6 +270,124 @@ fun MainDashboardContent(
 
             Spacer(modifier = Modifier.height(10.dp))
 
+            // Notification Access Status Warning & Educational Dialog
+            if (!isNotificationAccessEnabled) {
+                var showWhyDialog by remember { mutableStateOf(false) }
+
+                StudioCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 12.dp),
+                    border = BorderStroke(1.dp, StudioColors.RedAccent)
+                ) {
+                    Column(modifier = Modifier.padding(14.dp)) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(text = "⚠️", fontSize = 16.sp)
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(
+                                    text = "Notification Access Disabled",
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 14.sp,
+                                    color = StudioColors.RedText
+                                )
+                            }
+
+                            Surface(
+                                shape = CircleShape,
+                                color = StudioColors.RedSurface,
+                                border = BorderStroke(1.dp, StudioColors.RedAccent.copy(alpha = 0.3f))
+                            ) {
+                                Text(
+                                    text = "Action Required",
+                                    fontSize = 10.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = StudioColors.RedText,
+                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
+                                )
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Text(
+                            text = "FocusRefine needs Notification Access to intercept, evaluate, and filter incoming notifications in real-time.",
+                            fontSize = 12.sp,
+                            color = StudioColors.TextSecondary
+                        )
+
+                        Spacer(modifier = Modifier.height(10.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Button(
+                                onClick = onEnableNotificationAccess,
+                                modifier = Modifier.weight(1f),
+                                shape = CircleShape,
+                                colors = ButtonDefaults.buttonColors(containerColor = StudioColors.ActiveViolet)
+                            ) {
+                                Text("Enable Access", fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                            }
+
+                            OutlinedButton(
+                                onClick = { showWhyDialog = true },
+                                modifier = Modifier.weight(1f),
+                                shape = CircleShape,
+                                border = BorderStroke(1.dp, StudioColors.StudioBorder)
+                            ) {
+                                Text("Why required?", fontSize = 12.sp, color = Color.White)
+                            }
+                        }
+                    }
+                }
+
+                if (showWhyDialog) {
+                    AlertDialog(
+                        onDismissRequest = { showWhyDialog = false },
+                        title = {
+                            Text(
+                                text = "Why Notification Access Is Required",
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 16.sp
+                            )
+                        },
+                        text = {
+                            Text(
+                                text = "FocusRefine needs Notification Access to intercept, evaluate, and filter incoming notifications in real-time according to your active modes and learned rules.\n\nYour notifications are processed 100% locally on-device and never shared, stored externally, or uploaded.",
+                                color = StudioColors.TextSecondary,
+                                fontSize = 13.sp,
+                                lineHeight = 18.sp
+                            )
+                        },
+                        confirmButton = {
+                            Button(
+                                onClick = {
+                                    showWhyDialog = false
+                                    onEnableNotificationAccess()
+                                },
+                                shape = CircleShape,
+                                colors = ButtonDefaults.buttonColors(containerColor = StudioColors.ActiveViolet)
+                            ) {
+                                Text("Got it, Enable Now", fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                            }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = { showWhyDialog = false }) {
+                                Text("Cancel", color = StudioColors.TextMuted, fontSize = 12.sp)
+                            }
+                        },
+                        containerColor = StudioColors.CardSurface
+                    )
+                }
+            }
+
             // 2. Stat / Filter Summary Card
             StudioCard(
                 modifier = Modifier.fillMaxWidth(),
