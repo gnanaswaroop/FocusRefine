@@ -163,12 +163,23 @@ fun MainDashboardContent(
     val totalCount = mutedCount + urgentCount
     val noiseFilteredPercent = if (totalCount > 0) (mutedCount * 100 / totalCount) else 0
 
-    val modeOptions = listOf(
-        Pair("Commute", "🚗"),
-        Pair("Deep Focus", "🎧"),
-        Pair("Sleep", "🌙"),
-        Pair("Gaming", "🎮")
-    )
+    val modeOptions = remember(refreshTrigger, liveRefreshTrigger) {
+        val list = mutableListOf(
+            Pair("Commute", "🚗"),
+            Pair("Deep Focus", "🎧"),
+            Pair("Sleep", "🌙"),
+            Pair("Gaming", "🎮")
+        )
+        val customStr = prefs.getString("custom_modes_list", "") ?: ""
+        if (customStr.isNotEmpty()) {
+            for (name in customStr.split(",")) {
+                if (name.isNotBlank() && !list.any { it.first.equals(name, ignoreCase = true) }) {
+                    list.add(Pair(name, "⚡"))
+                }
+            }
+        }
+        list
+    }
 
     LaunchedEffect(isNotificationAccessEnabled) {
         if (!isNotificationAccessEnabled) {
