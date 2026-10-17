@@ -146,7 +146,8 @@ fun MainDashboardContent(
     var isRunning by remember(isFilteringActive) { mutableStateOf(isFilteringActive) }
     var currentTabUrgent by remember { mutableStateOf(false) } // false = Muted, true = Shown
     var searchQuery by remember { mutableStateOf("") }
-    var currentMode by remember { mutableStateOf(prefs.getString("current_mode", "Commute") ?: "Commute") }
+    val defaultMode = remember { PromptManager.getDefaultModeName(context) }
+    var currentMode by remember { mutableStateOf(prefs.getString("current_mode", defaultMode) ?: defaultMode) }
     var notifications by remember { mutableStateOf(emptyList<NotificationEntity>()) }
     var refreshTrigger by remember { mutableStateOf(0) }
 
