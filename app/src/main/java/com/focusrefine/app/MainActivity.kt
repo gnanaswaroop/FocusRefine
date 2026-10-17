@@ -8,7 +8,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -16,16 +15,21 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatDelegate
-import com.focusrefine.app.R
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -33,7 +37,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -149,24 +152,17 @@ fun MainDashboardContent(
     val defaultMode = remember { PromptManager.getDefaultModeName(context) }
     var currentMode by remember { mutableStateOf(prefs.getString("current_mode", defaultMode) ?: defaultMode) }
     var notifications by remember { mutableStateOf(emptyList<NotificationEntity>()) }
+    var mutedCount by remember { mutableStateOf(0) }
+    var urgentCount by remember { mutableStateOf(0) }
     var refreshTrigger by remember { mutableStateOf(0) }
+    var selectedNotifForDetail by remember { mutableStateOf<NotificationEntity?>(null) }
 
-    // Load modes
-    val modes = remember(refreshTrigger, liveRefreshTrigger) {
-        val list = mutableListOf<String>()
-        val ootbConfigs = PromptManager.getAllOotbConfigs(context)
-        for ((name, config) in ootbConfigs) {
-            if (prefs.getBoolean("mode_${name}_enabled", config.enabled)) list.add(name)
-        }
-        val customList = prefs.getString("custom_modes_list", "") ?: ""
-        if (customList.isNotEmpty()) {
-            for (name in customList.split(",")) {
-                if (name.isNotBlank() && prefs.getBoolean("custom_mode_enabled_$name", true)) list.add(name)
-            }
-        }
-        if (list.isEmpty()) list.add("Default")
-        list
-    }
+    val modeOptions = listOf(
+        Pair("Commute", "🚗"),
+        Pair("Deep Focus", "🎧"),
+        Pair("Sleep", "🌙"),
+        Pair("Gaming", "🎮")
+    )
 
     LaunchedEffect(isNotificationAccessEnabled) {
         if (!isNotificationAccessEnabled) {
@@ -183,19 +179,21 @@ fun MainDashboardContent(
             } else {
                 dao.searchByUrgency(currentTabUrgent, "%$searchQuery%")
             }
+            mutedCount = dao.getByUrgency(false).size
+            urgentCount = dao.getByUrgency(true).size
         }
     }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
+        color = StudioColors.DarkBackground
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(horizontal = 16.dp, vertical = 12.dp)
         ) {
-            // Top Header
+            // 1. Top Bar Header
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -203,152 +201,165 @@ fun MainDashboardContent(
                 Image(
                     painter = painterResource(id = R.drawable.adaptive_foreground),
                     contentDescription = "App Logo",
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(28.dp)
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
-                    text = "Focus Refine",
-                    style = MaterialTheme.typography.headlineMedium,
+                    text = "FocusRefine",
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
+                    color = Color.White,
                     modifier = Modifier.weight(1f)
                 )
-                Button(onClick = onOpenSettings) {
-                    Text("Settings")
-                }
-            }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            // Notification Access Status
-            if (!isNotificationAccessEnabled) {
-                var showWhyDialog by remember { mutableStateOf(false) }
-
-                Text(
-                    text = "✕ Notification Access Disabled",
-                    color = MaterialTheme.colorScheme.error,
-                    fontSize = 13.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    OutlinedButton(
-                        onClick = onEnableNotificationAccess,
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Text("Enable Access")
-                    }
-                    TextButton(
-                        onClick = { showWhyDialog = true },
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Text("Why is this required?")
-                    }
-                }
-
-                if (showWhyDialog) {
-                    AlertDialog(
-                        onDismissRequest = { showWhyDialog = false },
-                        title = { Text("Why Notification Access Is Required") },
-                        text = {
-                            Text(
-                                "FocusRefine needs Notification Access to intercept, evaluate, and filter incoming notifications in real-time according to your active modes and learned rules.\n\nYour notifications are processed entirely on-device and never shared, stored externally, or uploaded."
-                            )
-                        },
-                        confirmButton = {
-                            Button(onClick = {
-                                showWhyDialog = false
-                                onEnableNotificationAccess()
-                            }) {
-                                Text("Got it, Enable Now")
-                            }
-                        },
-                        dismissButton = {
-                            TextButton(onClick = { showWhyDialog = false }) {
-                                Text("Cancel")
-                            }
-                        }
+                IconButton(onClick = onOpenSettings) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_notification),
+                        contentDescription = "Settings",
+                        tint = StudioColors.TextSecondary
                     )
                 }
-            } else {
-                Text(
-                    text = "✓ Notification Access Enabled",
-                    color = Color(0xFF2E7D32),
-                    fontSize = 13.sp,
-                    fontWeight = FontWeight.Bold
-                )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            // Sub-badge: On-Device Protection Active
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(bottom = 12.dp)
+            ) {
+                Surface(
+                    shape = CircleShape,
+                    color = StudioColors.GreenSurface,
+                    border = BorderStroke(1.dp, StudioColors.GreenAccent.copy(alpha = 0.3f))
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(6.dp)
+                                .clip(CircleShape)
+                                .background(StudioColors.GreenAccent)
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            text = "On-Device Protection Active",
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = StudioColors.GreenText
+                        )
+                    }
+                }
+            }
 
-            // Controls Card
-            Card(modifier = Modifier.fillMaxWidth()) {
+            // 2. Stat / Filter Summary Card
+            StudioCard(
+                modifier = Modifier.fillMaxWidth(),
+                border = BorderStroke(1.dp, StudioColors.StudioBorder)
+            ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text(
-                            text = "Filtering Active",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 15.sp,
-                            modifier = Modifier.weight(1f)
-                        )
-                        Switch(
-                            checked = isRunning && isNotificationAccessEnabled,
-                            enabled = isNotificationAccessEnabled,
-                            onCheckedChange = { isChecked ->
-                                if (!isNotificationAccessEnabled) {
-                                    Toast.makeText(context, "Please enable Notification Access first", Toast.LENGTH_SHORT).show()
-                                    isRunning = false
-                                    prefs.edit().putBoolean("service_running", false).apply()
-                                } else {
-                                    isRunning = isChecked
-                                    prefs.edit().putBoolean("service_running", isChecked).apply()
-                                    val toggleIntent = Intent(NotificationFilterService.ACTION_TOGGLE_SERVICE).apply {
-                                        setPackage(context.packageName)
-                                    }
-                                    context.sendBroadcast(toggleIntent)
-                                }
-                            }
-                        )
-                    }
-                    Divider(modifier = Modifier.padding(vertical = 12.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = "Current Mode",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 15.sp
-                        )
-                        Spacer(modifier = Modifier.width(16.dp))
-                        var expanded by remember { mutableStateOf(false) }
-                        Box(modifier = Modifier.weight(1f)) {
-                            OutlinedButton(
-                                onClick = { expanded = true },
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                Text(currentMode)
-                            }
-                            DropdownMenu(
-                                expanded = expanded,
-                                onDismissRequest = { expanded = false }
-                            ) {
-                                modes.forEach { mode ->
-                                    DropdownMenuItem(
-                                        text = { Text(mode) },
-                                        onClick = {
-                                            currentMode = mode
-                                            prefs.edit().putString("current_mode", mode).apply()
-                                            expanded = false
+                        Column {
+                            Text(
+                                text = "84% Noise Filtered",
+                                fontSize = 22.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                            Spacer(modifier = Modifier.height(2.dp))
+                            Text(
+                                text = "${mutedCount} Muted • ${urgentCount} Urgent Shown Today",
+                                fontSize = 12.sp,
+                                color = StudioColors.TextSecondary
+                            )
+                        }
+                        Column(horizontalAlignment = Alignment.End) {
+                            Switch(
+                                checked = isRunning && isNotificationAccessEnabled,
+                                enabled = isNotificationAccessEnabled,
+                                onCheckedChange = { isChecked ->
+                                    if (!isNotificationAccessEnabled) {
+                                        Toast.makeText(context, "Please enable Notification Access first", Toast.LENGTH_SHORT).show()
+                                        isRunning = false
+                                        prefs.edit().putBoolean("service_running", false).apply()
+                                    } else {
+                                        isRunning = isChecked
+                                        prefs.edit().putBoolean("service_running", isChecked).apply()
+                                        val toggleIntent = Intent(NotificationFilterService.ACTION_TOGGLE_SERVICE).apply {
+                                            setPackage(context.packageName)
                                         }
-                                    )
-                                }
-                            }
+                                        context.sendBroadcast(toggleIntent)
+                                    }
+                                },
+                                colors = SwitchDefaults.colors(
+                                    checkedThumbColor = Color.White,
+                                    checkedTrackColor = StudioColors.ActiveViolet
+                                )
+                            )
+                            Text(
+                                text = if (isRunning) "AI Filtering Active" else "Filtering Paused",
+                                fontSize = 10.sp,
+                                color = if (isRunning) StudioColors.ActiveVioletLight else StudioColors.TextMuted
+                            )
+                        }
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(14.dp))
+
+            // 3. Context Mode Selector
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Context mode",
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = StudioColors.TextSecondary
+                )
+                Text(
+                    text = "$currentMode · Active",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = StudioColors.ActiveVioletLight
+                )
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                items(modeOptions) { (modeName, modeIcon) ->
+                    val isSelected = currentMode.contains(modeName, ignoreCase = true) || (currentMode == modeName)
+                    Surface(
+                        onClick = {
+                            currentMode = modeName
+                            prefs.edit().putString("current_mode", modeName).apply()
+                        },
+                        shape = CircleShape,
+                        color = if (isSelected) StudioColors.ActiveViolet else StudioColors.CardSurface,
+                        border = BorderStroke(1.dp, if (isSelected) StudioColors.ActiveViolet else StudioColors.StudioBorder)
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(text = modeIcon, fontSize = 14.sp)
+                            Spacer(modifier = Modifier.width(6.dp))
+                            Text(
+                                text = modeName,
+                                fontSize = 12.sp,
+                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+                                color = Color.White
+                            )
                         }
                     }
                 }
@@ -356,51 +367,73 @@ fun MainDashboardContent(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Inbox Header & Tabs
+            // 4. Smart Inbox Section Header & Tabs
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Inbox",
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold
+                    text = "Smart Inbox",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
                 )
-                IconButton(onClick = {
-                    refreshTrigger++
-                    Toast.makeText(context, "Inbox refreshed", Toast.LENGTH_SHORT).show()
-                }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_refresh),
-                        contentDescription = "Refresh Inbox"
-                    )
-                }
-                Spacer(modifier = Modifier.weight(1f))
-                TextButton(onClick = { currentTabUrgent = false }) {
-                    Text(
-                        text = "Muted",
-                        fontWeight = if (!currentTabUrgent) FontWeight.Bold else FontWeight.Normal,
-                        color = if (!currentTabUrgent) MaterialTheme.colorScheme.primary else Color.Gray
-                    )
-                }
-                TextButton(onClick = { currentTabUrgent = true }) {
-                    Text(
-                        text = "Shown",
-                        fontWeight = if (currentTabUrgent) FontWeight.Bold else FontWeight.Normal,
-                        color = if (currentTabUrgent) MaterialTheme.colorScheme.primary else Color.Gray
-                    )
+
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Surface(
+                        onClick = { currentTabUrgent = false },
+                        shape = CircleShape,
+                        color = if (!currentTabUrgent) StudioColors.ActiveViolet else StudioColors.CardSurface,
+                        border = BorderStroke(1.dp, StudioColors.StudioBorder)
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(text = "🔕 Muted ($mutedCount)", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                        }
+                    }
+
+                    Surface(
+                        onClick = { currentTabUrgent = true },
+                        shape = CircleShape,
+                        color = if (currentTabUrgent) StudioColors.GoldAccent else StudioColors.CardSurface,
+                        border = BorderStroke(1.dp, StudioColors.StudioBorder)
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "🔔 Shown ($urgentCount)",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = if (currentTabUrgent) Color.Black else Color.White
+                            )
+                        }
+                    }
                 }
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             // Search Bar
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                placeholder = { Text("Search notifications...") },
+                placeholder = { Text("Search notifications...", color = StudioColors.TextMuted, fontSize = 13.sp) },
+                singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
-                singleLine = true
+                shape = CircleShape,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedContainerColor = StudioColors.CardSurface,
+                    unfocusedContainerColor = StudioColors.CardSurface,
+                    focusedBorderColor = StudioColors.ActiveViolet,
+                    unfocusedBorderColor = StudioColors.StudioBorder,
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White
+                )
             )
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -410,84 +443,141 @@ fun MainDashboardContent(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 items(notifications) { notif ->
-                    var isExpanded by remember { mutableStateOf(false) }
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { isExpanded = !isExpanded }
+                    val isMuted = !notif.isUrgent
+                    StudioCard(
+                        onClick = {
+                            val intent = Intent(context, NotificationDetailActivity::class.java).apply {
+                                putExtra("notif_id", notif.id)
+                                putExtra("title", notif.title)
+                                putExtra("text", notif.text)
+                                putExtra("package_name", notif.packageName)
+                                putExtra("timestamp", notif.timestamp)
+                                putExtra("is_urgent", notif.isUrgent)
+                            }
+                            context.startActivity(intent)
+                        },
+                        modifier = Modifier.fillMaxWidth()
                     ) {
-                        Column(modifier = Modifier.padding(16.dp)) {
+                        Column(modifier = Modifier.padding(14.dp)) {
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                Text(
-                                    text = notif.title ?: "No Title",
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 15.sp,
-                                    modifier = Modifier.weight(1f)
-                                )
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Box(
+                                        modifier = Modifier
+                                            .size(20.dp)
+                                            .clip(CircleShape)
+                                            .background(if (isMuted) StudioColors.RedSurface else StudioColors.GreenSurface),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Text(
+                                            text = if (notif.packageName.contains("maps")) "🗺️" else if (notif.packageName.contains("whatsapp")) "💬" else "📩",
+                                            fontSize = 11.sp
+                                        )
+                                    }
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Text(
+                                        text = notif.title ?: "Notification",
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 14.sp,
+                                        color = Color.White
+                                    )
+                                }
                                 Text(
                                     text = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date(notif.timestamp)),
                                     fontSize = 11.sp,
-                                    color = MaterialTheme.colorScheme.outline
+                                    color = StudioColors.TextMuted
                                 )
                             }
-                            Spacer(modifier = Modifier.height(4.dp))
+
+                            Spacer(modifier = Modifier.height(6.dp))
+
                             Text(
-                                text = notif.text ?: "No Text",
+                                text = notif.text ?: "No content",
                                 fontSize = 13.sp,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                maxLines = if (isExpanded) Int.MAX_VALUE else 2,
+                                color = StudioColors.TextSecondary,
+                                maxLines = 2,
                                 overflow = TextOverflow.Ellipsis
                             )
-                            Spacer(modifier = Modifier.height(8.dp))
+
+                            Spacer(modifier = Modifier.height(10.dp))
+
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                Text(
-                                    text = notif.packageName,
-                                    fontSize = 10.sp,
-                                    color = MaterialTheme.colorScheme.outline,
-                                    modifier = Modifier.weight(1f)
-                                )
-                                IconButton(onClick = {
-                                    val db = AppDatabase.getDatabase(context)
-                                    val newUrgent = !notif.isUrgent
-                                    val updated = notif.copy(isUrgent = newUrgent, isLearned = true)
-                                    CoroutineScope(Dispatchers.IO).launch {
-                                        db.notificationDao().insert(updated)
-                                        refreshTrigger++
-                                        withContext(Dispatchers.Main) {
-                                            Toast.makeText(context, if (newUrgent) "Moved to Shown tab" else "Moved to Muted tab", Toast.LENGTH_SHORT).show()
-                                        }
-                                    }
-                                }) {
-                                    Icon(painter = painterResource(id = R.drawable.ic_swap_horiz), contentDescription = "Reclassify")
+                                // Urgency Badge Tag
+                                Surface(
+                                    shape = CircleShape,
+                                    color = if (isMuted) StudioColors.RedSurface else StudioColors.GreenSurface,
+                                    border = BorderStroke(1.dp, if (isMuted) StudioColors.RedAccent.copy(alpha = 0.3f) else StudioColors.GreenAccent.copy(alpha = 0.3f))
+                                ) {
+                                    Text(
+                                        text = if (isMuted) "Muted: Routine Alert" else "High Urgency: Priority Prompt",
+                                        fontSize = 10.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = if (isMuted) StudioColors.RedText else StudioColors.GreenText,
+                                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+                                    )
                                 }
-                                IconButton(onClick = {
-                                    try {
-                                        val intent = context.packageManager.getLaunchIntentForPackage(notif.packageName)
-                                        if (intent != null) {
-                                            context.startActivity(intent)
-                                        } else {
-                                            Toast.makeText(context, "App not installed: ${notif.packageName}", Toast.LENGTH_SHORT).show()
-                                        }
-                                    } catch (_: Exception) {
-                                        Toast.makeText(context, "Cannot open app", Toast.LENGTH_SHORT).show()
+
+                                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                                    IconButton(
+                                        onClick = {
+                                            val db = AppDatabase.getDatabase(context)
+                                            val newUrgent = !notif.isUrgent
+                                            val updated = notif.copy(isUrgent = newUrgent, isLearned = true)
+                                            CoroutineScope(Dispatchers.IO).launch {
+                                                db.notificationDao().insert(updated)
+                                                refreshTrigger++
+                                                withContext(Dispatchers.Main) {
+                                                    Toast.makeText(context, if (newUrgent) "Moved to Shown" else "Moved to Muted", Toast.LENGTH_SHORT).show()
+                                                }
+                                            }
+                                        },
+                                        modifier = Modifier.size(28.dp)
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.ic_swap_horiz),
+                                            contentDescription = "Swap Tab",
+                                            tint = StudioColors.TextSecondary,
+                                            modifier = Modifier.size(16.dp)
+                                        )
                                     }
-                                }) {
-                                    Icon(painter = painterResource(id = R.drawable.ic_open_in_new), contentDescription = "Open App")
+                                    IconButton(
+                                        onClick = {
+                                            try {
+                                                val intent = context.packageManager.getLaunchIntentForPackage(notif.packageName)
+                                                if (intent != null) context.startActivity(intent)
+                                                else Toast.makeText(context, "App not installed", Toast.LENGTH_SHORT).show()
+                                            } catch (_: Exception) {
+                                                Toast.makeText(context, "Cannot open app", Toast.LENGTH_SHORT).show()
+                                            }
+                                        },
+                                        modifier = Modifier.size(28.dp)
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.ic_open_in_new),
+                                            contentDescription = "Open App",
+                                            tint = StudioColors.TextSecondary,
+                                            modifier = Modifier.size(16.dp)
+                                        )
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
+
+            // 5. Studio Footer
+            StudioFooter(text = "🔒 Your notifications stay on this device.")
         }
     }
 }
