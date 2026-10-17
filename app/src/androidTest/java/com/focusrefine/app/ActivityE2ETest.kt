@@ -43,4 +43,25 @@ class ActivityE2ETest {
             assertNotNull(scenario)
         }
     }
+
+    @Test
+    fun testNotificationDetailActivityLaunches() {
+        ActivityScenario.launch(NotificationDetailActivity::class.java).use { scenario ->
+            assertNotNull(scenario)
+        }
+    }
+
+    @Test
+    fun testContextModesActivityLaunches() {
+        ActivityScenario.launch(ContextModesActivity::class.java).use { scenario ->
+            assertNotNull(scenario)
+        }
+    }
+
+    @Test
+    fun testPrivacyInsightsActivityLaunches() {
+        ActivityScenario.launch(PrivacyInsightsActivity::class.java).use { scenario ->
+            assertNotNull(scenario)
+        }
+    }
 }

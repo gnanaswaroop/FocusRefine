@@ -1,0 +1,29 @@
+[
+  {
+    "id": "nav_prompts",
+    "title": "Navigation prompts",
+    "description": "Directions while you're on the move",
+    "icon": "🚀",
+    "prefKey": "exception_nav_prompts",
+    "defaultEnabled": true,
+    "keywords": ["navigation", "maps", "turn left", "turn right", "traffic", "route", "200 feet", "merge"]
+  },
+  {
+    "id": "calls_priority",
+    "title": "Calls & priority contacts",
+    "description": "Let important people reach you",
+    "icon": "📞",
+    "prefKey": "exception_calls",
+    "defaultEnabled": true,
+    "keywords": ["call", "incoming call", "missed call", "mom", "dad", "wife", "husband", "boss", "emergency"]
+  },
+  {
+    "id": "security_otps",
+    "title": "Security & OTP verifications",
+    "description": "Two-factor auth codes and bank security pings",
+    "icon": "🔐",
+    "prefKey": "exception_security_otps",
+    "defaultEnabled": true,
+    "keywords": ["otp", "verification code", "security", "bank", "authentication", "login code", "passcode"]
+  }
+]
