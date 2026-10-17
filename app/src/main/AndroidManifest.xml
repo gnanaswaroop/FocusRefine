@@ -27,31 +27,31 @@
 
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="true" />
 
         <activity
             android:name=".SettingsActivity"
-            android:exported="false" />
+            android:exported="true" />
 
         <activity
             android:name=".ConfigureModesActivity"
-            android:exported="false" />
+            android:exported="true" />
 
         <activity
             android:name=".LearnedRulesActivity"
-            android:exported="false" />
+            android:exported="true" />
 
         <activity
             android:name=".NotificationDetailActivity"
-            android:exported="false" />
+            android:exported="true" />
 
         <activity
             android:name=".ContextModesActivity"
-            android:exported="false" />
+            android:exported="true" />
 
         <activity
             android:name=".PrivacyInsightsActivity"
-            android:exported="false" />
+            android:exported="true" />
 
         <service
             android:name=".NotificationFilterService"

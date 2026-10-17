@@ -1,0 +1,7 @@
+title: FocusRefine Documentation
+description: Intelligent On-Device Notification Filtering for Android
+theme: jekyll-theme-primer
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
