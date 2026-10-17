@@ -418,7 +418,9 @@ fun SettingsStudioScreen(
             // 6. Navigation Hub Cards
             StudioCard(onClick = onNavigateToAppRules, modifier = Modifier.fillMaxWidth()) {
                 Row(
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -434,7 +436,9 @@ fun SettingsStudioScreen(
 
             StudioCard(onClick = onNavigateToContextModes, modifier = Modifier.fillMaxWidth()) {
                 Row(
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -450,7 +454,9 @@ fun SettingsStudioScreen(
 
             StudioCard(onClick = onNavigateToPrivacy, modifier = Modifier.fillMaxWidth()) {
                 Row(
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {

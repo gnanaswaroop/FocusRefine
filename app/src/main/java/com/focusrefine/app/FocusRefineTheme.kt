@@ -3,6 +3,7 @@ package com.focusrefine.app
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -11,10 +12,12 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -96,7 +99,7 @@ fun FocusRefineTheme(content: @Composable () -> Unit) {
 
 @Composable
 fun StudioCard(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.fillMaxWidth(),
     onClick: (() -> Unit)? = null,
     border: BorderStroke? = BorderStroke(1.dp, StudioColors.StudioBorder),
     content: @Composable ColumnScope.() -> Unit
@@ -223,3 +226,65 @@ fun StudioFooter(
             .padding(vertical = 12.dp)
     )
 }
+
+@Composable
+fun AppIconImage(
+    packageName: String,
+    modifier: Modifier = Modifier
+) {
+    val context = LocalContext.current
+    val iconDrawable = remember(packageName) {
+        try {
+            context.packageManager.getApplicationIcon(packageName)
+        } catch (_: Exception) {
+            context.packageManager.defaultActivityIcon
+        }
+    }
+
+    val imageBitmap = remember(iconDrawable) {
+        try {
+            if (iconDrawable is android.graphics.drawable.BitmapDrawable) {
+                iconDrawable.bitmap.asImageBitmap()
+            } else {
+                val bmp = android.graphics.Bitmap.createBitmap(
+                    iconDrawable.intrinsicWidth.coerceAtLeast(1),
+                    iconDrawable.intrinsicHeight.coerceAtLeast(1),
+                    android.graphics.Bitmap.Config.ARGB_8888
+                )
+                val canvas = android.graphics.Canvas(bmp)
+                iconDrawable.setBounds(0, 0, canvas.width, canvas.height)
+                iconDrawable.draw(canvas)
+                bmp.asImageBitmap()
+            }
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    if (imageBitmap != null) {
+        Image(
+            bitmap = imageBitmap,
+            contentDescription = "App Icon",
+            modifier = modifier.clip(CircleShape)
+        )
+    } else {
+        Box(
+            modifier = modifier
+                .clip(CircleShape)
+                .background(StudioColors.CardSurfaceHighlight),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = when {
+                    packageName.contains("maps", ignoreCase = true) -> "🗺️"
+                    packageName.contains("whatsapp", ignoreCase = true) -> "💬"
+                    packageName.contains("gmail", ignoreCase = true) -> "📧"
+                    packageName.contains("instagram", ignoreCase = true) -> "📷"
+                    else -> "📩"
+                },
+                fontSize = 12.sp
+            )
+        }
+    }
+}
+
