@@ -254,6 +254,13 @@ class NotificationFilterService : NotificationListenerService() {
         } catch (_: Exception) {
         }
         try {
+            val manager = getSystemService(NotificationManager::class.java)
+            if (manager.isNotificationPolicyAccessGranted) {
+                manager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL)
+            }
+        } catch (_: Exception) {
+        }
+        try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 stopForeground(STOP_FOREGROUND_REMOVE)
             } else {
@@ -274,10 +281,48 @@ class NotificationFilterService : NotificationListenerService() {
     )
 
     private fun analyzeContentWithDetails(title: String?, text: String?, mode: String): ClassificationResult {
-        // 1. Check for matching user learned rule (exact match or synthesized rule match)
+        val content = "${title ?: ""} ${text ?: ""}".lowercase()
+        val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
+
+        // 1. MediaPipe On-Device AI Pipeline Evaluation FIRST (if enabled and classifier available)
+        val useAi = prefs.getBoolean("use_ai_model", true)
+        val filterStrength = prefs.getInt("filter_strength", 1) // 0=Gentle, 1=Balanced, 2=Strict
+        val scoreThreshold = when (filterStrength) {
+            0 -> 0.4f // Gentle
+            2 -> 0.8f // Strict
+            else -> 0.6f // Balanced
+        }
+
+        var aiExplanation: String? = null
+        var aiClassifiedUrgent = false
+
+        if (useAi && textClassifier != null) {
+            try {
+                val result = textClassifier!!.classify(content)
+                for (classification in result.classificationResult().classifications()) {
+                    for (category in classification.categories()) {
+                        if (category.categoryName().equals("urgent", ignoreCase = true)) {
+                            val score = category.score()
+                            val scorePercent = (score * 100).toInt()
+                            val thresholdPercent = (scoreThreshold * 100).toInt()
+                            if (score >= scoreThreshold) {
+                                aiClassifiedUrgent = true
+                                aiExplanation = "🤖 [AI Pipeline] MediaPipe model classified notification as urgent with $scorePercent% confidence (exceeded $mode threshold $thresholdPercent%)."
+                            } else {
+                                aiExplanation = "🤖 [AI Pipeline] MediaPipe model confidence $scorePercent% was below $mode urgency threshold ($thresholdPercent%); muted as routine."
+                            }
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "MediaPipe AI Pipeline classification error: ${e.message}")
+            }
+        }
+
+        // 2. Check for matching user learned rule overrides
         val learnedRule = database.notificationDao().findMatchingLearnedRule(title ?: "", "%${text ?: ""}%")
         if (learnedRule != null) {
-            val ruleTag = learnedRule.synthesizedRule ?: "Direct user preference"
+            val ruleTag = learnedRule.synthesizedRule ?: "User preference override"
             Log.d(TAG, "🔍 [Semantic Search] Learned rule override matched: isUrgent = ${learnedRule.isUrgent}")
             return ClassificationResult(
                 isUrgent = learnedRule.isUrgent,
@@ -285,7 +330,7 @@ class NotificationFilterService : NotificationListenerService() {
             )
         }
 
-        // 1b. Check all AI Synthesized semantic rules
+        // 2b. Check all AI Synthesized semantic rules
         val synthesizedRules = database.notificationDao().getSynthesizedRules()
         for (ruleNotif in synthesizedRules) {
             val ruleText = ruleNotif.synthesizedRule ?: continue
@@ -298,10 +343,7 @@ class NotificationFilterService : NotificationListenerService() {
             }
         }
 
-        val content = "${title ?: ""} ${text ?: ""}".lowercase()
-        val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
-
-        // 2. Check JSON-driven exceptions from exceptions.json
+        // 3. Check JSON-driven exceptions from exceptions.json
         val exceptions = ExceptionManager.getAllExceptions(this)
         for (exc in exceptions) {
             val isEnabled = prefs.getBoolean(exc.prefKey, exc.defaultEnabled)
@@ -316,38 +358,15 @@ class NotificationFilterService : NotificationListenerService() {
             }
         }
 
-        // 3. MediaPipe On-Device AI Pipeline Evaluation
-        val useAi = prefs.getBoolean("use_ai_model", true)
-        val filterStrength = prefs.getInt("filter_strength", 1) // 0=Gentle, 1=Balanced, 2=Strict
-        val scoreThreshold = when (filterStrength) {
-            0 -> 0.4f // Gentle
-            2 -> 0.8f // Strict
-            else -> 0.6f // Balanced
+        // 4. Return MediaPipe AI Pipeline Result if available
+        if (aiExplanation != null) {
+            return ClassificationResult(
+                isUrgent = aiClassifiedUrgent,
+                explanation = aiExplanation
+            )
         }
 
-        if (useAi && textClassifier != null) {
-            try {
-                val result = textClassifier!!.classify(content)
-                for (classification in result.classificationResult().classifications()) {
-                    for (category in classification.categories()) {
-                        if (category.categoryName().equals("urgent", ignoreCase = true)) {
-                            val score = category.score()
-                            if (score >= scoreThreshold) {
-                                Log.d(TAG, "🤖 [AI Pipeline] MediaPipe model urgent score: $score")
-                                return ClassificationResult(
-                                    isUrgent = true,
-                                    explanation = "🤖 [AI Pipeline] MediaPipe model classified notification as urgent with ${(score * 100).toInt()}% confidence (exceeded $mode threshold $scoreThreshold)."
-                                )
-                            }
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                Log.e(TAG, "MediaPipe AI Pipeline classification error: ${e.message}")
-            }
-        }
-
-        // 4. Semantic Prompt Search & Keyword Matching
+        // 5. Semantic Prompt Search & Keyword Matching Fallback
         val ootbPrompts = PromptManager.getAllOotbPrompts(this)
         val basePrompt = when {
             mode.contains("Commute", ignoreCase = true) ->
@@ -377,13 +396,16 @@ class NotificationFilterService : NotificationListenerService() {
         Log.d(TAG, "🔍 [Semantic Search] Notification muted under $mode mode")
         return ClassificationResult(
             isUrgent = false,
-            explanation = "🔍 [Semantic Search] Did not contain urgent prompt tokens or high AI confidence for $mode mode; muted as casual communication."
+            explanation = "🔍 [Semantic Search] Did not contain urgent prompt tokens for $mode mode; muted as casual communication."
         )
     }
 
     override fun onTaskRemoved(rootIntent: Intent?) {
         try {
             val manager = getSystemService(NotificationManager::class.java)
+            if (manager.isNotificationPolicyAccessGranted) {
+                manager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL)
+            }
             manager.cancel(NOTIFICATION_ID)
             stopSelf()
         } catch (_: Exception) {}

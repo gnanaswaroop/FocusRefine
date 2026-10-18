@@ -86,21 +86,24 @@ Pre-configured exceptions are externalized into `assets/exceptions.json` and par
 
 ## 4. MediaPipe AI Pipeline vs. Semantic Search Inputs
 
-FocusRefine clearly distinguishes between the **MediaPipe On-Device AI Pipeline** and **Semantic Search / Prompt Matcher** inputs:
+FocusRefine evaluates incoming notifications through an organized pipeline, clearly distinguishing between the **MediaPipe On-Device AI Pipeline** and **Semantic Search / Prompt Matcher** inputs:
 
 ```
 Incoming Notification
+         │
+         ├─► 🤖 [AI Pipeline] On-Device MediaPipe TextClassifier (Primary Deep Intent Classifier)
          │
          ├─► 🔍 [Semantic Search] User Learned Rules & AI Synthesized Rules (AiRuleSynthesizer)
          │
          ├─► 🔍 [Semantic Search] JSON Exceptions (exceptions.json)
          │
-         ├─► 🤖 [AI Pipeline] On-Device MediaPipe TextClassifier (tflite model confidence score)
-         │
          └─► 🔍 [Semantic Search] Mode System Prompts & Keyword Tokens (prompts.json)
 ```
 
-1. **`🤖 [AI Pipeline]`**: On-device MediaPipe deep intent classification model (`text_classifier.tflite`). Evaluates deep semantics and returns confidence scores (e.g. `🤖 [AI Pipeline] MediaPipe model score 88% exceeded Deep Focus threshold 0.6`). On emulator environments where native JNI is unavailable, the AI pipeline automatically disables and falls back to local semantic search.
+1. **`🤖 [AI Pipeline]`**: On-device MediaPipe deep intent classification model (`text_classifier.tflite`). Evaluates notification text semantics and generates explicit AI explanations for both Urgent (*Shown*) and Routine (*Muted*) classifications:
+   - Urgent AI Explanation: `🤖 [AI Pipeline] MediaPipe model classified notification as urgent with 88% confidence (exceeded Deep Focus threshold 60%).`
+   - Routine AI Explanation: `🤖 [AI Pipeline] MediaPipe model confidence 35% was below Deep Focus urgency threshold (60%); muted as routine.`
+   - On emulator environments where native JNI is unavailable, the AI pipeline automatically disables and falls back to local semantic search.
 2. **`🔍 [Semantic Search]`**: Token-based keyword matching, user exception rules, and dynamic AI-synthesized preference rules.
 
 ---
