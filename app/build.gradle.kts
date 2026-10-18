@@ -50,6 +50,12 @@ android {
     lint {
         abortOnError = false
     }
+    sourceSets {
+        getByName("androidTest") {
+            // Golden + holdout notification datasets, shared with scripts/replay_golden.py
+            assets.srcDir("$rootDir/testdata/golden")
+        }
+    }
 }
 
 dependencies {
@@ -70,7 +76,7 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    implementation("com.google.mediapipe:tasks-text:0.10.14")
+    implementation("com.google.mediapipe:tasks-text:1.1.1")
 
     val composeBom = platform("androidx.compose:compose-bom:2024.02.00")
     implementation(composeBom)
