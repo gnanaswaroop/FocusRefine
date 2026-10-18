@@ -153,7 +153,7 @@ A labeled dataset (`testdata/golden/`) and an adb end-to-end replay (`scripts/re
 | Engine | Golden F1 | Held-out F1 |
 | :--- | :--- | :--- |
 | Keyword only (`--engine keyword`) | 0.396 | 0.360 |
-| Embedding model (default) | 0.507 | 0.452 |
+| Embedding model (default, Balanced) | 0.570 | 0.527 |
 
 The keyword engine's main weaknesses, all measured:
 - **Exceptions fire on the whole text, including app names.** "Calls & priority contacts" Shows `Mom | Good morning!` and `Boss | Thanks, noted`; "Navigation prompts" Shows `Google Maps | Rate your visit`; "Security & OTP" Shows a bank statement. Some of this is intended (these exceptions apply in every mode), but it disagrees with mode-specific expectations, and it caps the end-to-end score of the embedding engine too, because exceptions decide before the model does.

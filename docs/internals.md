@@ -125,10 +125,10 @@ python scripts/replay_golden.py --serial <device> --allow-device --min-f1 0.6
 
 | Engine | Set | F1 | Precision | Recall | Accuracy |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| Embedding model (default) | Golden (96) | 0.507 | 0.412 | 0.687 | 0.792 |
-| Embedding model (default) | Holdout (76) | 0.452 | 0.408 | 0.538 | 0.761 |
+| Embedding model (default, Balanced) | Golden (96) | 0.570 | 0.443 | 0.855 | 0.792 |
+| Embedding model (default, Balanced) | Holdout (76) | 0.527 | 0.439 | 0.708 | 0.761 |
 
-Per mode F1, holdout, embedding engine: Commute 0.72, Deep Work / Focus 0.42, DND 0.52, Sleeping / Rest 0.53, Workout / Gym 0.07. The end-to-end figures are lower than the isolated model's because exceptions (21 of 96 golden items, 15 of 76 holdout items) decide first and Show things like calls and navigation in every mode, which hurts Workout / Gym most. Keyword-only baseline (`--engine keyword`; identical on the emulator and a Pixel 9 Pro XL):
+Per mode F1, holdout, embedding engine: Commute 0.74, Deep Work / Focus 0.47, DND 0.53, Sleeping / Rest 0.62, Workout / Gym 0.27. The end-to-end figures are lower than the isolated model's because exceptions (21 of 96 golden items, 15 of 76 holdout items) decide first and Show things like calls and navigation in every mode, which hurts Workout / Gym most. Keyword-only baseline (`--engine keyword`; identical on the emulator and a Pixel 9 Pro XL):
 
 | Set | F1 | Precision | Recall | Accuracy |
 | :--- | :--- | :--- | :--- | :--- |
