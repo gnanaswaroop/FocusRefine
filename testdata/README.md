@@ -39,7 +39,8 @@ truth from real traffic. Prefer adding real, anonymized notifications over infla
 ## Running the adb replay
 
 ```
-python scripts/replay_golden.py --serial emulator-5554                  # both sets, all modes
+python scripts/replay_golden.py --serial emulator-5554                  # both sets, all modes, AI model on
+python scripts/replay_golden.py --serial emulator-5554 --engine keyword # keyword-only baseline
 python scripts/replay_golden.py --serial emulator-5554 --dataset holdout --modes Commute
 python scripts/replay_golden.py --serial emulator-5554 --min-f1 0.6     # exit 1 on regression
 ```

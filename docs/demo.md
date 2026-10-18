@@ -22,8 +22,8 @@ This document provides a feature walkthrough and visual demonstration guide for 
 ![SettingsActivity](../assets/SettingsActivity.png)
 
 - **Collapsible Studio Cards**: All cards are collapsible (open/expanded by default) with clickable headers and expand/collapse chevrons (`˅` / `›`).
-- **Classification Engine Toggle & Emulator Detection**: Switch between `On-Device AI Engine Active` (MediaPipe AI model) and `On-Device Semantic Matcher Active`. On emulators, the switch is safely disabled with an emulator status note.
-- **Filtering Strength**: Tri-state segmented control (`Gentle` | `Balanced` | `Strict`) adjusting AI score thresholds (`0.4f`–`0.8f`).
+- **Classification Engine Toggle**: Switch between `On-Device AI Engine Active` (on-device embedding model) and `On-Device Keyword Matcher Active`. The banner reflects the engine that actually loaded.
+- **Filtering Strength**: Tri-state segmented control (`Gentle` | `Balanced` | `Strict`) shifting the AI urgency thresholds.
 - **Urgent Notification Exceptions**: JSON-driven switches for `Navigation prompts`, `Calls & priority contacts`, and `Security & OTP verifications` loaded from `assets/exceptions.json`.
 - **Advanced Settings**: Includes an **"Inbox Swipe Animations"** toggle to enable or disable horizontal slide transitions on Smart Inbox tab switches.
 - **Learned Rules Direct Access**: Dedicated navigation link to view and manage AI-synthesized learned rules in `LearnedRulesActivity`.
