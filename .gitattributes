@@ -1,0 +1,17 @@
+# Normalize line endings: text files are stored AND checked out with LF on every platform,
+# so Windows' core.autocrlf no longer warns "LF will be replaced by CRLF".
+* text=auto eol=lf
+
+# Windows batch files need CRLF
+*.bat text eol=crlf
+
+# Binary assets: never touch line endings
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.mp4 binary
+*.jar binary
+*.tflite binary
+*.keystore binary
+*.jks binary

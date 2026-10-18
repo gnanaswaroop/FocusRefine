@@ -15,10 +15,15 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.animation.*
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -31,6 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -40,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.core.content.ContextCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -50,103 +57,148 @@ import java.util.*
 class MainActivity : ComponentActivity() {
 
     private lateinit var prefs: SharedPreferences
-    private lateinit var database: AppDatabase
-    private var isAccessEnabled by mutableStateOf(false)
-    private var isFilteringActive by mutableStateOf(true)
     private var lastThemeMode = -99
-    private var liveRefreshTrigger by mutableStateOf(0)
+    private var isNotifAccessEnabledState = mutableStateOf(false)
 
-    private val serviceStateReceiver = object : BroadcastReceiver() {
+    private val notifReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            if (intent.action == NotificationFilterService.ACTION_SERVICE_STATE_CHANGED) {
-                val newState = intent.getBooleanExtra("is_running", prefs.getBoolean("service_running", true))
-                isFilteringActive = newState
-            } else if (intent.action == NotificationFilterService.ACTION_NOTIFICATION_ARRIVED) {
-                liveRefreshTrigger++
+            if (intent.action == NotificationFilterService.ACTION_NOTIFICATION_ARRIVED ||
+                intent.action == NotificationFilterService.ACTION_SERVICE_STATE_CHANGED) {
+                val liveRefreshIntent = Intent("com.focusrefine.app.ACTION_LIVE_REFRESH")
+                sendBroadcast(liveRefreshIntent)
             }
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        database = AppDatabase.getDatabase(this)
         prefs = getSharedPreferences("FocusRefinePrefs", MODE_PRIVATE)
         lastThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         @Suppress("WrongConstant")
         AppCompatDelegate.setDefaultNightMode(lastThemeMode)
 
+        val filter = IntentFilter().apply {
+            addAction(NotificationFilterService.ACTION_NOTIFICATION_ARRIVED)
+            addAction(NotificationFilterService.ACTION_SERVICE_STATE_CHANGED)
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            registerReceiver(notifReceiver, filter, RECEIVER_NOT_EXPORTED)
+        } else {
+            registerReceiver(notifReceiver, filter)
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 101)
             }
         }
 
-        isAccessEnabled = isNotificationServiceEnabled()
-        isFilteringActive = prefs.getBoolean("service_running", true)
+        isNotifAccessEnabledState.value = isNotificationServiceEnabled()
+        startNotificationService()
+
         setContent {
             FocusRefineTheme {
-                MainDashboardContent(
-                    onOpenSettings = { startActivity(Intent(this, SettingsActivity::class.java)) },
-                    onEnableNotificationAccess = { startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)) },
-                    isNotificationAccessEnabled = isAccessEnabled,
-                    isFilteringActive = isFilteringActive,
-                    liveRefreshTrigger = liveRefreshTrigger
+                MainStudioScreen(
+                    isNotificationAccessEnabled = isNotifAccessEnabledState.value,
+                    isFilteringActive = prefs.getBoolean("service_running", true),
+                    prefs = prefs,
+                    onEnableNotificationAccess = {
+                        try {
+                            startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+                        } catch (_: Exception) {
+                            Toast.makeText(this, "Unable to open notification settings", Toast.LENGTH_SHORT).show()
+                        }
+                    },
+                    onOpenSettings = { startActivity(Intent(this, SettingsActivity::class.java)) }
                 )
             }
         }
-
-        val autoDetector = AndroidAutoDetector(this)
-        autoDetector.observeConnection(this)
     }
 
     override fun onResume() {
         super.onResume()
+        val isCurrentlyEnabled = isNotificationServiceEnabled()
+        isNotifAccessEnabledState.value = isCurrentlyEnabled
+
+        if (isCurrentlyEnabled) {
+            startNotificationService()
+        }
+
         val currentThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        @Suppress("WrongConstant")
         AppCompatDelegate.setDefaultNightMode(currentThemeMode)
         if (lastThemeMode != -99 && currentThemeMode != lastThemeMode) {
+            lastThemeMode = currentThemeMode
             recreate()
             return
         }
         lastThemeMode = currentThemeMode
 
-        isAccessEnabled = isNotificationServiceEnabled()
-        liveRefreshTrigger++
-        val filter = IntentFilter().apply {
-            addAction(NotificationFilterService.ACTION_SERVICE_STATE_CHANGED)
-            addAction(NotificationFilterService.ACTION_NOTIFICATION_ARRIVED)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            registerReceiver(serviceStateReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
-        } else {
-            registerReceiver(serviceStateReceiver, filter)
-        }
+        val liveRefreshIntent = Intent("com.focusrefine.app.ACTION_LIVE_REFRESH")
+        sendBroadcast(liveRefreshIntent)
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onDestroy() {
         try {
-            unregisterReceiver(serviceStateReceiver)
+            unregisterReceiver(notifReceiver)
         } catch (_: Exception) {}
+        super.onDestroy()
     }
 
     private fun isNotificationServiceEnabled(): Boolean {
+        val pkgName = packageName
         val flat = Settings.Secure.getString(contentResolver, "enabled_notification_listeners")
-        return flat != null && flat.contains(packageName)
+        if (flat != null) {
+            val names = flat.split(":")
+            for (name in names) {
+                if (name.contains(pkgName)) return true
+            }
+        }
+        return false
+    }
+
+    private fun startNotificationService() {
+        if (isNotificationServiceEnabled()) {
+            val serviceIntent = Intent(this, NotificationFilterService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(serviceIntent)
+            } else {
+                startService(serviceIntent)
+            }
+        }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MainDashboardContent(
-    onOpenSettings: () -> Unit,
-    onEnableNotificationAccess: () -> Unit,
+fun MainStudioScreen(
     isNotificationAccessEnabled: Boolean,
-    isFilteringActive: Boolean = true,
-    liveRefreshTrigger: Int = 0
+    isFilteringActive: Boolean,
+    prefs: SharedPreferences,
+    onEnableNotificationAccess: () -> Unit,
+    onOpenSettings: () -> Unit
 ) {
     val context = LocalContext.current
-    val prefs = context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
+    var liveRefreshTrigger by remember { mutableStateOf(0) }
+
+    DisposableEffect(Unit) {
+        val receiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                liveRefreshTrigger++
+            }
+        }
+        val filter = IntentFilter("com.focusrefine.app.ACTION_LIVE_REFRESH")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.registerReceiver(receiver, filter, RECEIVER_NOT_EXPORTED)
+        } else {
+            context.registerReceiver(receiver, filter)
+        }
+        onDispose {
+            try {
+                context.unregisterReceiver(receiver)
+            } catch (_: Exception) {}
+        }
+    }
+
     val database = AppDatabase.getDatabase(context)
 
     var isRunning by remember(isFilteringActive) { mutableStateOf(isFilteringActive) }
@@ -160,23 +212,34 @@ fun MainDashboardContent(
     var refreshTrigger by remember { mutableStateOf(0) }
     var isFullScreenInbox by remember { mutableStateOf(false) }
 
+    val enableSwipeAnimations = remember(refreshTrigger, liveRefreshTrigger) {
+        prefs.getBoolean("enable_swipe_animations", true)
+    }
+
     val totalCount = mutedCount + urgentCount
     val noiseFilteredPercent = if (totalCount > 0) (mutedCount * 100 / totalCount) else 0
 
+    // Context modes enabled on home page: Default enabled ONLY for Commute and Deep Focus
     val modeOptions = remember(refreshTrigger, liveRefreshTrigger) {
-        val list = mutableListOf(
-            Pair("Commute", "🚗"),
-            Pair("Deep Focus", "🎧"),
-            Pair("Sleep", "🌙"),
-            Pair("Gaming", "🎮")
-        )
+        val list = mutableListOf<Pair<String, String>>()
+        if (prefs.getBoolean("mode_enabled_Commute", true)) list.add(Pair("Commute", "🚗"))
+        if (prefs.getBoolean("mode_enabled_Deep Focus", true)) list.add(Pair("Deep Focus", "🎧"))
+        if (prefs.getBoolean("mode_enabled_Sleep", false)) list.add(Pair("Sleep", "🌙"))
+        if (prefs.getBoolean("mode_enabled_Gaming", false)) list.add(Pair("Gaming", "🎮"))
+
         val customStr = prefs.getString("custom_modes_list", "") ?: ""
         if (customStr.isNotEmpty()) {
             for (name in customStr.split(",")) {
                 if (name.isNotBlank() && !list.any { it.first.equals(name, ignoreCase = true) }) {
-                    list.add(Pair(name, "⚡"))
+                    if (prefs.getBoolean("custom_mode_enabled_$name", false)) {
+                        list.add(Pair(name, "⚡"))
+                    }
                 }
             }
+        }
+        if (list.isEmpty()) {
+            list.add(Pair("Commute", "🚗"))
+            list.add(Pair("Deep Focus", "🎧"))
         }
         list
     }
@@ -185,6 +248,8 @@ fun MainDashboardContent(
         if (!isNotificationAccessEnabled) {
             isRunning = false
             prefs.edit().putBoolean("service_running", false).apply()
+        } else {
+            isRunning = prefs.getBoolean("service_running", true)
         }
     }
 
@@ -217,16 +282,25 @@ fun MainDashboardContent(
                     .padding(vertical = 4.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.adaptive_foreground),
-                    contentDescription = "App Logo",
-                    modifier = Modifier.size(26.dp)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
+                Box(
+                    modifier = Modifier
+                        .size(38.dp)
+                        .clip(CircleShape)
+                        .background(StudioColors.CardSurfaceHighlight)
+                        .border(1.dp, StudioColors.ActiveViolet.copy(alpha = 0.5f), CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.adaptive_foreground),
+                        contentDescription = "App Logo",
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = "FocusRefine",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.ExtraBold,
                     color = Color.White
                 )
                 Spacer(modifier = Modifier.width(8.dp))
@@ -330,9 +404,9 @@ fun MainDashboardContent(
                                 onClick = onEnableNotificationAccess,
                                 modifier = Modifier.weight(1f),
                                 shape = CircleShape,
-                                colors = ButtonDefaults.buttonColors(containerColor = StudioColors.ActiveViolet)
+                                colors = ButtonDefaults.buttonColors(containerColor = StudioColors.RedAccent)
                             ) {
-                                Text("Enable Access", fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                                Text("Approve Permission", fontSize = 12.sp, fontWeight = FontWeight.Bold)
                             }
 
                             OutlinedButton(
@@ -341,7 +415,7 @@ fun MainDashboardContent(
                                 shape = CircleShape,
                                 border = BorderStroke(1.dp, StudioColors.StudioBorder)
                             ) {
-                                Text("Why required?", fontSize = 12.sp, color = Color.White)
+                                Text("Why Required?", fontSize = 12.sp, color = Color.White)
                             }
                         }
                     }
@@ -350,20 +424,15 @@ fun MainDashboardContent(
                 if (showWhyDialog) {
                     AlertDialog(
                         onDismissRequest = { showWhyDialog = false },
-                        title = {
-                            Text(
-                                text = "Why Notification Access Is Required",
-                                color = Color.White,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 16.sp
-                            )
-                        },
+                        title = { Text("Why Notification Access Is Required", color = Color.White, fontWeight = FontWeight.Bold) },
                         text = {
                             Text(
-                                text = "FocusRefine needs Notification Access to intercept, evaluate, and filter incoming notifications in real-time according to your active modes and learned rules.\n\nYour notifications are processed 100% locally on-device and never shared, stored externally, or uploaded.",
+                                "FocusRefine acts as an on-device privacy shield for your notification shade.\n\n" +
+                                "To classify and quiet routine pings, Android requires explicit Notification Access.\n\n" +
+                                "• 100% On-Device: Your text never leaves your phone.\n" +
+                                "• Zero Internet Permission: We physically cannot transmit your data.",
                                 color = StudioColors.TextSecondary,
-                                fontSize = 13.sp,
-                                lineHeight = 18.sp
+                                fontSize = 13.sp
                             )
                         },
                         confirmButton = {
@@ -372,10 +441,9 @@ fun MainDashboardContent(
                                     showWhyDialog = false
                                     onEnableNotificationAccess()
                                 },
-                                shape = CircleShape,
                                 colors = ButtonDefaults.buttonColors(containerColor = StudioColors.ActiveViolet)
                             ) {
-                                Text("Got it, Enable Now", fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                                Text("Enable Access Now")
                             }
                         },
                         dismissButton = {
@@ -447,15 +515,15 @@ fun MainDashboardContent(
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            // 3. Context Mode Selector
+            // 3. Context Mode Selector (Long press opens ContextModesActivity)
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Context mode",
-                    fontSize = 13.sp,
+                    text = "Context mode (Long press to manage)",
+                    fontSize = 12.sp,
                     fontWeight = FontWeight.Medium,
                     color = StudioColors.TextSecondary
                 )
@@ -475,19 +543,25 @@ fun MainDashboardContent(
             ) {
                 items(modeOptions) { (modeName, modeIcon) ->
                     val isSelected = currentMode.contains(modeName, ignoreCase = true) || (currentMode == modeName)
-                    Surface(
-                        onClick = {
-                            currentMode = modeName
-                            prefs.edit().putString("current_mode", modeName).apply()
-                        },
-                        shape = CircleShape,
-                        color = if (isSelected) StudioColors.ActiveViolet else StudioColors.CardSurface,
-                        border = BorderStroke(1.dp, if (isSelected) StudioColors.ActiveViolet else StudioColors.StudioBorder)
+                    Box(
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .background(if (isSelected) StudioColors.ActiveViolet else StudioColors.CardSurface)
+                            .border(1.dp, if (isSelected) StudioColors.ActiveViolet else StudioColors.StudioBorder, CircleShape)
+                            .combinedClickable(
+                                onClick = {
+                                    currentMode = modeName
+                                    prefs.edit().putString("current_mode", modeName).apply()
+                                    refreshTrigger++
+                                },
+                                onLongClick = {
+                                    context.startActivity(Intent(context, ContextModesActivity::class.java))
+                                    Toast.makeText(context, "Opening details for $modeName", Toast.LENGTH_SHORT).show()
+                                }
+                            )
+                            .padding(horizontal = 14.dp, vertical = 8.dp)
                     ) {
-                        Row(
-                            modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(text = modeIcon, fontSize = 14.sp)
                             Spacer(modifier = Modifier.width(6.dp))
                             Text(
@@ -583,139 +657,344 @@ fun MainDashboardContent(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Notifications List
-            LazyColumn(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                items(notifications) { notif ->
-                    val isMuted = !notif.isUrgent
-                    StudioCard(
-                        onClick = {
-                            val intent = Intent(context, NotificationDetailActivity::class.java).apply {
-                                putExtra("notif_id", notif.id)
-                                putExtra("title", notif.title)
-                                putExtra("text", notif.text)
-                                putExtra("package_name", notif.packageName)
-                                putExtra("timestamp", notif.timestamp)
-                                putExtra("is_urgent", notif.isUrgent)
-                            }
-                            context.startActivity(intent)
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Column(modifier = Modifier.padding(14.dp)) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    AppIconImage(
-                                        packageName = notif.packageName,
-                                        modifier = Modifier.size(24.dp)
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text(
-                                        text = notif.title ?: "Notification",
-                                        fontWeight = FontWeight.Bold,
-                                        fontSize = 14.sp,
-                                        color = Color.White
-                                    )
-                                }
-                                Text(
-                                    text = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date(notif.timestamp)),
-                                    fontSize = 11.sp,
-                                    color = StudioColors.TextMuted
+            // Notifications List with Swipe Gesture & Animated Tab Transitions
+            var totalDrag by remember { mutableStateOf(0f) }
+
+            if (enableSwipeAnimations) {
+                AnimatedContent(
+                    targetState = currentTabUrgent,
+                    transitionSpec = {
+                        if (targetState) { // Swipe Left -> Shown tab
+                            (slideInHorizontally { width -> width } + fadeIn()).togetherWith(slideOutHorizontally { width -> -width } + fadeOut())
+                        } else { // Swipe Right -> Muted tab
+                            (slideInHorizontally { width -> -width } + fadeIn()).togetherWith(slideOutHorizontally { width -> width } + fadeOut())
+                        }
+                    },
+                    label = "SmartInboxSwipeAnimation",
+                    modifier = Modifier.weight(1f).fillMaxWidth()
+                ) { isUrgentTab ->
+                    key(isUrgentTab) {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .pointerInput(Unit) {
+                                detectHorizontalDragGestures(
+                                    onDragStart = { totalDrag = 0f },
+                                    onDragEnd = {
+                                        if (totalDrag < -80f && !currentTabUrgent) {
+                                            currentTabUrgent = true
+                                            Toast.makeText(context, "Switched to Shown tab", Toast.LENGTH_SHORT).show()
+                                        } else if (totalDrag > 80f && currentTabUrgent) {
+                                            currentTabUrgent = false
+                                            Toast.makeText(context, "Switched to Muted tab", Toast.LENGTH_SHORT).show()
+                                        }
+                                    },
+                                    onHorizontalDrag = { _, dragAmount ->
+                                        totalDrag += dragAmount
+                                    }
                                 )
-                            }
-
-                            Spacer(modifier = Modifier.height(6.dp))
-
-                            Text(
-                                text = notif.text ?: "No content",
-                                fontSize = 13.sp,
-                                color = StudioColors.TextSecondary,
-                                maxLines = 2,
-                                overflow = TextOverflow.Ellipsis
-                            )
-
-                            Spacer(modifier = Modifier.height(10.dp))
-
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.SpaceBetween
+                            },
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        items(notifications) { notif ->
+                            val isMuted = !notif.isUrgent
+                            StudioCard(
+                                onClick = {
+                                    val intent = Intent(context, NotificationDetailActivity::class.java).apply {
+                                        putExtra("notif_id", notif.id)
+                                        putExtra("title", notif.title)
+                                        putExtra("text", notif.text)
+                                        putExtra("package_name", notif.packageName)
+                                        putExtra("timestamp", notif.timestamp)
+                                        putExtra("is_urgent", notif.isUrgent)
+                                        putExtra("explanation", notif.explanation)
+                                    }
+                                    context.startActivity(intent)
+                                },
+                                modifier = Modifier.fillMaxWidth()
                             ) {
-                                Surface(
-                                    shape = CircleShape,
-                                    color = if (isMuted) StudioColors.RedSurface else StudioColors.GreenSurface,
-                                    border = BorderStroke(1.dp, if (isMuted) StudioColors.RedAccent.copy(alpha = 0.3f) else StudioColors.GreenAccent.copy(alpha = 0.3f))
-                                ) {
-                                    Text(
-                                        text = if (isMuted) "Muted: Routine Alert" else "High Urgency: Priority Prompt",
-                                        fontSize = 10.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        color = if (isMuted) StudioColors.RedText else StudioColors.GreenText,
-                                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
-                                    )
-                                }
-
-                                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                                    IconButton(
-                                        onClick = {
-                                            val db = AppDatabase.getDatabase(context)
-                                            val newUrgent = !notif.isUrgent
-                                            val updated = notif.copy(isUrgent = newUrgent, isLearned = true)
-                                            CoroutineScope(Dispatchers.IO).launch {
-                                                db.notificationDao().insert(updated)
-                                                refreshTrigger++
-                                                withContext(Dispatchers.Main) {
-                                                    Toast.makeText(context, if (newUrgent) "Moved to Shown" else "Moved to Muted", Toast.LENGTH_SHORT).show()
-                                                }
-                                            }
-                                        },
-                                        modifier = Modifier.size(28.dp)
+                                Column(modifier = Modifier.padding(14.dp)) {
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.SpaceBetween
                                     ) {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.ic_swap_horiz),
-                                            contentDescription = "Swap Tab",
-                                            tint = StudioColors.TextSecondary,
-                                            modifier = Modifier.size(16.dp)
+                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                            AppIconImage(
+                                                packageName = notif.packageName,
+                                                modifier = Modifier.size(24.dp)
+                                            )
+                                            Spacer(modifier = Modifier.width(8.dp))
+                                            Text(
+                                                text = notif.title ?: "Notification",
+                                                fontWeight = FontWeight.Bold,
+                                                fontSize = 14.sp,
+                                                color = Color.White
+                                            )
+                                        }
+                                        Text(
+                                            text = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date(notif.timestamp)),
+                                            fontSize = 11.sp,
+                                            color = StudioColors.TextMuted
                                         )
                                     }
-                                    IconButton(
-                                        onClick = {
-                                            try {
-                                                val intent = context.packageManager.getLaunchIntentForPackage(notif.packageName)
-                                                if (intent != null) context.startActivity(intent)
-                                                else Toast.makeText(context, "App not installed", Toast.LENGTH_SHORT).show()
-                                            } catch (_: Exception) {
-                                                Toast.makeText(context, "Cannot open app", Toast.LENGTH_SHORT).show()
-                                            }
-                                        },
-                                        modifier = Modifier.size(28.dp)
+
+                                    Spacer(modifier = Modifier.height(6.dp))
+
+                                    Text(
+                                        text = notif.text ?: "No content",
+                                        fontSize = 13.sp,
+                                        color = StudioColors.TextSecondary,
+                                        maxLines = 2,
+                                        overflow = TextOverflow.Ellipsis
+                                    )
+
+                                    Spacer(modifier = Modifier.height(10.dp))
+
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.SpaceBetween
                                     ) {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.ic_open_in_new),
-                                            contentDescription = "Open App",
-                                            tint = StudioColors.TextSecondary,
-                                            modifier = Modifier.size(16.dp)
+                                        Surface(
+                                            shape = CircleShape,
+                                            color = if (isMuted) StudioColors.RedSurface else StudioColors.GreenSurface,
+                                            border = BorderStroke(1.dp, if (isMuted) StudioColors.RedAccent.copy(alpha = 0.3f) else StudioColors.GreenAccent.copy(alpha = 0.3f))
+                                        ) {
+                                            Text(
+                                                text = if (isMuted) "Muted: Routine Alert" else "High Urgency: Priority Prompt",
+                                                fontSize = 10.sp,
+                                                fontWeight = FontWeight.Bold,
+                                                color = if (isMuted) StudioColors.RedText else StudioColors.GreenText,
+                                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+                                            )
+                                        }
+
+                                        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                                            IconButton(
+                                                onClick = {
+                                                    val db = AppDatabase.getDatabase(context)
+                                                    val activeModeStr = prefs.getString("current_mode", "Default") ?: "Default"
+                                                    val newUrgent = !notif.isUrgent
+                                                    val ruleText = AiRuleSynthesizer.synthesizeRule(
+                                                        packageName = notif.packageName,
+                                                        title = notif.title,
+                                                        text = notif.text,
+                                                        isUrgent = newUrgent,
+                                                        activeMode = activeModeStr
+                                                    )
+                                                    val updated = notif.copy(isUrgent = newUrgent, isLearned = true, synthesizedRule = ruleText)
+                                                    CoroutineScope(Dispatchers.IO).launch {
+                                                        db.notificationDao().insert(updated)
+                                                        refreshTrigger++
+                                                        withContext(Dispatchers.Main) {
+                                                            Toast.makeText(context, if (newUrgent) "Moved to Shown" else "Moved to Muted", Toast.LENGTH_SHORT).show()
+                                                        }
+                                                    }
+                                                },
+                                                modifier = Modifier.size(28.dp)
+                                            ) {
+                                                Icon(
+                                                    painter = painterResource(id = R.drawable.ic_swap_horiz),
+                                                    contentDescription = "Swap Tab",
+                                                    tint = StudioColors.TextSecondary,
+                                                    modifier = Modifier.size(16.dp)
+                                                )
+                                            }
+                                            IconButton(
+                                                onClick = {
+                                                    try {
+                                                        val intent = context.packageManager.getLaunchIntentForPackage(notif.packageName)
+                                                        if (intent != null) context.startActivity(intent)
+                                                        else Toast.makeText(context, "App not installed", Toast.LENGTH_SHORT).show()
+                                                    } catch (_: Exception) {
+                                                        Toast.makeText(context, "Cannot open app", Toast.LENGTH_SHORT).show()
+                                                    }
+                                                },
+                                                modifier = Modifier.size(28.dp)
+                                            ) {
+                                                Icon(
+                                                    painter = painterResource(id = R.drawable.ic_open_in_new),
+                                                    contentDescription = "Open App",
+                                                    tint = StudioColors.TextSecondary,
+                                                    modifier = Modifier.size(16.dp)
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        item {
+                            StudioFooter(
+                                text = "🔒 Your notifications stay on this device.",
+                                modifier = Modifier.padding(top = 12.dp, bottom = 16.dp)
+                            )
+                        }
+                    }
+                    }
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                        .pointerInput(Unit) {
+                            detectHorizontalDragGestures(
+                                onDragStart = { totalDrag = 0f },
+                                onDragEnd = {
+                                    if (totalDrag < -80f && !currentTabUrgent) {
+                                        currentTabUrgent = true
+                                        Toast.makeText(context, "Switched to Shown tab", Toast.LENGTH_SHORT).show()
+                                    } else if (totalDrag > 80f && currentTabUrgent) {
+                                        currentTabUrgent = false
+                                        Toast.makeText(context, "Switched to Muted tab", Toast.LENGTH_SHORT).show()
+                                    }
+                                },
+                                onHorizontalDrag = { _, dragAmount ->
+                                    totalDrag += dragAmount
+                                }
+                            )
+                        },
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    items(notifications) { notif ->
+                        val isMuted = !notif.isUrgent
+                        StudioCard(
+                            onClick = {
+                                val intent = Intent(context, NotificationDetailActivity::class.java).apply {
+                                    putExtra("notif_id", notif.id)
+                                    putExtra("title", notif.title)
+                                    putExtra("text", notif.text)
+                                    putExtra("package_name", notif.packageName)
+                                    putExtra("timestamp", notif.timestamp)
+                                    putExtra("is_urgent", notif.isUrgent)
+                                    putExtra("explanation", notif.explanation)
+                                }
+                                context.startActivity(intent)
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Column(modifier = Modifier.padding(14.dp)) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        AppIconImage(
+                                            packageName = notif.packageName,
+                                            modifier = Modifier.size(24.dp)
                                         )
+                                        Spacer(modifier = Modifier.width(8.dp))
+                                        Text(
+                                            text = notif.title ?: "Notification",
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 14.sp,
+                                            color = Color.White
+                                        )
+                                    }
+                                    Text(
+                                        text = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date(notif.timestamp)),
+                                        fontSize = 11.sp,
+                                        color = StudioColors.TextMuted
+                                    )
+                                }
+
+                                Spacer(modifier = Modifier.height(6.dp))
+
+                                Text(
+                                    text = notif.text ?: "No content",
+                                    fontSize = 13.sp,
+                                    color = StudioColors.TextSecondary,
+                                    maxLines = 2,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+
+                                Spacer(modifier = Modifier.height(10.dp))
+
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Surface(
+                                        shape = CircleShape,
+                                        color = if (isMuted) StudioColors.RedSurface else StudioColors.GreenSurface,
+                                        border = BorderStroke(1.dp, if (isMuted) StudioColors.RedAccent.copy(alpha = 0.3f) else StudioColors.GreenAccent.copy(alpha = 0.3f))
+                                    ) {
+                                        Text(
+                                            text = if (isMuted) "Muted: Routine Alert" else "High Urgency: Priority Prompt",
+                                            fontSize = 10.sp,
+                                            fontWeight = FontWeight.Bold,
+                                            color = if (isMuted) StudioColors.RedText else StudioColors.GreenText,
+                                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+                                        )
+                                    }
+
+                                    Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                                        IconButton(
+                                            onClick = {
+                                                val db = AppDatabase.getDatabase(context)
+                                                val activeModeStr = prefs.getString("current_mode", "Default") ?: "Default"
+                                                val newUrgent = !notif.isUrgent
+                                                val ruleText = AiRuleSynthesizer.synthesizeRule(
+                                                    packageName = notif.packageName,
+                                                    title = notif.title,
+                                                    text = notif.text,
+                                                    isUrgent = newUrgent,
+                                                    activeMode = activeModeStr
+                                                )
+                                                val updated = notif.copy(isUrgent = newUrgent, isLearned = true, synthesizedRule = ruleText)
+                                                CoroutineScope(Dispatchers.IO).launch {
+                                                    db.notificationDao().insert(updated)
+                                                    refreshTrigger++
+                                                    withContext(Dispatchers.Main) {
+                                                        Toast.makeText(context, if (newUrgent) "Moved to Shown" else "Moved to Muted", Toast.LENGTH_SHORT).show()
+                                                    }
+                                                }
+                                            },
+                                            modifier = Modifier.size(28.dp)
+                                        ) {
+                                            Icon(
+                                                painter = painterResource(id = R.drawable.ic_swap_horiz),
+                                                contentDescription = "Swap Tab",
+                                                tint = StudioColors.TextSecondary,
+                                                modifier = Modifier.size(16.dp)
+                                            )
+                                        }
+                                        IconButton(
+                                            onClick = {
+                                                try {
+                                                    val intent = context.packageManager.getLaunchIntentForPackage(notif.packageName)
+                                                    if (intent != null) context.startActivity(intent)
+                                                    else Toast.makeText(context, "App not installed", Toast.LENGTH_SHORT).show()
+                                                } catch (_: Exception) {
+                                                    Toast.makeText(context, "Cannot open app", Toast.LENGTH_SHORT).show()
+                                                }
+                                            },
+                                            modifier = Modifier.size(28.dp)
+                                        ) {
+                                            Icon(
+                                                painter = painterResource(id = R.drawable.ic_open_in_new),
+                                                contentDescription = "Open App",
+                                                tint = StudioColors.TextSecondary,
+                                                modifier = Modifier.size(16.dp)
+                                            )
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
 
-                item {
-                    StudioFooter(
-                        text = "🔒 Your notifications stay on this device.",
-                        modifier = Modifier.padding(top = 12.dp, bottom = 16.dp)
-                    )
+                    item {
+                        StudioFooter(
+                            text = "🔒 Your notifications stay on this device.",
+                            modifier = Modifier.padding(top = 12.dp, bottom = 16.dp)
+                        )
+                    }
                 }
             }
         }
@@ -790,29 +1069,27 @@ fun MainDashboardContent(
 
                         Spacer(modifier = Modifier.height(12.dp))
 
-                        OutlinedTextField(
-                            value = searchQuery,
-                            onValueChange = { searchQuery = it },
-                            placeholder = { Text("Search notifications...", color = StudioColors.TextMuted, fontSize = 13.sp) },
-                            singleLine = true,
-                            modifier = Modifier.fillMaxWidth(),
-                            shape = CircleShape,
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedContainerColor = StudioColors.CardSurface,
-                                unfocusedContainerColor = StudioColors.CardSurface,
-                                focusedBorderColor = StudioColors.ActiveViolet,
-                                unfocusedBorderColor = StudioColors.StudioBorder,
-                                focusedTextColor = Color.White,
-                                unfocusedTextColor = Color.White
-                            )
-                        )
-
-                        Spacer(modifier = Modifier.height(12.dp))
+                        var fullScreenDrag by remember { mutableStateOf(0f) }
 
                         LazyColumn(
                             modifier = Modifier
                                 .weight(1f)
-                                .fillMaxWidth(),
+                                .fillMaxWidth()
+                                .pointerInput(Unit) {
+                                    detectHorizontalDragGestures(
+                                        onDragStart = { fullScreenDrag = 0f },
+                                        onDragEnd = {
+                                            if (fullScreenDrag < -80f && !currentTabUrgent) {
+                                                currentTabUrgent = true
+                                            } else if (fullScreenDrag > 80f && currentTabUrgent) {
+                                                currentTabUrgent = false
+                                            }
+                                        },
+                                        onHorizontalDrag = { _, dragAmount ->
+                                            fullScreenDrag += dragAmount
+                                        }
+                                    )
+                                },
                             verticalArrangement = Arrangement.spacedBy(10.dp)
                         ) {
                             items(notifications) { notif ->
@@ -826,6 +1103,7 @@ fun MainDashboardContent(
                                             putExtra("package_name", notif.packageName)
                                             putExtra("timestamp", notif.timestamp)
                                             putExtra("is_urgent", notif.isUrgent)
+                                            putExtra("explanation", notif.explanation)
                                         }
                                         context.startActivity(intent)
                                     },
@@ -863,7 +1141,7 @@ fun MainDashboardContent(
                                             text = notif.text ?: "No content",
                                             fontSize = 13.sp,
                                             color = StudioColors.TextSecondary,
-                                            maxLines = 3,
+                                            maxLines = 2,
                                             overflow = TextOverflow.Ellipsis
                                         )
 
@@ -892,8 +1170,16 @@ fun MainDashboardContent(
                                                 IconButton(
                                                     onClick = {
                                                         val db = AppDatabase.getDatabase(context)
+                                                        val activeModeStr = prefs.getString("current_mode", "Default") ?: "Default"
                                                         val newUrgent = !notif.isUrgent
-                                                        val updated = notif.copy(isUrgent = newUrgent, isLearned = true)
+                                                        val ruleText = AiRuleSynthesizer.synthesizeRule(
+                                                            packageName = notif.packageName,
+                                                            title = notif.title,
+                                                            text = notif.text,
+                                                            isUrgent = newUrgent,
+                                                            activeMode = activeModeStr
+                                                        )
+                                                        val updated = notif.copy(isUrgent = newUrgent, isLearned = true, synthesizedRule = ruleText)
                                                         CoroutineScope(Dispatchers.IO).launch {
                                                             db.notificationDao().insert(updated)
                                                             refreshTrigger++
@@ -935,13 +1221,6 @@ fun MainDashboardContent(
                                     }
                                 }
                             }
-
-                            item {
-                                StudioFooter(
-                                    text = "🔒 Your notifications stay on this device.",
-                                    modifier = Modifier.padding(top = 12.dp, bottom = 16.dp)
-                                )
-                            }
                         }
                     }
                 }
@@ -952,13 +1231,16 @@ fun MainDashboardContent(
 
 @Preview(showBackground = true, widthDp = 380, heightDp = 800)
 @Composable
-fun MainDashboardPreview() {
+fun MainStudioPreview() {
+    val context = LocalContext.current
+    val prefs = context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
     FocusRefineTheme {
-        MainDashboardContent(
-            onOpenSettings = {},
-            onEnableNotificationAccess = {},
+        MainStudioScreen(
             isNotificationAccessEnabled = true,
-            isFilteringActive = true
+            isFilteringActive = true,
+            prefs = prefs,
+            onEnableNotificationAccess = {},
+            onOpenSettings = {}
         )
     }
 }
