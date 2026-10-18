@@ -59,6 +59,33 @@ class PersonalLearningTest {
     }
 
     @Test
+    fun aShownNotificationCanBeLearnedAsMutedAndBack() {
+        val shownTitle = "Apple Watch"
+        val shownText = "High heart rate notification: 140 BPM while inactive"
+        val shownContent = "$shownTitle $shownText".lowercase()
+        val engine = EmbeddingClassifier.create(context)!!
+        try {
+            val before = verdict(engine, shownContent)
+            assertTrue("test premise: the built-in model shows this (score ${before.score} vs ${before.threshold})", before.isUrgent)
+
+            assertEquals(1, PersonalLearning.record(context, shownTitle, shownText, mode, urgent = false))
+
+            val after = verdict(engine, shownContent)
+            assertFalse("adjustment ${after.adjustment}", after.isUrgent)
+            assertTrue(after.adjustment < 0)
+            val similar = verdict(engine, "apple watch high heart rate notification: 150 bpm while inactive")
+            assertFalse("a near-identical notification follows the user's choice", similar.isUrgent)
+            val unrelated = verdict(engine, "doctor: urgent medical notification, please call")
+            assertTrue("a different urgent message stays shown", unrelated.isUrgent)
+
+            PersonalLearning.forget(context, shownTitle, shownText)
+            assertTrue(verdict(engine, shownContent).isUrgent)
+        } finally {
+            engine.close()
+        }
+    }
+
+    @Test
     fun customModesAreNotLearned() {
         assertEquals(null, PersonalLearning.record(context, title, text, "My Custom Mode", urgent = true))
         assertEquals(0, PersonalLearning.correctionCount(context))
