@@ -89,20 +89,19 @@ Pre-configured exceptions are externalized into `assets/exceptions.json` and par
 The decision logic lives in `NotificationClassifier` (shared by the live listener service and the history re-run). It distinguishes the **On-Device AI Pipeline** (an embedding model) from **Semantic Search / Prompt Matcher** inputs. The order below is the real precedence: the first step that matches decides.
 
 ```mermaid
-flowchart TD
-    N(["Notification<br/>title + text + active mode"]) --> L{"1. User learned rule<br/>matches?<br/>(same title, or text LIKE)"}
-    L -- yes --> R1["Result: the rule's action (Shown or Muted)<br/>🔍 Matched user learned preference rule"]
-    L -- no --> S{"2. AI-synthesized rule<br/>matches?<br/>(token overlap)"}
-    S -- yes --> R2["Result: the rule's action (Shown or Muted)<br/>🔍 Matched AI synthesized preference rule"]
-    S -- no --> E{"3. An enabled exception<br/>keyword is in the text?<br/>(navigation, calls, OTP)"}
-    E -- yes --> R3["Result: Shown<br/>🔍 Matched user exception"]
-    E -- no --> M{"4. Embedding model loaded,<br/>enabled, and the mode<br/>is a built-in one?"}
-    M -- yes --> R4["Result: Shown if score reaches the<br/>mode threshold (shifted by strength), else Muted<br/>🤖 AI Pipeline"]
-    M -- no --> K{"5. Any token of the active<br/>mode prompt is in the text?"}
-    K -- yes --> R5["Result: Shown<br/>🔍 Matched active mode prompt token"]
-    K -- no --> R6["Result: Muted<br/>🔍 Did not contain urgent prompt tokens"]
-
-    R1 --> D(["Live service: save the row, cancel the notification if Muted<br/>History re-run: update isUrgent and explanation"])
+graph TD
+    N["Notification: title, text and active mode"] --> L{"1. User learned rule matches?"}
+    L -->|yes| R1["Use the rule action: Shown or Muted"]
+    L -->|no| S{"2. AI-synthesized rule matches?"}
+    S -->|yes| R2["Use the rule action: Shown or Muted"]
+    S -->|no| E{"3. Enabled exception keyword in the text?"}
+    E -->|yes| R3["Shown"]
+    E -->|no| M{"4. Embedding model loaded, enabled, built-in mode?"}
+    M -->|yes| R4["AI Pipeline: Shown if score reaches the mode threshold, else Muted"]
+    M -->|no| K{"5. Any token of the mode prompt in the text?"}
+    K -->|yes| R5["Shown"]
+    K -->|no| R6["Muted"]
+    R1 --> D["Live service: save the row and cancel the notification if Muted. History re-run: update isUrgent and explanation"]
     R2 --> D
     R3 --> D
     R4 --> D

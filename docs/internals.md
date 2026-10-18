@@ -8,22 +8,22 @@ This document provides a comprehensive technical breakdown of the architecture, 
 
 ```mermaid
 graph TD
-    A[System Notifications] -->|onNotificationPosted| B[NotificationFilterService]
-    B -->|classify| X[NotificationClassifier]
-    X -->|1. Learned & Synthesized Rules| D[Room DB / AiRuleSynthesizer]
-    X -->|2. Check Exceptions| E[ExceptionManager: exceptions.json]
-    X -->|3. On-device embedding model| C[EmbeddingClassifier: text_embedder.tflite + embedding_anchors.json]
-    X -->|4. Semantic Prompt Search| F[PromptManager & Enriched Prompts]
-    X -->|Shown/Muted + explanation| G[Room DB: NotificationEntity + Explanation]
-    I[MainActivity] -->|Smart Inbox, Swipe Animations & Gestures| G
-    J[SettingsActivity] -->|Collapsible Cards, Advanced Swipe Toggle, Learnings Link| B
-    J -->|Re-run classification on history| R[HistoryReclassifier]
+    A["System notifications"] -->|onNotificationPosted| B["NotificationFilterService"]
+    B -->|classify| X["NotificationClassifier"]
+    X -->|1. learned and synthesized rules| D["Room DB and AiRuleSynthesizer"]
+    X -->|2. exceptions| E["ExceptionManager, exceptions.json"]
+    X -->|3. embedding model| C["EmbeddingClassifier, text_embedder.tflite, embedding_anchors.json"]
+    X -->|4. prompt keywords| F["PromptManager and enriched prompts"]
+    X -->|Shown or Muted plus explanation| G["Room DB, NotificationEntity and explanation"]
+    I["MainActivity"] -->|Smart Inbox| G
+    J["SettingsActivity"] -->|settings| B
+    J -->|re-run classification on history| R["HistoryReclassifier"]
     R -->|classify every stored row| X
-    R -->|update isUrgent + explanation| G
-    K[NotificationDetailActivity] -->|Inspect AI Rationale & Reclassify| D
-    L[ConfigureModesActivity] -->|Per-App Rules Tuning| B
-    M[ContextModesActivity] -->|Manage Modes & Show-on-Home Toggles| B
-    N[PrivacyInsightsActivity] -->|Reset Local Learning Data| D
+    R -->|update isUrgent and explanation| G
+    K["NotificationDetailActivity"] -->|inspect rationale, reclassify| D
+    L["ConfigureModesActivity"] -->|per-app rules| B
+    M["ContextModesActivity"] -->|manage modes| B
+    N["PrivacyInsightsActivity"] -->|reset learning data| D
 ```
 
 ---
