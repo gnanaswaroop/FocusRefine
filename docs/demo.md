@@ -27,6 +27,7 @@ This document provides a feature walkthrough and visual demonstration guide for 
 - **Urgent Notification Exceptions**: JSON-driven switches for `Navigation prompts`, `Calls & priority contacts`, and `Security & OTP verifications` loaded from `assets/exceptions.json`.
 - **Advanced Settings**: Includes an **"Inbox Swipe Animations"** toggle to enable or disable horizontal slide transitions on Smart Inbox tab switches.
 - **Learned Rules Direct Access**: Dedicated navigation link to view and manage AI-synthesized learned rules in `LearnedRulesActivity`.
+- **Re-run Classification on History**: In the *Learning & Feedback* card, tap **"Re-run classification on history"** and confirm the dialog to re-check every stored notification with the current mode, filtering strength, exceptions and learned rules. A spinner shows while it runs and a toast summarizes the result (e.g. `Re-classified 25: 6 now Shown, 1 now Muted`). Learned rules are never changed, and the notification shade is untouched. Try it after switching modes or adding a learned rule.
 - **Sample Seeding & Clear Inbox**: Tap **"✨ Add 20 Samples"** to seed 20 pre-configured test notifications or **"🗑 Clear Inbox"** to purge history.
 
 ---
