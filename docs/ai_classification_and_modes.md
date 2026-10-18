@@ -84,9 +84,9 @@ Pre-configured exceptions are externalized into `assets/exceptions.json` and par
 
 ---
 
-## 4. MediaPipe AI Pipeline vs. Semantic Search Inputs
+## 4. AI Pipeline vs. Semantic Search Inputs
 
-The decision logic lives in `NotificationClassifier` (shared by the live listener service and the history re-run). It distinguishes the **MediaPipe On-Device AI Pipeline** from **Semantic Search / Prompt Matcher** inputs. The order below is the real precedence: the first step that matches decides.
+The decision logic lives in `NotificationClassifier` (shared by the live listener service and the history re-run). It distinguishes the **On-Device AI Pipeline** (an embedding model) from **Semantic Search / Prompt Matcher** inputs. The order below is the real precedence: the first step that matches decides.
 
 ```mermaid
 flowchart TD
@@ -96,8 +96,8 @@ flowchart TD
     S -- yes --> R2["Result: the rule's action (Shown or Muted)<br/>🔍 Matched AI synthesized preference rule"]
     S -- no --> E{"3. An enabled exception<br/>keyword is in the text?<br/>(navigation, calls, OTP)"}
     E -- yes --> R3["Result: Shown<br/>🔍 Matched user exception"]
-    E -- no --> M{"4. MediaPipe model loaded,<br/>enabled, and reports<br/>an urgent score?"}
-    M -- yes --> R4["Result: Shown if score reaches the<br/>filtering-strength threshold, else Muted<br/>🤖 AI Pipeline"]
+    E -- no --> M{"4. Embedding model loaded,<br/>enabled, and the mode<br/>is a built-in one?"}
+    M -- yes --> R4["Result: Shown if score reaches the<br/>mode threshold (shifted by strength), else Muted<br/>🤖 AI Pipeline"]
     M -- no --> K{"5. Any token of the active<br/>mode prompt is in the text?"}
     K -- yes --> R5["Result: Shown<br/>🔍 Matched active mode prompt token"]
     K -- no --> R6["Result: Muted<br/>🔍 Did not contain urgent prompt tokens"]
@@ -110,13 +110,13 @@ flowchart TD
     R6 --> D
 ```
 
-The first step that matches decides, so a learned rule always beats an exception, and an exception always beats the model. The model is only consulted at step 4 (and its inference is skipped entirely when an earlier step already decided). Step 5 never falls through: it always returns Shown or Muted. Thresholds for step 4 follow the filtering-strength setting (`Gentle` 0.4, `Balanced` 0.6, `Strict` 0.8).
+The first step that matches decides, so a learned rule always beats an exception, and an exception always beats the model. The model is only consulted at step 4 (and its inference is skipped entirely when an earlier step already decided). Step 5 never falls through: it always returns Shown or Muted. Step 4's per-mode thresholds are shifted by the filtering-strength setting (`Gentle` -0.02, `Balanced` 0, `Strict` +0.02).
 
-1. **`🤖 [AI Pipeline]`**: On-device MediaPipe `TextClassifier` (`text_classifier.tflite`). When it produces an `urgent` score it generates explicit explanations for both Urgent (*Shown*) and Routine (*Muted*) classifications:
-   - Urgent AI Explanation: `🤖 [AI Pipeline] MediaPipe model classified notification as urgent with 88% confidence (exceeded Deep Focus threshold 60%).`
-   - Routine AI Explanation: `🤖 [AI Pipeline] MediaPipe model confidence 35% was below Deep Focus urgency threshold (60%); muted as routine.`
-   - **Availability:** the model file is **not in the repository**, so model creation fails and the pipeline falls back to semantic search on every device, real phones included (verified on a Pixel 9 Pro XL: the native library loads, then MediaPipe fails to open the missing asset). MediaPipe's public text classifiers are sentiment models (`positive` / `negative`) and never produce an `urgent` category, so they cannot drive this step; a custom-trained model would be needed.
-2. **`🔍 [Semantic Search]`**: Token-based keyword matching, user exception rules, and dynamic AI-synthesized preference rules. In practice this is the engine that decides today.
+1. **`🤖 [AI Pipeline]`**: an on-device sentence-embedding model (MediaPipe `TextEmbedder`, Universal Sentence Encoder, `assets/text_embedder.tflite`). It scores a notification for the active **built-in** mode as the best similarity to that mode's example phrases minus the best similarity to routine phrases, and compares it with the mode's threshold (`assets/embedding_anchors.json`). Custom modes have no anchors, so they use the keyword engine with your own prompt. Explanations look like:
+   - Shown: `🤖 [AI Pipeline] On-device embedding model scored this 0.071 for Commute, at or above the 0.041 urgency threshold; shown.`
+   - Muted: `🤖 [AI Pipeline] On-device embedding model scored this 0.012 for Commute, below the 0.041 urgency threshold; muted as routine.`
+   - **Availability:** loads on emulators and phones (`tasks-text` 1.1.1). If it cannot load, or `use_ai_model` is off, the keyword engine decides.
+2. **`🔍 [Semantic Search]`**: Token-based keyword matching, user exception rules, and dynamic AI-synthesized preference rules. It decides whenever the embedding model is off, failed to load, or the mode is custom.
 
 Keep the explanation prefixes (`🤖 [AI Pipeline]`, `🔍 [Semantic Search]`) stable: they are persisted, shown in the detail screen, and referenced by tests and docs.
 
@@ -144,22 +144,29 @@ Settings → **Learning & Feedback** → **Re-run classification on history** re
 
 ---
 
-## 7. Measured Quality & Embedding Classifier Findings
+## 7. Measured Quality
 
 A labeled dataset (`testdata/golden/`) and an adb end-to-end replay (`scripts/replay_golden.py`) measure the real service on an emulator or device. See [Technical Implementation Guide](internals.md#3-testing--evaluation) for how to run them.
 
-**Current production engine** (keyword fallback, macro average over the five OOTB modes): golden set F1 **0.40**, held-out set F1 **0.36**. The main causes, all measured:
-- **Exceptions fire on the whole text, including app names.** "Calls & priority contacts" Shows `Mom | Good morning!` and `Boss | Thanks, noted`; "Navigation prompts" Shows `Google Maps | Rate your visit`; "Security & OTP" Shows a bank statement. Some of this is intended (these exceptions apply in every mode), but it disagrees with mode-specific expectations.
-- **Substring tokens.** Prompt tokens such as `or` and `and` match inside unrelated words.
-- **`Workout / Gym` has no dedicated branch** in the keyword lookup, so it falls back to a generic default prompt (F1 0.11).
-- **Paraphrases are missed**: every false negative is "no keyword matched".
+**Measured with the real service** (macro average over the five OOTB modes):
 
-**TextEmbedder prototype (findings from a throwaway spike; not part of this codebase).** An embedding classifier scores each mode as the best similarity to example phrases for that mode minus the best similarity to "routine" anchors. Unlike the sentiment classifiers it works with the modes and prompts the user edits, runs in the background on any API 28+ device, and needs no training. Results with thresholds tuned on the golden set only:
+| Engine | Golden F1 | Held-out F1 |
+| :--- | :--- | :--- |
+| Keyword only (`--engine keyword`) | 0.396 | 0.360 |
+| Embedding model (default) | 0.507 | 0.452 |
+
+The keyword engine's main weaknesses, all measured:
+- **Exceptions fire on the whole text, including app names.** "Calls & priority contacts" Shows `Mom | Good morning!` and `Boss | Thanks, noted`; "Navigation prompts" Shows `Google Maps | Rate your visit`; "Security & OTP" Shows a bank statement. Some of this is intended (these exceptions apply in every mode), but it disagrees with mode-specific expectations, and it caps the end-to-end score of the embedding engine too, because exceptions decide before the model does.
+- **Substring tokens.** Prompt tokens such as `or` and `and` match inside unrelated words.
+- **`Workout / Gym` has no dedicated branch** in the keyword lookup, so it falls back to a generic default prompt.
+- **Paraphrases are missed**: every keyword false negative is "no keyword matched".
+
+**Embedding model alone** (`EmbedderBenchmarkTest`, no rules or exceptions; thresholds tuned on the golden set only):
 
 | | Golden F1 | Held-out F1 |
 | :--- | :--- | :--- |
 | Keyword engine (benchmark re-implementation) | 0.42 | 0.35 |
 | Embedding, similarity to mode prompt only | 0.61 | 0.44 |
-| Embedding, examples minus routine anchors | 0.77 | 0.60 |
+| Embedding, examples minus routine anchors (used) | 0.77 | 0.60 |
 
-Cost on a Pixel 9 Pro XL: about 40 ms per notification (p95 about 90 ms), about 6 MB of native heap, and a 6.1 MB model (MediaPipe's Universal Sentence Encoder). The model's redistribution terms were not reviewed, and it would add its size to every APK, so it is not bundled here. The weakest mode is Deep Work / Focus (short technical alerts), and real emergencies need shared anchors in every mode. The dataset and anchor phrases are synthetic, so treat these figures as indicative.
+Cost on a Pixel 9 Pro XL: about 40 ms per notification (p95 about 90 ms), about 6 MB of native heap, a one-time anchor embedding of about 1.7 s, and a 6.1 MB model. The weakest mode is Deep Work / Focus (short technical alerts), and real emergencies need shared anchors in every mode. The dataset and anchor phrases are synthetic and written by the same author, so treat these figures as indicative. Model source and license status: [`THIRD_PARTY_MODELS.md`](../THIRD_PARTY_MODELS.md).

@@ -14,7 +14,6 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.google.mediapipe.tasks.text.textclassifier.TextClassifier
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,7 +24,7 @@ class NotificationFilterService : NotificationListenerService() {
     private lateinit var database: AppDatabase
     private val CHANNEL_ID = "focusrefine_service_channel"
     private val NOTIFICATION_ID = 1001
-    private var textClassifier: TextClassifier? = null
+    private var embeddingClassifier: EmbeddingClassifier? = null
     private lateinit var classifier: NotificationClassifier
 
     private val toggleReceiver = object : BroadcastReceiver() {
@@ -78,8 +77,13 @@ class NotificationFilterService : NotificationListenerService() {
         createNotificationChannel()
 
         val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
-        textClassifier = NotificationClassifier.createTextClassifier(this)
-        classifier = NotificationClassifier(this, database, textClassifier)
+        embeddingClassifier = EmbeddingClassifier.create(this)
+        classifier = NotificationClassifier(this, database, embeddingClassifier)
+        embeddingClassifier?.let { engine ->
+            Thread {
+                try { engine.warmUp() } catch (e: Throwable) { Log.w(TAG, "Embedding warm-up failed: ${e.message}") }
+            }.start()
+        }
 
         val filter = IntentFilter().apply {
             addAction(ACTION_TOGGLE_SERVICE)
@@ -259,7 +263,7 @@ class NotificationFilterService : NotificationListenerService() {
             manager.cancel(NOTIFICATION_ID)
         } catch (_: Exception) {
         }
-        textClassifier?.close()
+        embeddingClassifier?.close()
         super.onDestroy()
     }
 

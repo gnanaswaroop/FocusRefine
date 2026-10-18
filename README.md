@@ -13,8 +13,8 @@ FocusRefine consists of two primary screens designed with a **dark-mode first** 
    - Houses a dual-tab inbox (**Shown** vs. **Muted**) powered by modern notification cards. Each card displays the corresponding **application icon**, timestamps, expandable/collapsible text views, package identifiers, and a compact **external link icon button** to launch target applications instantly (with robust fallback handling for Telegram variants like `org.telegram.messenger` and `org.telegram.plus`).
 
 2. **Settings & Configuration Screen (`SettingsActivity`)**:
-   - Displays a live **AI Support Status Banner** indicating whether MediaPipe Gemini Nano is supported or running on the high-performance local semantic heuristic engine.
-   - Features an **AI Engine Toggle Switch** to switch between MediaPipe On-Device AI and semantic heuristics.
+   - Displays a live **AI Support Status Banner** showing which on-device engine is really running: the embedding model or the keyword matcher.
+   - Features an **AI Engine Toggle Switch** to switch between the on-device embedding model and the keyword matcher.
    - Provides an in-app **Theme Mode Switcher** (System Default, Light, Dark — **Dark-Mode First** by default).
    - Includes **Data Retention** configuration to automatically clear history older than X days.
    - Allows enabling/disabling OOTB modes (**Commute** and **DND**) with inline prompt editing, plus creation and management of **Custom Modes**.
