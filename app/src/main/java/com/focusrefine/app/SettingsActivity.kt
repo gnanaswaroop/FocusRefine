@@ -34,6 +34,7 @@ import kotlinx.coroutines.withContext
 class SettingsActivity : ComponentActivity() {
 
     private lateinit var prefs: SharedPreferences
+    private var isReclassifying by mutableStateOf(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,6 +97,28 @@ class SettingsActivity : ComponentActivity() {
                             }
                         }
                     },
+                    isReclassifying = isReclassifying,
+                    onReclassifyHistory = {
+                        if (!isReclassifying) {
+                            isReclassifying = true
+                            lifecycleScope.launch(Dispatchers.IO) {
+                                val message = try {
+                                    val s = HistoryReclassifier.run(this@SettingsActivity)
+                                    when {
+                                        s.total == 0 -> "No notification history to re-classify"
+                                        s.changed == 0 -> "Re-checked ${s.total} notifications, no changes"
+                                        else -> "Re-classified ${s.total}: ${s.toShown} now Shown, ${s.toMuted} now Muted"
+                                    } + if (s.failed > 0) " (${s.failed} failed)" else ""
+                                } catch (e: Exception) {
+                                    "Re-classification failed: ${e.message}"
+                                }
+                                withContext(Dispatchers.Main) {
+                                    isReclassifying = false
+                                    Toast.makeText(this@SettingsActivity, message, Toast.LENGTH_LONG).show()
+                                }
+                            }
+                        }
+                    },
                     onClearAllNotifications = {
                         lifecycleScope.launch(Dispatchers.IO) {
                             AppDatabase.getDatabase(this@SettingsActivity).notificationDao().deleteAll()
@@ -123,9 +146,12 @@ fun SettingsStudioScreen(
     onNavigateToPrivacy: () -> Unit,
     onNavigateToLearnedRules: () -> Unit,
     onSendSampleNotifications: () -> Unit,
-    onClearAllNotifications: () -> Unit
+    onClearAllNotifications: () -> Unit,
+    isReclassifying: Boolean = false,
+    onReclassifyHistory: () -> Unit = {}
 ) {
     val context = androidx.compose.ui.platform.LocalContext.current
+    var showReclassifyDialog by remember { mutableStateOf(false) }
     val defaultMode = remember { PromptManager.getDefaultModeName(context) }
     var currentMode by remember { mutableStateOf(prefs?.getString("current_mode", defaultMode) ?: defaultMode) }
     var filterStrengthIndex by remember { mutableStateOf(prefs?.getInt("filter_strength", 1) ?: 1) } // 0=Gentle, 1=Balanced, 2=Strict
@@ -142,6 +168,27 @@ fun SettingsStudioScreen(
     var isAdvancedExpanded by remember { mutableStateOf(true) }
 
     val modeOptions = listOf("Commute", "Deep Focus", "Sleep", "Gaming")
+
+    if (showReclassifyDialog) {
+        AlertDialog(
+            onDismissRequest = { showReclassifyDialog = false },
+            title = { Text("Re-run classification?") },
+            text = {
+                Text(
+                    "Every notification in your history will be re-checked using the current mode ($currentMode), " +
+                        "filtering strength, exceptions and learned rules. Items may move between Shown and Muted. " +
+                        "Your learned rules are not changed, and nothing is added to or removed from your notification shade."
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    showReclassifyDialog = false
+                    onReclassifyHistory()
+                }) { Text("Re-run") }
+            },
+            dismissButton = { TextButton(onClick = { showReclassifyDialog = false }) { Text("Cancel") } }
+        )
+    }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -605,6 +652,34 @@ fun SettingsStudioScreen(
                                 Text("Review AI rules generated from your feedback", fontSize = 11.sp, color = StudioColors.TextMuted)
                             }
                             Text("›", fontSize = 18.sp, color = StudioColors.ActiveVioletLight)
+                        }
+
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), color = StudioColors.StudioBorder)
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable(enabled = !isReclassifying) { showReclassifyDialog = true },
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("Re-run classification on history", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = StudioColors.ActiveVioletLight)
+                                Text(
+                                    if (isReclassifying) "Re-classifying your history…" else "Re-check past notifications with your current mode, settings and rules",
+                                    fontSize = 11.sp,
+                                    color = StudioColors.TextMuted
+                                )
+                            }
+                            if (isReclassifying) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(18.dp),
+                                    strokeWidth = 2.dp,
+                                    color = StudioColors.ActiveViolet
+                                )
+                            } else {
+                                Text("↻", fontSize = 18.sp, color = StudioColors.ActiveVioletLight)
+                            }
                         }
 
                         HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), color = StudioColors.StudioBorder)

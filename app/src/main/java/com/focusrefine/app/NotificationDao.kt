@@ -13,6 +13,12 @@ interface NotificationDao {
     @Query("SELECT * FROM notifications ORDER BY timestamp DESC")
     fun getAll(): List<NotificationEntity>
 
+    @Query("SELECT * FROM notifications WHERE isLearned = 0 ORDER BY timestamp DESC")
+    fun getHistory(): List<NotificationEntity>
+
+    @Query("UPDATE notifications SET isUrgent = :isUrgent, explanation = :explanation WHERE id = :id")
+    fun updateClassification(id: Int, isUrgent: Boolean, explanation: String?)
+
     @Query("SELECT * FROM notifications WHERE isUrgent = :isUrgent ORDER BY timestamp DESC")
     fun getByUrgency(isUrgent: Boolean): List<NotificationEntity>
 
