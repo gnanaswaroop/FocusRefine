@@ -131,6 +131,7 @@ fun SettingsStudioScreen(
     var filterStrengthIndex by remember { mutableStateOf(prefs?.getInt("filter_strength", 1) ?: 1) } // 0=Gentle, 1=Balanced, 2=Strict
     var learnFromChoices by remember { mutableStateOf(prefs?.getBoolean("learn_from_choices", true) ?: true) }
     var useAiModel by remember { mutableStateOf(if (isEmulator) false else (prefs?.getBoolean("use_ai_model", true) ?: true)) }
+    var enableSwipeAnimations by remember { mutableStateOf(prefs?.getBoolean("enable_swipe_animations", true) ?: true) }
 
     // Collapsible Card States (Open/Expanded by default)
     var isEngineExpanded by remember { mutableStateOf(true) }
@@ -138,6 +139,7 @@ fun SettingsStudioScreen(
     var isExceptionsExpanded by remember { mutableStateOf(true) }
     var isModesExpanded by remember { mutableStateOf(true) }
     var isLearnExpanded by remember { mutableStateOf(true) }
+    var isAdvancedExpanded by remember { mutableStateOf(true) }
 
     val modeOptions = listOf("Commute", "Deep Focus", "Sleep", "Gaming")
 
@@ -626,7 +628,58 @@ fun SettingsStudioScreen(
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            // 6. Navigation Hub Cards
+            // 6. Advanced Settings Card (Collapsible)
+            StudioCard(modifier = Modifier.fillMaxWidth()) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { isAdvancedExpanded = !isAdvancedExpanded },
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Advanced Settings",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 15.sp,
+                            color = Color.White
+                        )
+                        Text(
+                            text = if (isAdvancedExpanded) "˅" else "›",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = StudioColors.TextSecondary
+                        )
+                    }
+
+                    if (isAdvancedExpanded) {
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("Inbox Swipe Animations", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                                Text("Animate tab transitions on Smart Inbox swipe.", fontSize = 11.sp, color = StudioColors.TextMuted)
+                            }
+                            Switch(
+                                checked = enableSwipeAnimations,
+                                onCheckedChange = {
+                                    enableSwipeAnimations = it
+                                    prefs?.edit()?.putBoolean("enable_swipe_animations", it)?.apply()
+                                },
+                                colors = SwitchDefaults.colors(checkedTrackColor = StudioColors.ActiveViolet)
+                            )
+                        }
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(14.dp))
+
+            // 7. Navigation Hub Cards
             StudioCard(onClick = onNavigateToLearnedRules, modifier = Modifier.fillMaxWidth()) {
                 Row(
                     modifier = Modifier

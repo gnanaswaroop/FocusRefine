@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.animation.*
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -211,6 +212,10 @@ fun MainStudioScreen(
     var refreshTrigger by remember { mutableStateOf(0) }
     var isFullScreenInbox by remember { mutableStateOf(false) }
 
+    val enableSwipeAnimations = remember(refreshTrigger, liveRefreshTrigger) {
+        prefs.getBoolean("enable_swipe_animations", true)
+    }
+
     val totalCount = mutedCount + urgentCount
     val noiseFilteredPercent = if (totalCount > 0) (mutedCount * 100 / totalCount) else 0
 
@@ -277,16 +282,25 @@ fun MainStudioScreen(
                     .padding(vertical = 4.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.adaptive_foreground),
-                    contentDescription = "App Logo",
-                    modifier = Modifier.size(26.dp)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
+                Box(
+                    modifier = Modifier
+                        .size(38.dp)
+                        .clip(CircleShape)
+                        .background(StudioColors.CardSurfaceHighlight)
+                        .border(1.dp, StudioColors.ActiveViolet.copy(alpha = 0.5f), CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.adaptive_foreground),
+                        contentDescription = "App Logo",
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = "FocusRefine",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.ExtraBold,
                     color = Color.White
                 )
                 Spacer(modifier = Modifier.width(8.dp))
@@ -643,167 +657,344 @@ fun MainStudioScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Notifications List with Swipe Left/Right gesture to toggle Muted/Shown tabs
+            // Notifications List with Swipe Gesture & Animated Tab Transitions
             var totalDrag by remember { mutableStateOf(0f) }
 
-            LazyColumn(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-                    .pointerInput(Unit) {
-                        detectHorizontalDragGestures(
-                            onDragStart = { totalDrag = 0f },
-                            onDragEnd = {
-                                if (totalDrag < -80f && !currentTabUrgent) { // Swipe Left -> Switch to Shown tab
-                                    currentTabUrgent = true
-                                    Toast.makeText(context, "Switched to Shown tab", Toast.LENGTH_SHORT).show()
-                                } else if (totalDrag > 80f && currentTabUrgent) { // Swipe Right -> Switch to Muted tab
-                                    currentTabUrgent = false
-                                    Toast.makeText(context, "Switched to Muted tab", Toast.LENGTH_SHORT).show()
-                                }
-                            },
-                            onHorizontalDrag = { _, dragAmount ->
-                                totalDrag += dragAmount
-                            }
-                        )
+            if (enableSwipeAnimations) {
+                AnimatedContent(
+                    targetState = currentTabUrgent,
+                    transitionSpec = {
+                        if (targetState) { // Swipe Left -> Shown tab
+                            (slideInHorizontally { width -> width } + fadeIn()).togetherWith(slideOutHorizontally { width -> -width } + fadeOut())
+                        } else { // Swipe Right -> Muted tab
+                            (slideInHorizontally { width -> -width } + fadeIn()).togetherWith(slideOutHorizontally { width -> width } + fadeOut())
+                        }
                     },
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                items(notifications) { notif ->
-                    val isMuted = !notif.isUrgent
-                    StudioCard(
-                        onClick = {
-                            val intent = Intent(context, NotificationDetailActivity::class.java).apply {
-                                putExtra("notif_id", notif.id)
-                                putExtra("title", notif.title)
-                                putExtra("text", notif.text)
-                                putExtra("package_name", notif.packageName)
-                                putExtra("timestamp", notif.timestamp)
-                                putExtra("is_urgent", notif.isUrgent)
-                                putExtra("explanation", notif.explanation)
-                            }
-                            context.startActivity(intent)
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Column(modifier = Modifier.padding(14.dp)) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    AppIconImage(
-                                        packageName = notif.packageName,
-                                        modifier = Modifier.size(24.dp)
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text(
-                                        text = notif.title ?: "Notification",
-                                        fontWeight = FontWeight.Bold,
-                                        fontSize = 14.sp,
-                                        color = Color.White
-                                    )
-                                }
-                                Text(
-                                    text = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date(notif.timestamp)),
-                                    fontSize = 11.sp,
-                                    color = StudioColors.TextMuted
+                    label = "SmartInboxSwipeAnimation",
+                    modifier = Modifier.weight(1f).fillMaxWidth()
+                ) { isUrgentTab ->
+                    key(isUrgentTab) {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .pointerInput(Unit) {
+                                detectHorizontalDragGestures(
+                                    onDragStart = { totalDrag = 0f },
+                                    onDragEnd = {
+                                        if (totalDrag < -80f && !currentTabUrgent) {
+                                            currentTabUrgent = true
+                                            Toast.makeText(context, "Switched to Shown tab", Toast.LENGTH_SHORT).show()
+                                        } else if (totalDrag > 80f && currentTabUrgent) {
+                                            currentTabUrgent = false
+                                            Toast.makeText(context, "Switched to Muted tab", Toast.LENGTH_SHORT).show()
+                                        }
+                                    },
+                                    onHorizontalDrag = { _, dragAmount ->
+                                        totalDrag += dragAmount
+                                    }
                                 )
-                            }
-
-                            Spacer(modifier = Modifier.height(6.dp))
-
-                            Text(
-                                text = notif.text ?: "No content",
-                                fontSize = 13.sp,
-                                color = StudioColors.TextSecondary,
-                                maxLines = 2,
-                                overflow = TextOverflow.Ellipsis
-                            )
-
-                            Spacer(modifier = Modifier.height(10.dp))
-
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.SpaceBetween
+                            },
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        items(notifications) { notif ->
+                            val isMuted = !notif.isUrgent
+                            StudioCard(
+                                onClick = {
+                                    val intent = Intent(context, NotificationDetailActivity::class.java).apply {
+                                        putExtra("notif_id", notif.id)
+                                        putExtra("title", notif.title)
+                                        putExtra("text", notif.text)
+                                        putExtra("package_name", notif.packageName)
+                                        putExtra("timestamp", notif.timestamp)
+                                        putExtra("is_urgent", notif.isUrgent)
+                                        putExtra("explanation", notif.explanation)
+                                    }
+                                    context.startActivity(intent)
+                                },
+                                modifier = Modifier.fillMaxWidth()
                             ) {
-                                Surface(
-                                    shape = CircleShape,
-                                    color = if (isMuted) StudioColors.RedSurface else StudioColors.GreenSurface,
-                                    border = BorderStroke(1.dp, if (isMuted) StudioColors.RedAccent.copy(alpha = 0.3f) else StudioColors.GreenAccent.copy(alpha = 0.3f))
-                                ) {
-                                    Text(
-                                        text = if (isMuted) "Muted: Routine Alert" else "High Urgency: Priority Prompt",
-                                        fontSize = 10.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        color = if (isMuted) StudioColors.RedText else StudioColors.GreenText,
-                                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
-                                    )
-                                }
-
-                                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                                    IconButton(
-                                        onClick = {
-                                            val db = AppDatabase.getDatabase(context)
-                                            val activeModeStr = prefs.getString("current_mode", "Default") ?: "Default"
-                                            val newUrgent = !notif.isUrgent
-                                            val ruleText = AiRuleSynthesizer.synthesizeRule(
-                                                packageName = notif.packageName,
-                                                title = notif.title,
-                                                text = notif.text,
-                                                isUrgent = newUrgent,
-                                                activeMode = activeModeStr
-                                            )
-                                            val updated = notif.copy(isUrgent = newUrgent, isLearned = true, synthesizedRule = ruleText)
-                                            CoroutineScope(Dispatchers.IO).launch {
-                                                db.notificationDao().insert(updated)
-                                                refreshTrigger++
-                                                withContext(Dispatchers.Main) {
-                                                    Toast.makeText(context, if (newUrgent) "Moved to Shown" else "Moved to Muted", Toast.LENGTH_SHORT).show()
-                                                }
-                                            }
-                                        },
-                                        modifier = Modifier.size(28.dp)
+                                Column(modifier = Modifier.padding(14.dp)) {
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.SpaceBetween
                                     ) {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.ic_swap_horiz),
-                                            contentDescription = "Swap Tab",
-                                            tint = StudioColors.TextSecondary,
-                                            modifier = Modifier.size(16.dp)
+                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                            AppIconImage(
+                                                packageName = notif.packageName,
+                                                modifier = Modifier.size(24.dp)
+                                            )
+                                            Spacer(modifier = Modifier.width(8.dp))
+                                            Text(
+                                                text = notif.title ?: "Notification",
+                                                fontWeight = FontWeight.Bold,
+                                                fontSize = 14.sp,
+                                                color = Color.White
+                                            )
+                                        }
+                                        Text(
+                                            text = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date(notif.timestamp)),
+                                            fontSize = 11.sp,
+                                            color = StudioColors.TextMuted
                                         )
                                     }
-                                    IconButton(
-                                        onClick = {
-                                            try {
-                                                val intent = context.packageManager.getLaunchIntentForPackage(notif.packageName)
-                                                if (intent != null) context.startActivity(intent)
-                                                else Toast.makeText(context, "App not installed", Toast.LENGTH_SHORT).show()
-                                            } catch (_: Exception) {
-                                                Toast.makeText(context, "Cannot open app", Toast.LENGTH_SHORT).show()
-                                            }
-                                        },
-                                        modifier = Modifier.size(28.dp)
+
+                                    Spacer(modifier = Modifier.height(6.dp))
+
+                                    Text(
+                                        text = notif.text ?: "No content",
+                                        fontSize = 13.sp,
+                                        color = StudioColors.TextSecondary,
+                                        maxLines = 2,
+                                        overflow = TextOverflow.Ellipsis
+                                    )
+
+                                    Spacer(modifier = Modifier.height(10.dp))
+
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.SpaceBetween
                                     ) {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.ic_open_in_new),
-                                            contentDescription = "Open App",
-                                            tint = StudioColors.TextSecondary,
-                                            modifier = Modifier.size(16.dp)
+                                        Surface(
+                                            shape = CircleShape,
+                                            color = if (isMuted) StudioColors.RedSurface else StudioColors.GreenSurface,
+                                            border = BorderStroke(1.dp, if (isMuted) StudioColors.RedAccent.copy(alpha = 0.3f) else StudioColors.GreenAccent.copy(alpha = 0.3f))
+                                        ) {
+                                            Text(
+                                                text = if (isMuted) "Muted: Routine Alert" else "High Urgency: Priority Prompt",
+                                                fontSize = 10.sp,
+                                                fontWeight = FontWeight.Bold,
+                                                color = if (isMuted) StudioColors.RedText else StudioColors.GreenText,
+                                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+                                            )
+                                        }
+
+                                        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                                            IconButton(
+                                                onClick = {
+                                                    val db = AppDatabase.getDatabase(context)
+                                                    val activeModeStr = prefs.getString("current_mode", "Default") ?: "Default"
+                                                    val newUrgent = !notif.isUrgent
+                                                    val ruleText = AiRuleSynthesizer.synthesizeRule(
+                                                        packageName = notif.packageName,
+                                                        title = notif.title,
+                                                        text = notif.text,
+                                                        isUrgent = newUrgent,
+                                                        activeMode = activeModeStr
+                                                    )
+                                                    val updated = notif.copy(isUrgent = newUrgent, isLearned = true, synthesizedRule = ruleText)
+                                                    CoroutineScope(Dispatchers.IO).launch {
+                                                        db.notificationDao().insert(updated)
+                                                        refreshTrigger++
+                                                        withContext(Dispatchers.Main) {
+                                                            Toast.makeText(context, if (newUrgent) "Moved to Shown" else "Moved to Muted", Toast.LENGTH_SHORT).show()
+                                                        }
+                                                    }
+                                                },
+                                                modifier = Modifier.size(28.dp)
+                                            ) {
+                                                Icon(
+                                                    painter = painterResource(id = R.drawable.ic_swap_horiz),
+                                                    contentDescription = "Swap Tab",
+                                                    tint = StudioColors.TextSecondary,
+                                                    modifier = Modifier.size(16.dp)
+                                                )
+                                            }
+                                            IconButton(
+                                                onClick = {
+                                                    try {
+                                                        val intent = context.packageManager.getLaunchIntentForPackage(notif.packageName)
+                                                        if (intent != null) context.startActivity(intent)
+                                                        else Toast.makeText(context, "App not installed", Toast.LENGTH_SHORT).show()
+                                                    } catch (_: Exception) {
+                                                        Toast.makeText(context, "Cannot open app", Toast.LENGTH_SHORT).show()
+                                                    }
+                                                },
+                                                modifier = Modifier.size(28.dp)
+                                            ) {
+                                                Icon(
+                                                    painter = painterResource(id = R.drawable.ic_open_in_new),
+                                                    contentDescription = "Open App",
+                                                    tint = StudioColors.TextSecondary,
+                                                    modifier = Modifier.size(16.dp)
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        item {
+                            StudioFooter(
+                                text = "🔒 Your notifications stay on this device.",
+                                modifier = Modifier.padding(top = 12.dp, bottom = 16.dp)
+                            )
+                        }
+                    }
+                    }
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                        .pointerInput(Unit) {
+                            detectHorizontalDragGestures(
+                                onDragStart = { totalDrag = 0f },
+                                onDragEnd = {
+                                    if (totalDrag < -80f && !currentTabUrgent) {
+                                        currentTabUrgent = true
+                                        Toast.makeText(context, "Switched to Shown tab", Toast.LENGTH_SHORT).show()
+                                    } else if (totalDrag > 80f && currentTabUrgent) {
+                                        currentTabUrgent = false
+                                        Toast.makeText(context, "Switched to Muted tab", Toast.LENGTH_SHORT).show()
+                                    }
+                                },
+                                onHorizontalDrag = { _, dragAmount ->
+                                    totalDrag += dragAmount
+                                }
+                            )
+                        },
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    items(notifications) { notif ->
+                        val isMuted = !notif.isUrgent
+                        StudioCard(
+                            onClick = {
+                                val intent = Intent(context, NotificationDetailActivity::class.java).apply {
+                                    putExtra("notif_id", notif.id)
+                                    putExtra("title", notif.title)
+                                    putExtra("text", notif.text)
+                                    putExtra("package_name", notif.packageName)
+                                    putExtra("timestamp", notif.timestamp)
+                                    putExtra("is_urgent", notif.isUrgent)
+                                    putExtra("explanation", notif.explanation)
+                                }
+                                context.startActivity(intent)
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Column(modifier = Modifier.padding(14.dp)) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        AppIconImage(
+                                            packageName = notif.packageName,
+                                            modifier = Modifier.size(24.dp)
                                         )
+                                        Spacer(modifier = Modifier.width(8.dp))
+                                        Text(
+                                            text = notif.title ?: "Notification",
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 14.sp,
+                                            color = Color.White
+                                        )
+                                    }
+                                    Text(
+                                        text = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date(notif.timestamp)),
+                                        fontSize = 11.sp,
+                                        color = StudioColors.TextMuted
+                                    )
+                                }
+
+                                Spacer(modifier = Modifier.height(6.dp))
+
+                                Text(
+                                    text = notif.text ?: "No content",
+                                    fontSize = 13.sp,
+                                    color = StudioColors.TextSecondary,
+                                    maxLines = 2,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+
+                                Spacer(modifier = Modifier.height(10.dp))
+
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Surface(
+                                        shape = CircleShape,
+                                        color = if (isMuted) StudioColors.RedSurface else StudioColors.GreenSurface,
+                                        border = BorderStroke(1.dp, if (isMuted) StudioColors.RedAccent.copy(alpha = 0.3f) else StudioColors.GreenAccent.copy(alpha = 0.3f))
+                                    ) {
+                                        Text(
+                                            text = if (isMuted) "Muted: Routine Alert" else "High Urgency: Priority Prompt",
+                                            fontSize = 10.sp,
+                                            fontWeight = FontWeight.Bold,
+                                            color = if (isMuted) StudioColors.RedText else StudioColors.GreenText,
+                                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+                                        )
+                                    }
+
+                                    Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                                        IconButton(
+                                            onClick = {
+                                                val db = AppDatabase.getDatabase(context)
+                                                val activeModeStr = prefs.getString("current_mode", "Default") ?: "Default"
+                                                val newUrgent = !notif.isUrgent
+                                                val ruleText = AiRuleSynthesizer.synthesizeRule(
+                                                    packageName = notif.packageName,
+                                                    title = notif.title,
+                                                    text = notif.text,
+                                                    isUrgent = newUrgent,
+                                                    activeMode = activeModeStr
+                                                )
+                                                val updated = notif.copy(isUrgent = newUrgent, isLearned = true, synthesizedRule = ruleText)
+                                                CoroutineScope(Dispatchers.IO).launch {
+                                                    db.notificationDao().insert(updated)
+                                                    refreshTrigger++
+                                                    withContext(Dispatchers.Main) {
+                                                        Toast.makeText(context, if (newUrgent) "Moved to Shown" else "Moved to Muted", Toast.LENGTH_SHORT).show()
+                                                    }
+                                                }
+                                            },
+                                            modifier = Modifier.size(28.dp)
+                                        ) {
+                                            Icon(
+                                                painter = painterResource(id = R.drawable.ic_swap_horiz),
+                                                contentDescription = "Swap Tab",
+                                                tint = StudioColors.TextSecondary,
+                                                modifier = Modifier.size(16.dp)
+                                            )
+                                        }
+                                        IconButton(
+                                            onClick = {
+                                                try {
+                                                    val intent = context.packageManager.getLaunchIntentForPackage(notif.packageName)
+                                                    if (intent != null) context.startActivity(intent)
+                                                    else Toast.makeText(context, "App not installed", Toast.LENGTH_SHORT).show()
+                                                } catch (_: Exception) {
+                                                    Toast.makeText(context, "Cannot open app", Toast.LENGTH_SHORT).show()
+                                                }
+                                            },
+                                            modifier = Modifier.size(28.dp)
+                                        ) {
+                                            Icon(
+                                                painter = painterResource(id = R.drawable.ic_open_in_new),
+                                                contentDescription = "Open App",
+                                                tint = StudioColors.TextSecondary,
+                                                modifier = Modifier.size(16.dp)
+                                            )
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
 
-                item {
-                    StudioFooter(
-                        text = "🔒 Your notifications stay on this device.",
-                        modifier = Modifier.padding(top = 12.dp, bottom = 16.dp)
-                    )
+                    item {
+                        StudioFooter(
+                            text = "🔒 Your notifications stay on this device.",
+                            modifier = Modifier.padding(top = 12.dp, bottom = 16.dp)
+                        )
+                    }
                 }
             }
         }
