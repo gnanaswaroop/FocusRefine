@@ -152,7 +152,7 @@ Eleven of twelve configurations improved on never-seen notifications of the same
 corrections for a user whose tastes differ most from the defaults) did not change. This agrees with the simulation in 3.2
 and shows the effect survives the rest of the pipeline: rules, exceptions, the real service and the real database.
 These are the favourable "same kind" conditions; the new-kind and external-holdout figures in 3.2 are the conservative ones.
-Total real-service runs behind sections 3.1 and 3.4: 28 configurations, each across all five modes.
+Total real-service runs behind sections 3.1 and 3.4: 20 configurations, each across all five modes.
 
 ## 4. Why not a larger or federated model?
 - A network-trained or shared model would need data to leave the device, which is ruled out.
