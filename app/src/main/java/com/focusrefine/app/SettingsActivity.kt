@@ -40,19 +40,12 @@ class SettingsActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         prefs = getSharedPreferences("FocusRefinePrefs", MODE_PRIVATE)
 
-        val isEmulator = android.os.Build.FINGERPRINT.contains("generic") ||
-                         android.os.Build.HARDWARE.contains("goldfish") ||
-                         android.os.Build.HARDWARE.contains("ranchu") ||
-                         android.os.Build.MODEL.contains("sdk")
-
-        if (isEmulator) {
-            prefs.edit().putBoolean("use_ai_model", false).apply()
-        }
+        val engineLoaded = prefs.getBoolean(EmbeddingClassifier.PREF_ENGINE_LOADED, false)
 
         setContent {
             FocusRefineTheme {
                 SettingsStudioScreen(
-                    isEmulator = isEmulator,
+                    engineLoaded = engineLoaded,
                     prefs = prefs,
                     onBack = { finish() },
                     onNavigateToAppRules = { startActivity(Intent(this, ConfigureModesActivity::class.java)) },
@@ -138,7 +131,7 @@ class SettingsActivity : ComponentActivity() {
 
 @Composable
 fun SettingsStudioScreen(
-    isEmulator: Boolean,
+    engineLoaded: Boolean,
     prefs: SharedPreferences?,
     onBack: () -> Unit,
     onNavigateToAppRules: () -> Unit,
@@ -156,7 +149,7 @@ fun SettingsStudioScreen(
     var currentMode by remember { mutableStateOf(prefs?.getString("current_mode", defaultMode) ?: defaultMode) }
     var filterStrengthIndex by remember { mutableStateOf(prefs?.getInt("filter_strength", 1) ?: 1) } // 0=Gentle, 1=Balanced, 2=Strict
     var learnFromChoices by remember { mutableStateOf(prefs?.getBoolean("learn_from_choices", true) ?: true) }
-    var useAiModel by remember { mutableStateOf(if (isEmulator) false else (prefs?.getBoolean("use_ai_model", true) ?: true)) }
+    var useAiModel by remember { mutableStateOf(prefs?.getBoolean("use_ai_model", true) ?: true) }
     var enableSwipeAnimations by remember { mutableStateOf(prefs?.getBoolean("enable_swipe_animations", true) ?: true) }
 
     // Collapsible Card States (Open/Expanded by default)
@@ -250,11 +243,12 @@ fun SettingsStudioScreen(
                     if (isEngineExpanded) {
                         Spacer(modifier = Modifier.height(10.dp))
 
-                        // Active Engine Status Banner
+                        // Active Engine Status Banner: reflects the engine the service actually loaded
+                        val engineActive = useAiModel && engineLoaded
                         Surface(
                             shape = MaterialTheme.shapes.small,
-                            color = if (useAiModel && !isEmulator) StudioColors.ActiveViolet.copy(alpha = 0.2f) else StudioColors.CardSurfaceHighlight,
-                            border = BorderStroke(1.dp, if (useAiModel && !isEmulator) StudioColors.ActiveViolet else StudioColors.StudioBorder),
+                            color = if (engineActive) StudioColors.ActiveViolet.copy(alpha = 0.2f) else StudioColors.CardSurfaceHighlight,
+                            border = BorderStroke(1.dp, if (engineActive) StudioColors.ActiveViolet else StudioColors.StudioBorder),
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Row(
@@ -262,26 +256,26 @@ fun SettingsStudioScreen(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Text(
-                                    text = if (useAiModel && !isEmulator) "✨" else "🔍",
+                                    text = if (engineActive) "✨" else "🔍",
                                     fontSize = 16.sp
                                 )
                                 Spacer(modifier = Modifier.width(10.dp))
                                 Column {
                                     Text(
-                                        text = if (useAiModel && !isEmulator) "On-Device AI Engine Active" else "On-Device Semantic Matcher Active",
+                                        text = if (engineActive) "On-Device AI Engine Active" else "On-Device Keyword Matcher Active",
                                         fontWeight = FontWeight.Bold,
                                         fontSize = 13.sp,
-                                        color = if (useAiModel && !isEmulator) StudioColors.ActiveVioletLight else Color.White
+                                        color = if (engineActive) StudioColors.ActiveVioletLight else Color.White
                                     )
                                     Text(
-                                        text = if (useAiModel && !isEmulator)
-                                            "Deep intent classification via Gemini Nano / AICore."
-                                        else if (isEmulator)
-                                            "Emulator mode: MediaPipe native JNI disabled. Using local semantic prompt matcher."
+                                        text = if (engineActive)
+                                            "Semantic matching with an on-device embedding model for built-in modes. Custom modes use your prompt keywords."
+                                        else if (!useAiModel)
+                                            "AI engine is off. Matching the keywords in your mode prompts."
                                         else
-                                            "Local tokenization & prompt heuristic matching.",
+                                            "The AI model is not loaded (the service may not have started yet, or this device cannot run it). Matching prompt keywords.",
                                         fontSize = 11.sp,
-                                        color = if (isEmulator) StudioColors.GoldAccent else StudioColors.TextMuted
+                                        color = if (useAiModel && !engineLoaded) StudioColors.GoldAccent else StudioColors.TextMuted
                                     )
                                 }
                             }
@@ -299,31 +293,25 @@ fun SettingsStudioScreen(
                                     text = "Use On-Device AI Engine",
                                     fontSize = 14.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = if (isEmulator) StudioColors.TextMuted else Color.White
+                                    color = Color.White
                                 )
                                 Text(
-                                    text = if (isEmulator)
-                                        "Disabled on emulator (MediaPipe model requires device hardware)"
-                                    else
-                                        "Toggle off to use On-Device Semantic Matcher",
+                                    text = "Toggle off to use the keyword matcher. Takes effect when the filter service restarts.",
                                     fontSize = 11.sp,
-                                    color = if (isEmulator) StudioColors.GoldAccent else StudioColors.TextMuted
+                                    color = StudioColors.TextMuted
                                 )
                             }
 
                             Switch(
-                                enabled = !isEmulator,
-                                checked = if (isEmulator) false else useAiModel,
+                                checked = useAiModel,
                                 onCheckedChange = { isChecked ->
-                                    if (!isEmulator) {
-                                        useAiModel = isChecked
-                                        prefs?.edit()?.putBoolean("use_ai_model", isChecked)?.apply()
-                                        Toast.makeText(
-                                            context,
-                                            "Engine set to: ${if (isChecked) "On-Device AI" else "On-Device Semantic Matcher"}",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
+                                    useAiModel = isChecked
+                                    prefs?.edit()?.putBoolean("use_ai_model", isChecked)?.apply()
+                                    Toast.makeText(
+                                        context,
+                                        "Engine set to: ${if (isChecked) "On-Device AI" else "Keyword Matcher"}",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 },
                                 colors = SwitchDefaults.colors(
                                     checkedThumbColor = Color.White,
@@ -845,7 +833,7 @@ fun SettingsStudioPreview() {
     val prefs = context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
     FocusRefineTheme {
         SettingsStudioScreen(
-            isEmulator = false,
+            engineLoaded = true,
             prefs = prefs,
             onBack = {},
             onNavigateToAppRules = {},

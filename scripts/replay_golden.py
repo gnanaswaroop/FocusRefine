@@ -87,7 +87,7 @@ def clear_test_notifications(adb):
     time.sleep(1)
 
 
-def reset_app(adb, mode):
+def reset_app(adb, mode, use_ai):
     clear_test_notifications(adb)
     adb.shell(f"cmd notification disallow_listener {LISTENER}")
     time.sleep(1)
@@ -95,7 +95,8 @@ def reset_app(adb, mode):
     adb.shell(f"run-as {PKG} rm -f databases/focusrefine_database databases/focusrefine_database-wal databases/focusrefine_database-shm")
     set_prefs(adb, {
         "current_mode": ("string", mode),
-        "use_ai_model": ("boolean", False),
+        "use_ai_model": ("boolean", use_ai),
+        "filter_strength": ("int", 1),  # Balanced; a leftover Gentle/Strict would silently shift every threshold
         "service_running": ("boolean", True),
         "suppressed_count": ("int", 0),
     })
@@ -287,11 +288,11 @@ def wait_for_items(adb, items, settle):
     return rows
 
 
-def run_dataset(adb, name, items, modes, delay, settle):
+def run_dataset(adb, name, items, modes, delay, settle, use_ai):
     results = []
     for mode in modes:
         print(f"[{name}] mode={mode}: resetting app and posting {len(items)} notifications ...", flush=True)
-        reset_app(adb, mode)
+        reset_app(adb, mode, use_ai)
         wait_until_listening(adb)
         post_all(adb, items, delay)
         rows = wait_for_items(adb, items, settle)
@@ -316,6 +317,8 @@ def main():
     ap.add_argument("--serial", required=True)
     ap.add_argument("--dataset", nargs="+", default=["golden", "holdout"], choices=list(DATASETS))
     ap.add_argument("--modes", nargs="+", default=ALL_MODES)
+    ap.add_argument("--engine", choices=["ai", "keyword"], default="ai",
+                    help="ai = embedding model enabled (app default); keyword = use_ai_model off (baseline)")
     ap.add_argument("--delay", type=float, default=0.25, help="seconds between posts (system rate limit)")
     ap.add_argument("--settle", type=int, default=90, help="max seconds to wait for the app to process")
     ap.add_argument("--limit", type=int, help="only replay the first N notifications (quick run)")
@@ -338,7 +341,7 @@ def main():
             items = json.load(open(DATASETS[name], encoding="utf-8"))
             if a.limit:
                 items = items[: a.limit]
-            report["datasets"][name] = run_dataset(adb, name, items, a.modes, a.delay, a.settle)
+            report["datasets"][name] = run_dataset(adb, name, items, a.modes, a.delay, a.settle, a.engine == "ai")
     finally:
         restore_state(adb, saved)
 
