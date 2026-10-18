@@ -22,3 +22,4 @@ tools/
 tools/config.json
 .tg.env
 .artifacts/
+.claude/
