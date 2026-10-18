@@ -10,6 +10,7 @@ FocusRefine utilizes **Android Room** (an SQLite-based object-mapping persistenc
 
 ### Database File Details
 - **Database Name:** `focusrefine_database`
+- **Database Version:** `5`
 - **Storage Path:** Private application internal storage (`/data/data/com.focusrefine.app/databases/focusrefine_database`)
 - **Core Entity (`NotificationEntity`):**
   - `id`: Auto-generated primary key (`INTEGER`)
@@ -17,8 +18,17 @@ FocusRefine utilizes **Android Room** (an SQLite-based object-mapping persistenc
   - `text`: Notification body content text (nullable)
   - `packageName`: Originating app package identifier (`TEXT`, e.g., `com.whatsapp`)
   - `timestamp`: Epoch millisecond timestamp of receipt (`LONG`)
-  - `isUrgent`: Boolean flag determining classification (`true` = Shown/Urgent feed, `false` = Muted/Archived feed)
+  - `isUrgent`: Recommended Action flag (`true` = Shown/Urgent feed, `false` = Muted/Archived feed)
   - `isLearned`: Boolean flag indicating explicit user-defined correction or rule (`BOOLEAN`)
+  - `synthesizedRule`: AI-synthesized rule tag string (`TEXT`, e.g., `"[MUTE] Whatsapp: grab coffee later"`)
+  - `explanation`: Detailed classification explanation string (`TEXT`, e.g., `"🤖 [AI Pipeline] MediaPipe model score 88% exceeded threshold"`)
+
+### Data access (`NotificationDao`)
+All DAO methods are blocking (non-suspend) and must be called off the main thread. Alongside the existing inbox, search, learned-rule, and retention queries, the history re-classification feature uses:
+- `getHistory()`: every row where `isLearned = 0` (the notification history, excluding the user's learned-rule rows).
+- `updateClassification(id, isUrgent, explanation)`: rewrites only the decision and its explanation for one row.
+
+No schema change was needed for these: the database stays at **version 5**. Remember that `AppDatabase` uses `fallbackToDestructiveMigration()`, so bumping the version erases history and learned rules.
 
 ---
 
@@ -38,6 +48,13 @@ FocusRefine relies on Android's foundational security model to ensure that notif
 
 ## 3. Privacy & Data Lifecycle Management
 
-1. **100% On-Device Processing:** All notification inspection, classification (via MediaPipe or local heuristics), and persistence occur entirely on-device. No notification text or metadata ever leaves the physical device.
+1. **100% On-Device Processing:** All notification inspection, classification (via MediaPipe AI or local heuristics), and persistence occur entirely on-device. No notification text or metadata ever leaves the physical device.
 2. **Data Retention Controls:** Users can configure automatic data purging in `SettingsActivity` to delete database records older than a specified threshold (e.g., 1, 3, or 7 days), limiting data retention.
 3. **Manual Clearing:** Users have full control to clear all inbox items or reset learned rules instantly via the in-app settings interface.
+4. **Re-running Classification:** Settings → Learning & Feedback → *Re-run classification on history* re-evaluates stored notifications entirely on-device and updates only `isUrgent` and `explanation`. Learned-rule rows (`isLearned = 1`) are never modified, and no notification text is sent anywhere.
+
+---
+
+## 4. Development & Testing Access (Debug Builds Only)
+
+The end-to-end replay script (`scripts/replay_golden.py`) and the instrumented tests read and wipe the app's database through `adb shell run-as com.focusrefine.app`. `run-as` only works for **debuggable** builds, so release builds keep the sandbox guarantees described above: no other app, and no adb shell, can read the database. The script backs up and restores the database and preferences around a run, and refuses to run on a non-emulator unless `--allow-device` is passed, because it clears the device's notification history. See the [Technical Implementation Guide](internals.md#3-testing--evaluation).

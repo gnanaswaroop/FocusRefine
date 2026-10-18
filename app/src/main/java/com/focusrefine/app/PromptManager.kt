@@ -61,4 +61,10 @@ object PromptManager {
             ?: configs.keys.firstOrNull()
             ?: "Default"
     }
+
+    fun getEnrichedModePrompt(basePrompt: String, synthesizedRules: List<String>): String {
+        if (synthesizedRules.isEmpty()) return basePrompt
+        val rulesFormatted = synthesizedRules.joinToString("; ")
+        return "$basePrompt. [USER AI PREFERENCES: $rulesFormatted]"
+    }
 }

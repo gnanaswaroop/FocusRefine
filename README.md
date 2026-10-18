@@ -19,6 +19,7 @@ FocusRefine consists of two primary screens designed with a **dark-mode first** 
    - Includes **Data Retention** configuration to automatically clear history older than X days.
    - Allows enabling/disabling OOTB modes (**Commute** and **DND**) with inline prompt editing, plus creation and management of **Custom Modes**.
    - Contains the **"Send Sample Notifications"** action to test AI/heuristic classification and update live statistics.
+   - Offers **"Re-run classification on history"** (under *Learning & Feedback*) to re-check every stored notification with your current mode, filtering strength, exceptions and learned rules.
 
 ---
 
@@ -36,3 +37,9 @@ FocusRefine consists of two primary screens designed with a **dark-mode first** 
 3. **Permission Minimization & Security**:
    - Minimized application permissions in `AndroidManifest.xml` to include strictly notification listening, foreground service, and post notifications.
    - **Zero internet permissions**: All classification and storage occur 100% locally on-device.
+
+---
+
+## Testing & Evaluation
+
+Labeled golden and holdout notification datasets live in `testdata/golden/` (see `testdata/README.md`). `scripts/replay_golden.py` posts them from the adb shell through the real service and checks the Shown/Muted decisions in the app database, and the instrumented test `HistoryReclassifierTest` in `app/src/androidTest/` covers history re-classification. Details, results and caveats are in [`docs/internals.md`](docs/internals.md#3-testing--evaluation).

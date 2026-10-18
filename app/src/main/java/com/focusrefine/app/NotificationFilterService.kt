@@ -14,7 +14,6 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.google.mediapipe.tasks.core.BaseOptions
 import com.google.mediapipe.tasks.text.textclassifier.TextClassifier
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +26,7 @@ class NotificationFilterService : NotificationListenerService() {
     private val CHANNEL_ID = "focusrefine_service_channel"
     private val NOTIFICATION_ID = 1001
     private var textClassifier: TextClassifier? = null
+    private lateinit var classifier: NotificationClassifier
 
     private val toggleReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -78,20 +78,8 @@ class NotificationFilterService : NotificationListenerService() {
         createNotificationChannel()
 
         val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
-        val useAi = prefs.getBoolean("use_ai_model", true)
-
-        if (useAi) {
-            try {
-                val baseOptions = BaseOptions.builder().setModelAssetPath("text_classifier.tflite").build()
-                val options = TextClassifier.TextClassifierOptions.builder().setBaseOptions(baseOptions).build()
-                textClassifier = TextClassifier.createFromOptions(this, options)
-                Log.d(TAG, "MediaPipe TextClassifier initialized successfully")
-            } catch (e: Throwable) {
-                Log.d(TAG, "MediaPipe model asset or JNI native library not found (x86_64/emulator); using semantic prompt heuristic engine: ${e.message}")
-            }
-        } else {
-            Log.d(TAG, "MediaPipe AI Model disabled by user settings")
-        }
+        textClassifier = NotificationClassifier.createTextClassifier(this)
+        classifier = NotificationClassifier(this, database, textClassifier)
 
         val filter = IntentFilter().apply {
             addAction(ACTION_TOGGLE_SERVICE)
@@ -167,7 +155,7 @@ class NotificationFilterService : NotificationListenerService() {
         val appIconBitmap = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
 
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("Focus Refine Active")
+            .setContentTitle(getString(R.string.app_name))
             .setContentText(statusText)
             .setSmallIcon(R.drawable.ic_notification)
             .setLargeIcon(appIconBitmap)
@@ -206,16 +194,17 @@ class NotificationFilterService : NotificationListenerService() {
         CoroutineScope(Dispatchers.IO).launch {
             val defaultMode = PromptManager.getDefaultModeName(this@NotificationFilterService)
             val currentMode = prefs.getString("current_mode", defaultMode) ?: defaultMode
-            val isUrgent = analyzeContent(title, text, currentMode)
+            val classification = classifier.classify(title, text, currentMode)
 
-            if (isUrgent) {
+            if (classification.isUrgent) {
                 Log.d(TAG, "Allowed (Shown) notification: ${sbn.key}")
                 val entity = NotificationEntity(
                     title = title,
                     text = text,
                     packageName = packageName,
                     timestamp = System.currentTimeMillis(),
-                    isUrgent = true
+                    isUrgent = true,
+                    explanation = classification.explanation
                 )
                 database.notificationDao().insert(entity)
                 sendBroadcast(Intent(ACTION_NOTIFICATION_ARRIVED).setPackage(this@NotificationFilterService.packageName))
@@ -233,7 +222,8 @@ class NotificationFilterService : NotificationListenerService() {
                         text = text,
                         packageName = packageName,
                         timestamp = System.currentTimeMillis(),
-                        isUrgent = false
+                        isUrgent = false,
+                        explanation = classification.explanation
                     )
                     database.notificationDao().insert(entity)
                     sendBroadcast(Intent(ACTION_NOTIFICATION_ARRIVED).setPackage(this@NotificationFilterService.packageName))
@@ -252,6 +242,13 @@ class NotificationFilterService : NotificationListenerService() {
         } catch (_: Exception) {
         }
         try {
+            val manager = getSystemService(NotificationManager::class.java)
+            if (manager.isNotificationPolicyAccessGranted) {
+                manager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL)
+            }
+        } catch (_: Exception) {
+        }
+        try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 stopForeground(STOP_FOREGROUND_REMOVE)
             } else {
@@ -266,77 +263,12 @@ class NotificationFilterService : NotificationListenerService() {
         super.onDestroy()
     }
 
-    private fun analyzeContent(title: String?, text: String?, mode: String): Boolean {
-        // 1. Check for matching user learned rule first
-        val learnedRule = database.notificationDao().findMatchingLearnedRule(title ?: "", "%${text ?: ""}%")
-        if (learnedRule != null) {
-            Log.d(TAG, "Learned rule override matched: isUrgent = ${learnedRule.isUrgent}")
-            return learnedRule.isUrgent
-        }
-
-        val content = "${title ?: ""} ${text ?: ""}".lowercase()
-        val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
-
-        // 2. Check JSON-driven exceptions from exceptions.json
-        val exceptions = ExceptionManager.getAllExceptions(this)
-        for (exc in exceptions) {
-            val isEnabled = prefs.getBoolean(exc.prefKey, exc.defaultEnabled)
-            if (isEnabled) {
-                if (exc.keywords.any { keyword -> content.contains(keyword.lowercase()) }) {
-                    Log.d(TAG, "Matched user-enabled exception '${exc.title}': showing notification")
-                    return true
-                }
-            }
-        }
-
-        // 3. AI / Filtering Strength Evaluation
-        val useAi = prefs.getBoolean("use_ai_model", true)
-        val filterStrength = prefs.getInt("filter_strength", 1) // 0=Gentle, 1=Balanced, 2=Strict
-        val scoreThreshold = when (filterStrength) {
-            0 -> 0.4f // Gentle (Lenient)
-            2 -> 0.8f // Strict (Restricted)
-            else -> 0.6f // Balanced
-        }
-
-        if (useAi && textClassifier != null) {
-            try {
-                val result = textClassifier!!.classify(content)
-                for (classification in result.classificationResult().classifications()) {
-                    for (category in classification.categories()) {
-                        if (category.categoryName().equals("urgent", ignoreCase = true) && category.score() >= scoreThreshold) {
-                            return true
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                Log.e(TAG, "MediaPipe classification error: ${e.message}")
-            }
-        }
-
-        // 4. Prompt Keywords Evaluation
-        val ootbPrompts = PromptManager.getAllOotbPrompts(this)
-        val prompt = when {
-            mode.contains("Commute", ignoreCase = true) ->
-                prefs.getString("prompt_Commute", ootbPrompts["Commute"] ?: "navigation, maps, turn left, turn right, traffic, call, vip, boss, route") ?: ""
-            mode.contains("Focus", ignoreCase = true) ->
-                prefs.getString("prompt_Deep Work / Focus", ootbPrompts["Deep Work / Focus"] ?: "urgent, call, boss, meeting, build, outage, deadline") ?: ""
-            mode.contains("Sleep", ignoreCase = true) ->
-                prefs.getString("prompt_Sleeping / Rest", ootbPrompts["Sleeping / Rest"] ?: "emergency, family, hospital, call, alarm") ?: ""
-            mode.contains("DND", ignoreCase = true) ->
-                prefs.getString("prompt_Do Not Disturb (DND)", ootbPrompts["Do Not Disturb (DND)"] ?: "emergency, hospital, 911, critical") ?: ""
-            else ->
-                prefs.getString("custom_mode_prompt_$mode", "urgent, call, emergency, navigation, meeting") ?: "urgent, call, emergency, navigation, meeting"
-        }
-
-        val keywords = prompt.lowercase().split(",", " ").map { it.trim() }.filter { it.isNotEmpty() }
-        if (keywords.isEmpty()) return content.contains("urgent")
-
-        return keywords.any { keyword -> content.contains(keyword) }
-    }
-
     override fun onTaskRemoved(rootIntent: Intent?) {
         try {
             val manager = getSystemService(NotificationManager::class.java)
+            if (manager.isNotificationPolicyAccessGranted) {
+                manager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL)
+            }
             manager.cancel(NOTIFICATION_ID)
             stopSelf()
         } catch (_: Exception) {}

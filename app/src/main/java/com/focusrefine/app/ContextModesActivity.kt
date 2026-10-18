@@ -82,8 +82,6 @@ fun ContextModesScreen(
         list
     }
 
-    val activeModeInfo = modeItems.find { it.name.equals(activeMode, ignoreCase = true) } ?: modeItems.first()
-
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = StudioColors.DarkBackground
@@ -117,7 +115,7 @@ fun ContextModesScreen(
                 )
             }
 
-            // 1. Top Active Mode Banner
+            // 1. Intro Context Banner (No Duplicate Active Card)
             StudioCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
@@ -125,16 +123,12 @@ fun ContextModesScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(text = activeModeInfo.icon, fontSize = 16.sp)
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(
-                                text = "${activeModeInfo.name} · Active",
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 15.sp,
-                                color = Color.White
-                            )
-                        }
+                        Text(
+                            text = "Mode Configuration",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 15.sp,
+                            color = Color.White
+                        )
 
                         Surface(
                             shape = CircleShape,
@@ -142,7 +136,7 @@ fun ContextModesScreen(
                             border = BorderStroke(1.dp, StudioColors.ActiveViolet)
                         ) {
                             Text(
-                                text = "AI ON",
+                                text = "AI Filtering ON",
                                 fontSize = 10.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = StudioColors.ActiveVioletLight,
@@ -154,7 +148,7 @@ fun ContextModesScreen(
                     Spacer(modifier = Modifier.height(6.dp))
 
                     Text(
-                        text = "Your active mode decides which interruptions matter. Select any mode below to switch instantly.",
+                        text = "Tap a mode below to activate it, or toggle 'Show on Home Page' to customize home selector bubbles.",
                         fontSize = 12.sp,
                         color = StudioColors.TextSecondary
                     )
@@ -166,6 +160,12 @@ fun ContextModesScreen(
             // 2. Mode Cards List
             modeItems.forEach { modeInfo ->
                 val isActive = modeInfo.name.equals(activeMode, ignoreCase = true)
+                val defaultEnabled = when (modeInfo.name) {
+                    "Commute", "Deep Focus" -> true
+                    else -> false
+                }
+                val prefKey = if (modeInfo.isCustom) "custom_mode_enabled_${modeInfo.name}" else "mode_enabled_${modeInfo.name}"
+                var isModeEnabled by remember { mutableStateOf(prefs.getBoolean(prefKey, defaultEnabled)) }
 
                 StudioCard(
                     onClick = {
@@ -221,6 +221,7 @@ fun ContextModesScreen(
                                             prefs.edit()
                                                 .putString("custom_modes_list", listCustom.joinToString(","))
                                                 .remove("custom_mode_prompt_${modeInfo.name}")
+                                                .remove("custom_mode_enabled_${modeInfo.name}")
                                                 .apply()
                                             if (activeMode.equals(modeInfo.name, ignoreCase = true)) {
                                                 activeMode = "Commute"
@@ -249,6 +250,29 @@ fun ContextModesScreen(
                         Row(modifier = Modifier.fillMaxWidth()) {
                             Text(text = "Mute", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = StudioColors.RedText, modifier = Modifier.width(44.dp))
                             Text(text = modeInfo.muteText, fontSize = 12.sp, color = StudioColors.TextMuted)
+                        }
+
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 10.dp), color = StudioColors.StudioBorder)
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column {
+                                Text("Show on Home Page", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                                Text("Display selectable bubble on Home", fontSize = 11.sp, color = StudioColors.TextMuted)
+                            }
+                            Switch(
+                                checked = isModeEnabled,
+                                onCheckedChange = { newValue ->
+                                    isModeEnabled = newValue
+                                    prefs.edit().putBoolean(prefKey, newValue).apply()
+                                    refreshTrigger++
+                                    Toast.makeText(context, "${modeInfo.name} ${if (newValue) "enabled" else "disabled"} on Home Page", Toast.LENGTH_SHORT).show()
+                                },
+                                colors = SwitchDefaults.colors(checkedTrackColor = StudioColors.ActiveViolet)
+                            )
                         }
                     }
                 }

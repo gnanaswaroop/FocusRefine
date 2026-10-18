@@ -3,12 +3,12 @@
     "prompt": "Active navigation alerts, transit arrivals, real-time traffic updates, urgent calls from family members or VIP contacts, rideshare arrival notices, and flight boarding gates.",
     "enabled": true
   },
-  "Do Not Disturb (DND)": {
-    "prompt": "Critical safety emergencies, hospital notifications, emergency services, urgent family distress calls, and critical system alarms.",
-    "enabled": true
-  },
   "Deep Work / Focus": {
     "prompt": "Urgent meeting pings, project deadlines, critical build/deploy failures, manager escalations, and calendar reminders.",
+    "enabled": true
+  },
+  "Do Not Disturb (DND)": {
+    "prompt": "Critical safety emergencies, hospital notifications, emergency services, urgent family distress calls, and critical system alarms.",
     "enabled": false
   },
   "Sleeping / Rest": {
