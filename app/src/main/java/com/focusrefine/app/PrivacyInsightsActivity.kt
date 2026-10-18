@@ -38,15 +38,12 @@ class PrivacyInsightsActivity : ComponentActivity() {
         @Suppress("WrongConstant")
         AppCompatDelegate.setDefaultNightMode(themeMode)
 
-        val isEmulator = android.os.Build.FINGERPRINT.contains("generic") ||
-                         android.os.Build.HARDWARE.contains("goldfish") ||
-                         android.os.Build.HARDWARE.contains("ranchu") ||
-                         android.os.Build.MODEL.contains("sdk")
+        val engineLoaded = prefs.getBoolean(EmbeddingClassifier.PREF_ENGINE_LOADED, false)
 
         setContent {
             FocusRefineTheme {
                 PrivacyInsightsScreen(
-                    isEmulator = isEmulator,
+                    engineLoaded = engineLoaded,
                     onBack = { finish() }
                 )
             }
@@ -56,7 +53,7 @@ class PrivacyInsightsActivity : ComponentActivity() {
 
 @Composable
 fun PrivacyInsightsScreen(
-    isEmulator: Boolean,
+    engineLoaded: Boolean,
     onBack: () -> Unit
 ) {
     val context = androidx.compose.ui.platform.LocalContext.current
@@ -122,7 +119,7 @@ fun PrivacyInsightsScreen(
                         Text(text = "✨", fontSize = 16.sp)
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = if (isEmulator) "On-Device Semantic Engine Active" else "Gemini Nano AI Active (AICore)",
+                            text = if (engineLoaded) "On-Device AI Model Active" else "On-Device Keyword Engine Active",
                             fontWeight = FontWeight.Bold,
                             fontSize = 15.sp,
                             color = Color.White
@@ -363,7 +360,7 @@ fun PrivacyInsightsScreen(
 fun PrivacyInsightsPreview() {
     FocusRefineTheme {
         PrivacyInsightsScreen(
-            isEmulator = false,
+            engineLoaded = true,
             onBack = {}
         )
     }

@@ -3,8 +3,6 @@ package com.focusrefine.app
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import com.google.mediapipe.tasks.core.BaseOptions
-import com.google.mediapipe.tasks.text.textclassifier.TextClassifier
 
 data class ClassificationResult(
     val isUrgent: Boolean,
@@ -20,7 +18,7 @@ data class ClassificationResult(
 class NotificationClassifier(
     private val context: Context,
     private val database: AppDatabase,
-    private val textClassifier: TextClassifier?
+    private val embeddingClassifier: EmbeddingClassifier?
 ) {
 
     /**
@@ -28,7 +26,7 @@ class NotificationClassifier(
      * 1. a user learned rule
      * 2. an AI-synthesized rule
      * 3. an enabled exception (navigation, calls, OTP, ...)
-     * 4. the MediaPipe model, when it is available and reports an "urgent" category
+     * 4. the on-device embedding model, when it is loaded and the mode is a built-in one
      * 5. keywords from the active mode's prompt (always produces a result)
      */
     fun classify(title: String?, text: String?, mode: String): ClassificationResult {
@@ -89,49 +87,30 @@ class NotificationClassifier(
         )
     }
 
-    // ---- 4. MediaPipe model -----------------------------------------------------------------
+    // ---- 4. On-device embedding model -------------------------------------------------------
 
-    /** Returns null when the model is off, unavailable, failed, or has no "urgent" category. */
+    /** Returns null when the model is off, unavailable, failed, or the mode has no anchors (custom modes). */
     private fun classifyWithModel(content: String, mode: String, prefs: SharedPreferences): ClassificationResult? {
-        val classifier = textClassifier ?: return null
+        val engine = embeddingClassifier ?: return null
         if (!prefs.getBoolean(PREF_USE_AI, true)) return null
 
-        val threshold = urgencyThreshold(prefs.getInt(PREF_FILTER_STRENGTH, 1))
-        val scores = try {
-            urgentScores(classifier, content)
+        val verdict = try {
+            engine.classify(content, mode, prefs.getInt(PREF_FILTER_STRENGTH, 1))
         } catch (e: Exception) {
-            Log.e(TAG, "MediaPipe AI Pipeline classification error: ${e.message}")
-            return null
-        }
-        val lastScore = scores.lastOrNull() ?: return null
+            Log.e(TAG, "Embedding classification error: ${e.message}")
+            null
+        } ?: return null
 
+        val score = "%.3f".format(verdict.score)
+        val threshold = "%.3f".format(verdict.threshold)
         return ClassificationResult(
-            isUrgent = scores.any { it >= threshold },
-            explanation = modelExplanation(lastScore, threshold, mode)
+            isUrgent = verdict.isUrgent,
+            explanation = if (verdict.isUrgent) {
+                "$AI_PIPELINE On-device embedding model scored this $score for $mode, at or above the $threshold urgency threshold; shown."
+            } else {
+                "$AI_PIPELINE On-device embedding model scored this $score for $mode, below the $threshold urgency threshold; muted as routine."
+            }
         )
-    }
-
-    private fun urgentScores(classifier: TextClassifier, content: String): List<Float> =
-        classifier.classify(content).classificationResult().classifications()
-            .flatMap { it.categories() }
-            .filter { it.categoryName().equals("urgent", ignoreCase = true) }
-            .map { it.score() }
-
-    /** Filtering strength: 0 = Gentle, 1 = Balanced (default), 2 = Strict. */
-    private fun urgencyThreshold(filterStrength: Int): Float = when (filterStrength) {
-        0 -> 0.4f
-        2 -> 0.8f
-        else -> 0.6f
-    }
-
-    private fun modelExplanation(score: Float, threshold: Float, mode: String): String {
-        val scorePercent = (score * 100).toInt()
-        val thresholdPercent = (threshold * 100).toInt()
-        return if (score >= threshold) {
-            "$AI_PIPELINE MediaPipe model classified notification as urgent with $scorePercent% confidence (exceeded $mode threshold $thresholdPercent%)."
-        } else {
-            "$AI_PIPELINE MediaPipe model confidence $scorePercent% was below $mode urgency threshold ($thresholdPercent%); muted as routine."
-        }
     }
 
     // ---- 5. Mode prompt keywords ------------------------------------------------------------
@@ -197,24 +176,5 @@ class NotificationClassifier(
             BuiltInMode("Sleep", "Sleeping / Rest", "emergency, family, hospital, call, alarm"),
             BuiltInMode("DND", "Do Not Disturb (DND)", "emergency, hospital, 911, critical")
         )
-
-        /** Returns the MediaPipe classifier, or null when disabled by the user or unavailable on this device. */
-        fun createTextClassifier(context: Context): TextClassifier? {
-            val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            if (!prefs.getBoolean(PREF_USE_AI, true)) {
-                Log.d(TAG, "MediaPipe AI Model disabled by user settings")
-                return null
-            }
-            return try {
-                val baseOptions = BaseOptions.builder().setModelAssetPath("text_classifier.tflite").build()
-                val options = TextClassifier.TextClassifierOptions.builder().setBaseOptions(baseOptions).build()
-                TextClassifier.createFromOptions(context, options).also {
-                    Log.d(TAG, "MediaPipe TextClassifier initialized successfully")
-                }
-            } catch (e: Throwable) {
-                Log.d(TAG, "MediaPipe model asset or JNI native library not found (x86_64/emulator); using semantic prompt heuristic engine: ${e.message}")
-                null
-            }
-        }
     }
 }

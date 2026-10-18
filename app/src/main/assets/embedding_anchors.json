@@ -1,0 +1,80 @@
+{
+  "_comment": "Anchors and thresholds for EmbeddingClassifier. score = max similarity to a mode example minus max similarity to a routine phrase. Thresholds were tuned on testdata/golden/golden_notifications.json only; the holdout set is for checking, never tuning.",
+  "strengthOffsets": { "gentle": -0.02, "balanced": 0.0, "strict": 0.02 },
+  "routine": [
+    "Special offer: 30% discount on your next purchase",
+    "Someone liked your photo",
+    "Weekly newsletter with tips and stories",
+    "Friend sending a casual message about weekend plans",
+    "App update is available to install",
+    "Your food order is being prepared",
+    "New episode available to watch",
+    "Rate your recent experience",
+    "Daily news digest and trending topics",
+    "Game reminder: come back and play"
+  ],
+  "modes": [
+    {
+      "match": "Commute",
+      "threshold": 0.041,
+      "examples": [
+        "Turn right in 300 meters",
+        "Heavy traffic on your route, take alternate road",
+        "Your bus arrives in 4 minutes at stop 12",
+        "Your ride is arriving now",
+        "Boarding has started for your flight",
+        "Urgent call from family, please pick up",
+        "Gate has changed for your flight"
+      ]
+    },
+    {
+      "match": "Focus",
+      "threshold": 0.006,
+      "examples": [
+        "Production server is down",
+        "Build failed, deployment blocked",
+        "Your meeting starts in 10 minutes",
+        "Deadline is today, need status update",
+        "Critical bug reported by customer",
+        "Manager needs you urgently",
+        "Calendar reminder for upcoming meeting"
+      ]
+    },
+    {
+      "match": "DND",
+      "threshold": 0.047,
+      "examples": [
+        "Emergency alert issued for your area",
+        "Fire or smoke alarm triggered",
+        "Family member in hospital, come immediately",
+        "Call the emergency services now",
+        "Critical alarm: dangerous gas detected",
+        "Urgent: family emergency, please call"
+      ]
+    },
+    {
+      "match": "Sleep",
+      "threshold": 0.043,
+      "examples": [
+        "Family emergency please call immediately",
+        "School alert about your child",
+        "Doctor: urgent medical notification",
+        "Your relative is in the hospital",
+        "Health alert: abnormal heart rate",
+        "Message from your parent, it is important"
+      ]
+    },
+    {
+      "match": "Workout",
+      "threshold": 0.063,
+      "examples": [
+        "Your workout timer has finished",
+        "Next interval begins now",
+        "Heart rate zone reached",
+        "Workout summary: distance and pace",
+        "Rest period over, start next set",
+        "Emergency alert nearby"
+      ]
+    }
+  ]
+}

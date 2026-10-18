@@ -22,3 +22,7 @@ tools/
 tools/config.json
 .tg.env
 .artifacts/
+.claude/
+
+# Python
+__pycache__/
