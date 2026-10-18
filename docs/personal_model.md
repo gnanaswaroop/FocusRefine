@@ -127,8 +127,32 @@ About 40% of items are urgent in some mode; 41 are deliberate near-misses ("Buil
 "Heart rate summary for last week"). To grow the corpus, add templates to `scripts/generate_corpus.py` and re-run it;
 prefer adding real, anonymised notifications of your own over inflating the synthetic ones.
 
-### 3.4 Real service on the corpus
-See section 3.5 (filled in from `replay_personal.py --corpus` runs).
+### 3.4 Real service on the corpus (`replay_personal.py --corpus`)
+The same real-service experiment as 3.1, on the corpus, one random seed per row. Half of each template's instances are the
+pool the corrections come from; the other half (295 notifications of the same kinds, never corrected) is posted to the app
+and scored. Macro F1 over the five modes. Here the baseline's mistakes are almost all the embedding model's (the corpus
+avoids exception keywords), so the personal model can reach them:
+
+| Simulated user | Corrections chosen | N per mode | F1 before | F1 after | Change | Corrected items, accuracy before -> after |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| standard | random sample | 20 | 0.585 | 0.640 | +0.055 | 0.88 -> 0.99 |
+| standard | random sample | 60 | 0.585 | 0.685 | +0.100 | 0.84 -> 0.98 |
+| standard | the model's own mistakes | 20 | 0.585 | 0.755 | +0.169 | 0.00 -> 1.00 |
+| standard | the model's own mistakes | 60 | 0.585 | 0.749 | +0.164 | 0.00 -> 1.00 |
+| workaholic | random sample | 20 | 0.519 | 0.578 | +0.058 | 0.76 -> 1.00 |
+| workaholic | random sample | 60 | 0.519 | 0.635 | +0.115 | 0.80 -> 0.99 |
+| workaholic | the model's own mistakes | 20 | 0.519 | 0.690 | +0.171 | 0.00 -> 1.00 |
+| workaholic | the model's own mistakes | 60 | 0.519 | 0.726 | +0.207 | 0.00 -> 1.00 |
+| minimalist | random sample | 20 | 0.358 | 0.355 | -0.003 | 0.74 -> 0.95 |
+| minimalist | random sample | 60 | 0.358 | 0.471 | +0.112 | 0.80 -> 0.99 |
+| minimalist | the model's own mistakes | 20 | 0.358 | 0.541 | +0.183 | 0.00 -> 1.00 |
+| minimalist | the model's own mistakes | 60 | 0.358 | 0.650 | +0.291 | 0.00 -> 1.00 |
+
+Eleven of twelve configurations improved on never-seen notifications of the same kinds; the twelfth (20 random
+corrections for a user whose tastes differ most from the defaults) did not change. This agrees with the simulation in 3.2
+and shows the effect survives the rest of the pipeline: rules, exceptions, the real service and the real database.
+These are the favourable "same kind" conditions; the new-kind and external-holdout figures in 3.2 are the conservative ones.
+Total real-service runs behind sections 3.1 and 3.4: 28 configurations, each across all five modes.
 
 ## 4. Why not a larger or federated model?
 - A network-trained or shared model would need data to leave the device, which is ruled out.
