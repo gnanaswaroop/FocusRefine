@@ -87,6 +87,7 @@ class PersonalModel(val dim: Int, val params: Params = Params()) {
     }
 
     private fun kernel(x: FloatArray, mode: String, e: Example): Double {
+        if (mode != e.mode && params.crossMode == 0.0) return 0.0 // modes are independent: skip the dot product
         var cos = 0.0
         for (d in x.indices) cos += x[d].toDouble() * e.vector[d]
         val sameMode = if (mode == e.mode) 1.0 else params.crossMode

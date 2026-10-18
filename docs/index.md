@@ -61,7 +61,7 @@ FocusRefine employs a **Dual-Engine On-Device Intelligence Architecture** to eva
 
 ### 2. Semantic Search & Heuristic Matcher
 - Compares message content against active user-configured modes (*Commute*, *Deep Focus*, *Sleep*, *Gaming*, *DND*, or *Custom Modes*) using natural language rules and keyword matching. This engine decides when the AI model is off, fails to load, or the mode is custom.
-- Per-user learning that never leaves the phone: see [Personal Model](personal_model.md). Quality measurements for both engines: see [AI Classification Architecture & Modes](ai_classification_and_modes.md#7-measured-quality).
+- Per-user learning that never leaves the phone: see [Personal Model](personal_model.md) ([simulation tables](personal_model_simulation.md)). Quality measurements for both engines: see [AI Classification Architecture & Modes](ai_classification_and_modes.md#7-measured-quality).
 
 ### 3. AI-Driven Prompt Synthesis (`AiRuleSynthesizer.kt`)
 - Generates dynamic, token-based semantic rules (e.g. `"[MUTE] Whatsapp: grab coffee later"`) when users reclassify notifications.

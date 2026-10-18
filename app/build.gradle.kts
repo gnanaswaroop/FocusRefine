@@ -53,7 +53,7 @@ android {
     sourceSets {
         getByName("androidTest") {
             // Golden + holdout notification datasets, shared with scripts/replay_golden.py
-            assets.srcDir("$rootDir/testdata/golden")
+            assets.srcDirs("$rootDir/testdata/golden", "$rootDir/testdata/corpus")
         }
     }
 }
@@ -92,6 +92,7 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
 
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.json:json:20231013") // the Android stub of org.json does nothing in JVM tests
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("androidx.room:room-testing:2.6.1")

@@ -189,6 +189,10 @@ def backup_state(adb, out_dir):
     prefs = adb.run("exec-out", f"run-as {PKG} cat {PREFS_PATH}", check=False)
     with open(os.path.join(out_dir, "FocusRefinePrefs.xml"), "wb") as f:
         f.write(prefs)
+    personal = adb.run("exec-out", f"run-as {PKG} cat files/personal_model.bin", check=False)
+    if personal:
+        with open(os.path.join(out_dir, "personal_model.bin"), "wb") as f:
+            f.write(personal)
     zen = adb.shell("settings get global zen_mode", check=False).strip()
     return {"zen_mode": zen, "dir": out_dir}
 
@@ -225,6 +229,12 @@ def restore_state(adb, saved):
         push_app_file(adb, PREFS_PATH, prefs)
         print("restored original preferences")
 
+    adb.shell(f"run-as {PKG} rm -f files/personal_model.bin files/corrections.json", check=False)
+    saved_model = os.path.join(out_dir, "personal_model.bin")
+    if os.path.exists(saved_model):
+        with open(saved_model, "rb") as f:
+            push_app_file(adb, "files/personal_model.bin", f.read())
+        print("restored the personal model")
     adb.shell(f"cmd notification allow_listener {LISTENER}", check=False)
     clear_test_notifications(adb)
     print("cleared leftover test notifications from the notification shade")
