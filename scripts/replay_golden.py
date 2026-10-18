@@ -96,6 +96,7 @@ def reset_app(adb, mode, use_ai):
     time.sleep(1)
     adb.shell(f"am force-stop {PKG}")
     adb.shell(f"run-as {PKG} rm -f databases/focusrefine_database databases/focusrefine_database-wal databases/focusrefine_database-shm")
+    adb.shell(f"run-as {PKG} rm -f files/personal_model.bin")  # corrections from an earlier run must not leak into this one
     set_prefs(adb, {
         "current_mode": ("string", mode),
         "use_ai_model": ("boolean", use_ai),
