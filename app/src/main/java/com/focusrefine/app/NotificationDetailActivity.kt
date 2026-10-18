@@ -258,6 +258,7 @@ fun NotificationDetailScreen(
                                 ) else notif.synthesizedRule
 
                                 dao.insert(notif.copy(isUrgent = isUrgent, isLearned = learnFromChoice, synthesizedRule = ruleText))
+                                if (learnFromChoice) PersonalLearning.record(context, notif.title, notif.text, activeMode, isUrgent)
                             }
                         }
                         withContext(Dispatchers.Main) {

@@ -159,6 +159,7 @@ class LearnedRulesActivity : ComponentActivity() {
                                                     lifecycleScope.launch(Dispatchers.IO) {
                                                         val db = AppDatabase.getDatabase(this@LearnedRulesActivity)
                                                         db.notificationDao().delete(rule)
+                                                        PersonalLearning.forget(this@LearnedRulesActivity, rule.title, rule.text)
                                                         refreshTrigger++
                                                         withContext(Dispatchers.Main) {
                                                             Toast.makeText(this@LearnedRulesActivity, "Rule deleted", Toast.LENGTH_SHORT).show()
@@ -196,6 +197,7 @@ class LearnedRulesActivity : ComponentActivity() {
                                             lifecycleScope.launch(Dispatchers.IO) {
                                                 val db = AppDatabase.getDatabase(this@LearnedRulesActivity)
                                                 db.notificationDao().deleteLearnedRules()
+                                                PersonalLearning.clear(this@LearnedRulesActivity)
                                                 refreshTrigger++
                                                 withContext(Dispatchers.Main) {
                                                     Toast.makeText(this@LearnedRulesActivity, "All learned rules cleared", Toast.LENGTH_SHORT).show()

@@ -23,7 +23,7 @@ class EmbeddingClassifierTest {
     fun setUp() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val prefs = context.getSharedPreferences("FocusRefinePrefs", android.content.Context.MODE_PRIVATE)
-        check(prefs.getBoolean("use_ai_model", true)) { "use_ai_model is off on this device; the model will not load" }
+        prefs.edit().putBoolean("use_ai_model", true).commit() // other tests switch it off
         engine = EmbeddingClassifier.create(context)
     }
 
