@@ -14,7 +14,7 @@ Measurements for the on-device embedding classifier (`EmbeddingClassifier`) and 
 | One-time cost per process | Model load 82-125 ms, anchor embedding 1.6-1.9 s (background) |
 | Memory | About 6 MB native heap for the model |
 | Accuracy of the model alone (holdout) | F1 0.60 / AUC 0.89, versus 0.35 for keywords |
-| Accuracy end to end (holdout) | F1 0.452, versus 0.360 for keywords |
+| Accuracy end to end (holdout) | F1 0.527, versus 0.360 for keywords |
 | Same accuracy on emulator and phone? | Yes (the model is deterministic; measured identical) |
 | Thread safety | No errors or wrong results under 4 threads, but no speed-up |
 | Cost to app size | Native libraries grow; APK size not yet optimised |
@@ -81,9 +81,9 @@ Every notification is posted from the adb shell, classified by the real service 
 | Engine | Golden F1 | Golden precision / recall | Holdout F1 | Holdout precision / recall |
 | :--- | :--- | :--- | :--- | :--- |
 | Keyword only (`--engine keyword`) | 0.396 | 0.292 / 0.617 | 0.360 | 0.288 / 0.489 |
-| Embedding model (default) | 0.507 | 0.412 / 0.687 | 0.452 | 0.408 / 0.538 |
+| Embedding model (default, Balanced) | 0.570 | 0.443 / 0.855 | 0.527 | 0.439 / 0.708 |
 
-Per mode F1, embedding engine: golden Commute 0.78, Focus 0.33, DND 0.57, Sleeping 0.62, Workout 0.23; holdout 0.72 / 0.42 / 0.52 / 0.53 / 0.07.
+Per mode F1, embedding engine: golden Commute 0.81, Focus 0.45, DND 0.57, Sleeping 0.65, Workout 0.37; holdout 0.74 / 0.47 / 0.53 / 0.62 / 0.27. Measured at filtering strength Balanced (the replay script pins it).
 
 ### 6.3 Why end to end is lower than the model alone
 - **Exceptions decide first and apply in every mode.** 21 of 96 golden and 15 of 76 holdout items were decided by an exception, not the model. Calls, navigation and "bank" or "maps" substrings are Shown in all modes, which creates false positives, especially for Workout / Gym.

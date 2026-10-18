@@ -96,6 +96,7 @@ def reset_app(adb, mode, use_ai):
     set_prefs(adb, {
         "current_mode": ("string", mode),
         "use_ai_model": ("boolean", use_ai),
+        "filter_strength": ("int", 1),  # Balanced; a leftover Gentle/Strict would silently shift every threshold
         "service_running": ("boolean", True),
         "suppressed_count": ("int", 0),
     })
