@@ -62,12 +62,15 @@ def sh_quote(s):
     return "'" + s.replace("'", "'\\''") + "'"
 
 
-def set_prefs(adb, values):
+def set_prefs(adb, values, drop_prefixes=()):
     xml = adb.run("shell", f"run-as {PKG} cat {PREFS_PATH}", check=False).decode("utf-8", errors="replace").strip()
     try:
         root = ET.fromstring(xml)
     except ET.ParseError:
         root = ET.Element("map")
+    for el in list(root):
+        if any(el.get("name", "").startswith(prefix) for prefix in drop_prefixes):
+            root.remove(el)
     for name, (tag, val) in values.items():
         for el in root.findall(f".//*[@name='{name}']"):
             root.remove(el)
@@ -97,9 +100,13 @@ def reset_app(adb, mode, use_ai):
         "current_mode": ("string", mode),
         "use_ai_model": ("boolean", use_ai),
         "filter_strength": ("int", 1),  # Balanced; a leftover Gentle/Strict would silently shift every threshold
+        # The instrumented tests leave exception toggles and edited prompts behind; replay with the shipped defaults.
+        "exception_nav_prompts": ("boolean", True),
+        "exception_calls": ("boolean", True),
+        "exception_security_otps": ("boolean", True),
         "service_running": ("boolean", True),
         "suppressed_count": ("int", 0),
-    })
+    }, drop_prefixes=("prompt_", "custom_mode_prompt_"))
     adb.shell(f"cmd notification allow_listener {LISTENER}")
     for _ in range(20):  # wait for the listener process to come up
         if adb.shell(f"pidof {PKG}", check=False).strip():
