@@ -98,7 +98,7 @@ Thresholds were chosen on the golden set. The holdout set (disjoint, never tuned
 ## 7. Emulator versus phone
 - **Speed:** the emulator uses the desktop CPU (about 6 ms per embedding), so it understates phone latency by roughly 7x. Do not use emulator timings for budgeting.
 - **Accuracy:** identical on both. The keyword baseline was also identical across the two devices.
-- **Loading:** with `tasks-text` 0.10.14 only the phone could load MediaPipe (no `x86_64` native). With 1.1.1 both can. End-to-end replay of the embedding engine has so far been run on the emulator only; the phone was measured with the isolated benchmark.
+- **Loading:** with `tasks-text` 0.10.14 only the phone could load MediaPipe (no `x86_64` native). With 1.1.1 both can. The full end-to-end replay of the embedding engine was run on the emulator only. On the Pixel it was checked with the **release APK** (installed over the existing app, data kept): seven notifications posted in Sleeping / Rest mode at Balanced strength were Shown for Dexcom (low glucose), Apple Watch (high heart rate) and Hospital (exception), and removed from the shade for Greenwood School, Amazon, TikTok and Spotify, which is the same split the emulator produced (scores 0.047 and 0.095 against a 0.043 threshold for the first two). A release build is not debuggable, so the database and explanations could not be read there; the Shown/removed outcome was read from the system notification list.
 
 ## 8. Test harness findings that affect measurements
 - Android silently drops posts beyond **50 active notifications per package**, which looked like classification misses at first. The replay script reuses 24 tags and force-stops `com.android.shell` between modes to clear them.
@@ -122,8 +122,8 @@ python scripts/replay_golden.py --serial emulator-5554 --engine keyword   # base
 Native library sizes: `unzip -l app/build/outputs/apk/debug/app-debug.apk | grep "\.so$"`.
 
 ## 10. Not measured yet
-- Release APK / AAB size and per-ABI download size.
+- Release AAB size and per-ABI download size. The universal release APK (all four ABIs, minification off) is about 165 MB; the debug APK is about 183 MB.
 - Battery impact over a day of real notifications.
-- Embedding-engine replay on a physical device (it clears that device's notification history).
+- Full golden/holdout replay on a physical device (it needs a debuggable build and clears that device's notification history). Only the 7-notification release probe above was run there.
 - Behaviour on low-memory or older (API 28) devices.
 - Anchor-vector caching.
