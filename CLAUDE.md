@@ -112,7 +112,7 @@ Note: `AutoActivationReceiver` writes mode names `"Commute"` and `"Focus"`, whil
 
 ## Conventions and gotchas
 
-- Everything stays on-device: no INTERNET permission, no analytics, no network libraries. Keep manifest permissions minimal (listener binding, foreground service + special use, post notifications; the Bluetooth receiver relies on ACL broadcasts).
+- Everything stays on-device: no INTERNET permission, no analytics, no cloud backup. `tasks-core` (MediaPipe) drags in Google's `datatransport` library, which declares INTERNET and ACCESS_NETWORK_STATE; `AndroidManifest.xml` strips both with `tools:node="remove"` and sets `allowBackup="false"`. `PrivacyGuardsTest` fails the build if either regresses, so after adding any dependency check the merged manifest (`app/build/intermediates/merged_manifests/debug/processDebugManifest/AndroidManifest.xml`). Never log notification text or titles. Keep manifest permissions minimal (listener binding, foreground service + special use, post notifications; the Bluetooth receiver relies on ACL broadcasts).
 - 16 KB page-size compatibility: keep `android:extractNativeLibs="false"` and `jniLibs.useLegacyPackaging = false`. `tasks-text:1.1.1` is 16 KB aligned on all four ABIs (checked via ELF `LOAD` alignment), but bundles an unused GenAI native lib (arm64 natives ~14 MB + 15 MB vs ~8 MB with 0.10.14); APK size has not been optimised.
 - `gradle.properties` contains several `android.*` opt-out flags (e.g. `android.builtInKotlin=false`, `android.newDsl=false`) needed for this AGP/Kotlin combo; don't remove them casually.
 - Several Activities are `exported="true"` without intent filters; leave as-is unless deliberately hardening.
@@ -133,7 +133,6 @@ Classifier and rules:
 
 UI/privacy/quality:
 - The engine label reads `embedding_engine_loaded`, which is only written when the service starts, so it can be stale (it defaults to false before the service has ever run).
-- `NotificationFilterService` logs notification **title and text** with `Log.d` (`"Received Notification: Title=..., Text=..."`), which conflicts with the privacy-first claim.
 - Doc drift: `docs/ai_classification_and_modes.md` section 1 still describes "Deep Focus" and "Gaming" modes and keyword prompts that do not match `prompts.json`; `README.md` says "two primary screens"; `SettingsActivity` has an unused `AppCompatDelegate` import.
 
 ## Embedding classifier (`EmbeddingClassifier`)
