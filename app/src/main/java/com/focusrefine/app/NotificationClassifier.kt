@@ -66,7 +66,7 @@ class NotificationClassifier(
             ruleText != null && AiRuleSynthesizer.matchesRule(ruleText, title, text)
         } ?: return null
         val ruleText = match.synthesizedRule ?: return null
-        Log.d(TAG, "$SEMANTIC Matched AI Synthesized rule '$ruleText': isUrgent = ${match.isUrgent}")
+        Log.d(TAG, "$SEMANTIC Matched AI synthesized rule: isUrgent = ${match.isUrgent}")
         return ClassificationResult(
             isUrgent = match.isUrgent,
             explanation = "$SEMANTIC Matched AI synthesized preference rule '$ruleText'. Action: ${actionLabel(match.isUrgent)}."

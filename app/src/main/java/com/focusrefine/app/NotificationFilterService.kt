@@ -183,7 +183,8 @@ class NotificationFilterService : NotificationListenerService() {
         val text = extras.getCharSequence(Notification.EXTRA_TEXT)?.toString()
         val packageName = sbn.packageName
 
-        Log.d(TAG, "Received Notification: Title=$title, Text=$text")
+        // Never log notification content: logcat is readable over adb and by other tools.
+        Log.d(TAG, "Received notification from $packageName")
 
         if (packageName == this.packageName || packageName == "com.android.systemui") {
             return
