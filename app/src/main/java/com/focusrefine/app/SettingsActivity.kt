@@ -51,6 +51,7 @@ class SettingsActivity : ComponentActivity() {
                     onNavigateToAppRules = { startActivity(Intent(this, ConfigureModesActivity::class.java)) },
                     onNavigateToContextModes = { startActivity(Intent(this, ContextModesActivity::class.java)) },
                     onNavigateToPrivacy = { startActivity(Intent(this, PrivacyInsightsActivity::class.java)) },
+                    onNavigateToHelp = { startActivity(Intent(this, HelpActivity::class.java)) },
                     onNavigateToLearnedRules = { startActivity(Intent(this, LearnedRulesActivity::class.java)) },
                     onSendSampleNotifications = {
                         lifecycleScope.launch(Dispatchers.IO) {
@@ -137,6 +138,7 @@ fun SettingsStudioScreen(
     onNavigateToAppRules: () -> Unit,
     onNavigateToContextModes: () -> Unit,
     onNavigateToPrivacy: () -> Unit,
+    onNavigateToHelp: () -> Unit = {},
     onNavigateToLearnedRules: () -> Unit,
     onSendSampleNotifications: () -> Unit,
     onClearAllNotifications: () -> Unit,
@@ -772,6 +774,24 @@ fun SettingsStudioScreen(
                     Column {
                         Text("App Rules", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color.White)
                         Text("Per-app exceptions and filtering rules", fontSize = 11.sp, color = StudioColors.TextMuted)
+                    }
+                    Text("›", fontSize = 20.sp, color = StudioColors.TextSecondary)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            StudioCard(onClick = onNavigateToHelp, modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column {
+                        Text("Help & how it works", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color.White)
+                        Text("How decisions are made, and why it is offline and private", fontSize = 11.sp, color = StudioColors.TextMuted)
                     }
                     Text("›", fontSize = 20.sp, color = StudioColors.TextSecondary)
                 }

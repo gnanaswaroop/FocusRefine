@@ -63,6 +63,11 @@ This document provides a feature walkthrough and visual demonstration guide for 
 
 ---
 
+### 7. Help & how it works (`HelpActivity.kt`)
+- Opened from the **?** button on the home screen or from Settings. Plain-language sections on what the app does, how it decides, how to teach it, what it cannot do well, what is stored, and troubleshooting. Its **Offline-first and private** section includes a live privacy check of the installed app (no network permission, cloud backup off, AI model status, what is stored). See [Help screen](help_screen.md).
+
+---
+
 ### 6. Privacy & Insights (`PrivacyInsightsActivity.kt`)
 ![PrivacyInsightsActivity](../assets/PrivacyInsightsActivity.png)
 

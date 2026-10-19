@@ -34,7 +34,7 @@ Run from the repo root (Windows: `gradlew.bat`; Git Bash: `./gradlew`).
 ./gradlew assembleDebug assembleDebugAndroidTest
 adb -s <serial> install -r app/build/outputs/apk/debug/app-debug.apk
 adb -s <serial> install -r -t app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
-# whole suite (66 tests, all passing on a fresh emulator)
+# whole suite (71 tests, all passing on a fresh emulator)
 adb -s <serial> shell am instrument -w com.focusrefine.app.test/androidx.test.runner.AndroidJUnitRunner
 # one class
 adb -s <serial> shell am instrument -w -e class com.focusrefine.app.HistoryReclassifierTest com.focusrefine.app.test/androidx.test.runner.AndroidJUnitRunner
@@ -90,6 +90,7 @@ All screens are Compose with a shared "Dark Studio" design system in `FocusRefin
 | `ConfigureModesActivity` | Per-app rules (`Use AI` / `Allow all` / `Mute all`) - only a WhatsApp pref exists; not consulted by the classifier |
 | `LearnedRulesActivity` | View/remove learned rules |
 | `PrivacyInsightsActivity` | Privacy status, noise-filtered %, reset learning data |
+| `HelpActivity` | In-app help with a live privacy check (`PrivacyFacts`); not exported; opened from the home screen `?` and Settings. See `docs/help_screen.md` |
 
 Other components: `App` (applies saved night mode at startup), `NotificationToggleReceiver` (STOP/START action in the ongoing notification, action `com.focusrefine.app.ACTION_TOGGLE_SERVICE`), `AutoActivationReceiver` (Bluetooth ACL connect/disconnect to set `current_mode`), `AndroidAutoDetector`.
 
@@ -97,8 +98,8 @@ Note: `AutoActivationReceiver` writes mode names `"Commute"` and `"Focus"`, whil
 
 ## Tests
 
-- `app/src/test/` (JVM): `PersonalModelTest` (the personal model's math), `ConfidenceTest`, `TextClassificationTest`, `PromptEvaluationTest`, `NotificationBenchmarkTest`. These mostly re-implement the keyword logic locally rather than calling the classifier, so they don't catch regressions in `NotificationClassifier`.
-- `app/src/androidTest/` (device): `NotificationFilterE2ETest` (in-memory Room, toggle sync, learned-rule overrides, strength/exception prefs, synthesizer flows; it does **not** run the service), `ActivityE2ETest`, `PromptManagerTest`, `ThemeToggleTest`, `HistoryReclassifierTest`, `PersonalLearningTest` (real feedback path; asserts the stored file holds no message text), `PipelineE2ETest` / `PersonalLearningFlowE2ETest` / `InboxReviewE2ETest` / `ScreensE2ETest` (end to end with the real service or screens, via `ServiceHarness` and `AccessibilityDriver`), `ConfidenceStorageTest` (migration 5 to 6, review queries, `FeedbackRecorder`), `PrivacyGuardsTest`, `PersonalModelBenchmarkTest` (learning-curve simulation, logs `PERS_BENCH`), `EmbeddingClassifierTest` (asserts: model loads, urgent Shown / routine Muted, custom modes abstain, strength shifts the threshold, closed classifier fails fast), `EmbedderBenchmarkTest` (needs the golden assets: `sourceSets["androidTest"].assets.srcDir("testdata/golden")`). Because Room DAO calls are blocking, tests use `runBlocking` and an in-memory DB.
+- `app/src/test/` (JVM): `PersonalModelTest` (the personal model's math), `ConfidenceTest`, `PrivacyFactsTest`, `TextClassificationTest`, `PromptEvaluationTest`, `NotificationBenchmarkTest`. These mostly re-implement the keyword logic locally rather than calling the classifier, so they don't catch regressions in `NotificationClassifier`.
+- `app/src/androidTest/` (device): `NotificationFilterE2ETest` (in-memory Room, toggle sync, learned-rule overrides, strength/exception prefs, synthesizer flows; it does **not** run the service), `ActivityE2ETest`, `PromptManagerTest`, `ThemeToggleTest`, `HistoryReclassifierTest`, `PersonalLearningTest` (real feedback path; asserts the stored file holds no message text), `PipelineE2ETest` / `PersonalLearningFlowE2ETest` / `InboxReviewE2ETest` / `ScreensE2ETest` (end to end with the real service or screens, via `ServiceHarness` and `AccessibilityDriver`), `ConfidenceStorageTest` (migration 5 to 6, review queries, `FeedbackRecorder`), `HelpScreenE2ETest`, `PrivacyGuardsTest`, `PersonalModelBenchmarkTest` (learning-curve simulation, logs `PERS_BENCH`), `EmbeddingClassifierTest` (asserts: model loads, urgent Shown / routine Muted, custom modes abstain, strength shifts the threshold, closed classifier fails fast), `EmbedderBenchmarkTest` (needs the golden assets: `sourceSets["androidTest"].assets.srcDir("testdata/golden")`). Because Room DAO calls are blocking, tests use `runBlocking` and an in-memory DB.
 - `HistoryReclassifierTest` uses the app's **real** database and wipes it: emulator only.
 - **Golden datasets** in `testdata/golden/` (schema and labeling rules in `testdata/README.md`): `golden_notifications.json` (96 items, free to tune on) and `holdout_notifications.json` (76 unseen items, **never tune on it**; keep the two disjoint). Items are `{title, text, urgentIn: [modes in which it must be Shown]}`; labels are synthetic and hand-written. OTP/security is deliberately absent (handled by exceptions).
 - **`scripts/replay_golden.py`** is the real end-to-end test: it posts every notification from the adb shell (`cmd notification post`), lets the real service classify it, reads the Room DB back via `run-as` (debug builds only), and scores Shown/Muted per mode. It wipes history and pins `current_mode`, `use_ai_model`, `filter_strength` (Balanced) and the three exception toggles, and drops edited prompts (the instrumented tests leave those prefs changed, which once moved the scores from 0.570/0.527 to 0.629/0.546), so it backs up the DB and prefs (to `app/build/golden-reports/backup_*`) and afterwards restores prefs and learned rules (history stays cleared); it refuses non-emulators without `--allow-device`; on a device it sets priority-only DND during the run and restores it. Options: `--engine ai|keyword` (default `ai`; `keyword` sets `use_ai_model` off), `--dataset`, `--modes`, `--limit`, `--min-f1` (regression gate, exit 1), `--delay`, `--settle`. Harness gotchas it handles: wait for the listener to rebind (readiness probe), Android silently drops posts beyond **50 active notifications per package** (it reuses 24 tags and `am force-stop com.android.shell` clears them), and it re-posts anything that never arrives.
@@ -136,6 +137,7 @@ Classifier and rules:
 
 UI/privacy/quality:
 - The engine label reads `embedding_engine_loaded`, which is only written when the service starts, so it can be stale (it defaults to false before the service has ever run).
+- There is **no automatic history deletion** (`NotificationDao.deleteOlderThan` is never called); the Help screen and `docs/database_security.md` say so. Keep them honest if retention is added.
 - Doc drift: `docs/ai_classification_and_modes.md` section 1 still describes "Deep Focus" and "Gaming" modes and keyword prompts that do not match `prompts.json`; `README.md` says "two primary screens"; `SettingsActivity` has an unused `AppCompatDelegate` import.
 
 ## Embedding classifier (`EmbeddingClassifier`)

@@ -42,6 +42,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -109,7 +111,8 @@ class MainActivity : ComponentActivity() {
                             Toast.makeText(this, "Unable to open notification settings", Toast.LENGTH_SHORT).show()
                         }
                     },
-                    onOpenSettings = { startActivity(Intent(this, SettingsActivity::class.java)) }
+                    onOpenSettings = { startActivity(Intent(this, SettingsActivity::class.java)) },
+                    onOpenHelp = { startActivity(Intent(this, HelpActivity::class.java)) }
                 )
             }
         }
@@ -175,7 +178,8 @@ fun MainStudioScreen(
     isFilteringActive: Boolean,
     prefs: SharedPreferences,
     onEnableNotificationAccess: () -> Unit,
-    onOpenSettings: () -> Unit
+    onOpenSettings: () -> Unit,
+    onOpenHelp: () -> Unit = {}
 ) {
     val context = LocalContext.current
     var liveRefreshTrigger by remember { mutableStateOf(0) }
@@ -337,6 +341,12 @@ fun MainStudioScreen(
                     }
                 }
                 Spacer(modifier = Modifier.weight(1f))
+                IconButton(
+                    onClick = onOpenHelp,
+                    modifier = Modifier.size(32.dp).semantics { contentDescription = "Help" }
+                ) {
+                    Text(text = "?", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = StudioColors.TextPrimary)
+                }
                 IconButton(
                     onClick = onOpenSettings,
                     modifier = Modifier.size(32.dp)

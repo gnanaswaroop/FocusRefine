@@ -60,6 +60,10 @@
             android:name=".PrivacyInsightsActivity"
             android:exported="true" />
 
+        <activity
+            android:name=".HelpActivity"
+            android:exported="false" />
+
         <service
             android:name=".NotificationFilterService"
             android:label="FocusRefine Notification Filter"

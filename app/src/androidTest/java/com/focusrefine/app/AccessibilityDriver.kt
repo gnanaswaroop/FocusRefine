@@ -35,11 +35,15 @@ object AccessibilityDriver {
 
     fun hasText(text: String): Boolean = automation.rootInActiveWindow?.let { find(it, text) != null } ?: false
 
-    /** Waits until [text] is on screen (true) or gone (false when [present] is false). */
-    fun waitForText(text: String, present: Boolean = true, timeoutMs: Long = 20_000): Boolean {
+    /**
+     * Waits until [text] is on screen (true) or gone (false when [present] is false). With [scroll], scrolls down while
+     * waiting for it to appear, for content that starts below the visible part of the screen.
+     */
+    fun waitForText(text: String, present: Boolean = true, timeoutMs: Long = 20_000, scroll: Boolean = false): Boolean {
         val deadline = System.currentTimeMillis() + timeoutMs
         while (System.currentTimeMillis() < deadline) {
             if (hasText(text) == present) return true
+            if (scroll && present) automation.rootInActiveWindow?.let { scrollable(it)?.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD) }
             Thread.sleep(300)
         }
         return false
