@@ -14,6 +14,7 @@ This document provides a feature walkthrough and visual demonstration guide for 
 - **Context Mode Row**: Interactive chips for enabled context modes (🚗 `Commute` and 🎧 `Deep Focus` by default). **Long-pressing** any mode bubble opens [`ContextModesActivity`](file:///E:/Projects/do-i-care-app/app/src/main/java/com/focusrefine/app/ContextModesActivity.kt) directly.
 - **Smart Inbox Tabs, Swipe Gesture & Animations**: Toggle between `🔕 Muted` and `🔔 Shown` pill tabs or **swipe left / right** across the notification list to switch tabs with smooth Compose spring slide animations.
 - **Native App Icon Cards**: Displays authentic native app icons (`AppIconImage`) for installed applications.
+- **Close calls**: a gold banner counts decisions the app was not sure about ("2 close calls to review"); **Review** lists them least sure first. Each has a "Not sure" pill and one-tap **Show it / Mute it** and **Keep muted / Keep shown** buttons. See [Close calls](inbox_review.md).
 - **Full-Screen Smart Inbox (`⛶`)**: Tapping the full-screen icon expands the Smart Inbox into a full-height dialog view.
 
 ---

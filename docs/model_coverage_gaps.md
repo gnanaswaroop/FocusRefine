@@ -47,6 +47,9 @@ is 39.5% for Devanagari, 25% for Hinglish and long text, 20% for SMS-style, 18% 
 Transit (31% wrong, mostly false alarms), road incidents (30%, mostly false alarms), rideshare (26%), and missed calls from
 unknown numbers (40%, shown by mistake).
 
+## 3b. Strict filtering and the review list
+Of the 760 safety (notification, mode) pairs that should be Shown, the model shows 295 (39%) at Balanced. Many sit just above the threshold: Strict (+0.02) would mute 157 of those 295 (53%), and Gentle (-0.02) would rescue only 165 of the 465 misses. The close-call review list ([`inbox_review.md`](inbox_review.md)) flags the 150 misses that are borderline (32%); the other 315 are muted with high confidence and would not appear in it.
+
 ## 4. What to do about it (not done yet)
 1. Add **shared "genuine emergency" anchors** to every mode in `assets/embedding_anchors.json` and re-tune the thresholds
    against the corpus (not only the golden set).

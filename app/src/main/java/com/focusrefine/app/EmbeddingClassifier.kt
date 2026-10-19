@@ -26,7 +26,10 @@ class EmbeddingClassifier private constructor(
     private val store: PersonalModelStore
 ) {
     /** [adjustment] is the personal model's contribution to the decision value (0.0 when untrained). */
-    data class Verdict(val isUrgent: Boolean, val score: Double, val threshold: Double, val adjustment: Double = 0.0)
+    data class Verdict(val isUrgent: Boolean, val score: Double, val threshold: Double, val adjustment: Double = 0.0, val decision: Double = 0.0) {
+        /** 0.5 (right on the line) .. 1.0 (far from it). */
+        val confidence: Float get() = Confidence.fromDecision(decision)
+    }
 
     class ModeAnchors(val match: String, val threshold: Double, val examples: List<String>)
     class Config(val routine: List<String>, val modes: List<ModeAnchors>, val strengthOffsets: DoubleArray)
@@ -61,7 +64,7 @@ class EmbeddingClassifier private constructor(
         val model = currentPersonalModel()
         val adjustment = model?.adjustment(vector, anchors.match) ?: 0.0
         val decision = (model?.params?.baseScale ?: DEFAULT_BASE_SCALE) * (score - threshold) + adjustment
-        return Verdict(decision >= 0.0, score, threshold, adjustment)
+        return Verdict(decision >= 0.0, score, threshold, adjustment, decision)
     }
 
     /** Canonical built-in mode name for [mode] ("Sleeping / Rest" -> "Sleep"), or null for custom modes. */

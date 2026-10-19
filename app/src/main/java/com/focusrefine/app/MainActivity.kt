@@ -209,6 +209,8 @@ fun MainStudioScreen(
     var notifications by remember { mutableStateOf(emptyList<NotificationEntity>()) }
     var mutedCount by remember { mutableStateOf(0) }
     var urgentCount by remember { mutableStateOf(0) }
+    var uncertainCount by remember { mutableStateOf(0) } // decisions the app was not sure about
+    var reviewMode by remember { mutableStateOf(false) } // list only those, least sure first
     var refreshTrigger by remember { mutableStateOf(0) }
     var isFullScreenInbox by remember { mutableStateOf(false) }
 
@@ -253,16 +255,22 @@ fun MainStudioScreen(
         }
     }
 
-    LaunchedEffect(currentTabUrgent, searchQuery, currentMode, refreshTrigger, liveRefreshTrigger) {
+    LaunchedEffect(currentTabUrgent, searchQuery, currentMode, refreshTrigger, liveRefreshTrigger, reviewMode) {
         withContext(Dispatchers.IO) {
             val dao = database.notificationDao()
-            notifications = if (searchQuery.isEmpty()) {
+            notifications = if (reviewMode) {
+                dao.getUncertain(Confidence.UNCERTAIN_BELOW).filter {
+                    searchQuery.isEmpty() || (it.title ?: "").contains(searchQuery, ignoreCase = true) || (it.text ?: "").contains(searchQuery, ignoreCase = true)
+                }
+            } else if (searchQuery.isEmpty()) {
                 dao.getByUrgency(currentTabUrgent)
             } else {
                 dao.searchByUrgency(currentTabUrgent, "%$searchQuery%")
             }
             mutedCount = dao.getByUrgency(false).size
             urgentCount = dao.getByUrgency(true).size
+            uncertainCount = dao.countUncertain(Confidence.UNCERTAIN_BELOW)
+            if (reviewMode && uncertainCount == 0) reviewMode = false
         }
     }
 
@@ -657,6 +665,12 @@ fun MainStudioScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
+            // Close calls: surfaced above the list so they are not buried in a long inbox
+            if (uncertainCount > 0 || reviewMode) {
+                ReviewBanner(count = uncertainCount, reviewing = reviewMode, onToggle = { reviewMode = !reviewMode })
+                Spacer(modifier = Modifier.height(12.dp))
+            }
+
             // Notifications List with Swipe Gesture & Animated Tab Transitions
             var totalDrag by remember { mutableStateOf(0f) }
 
@@ -696,134 +710,8 @@ fun MainStudioScreen(
                             },
                         verticalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
-                        items(notifications) { notif ->
-                            val isMuted = !notif.isUrgent
-                            StudioCard(
-                                onClick = {
-                                    val intent = Intent(context, NotificationDetailActivity::class.java).apply {
-                                        putExtra("notif_id", notif.id)
-                                        putExtra("title", notif.title)
-                                        putExtra("text", notif.text)
-                                        putExtra("package_name", notif.packageName)
-                                        putExtra("timestamp", notif.timestamp)
-                                        putExtra("is_urgent", notif.isUrgent)
-                                        putExtra("explanation", notif.explanation)
-                                    }
-                                    context.startActivity(intent)
-                                },
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                Column(modifier = Modifier.padding(14.dp)) {
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.SpaceBetween
-                                    ) {
-                                        Row(verticalAlignment = Alignment.CenterVertically) {
-                                            AppIconImage(
-                                                packageName = notif.packageName,
-                                                modifier = Modifier.size(24.dp)
-                                            )
-                                            Spacer(modifier = Modifier.width(8.dp))
-                                            Text(
-                                                text = notif.title ?: "Notification",
-                                                fontWeight = FontWeight.Bold,
-                                                fontSize = 14.sp,
-                                                color = Color.White
-                                            )
-                                        }
-                                        Text(
-                                            text = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date(notif.timestamp)),
-                                            fontSize = 11.sp,
-                                            color = StudioColors.TextMuted
-                                        )
-                                    }
-
-                                    Spacer(modifier = Modifier.height(6.dp))
-
-                                    Text(
-                                        text = notif.text ?: "No content",
-                                        fontSize = 13.sp,
-                                        color = StudioColors.TextSecondary,
-                                        maxLines = 2,
-                                        overflow = TextOverflow.Ellipsis
-                                    )
-
-                                    Spacer(modifier = Modifier.height(10.dp))
-
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.SpaceBetween
-                                    ) {
-                                        Surface(
-                                            shape = CircleShape,
-                                            color = if (isMuted) StudioColors.RedSurface else StudioColors.GreenSurface,
-                                            border = BorderStroke(1.dp, if (isMuted) StudioColors.RedAccent.copy(alpha = 0.3f) else StudioColors.GreenAccent.copy(alpha = 0.3f))
-                                        ) {
-                                            Text(
-                                                text = if (isMuted) "Muted: Routine Alert" else "High Urgency: Priority Prompt",
-                                                fontSize = 10.sp,
-                                                fontWeight = FontWeight.Bold,
-                                                color = if (isMuted) StudioColors.RedText else StudioColors.GreenText,
-                                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
-                                            )
-                                        }
-
-                                        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                                            IconButton(
-                                                onClick = {
-                                                    val db = AppDatabase.getDatabase(context)
-                                                    val activeModeStr = prefs.getString("current_mode", "Default") ?: "Default"
-                                                    val newUrgent = !notif.isUrgent
-                                                    val ruleText = AiRuleSynthesizer.synthesizeRule(
-                                                        packageName = notif.packageName,
-                                                        title = notif.title,
-                                                        text = notif.text,
-                                                        isUrgent = newUrgent,
-                                                        activeMode = activeModeStr
-                                                    )
-                                                    val updated = notif.copy(isUrgent = newUrgent, isLearned = true, synthesizedRule = ruleText)
-                                                    CoroutineScope(Dispatchers.IO).launch {
-                                                        db.notificationDao().insert(updated)
-                                                        refreshTrigger++
-                                                        withContext(Dispatchers.Main) {
-                                                            Toast.makeText(context, if (newUrgent) "Moved to Shown" else "Moved to Muted", Toast.LENGTH_SHORT).show()
-                                                        }
-                                                    }
-                                                },
-                                                modifier = Modifier.size(28.dp)
-                                            ) {
-                                                Icon(
-                                                    painter = painterResource(id = R.drawable.ic_swap_horiz),
-                                                    contentDescription = "Swap Tab",
-                                                    tint = StudioColors.TextSecondary,
-                                                    modifier = Modifier.size(16.dp)
-                                                )
-                                            }
-                                            IconButton(
-                                                onClick = {
-                                                    try {
-                                                        val intent = context.packageManager.getLaunchIntentForPackage(notif.packageName)
-                                                        if (intent != null) context.startActivity(intent)
-                                                        else Toast.makeText(context, "App not installed", Toast.LENGTH_SHORT).show()
-                                                    } catch (_: Exception) {
-                                                        Toast.makeText(context, "Cannot open app", Toast.LENGTH_SHORT).show()
-                                                    }
-                                                },
-                                                modifier = Modifier.size(28.dp)
-                                            ) {
-                                                Icon(
-                                                    painter = painterResource(id = R.drawable.ic_open_in_new),
-                                                    contentDescription = "Open App",
-                                                    tint = StudioColors.TextSecondary,
-                                                    modifier = Modifier.size(16.dp)
-                                                )
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                        items(notifications, key = { it.id }) { notif ->
+                            InboxNotificationCard(notif = notif, onChanged = { refreshTrigger++ })
                         }
 
                         item {
@@ -859,134 +747,8 @@ fun MainStudioScreen(
                         },
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    items(notifications) { notif ->
-                        val isMuted = !notif.isUrgent
-                        StudioCard(
-                            onClick = {
-                                val intent = Intent(context, NotificationDetailActivity::class.java).apply {
-                                    putExtra("notif_id", notif.id)
-                                    putExtra("title", notif.title)
-                                    putExtra("text", notif.text)
-                                    putExtra("package_name", notif.packageName)
-                                    putExtra("timestamp", notif.timestamp)
-                                    putExtra("is_urgent", notif.isUrgent)
-                                    putExtra("explanation", notif.explanation)
-                                }
-                                context.startActivity(intent)
-                            },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Column(modifier = Modifier.padding(14.dp)) {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.SpaceBetween
-                                ) {
-                                    Row(verticalAlignment = Alignment.CenterVertically) {
-                                        AppIconImage(
-                                            packageName = notif.packageName,
-                                            modifier = Modifier.size(24.dp)
-                                        )
-                                        Spacer(modifier = Modifier.width(8.dp))
-                                        Text(
-                                            text = notif.title ?: "Notification",
-                                            fontWeight = FontWeight.Bold,
-                                            fontSize = 14.sp,
-                                            color = Color.White
-                                        )
-                                    }
-                                    Text(
-                                        text = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date(notif.timestamp)),
-                                        fontSize = 11.sp,
-                                        color = StudioColors.TextMuted
-                                    )
-                                }
-
-                                Spacer(modifier = Modifier.height(6.dp))
-
-                                Text(
-                                    text = notif.text ?: "No content",
-                                    fontSize = 13.sp,
-                                    color = StudioColors.TextSecondary,
-                                    maxLines = 2,
-                                    overflow = TextOverflow.Ellipsis
-                                )
-
-                                Spacer(modifier = Modifier.height(10.dp))
-
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.SpaceBetween
-                                ) {
-                                    Surface(
-                                        shape = CircleShape,
-                                        color = if (isMuted) StudioColors.RedSurface else StudioColors.GreenSurface,
-                                        border = BorderStroke(1.dp, if (isMuted) StudioColors.RedAccent.copy(alpha = 0.3f) else StudioColors.GreenAccent.copy(alpha = 0.3f))
-                                    ) {
-                                        Text(
-                                            text = if (isMuted) "Muted: Routine Alert" else "High Urgency: Priority Prompt",
-                                            fontSize = 10.sp,
-                                            fontWeight = FontWeight.Bold,
-                                            color = if (isMuted) StudioColors.RedText else StudioColors.GreenText,
-                                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
-                                        )
-                                    }
-
-                                    Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                                        IconButton(
-                                            onClick = {
-                                                val db = AppDatabase.getDatabase(context)
-                                                val activeModeStr = prefs.getString("current_mode", "Default") ?: "Default"
-                                                val newUrgent = !notif.isUrgent
-                                                val ruleText = AiRuleSynthesizer.synthesizeRule(
-                                                    packageName = notif.packageName,
-                                                    title = notif.title,
-                                                    text = notif.text,
-                                                    isUrgent = newUrgent,
-                                                    activeMode = activeModeStr
-                                                )
-                                                val updated = notif.copy(isUrgent = newUrgent, isLearned = true, synthesizedRule = ruleText)
-                                                CoroutineScope(Dispatchers.IO).launch {
-                                                    db.notificationDao().insert(updated)
-                                                    refreshTrigger++
-                                                    withContext(Dispatchers.Main) {
-                                                        Toast.makeText(context, if (newUrgent) "Moved to Shown" else "Moved to Muted", Toast.LENGTH_SHORT).show()
-                                                    }
-                                                }
-                                            },
-                                            modifier = Modifier.size(28.dp)
-                                        ) {
-                                            Icon(
-                                                painter = painterResource(id = R.drawable.ic_swap_horiz),
-                                                contentDescription = "Swap Tab",
-                                                tint = StudioColors.TextSecondary,
-                                                modifier = Modifier.size(16.dp)
-                                            )
-                                        }
-                                        IconButton(
-                                            onClick = {
-                                                try {
-                                                    val intent = context.packageManager.getLaunchIntentForPackage(notif.packageName)
-                                                    if (intent != null) context.startActivity(intent)
-                                                    else Toast.makeText(context, "App not installed", Toast.LENGTH_SHORT).show()
-                                                } catch (_: Exception) {
-                                                    Toast.makeText(context, "Cannot open app", Toast.LENGTH_SHORT).show()
-                                                }
-                                            },
-                                            modifier = Modifier.size(28.dp)
-                                        ) {
-                                            Icon(
-                                                painter = painterResource(id = R.drawable.ic_open_in_new),
-                                                contentDescription = "Open App",
-                                                tint = StudioColors.TextSecondary,
-                                                modifier = Modifier.size(16.dp)
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                    items(notifications, key = { it.id }) { notif ->
+                        InboxNotificationCard(notif = notif, onChanged = { refreshTrigger++ })
                     }
 
                     item {
@@ -1092,134 +854,8 @@ fun MainStudioScreen(
                                 },
                             verticalArrangement = Arrangement.spacedBy(10.dp)
                         ) {
-                            items(notifications) { notif ->
-                                val isMuted = !notif.isUrgent
-                                StudioCard(
-                                    onClick = {
-                                        val intent = Intent(context, NotificationDetailActivity::class.java).apply {
-                                            putExtra("notif_id", notif.id)
-                                            putExtra("title", notif.title)
-                                            putExtra("text", notif.text)
-                                            putExtra("package_name", notif.packageName)
-                                            putExtra("timestamp", notif.timestamp)
-                                            putExtra("is_urgent", notif.isUrgent)
-                                            putExtra("explanation", notif.explanation)
-                                        }
-                                        context.startActivity(intent)
-                                    },
-                                    modifier = Modifier.fillMaxWidth()
-                                ) {
-                                    Column(modifier = Modifier.padding(14.dp)) {
-                                        Row(
-                                            modifier = Modifier.fillMaxWidth(),
-                                            verticalAlignment = Alignment.CenterVertically,
-                                            horizontalArrangement = Arrangement.SpaceBetween
-                                        ) {
-                                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                                AppIconImage(
-                                                    packageName = notif.packageName,
-                                                    modifier = Modifier.size(24.dp)
-                                                )
-                                                Spacer(modifier = Modifier.width(8.dp))
-                                                Text(
-                                                    text = notif.title ?: "Notification",
-                                                    fontWeight = FontWeight.Bold,
-                                                    fontSize = 14.sp,
-                                                    color = Color.White
-                                                )
-                                            }
-                                            Text(
-                                                text = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date(notif.timestamp)),
-                                                fontSize = 11.sp,
-                                                color = StudioColors.TextMuted
-                                            )
-                                        }
-
-                                        Spacer(modifier = Modifier.height(6.dp))
-
-                                        Text(
-                                            text = notif.text ?: "No content",
-                                            fontSize = 13.sp,
-                                            color = StudioColors.TextSecondary,
-                                            maxLines = 2,
-                                            overflow = TextOverflow.Ellipsis
-                                        )
-
-                                        Spacer(modifier = Modifier.height(10.dp))
-
-                                        Row(
-                                            modifier = Modifier.fillMaxWidth(),
-                                            verticalAlignment = Alignment.CenterVertically,
-                                            horizontalArrangement = Arrangement.SpaceBetween
-                                        ) {
-                                            Surface(
-                                                shape = CircleShape,
-                                                color = if (isMuted) StudioColors.RedSurface else StudioColors.GreenSurface,
-                                                border = BorderStroke(1.dp, if (isMuted) StudioColors.RedAccent.copy(alpha = 0.3f) else StudioColors.GreenAccent.copy(alpha = 0.3f))
-                                            ) {
-                                                Text(
-                                                    text = if (isMuted) "Muted: Routine Alert" else "High Urgency: Priority Prompt",
-                                                    fontSize = 10.sp,
-                                                    fontWeight = FontWeight.Bold,
-                                                    color = if (isMuted) StudioColors.RedText else StudioColors.GreenText,
-                                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
-                                                )
-                                            }
-
-                                            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                                                IconButton(
-                                                    onClick = {
-                                                        val db = AppDatabase.getDatabase(context)
-                                                        val activeModeStr = prefs.getString("current_mode", "Default") ?: "Default"
-                                                        val newUrgent = !notif.isUrgent
-                                                        val ruleText = AiRuleSynthesizer.synthesizeRule(
-                                                            packageName = notif.packageName,
-                                                            title = notif.title,
-                                                            text = notif.text,
-                                                            isUrgent = newUrgent,
-                                                            activeMode = activeModeStr
-                                                        )
-                                                        val updated = notif.copy(isUrgent = newUrgent, isLearned = true, synthesizedRule = ruleText)
-                                                        CoroutineScope(Dispatchers.IO).launch {
-                                                            db.notificationDao().insert(updated)
-                                                            refreshTrigger++
-                                                            withContext(Dispatchers.Main) {
-                                                                Toast.makeText(context, if (newUrgent) "Moved to Shown" else "Moved to Muted", Toast.LENGTH_SHORT).show()
-                                                            }
-                                                        }
-                                                    },
-                                                    modifier = Modifier.size(28.dp)
-                                                ) {
-                                                    Icon(
-                                                        painter = painterResource(id = R.drawable.ic_swap_horiz),
-                                                        contentDescription = "Swap Tab",
-                                                        tint = StudioColors.TextSecondary,
-                                                        modifier = Modifier.size(16.dp)
-                                                    )
-                                                }
-                                                IconButton(
-                                                    onClick = {
-                                                        try {
-                                                            val intent = context.packageManager.getLaunchIntentForPackage(notif.packageName)
-                                                            if (intent != null) context.startActivity(intent)
-                                                            else Toast.makeText(context, "App not installed", Toast.LENGTH_SHORT).show()
-                                                        } catch (_: Exception) {
-                                                            Toast.makeText(context, "Cannot open app", Toast.LENGTH_SHORT).show()
-                                                        }
-                                                    },
-                                                    modifier = Modifier.size(28.dp)
-                                                ) {
-                                                    Icon(
-                                                        painter = painterResource(id = R.drawable.ic_open_in_new),
-                                                        contentDescription = "Open App",
-                                                        tint = StudioColors.TextSecondary,
-                                                        modifier = Modifier.size(16.dp)
-                                                    )
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
+                            items(notifications, key = { it.id }) { notif ->
+                                InboxNotificationCard(notif = notif, onChanged = { refreshTrigger++ })
                             }
                         }
                     }

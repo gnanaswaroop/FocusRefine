@@ -44,8 +44,8 @@ object HistoryReclassifier {
             history.forEach { row ->
                 try {
                     val result = classifier.classify(row.title, row.text, mode)
-                    if (result.isUrgent != row.isUrgent || result.explanation != row.explanation) {
-                        dao.updateClassification(row.id, result.isUrgent, result.explanation)
+                    if (result.isUrgent != row.isUrgent || result.explanation != row.explanation || result.confidence != row.confidence) {
+                        dao.updateClassification(row.id, result.isUrgent, result.explanation, result.confidence)
                     }
                     if (result.isUrgent && !row.isUrgent) toShown++
                     if (!result.isUrgent && row.isUrgent) toMuted++
@@ -64,6 +64,7 @@ object HistoryReclassifier {
             val count = (prefs.getInt("suppressed_count", 0) + delta).coerceAtLeast(0)
             prefs.edit().putInt("suppressed_count", count).apply()
         }
+        ReviewQueue.refresh(context)
         context.sendBroadcast(Intent(NotificationFilterService.ACTION_UPDATE_COUNT))
         context.sendBroadcast(
             Intent(NotificationFilterService.ACTION_NOTIFICATION_ARRIVED).setPackage(context.packageName)
