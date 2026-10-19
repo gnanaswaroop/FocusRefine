@@ -141,7 +141,7 @@ def post_all(adb, items, delay, tag_prefix="g"):
     for i, it in enumerate(items):
         lines.append(f"cmd notification post -t {sh_quote(it['title'])} {sh_quote('%s%02d' % (tag_prefix, i % TAG_POOL))} {sh_quote(it['text'])} >/dev/null 2>&1")
         lines.append(f"sleep {delay}")
-    with tempfile.NamedTemporaryFile("w", suffix=".sh", delete=False, newline="\n") as f:
+    with tempfile.NamedTemporaryFile("w", suffix=".sh", delete=False, newline="\n", encoding="utf-8") as f:
         f.write("\n".join(lines) + "\n")
         local = f.name
     try:
