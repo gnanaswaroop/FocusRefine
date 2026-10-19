@@ -117,7 +117,9 @@ def main():
     ap.add_argument("--corpus", action="store_true",
                     help="use testdata/corpus (590 items, 6 personas) instead of golden/holdout: half of each template "
                          "is the pool corrections are sampled from, the other half is the unseen test set")
-    ap.add_argument("--personas-corpus", nargs="+", default=None, help="personas to use with --corpus")
+    ap.add_argument("--test-sample", type=int, default=0,
+                    help="with --corpus: score a seeded random sample of N of the unseen instances instead of all of them "
+                         "(keeps long runs manageable; the same sample is used for every configuration)")
     ap.add_argument("--out", default=os.path.join(g.ROOT, "app", "build", "golden-reports"))
     a = ap.parse_args()
     if not a.serial.startswith("emulator-"):
@@ -135,6 +137,9 @@ def main():
             half = (len(items_) + 1) // 2
             golden += items_[:half]
             holdout += items_[half:]
+        if a.test_sample and a.test_sample < len(holdout):
+            holdout = random.Random(20261019).sample(holdout, a.test_sample)
+        print(f"corpus: {len(golden)} pool items, {len(holdout)} unseen items scored", flush=True)
     else:
         golden = json.load(open(g.DATASETS["golden"], encoding="utf-8"))
         holdout = json.load(open(g.DATASETS["holdout"], encoding="utf-8"))
