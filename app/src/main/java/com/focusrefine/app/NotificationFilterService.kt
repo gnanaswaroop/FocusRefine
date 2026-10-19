@@ -77,7 +77,7 @@ class NotificationFilterService : NotificationListenerService() {
         createNotificationChannel()
 
         val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
-        embeddingClassifier = EmbeddingClassifier.create(this)
+        embeddingClassifier = EmbeddingClassifier.shared(this)
         classifier = NotificationClassifier(this, database, embeddingClassifier)
         embeddingClassifier?.let { engine ->
             Thread {
@@ -270,7 +270,7 @@ class NotificationFilterService : NotificationListenerService() {
             manager.cancel(NOTIFICATION_ID)
         } catch (_: Exception) {
         }
-        embeddingClassifier?.close()
+        // The shared model stays loaded: the service is restarted often, and closing it is what made it fragile.
         super.onDestroy()
     }
 

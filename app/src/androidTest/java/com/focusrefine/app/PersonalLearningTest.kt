@@ -33,7 +33,7 @@ class PersonalLearningTest {
 
     @Test
     fun aCorrectionChangesTheDecisionAndForgettingRestoresIt() {
-        val engine = EmbeddingClassifier.create(context)
+        val engine = EmbeddingClassifier.shared(context)
         assertNotNull(engine); engine!!
         try {
             val before = verdict(engine)
@@ -54,7 +54,7 @@ class PersonalLearningTest {
             assertEquals(0.0, forgotten.adjustment, 1e-9)
             assertEquals(0, PersonalLearning.correctionCount(context))
         } finally {
-            engine.close()
+            // the shared engine stays open
         }
     }
 
@@ -63,7 +63,7 @@ class PersonalLearningTest {
         val shownTitle = "Apple Watch"
         val shownText = "High heart rate notification: 140 BPM while inactive"
         val shownContent = "$shownTitle $shownText".lowercase()
-        val engine = EmbeddingClassifier.create(context)!!
+        val engine = EmbeddingClassifier.shared(context)!!
         try {
             val before = verdict(engine, shownContent)
             assertTrue("test premise: the built-in model shows this (score ${before.score} vs ${before.threshold})", before.isUrgent)
@@ -81,7 +81,7 @@ class PersonalLearningTest {
             PersonalLearning.forget(context, shownTitle, shownText)
             assertTrue(verdict(engine, shownContent).isUrgent)
         } finally {
-            engine.close()
+            // the shared engine stays open
         }
     }
 
@@ -114,11 +114,11 @@ class PersonalLearningTest {
     @Test
     fun theFileSurvivesARestartOfTheClassifier() {
         PersonalLearning.record(context, title, text, mode, urgent = true)
-        val fresh = EmbeddingClassifier.create(context)!!
+        val fresh = EmbeddingClassifier.shared(context)!!
         try {
             assertTrue(verdict(fresh).isUrgent)
         } finally {
-            fresh.close()
+            // the shared engine stays open
         }
     }
 }

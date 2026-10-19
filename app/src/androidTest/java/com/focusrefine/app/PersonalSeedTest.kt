@@ -23,7 +23,7 @@ class PersonalSeedTest {
         context.getSharedPreferences("FocusRefinePrefs", android.content.Context.MODE_PRIVATE).edit().putBoolean("use_ai_model", true).commit()
         val list = JSONArray(file.readText())
         file.delete()
-        val engine = EmbeddingClassifier.create(context)
+        val engine = EmbeddingClassifier.shared(context)
         assertTrue("embedding model did not load", engine != null)
         engine!!
         try {
@@ -36,7 +36,6 @@ class PersonalSeedTest {
             android.util.Log.i("PERS_SEED", "stored $stored correction(s) from ${list.length()}")
             assertTrue("nothing was stored", stored > 0 || list.length() == 0)
         } finally {
-            engine.close()
         }
     }
 }

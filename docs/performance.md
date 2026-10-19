@@ -38,6 +38,38 @@ What this means in the app:
 - **Anchors are not cached on disk.** Every process start pays the 1.7 s again. Caching the vectors (keyed on model and `embedding_anchors.json` contents) would remove it.
 - **History re-run:** `HistoryReclassifier` loads its own embedder and pays model load plus anchors once, then about 40 ms per stored notification on a phone. For 500 rows expect roughly 20 s on a Pixel (estimated from the per-item figure, not measured).
 
+## 2b. A crash found only on a real phone (and its fix)
+Testing the new build on a Pixel 9 Pro XL (Android 17) found a native crash that never happens on the emulator: a
+`SIGBUS` (memory fault) on one of MediaPipe's own worker threads (`drishti/...`), inside `libmediapipe_tasks_jni.so`,
+while reading the model's weights. It was intermittent at first (2 of 3 runs right after a fresh install, then
+reproducible), and it hit the model tests, the personal-learning tests and the benchmark.
+
+| Experiment on the Pixel | Result |
+| :--- | :--- |
+| Load the model with `setModelAssetPath` (MediaPipe reads the weights straight out of the APK), 600 embeddings per run | crashed in **6 of 6** runs |
+| Load the same model into ordinary memory (`setModelAssetBuffer`), same 600 embeddings | **0 of 6** crashed |
+| Create and close a model 40 times in various patterns, with a warm-up thread racing a close | no crash (so create/close churn was not the cause) |
+
+The crashing reads are file-backed pages of the installed APK (the kernel's fs-verity worker threads were active in the
+log). The fix, in `EmbeddingClassifier.loadModelBuffer`: copy the model from the assets into a **page-aligned direct
+buffer** and pass it with `setModelAssetBuffer`, keeping a reference to the buffer for as long as the model lives.
+Two traps found on the way: an ordinary (unaligned) allocation made inference fail on x86_64 (`interpreter_->Invoke()`
+failed, and the app silently fell back to the keyword engine), and a buffer that is not referenced can be garbage collected
+while native code still reads it. Cost: the model's roughly 6 MB now sits in memory instead of being mapped from the APK.
+
+A second, related change: the app used to create and close a MediaPipe model for every correction and every history
+re-run (about 2 s each, mostly embedding the anchors). It now uses **one process-wide model**
+(`EmbeddingClassifier.shared`) that the service, corrections and history re-runs share and **nothing ever closes**.
+Releasing it when the AI engine was switched off was tried and removed: the service holds the same instance, and every
+later decision failed with "closed". After both changes: 12 of 12 test-class runs on the Pixel passed with no native crash
+(model tests, personal-learning tests and the benchmark, three rounds), and all 66 device tests pass on the emulator.
+
+Also verified on the Pixel: embeddings from the phone and the emulator differ by at most 1.2e-6 and **none of the 6,905
+notification-and-mode decisions differ**, so model accuracy is identical across devices (model alone: macro F1 0.774 on
+the golden set, 0.599 on the holdout set, as on the emulator). Latency on the phone while it was also in use: embed p50
+46 to 48 ms, p95 80 to 98 ms, the 47 anchors 2.0 to 3.2 s (earlier idle-phone runs: 38 to 44 ms, 83 to 95 ms, 1.6 to 1.9 s).
+Four threads sharing one model still produced no errors or wrong results.
+
 ## 3. Memory
 
 About **6 MB** of native heap allocated after loading the model (`Debug.getNativeHeapAllocatedSize` delta). Anchor embeddings are 47 float vectors plus the routine set, a few hundred KB at most. The classifier is created once per service lifetime and closed in `onDestroy`.

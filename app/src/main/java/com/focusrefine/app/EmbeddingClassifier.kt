@@ -6,6 +6,7 @@ import com.google.mediapipe.tasks.core.BaseOptions
 import com.google.mediapipe.tasks.text.textembedder.TextEmbedder
 import org.json.JSONArray
 import org.json.JSONObject
+import java.nio.ByteBuffer
 
 /**
  * Semantic urgency scoring with an on-device sentence embedder (MediaPipe TextEmbedder).
@@ -23,7 +24,8 @@ import org.json.JSONObject
 class EmbeddingClassifier private constructor(
     private val embedder: TextEmbedder,
     private val config: Config,
-    private val store: PersonalModelStore
+    private val store: PersonalModelStore,
+    @Suppress("unused") private val modelBuffer: ByteBuffer // keeps the model's memory alive while native code reads it
 ) {
     /** [adjustment] is the personal model's contribution to the decision value (0.0 when untrained). */
     data class Verdict(val isUrgent: Boolean, val score: Double, val threshold: Double, val adjustment: Double = 0.0, val decision: Double = 0.0) {
@@ -127,6 +129,7 @@ class EmbeddingClassifier private constructor(
     companion object {
         private const val TAG = "EmbeddingClassifier"
         private const val MODEL_ASSET = "text_embedder.tflite"
+        private const val PAGE = 4096
         private const val ANCHORS_ASSET = "embedding_anchors.json"
         private const val PREFS_NAME = "FocusRefinePrefs"
         private const val PREF_USE_AI = "use_ai_model"
@@ -135,7 +138,47 @@ class EmbeddingClassifier private constructor(
         /** Written on every attempt so the UI can show the engine that is really running. */
         const val PREF_ENGINE_LOADED = "embedding_engine_loaded"
 
-        /** Returns the embedder, or null when disabled by the user or unavailable on this device. */
+        @Volatile private var sharedEngine: EmbeddingClassifier? = null
+        private val sharedLock = Any()
+
+        /**
+         * The process-wide engine, created on first use and then shared by the filter service, the user's corrections
+         * and history re-runs. **Nothing ever closes it** (it lives as long as the process). Creating and closing a MediaPipe model for every
+         * correction was fragile: on a Pixel 9 Pro XL the model's worker threads sometimes faulted (SIGBUS) while a
+         * model was being closed right after an install. A single long-lived model also saves loading it and embedding
+         * its anchors (about 2 s) on each correction. Returns null when disabled by the user or unavailable.
+         */
+        fun shared(context: Context): EmbeddingClassifier? = synchronized(sharedLock) {
+            val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            if (!prefs.getBoolean(PREF_USE_AI, true)) {
+                // The user switched the AI engine off. The model is deliberately NOT released: the filter service holds
+                // the same instance, and closing it under the service made every later decision fail ("closed").
+                prefs.edit().putBoolean(PREF_ENGINE_LOADED, false).apply()
+                return null
+            }
+            sharedEngine?.let { existing ->
+                // Re-enabled after being off: the status the Settings screen reads must say the model is loaded again.
+                if (!prefs.getBoolean(PREF_ENGINE_LOADED, false)) prefs.edit().putBoolean(PREF_ENGINE_LOADED, true).apply()
+                return existing
+            }
+            create(context.applicationContext).also { sharedEngine = it }
+        }
+
+        /**
+         * The model as a page-aligned direct buffer in ordinary memory. It is not read straight out of the APK
+         * (setModelAssetPath): on a Pixel 9 Pro XL MediaPipe's worker threads faulted (SIGBUS) reading the weights from
+         * the APK mapping in 6 of 6 runs, and from memory they did not in 6 of 6. The alignment matters too: TFLite and
+         * XNNPACK read the weights in place, and an ordinary allocation made inference fail on x86_64.
+         */
+        fun loadModelBuffer(context: Context): ByteBuffer {
+            val bytes = context.assets.open(MODEL_ASSET).use { it.readBytes() }
+            val buffer = ByteBuffer.allocateDirect(bytes.size + 2 * PAGE).alignedSlice(PAGE)
+            buffer.put(bytes)
+            buffer.flip()
+            return buffer
+        }
+
+        /** Returns a new, separate embedder (tests; production code uses [shared]). Null when disabled or unavailable. */
         fun create(context: Context): EmbeddingClassifier? {
             val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
             if (!prefs.getBoolean(PREF_USE_AI, true)) {
@@ -144,12 +187,14 @@ class EmbeddingClassifier private constructor(
                 return null
             }
             val engine = try {
-                val base = BaseOptions.builder().setModelAssetPath(MODEL_ASSET).build()
+                val buffer = loadModelBuffer(context)
+                val base = BaseOptions.builder().setModelAssetBuffer(buffer).build()
                 val options = TextEmbedder.TextEmbedderOptions.builder().setBaseOptions(base).build()
                 EmbeddingClassifier(
                     TextEmbedder.createFromOptions(context, options),
                     loadConfig(context),
-                    PersonalModelStore(context.applicationContext)
+                    PersonalModelStore(context.applicationContext),
+                    buffer
                 )
             } catch (e: Throwable) {
                 Log.w(TAG, "Embedding model unavailable; using keyword engine: ${e.message}")

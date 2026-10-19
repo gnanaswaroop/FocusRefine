@@ -101,7 +101,7 @@ class PersonalModelBenchmarkTest {
     fun personalisationLearningCurve() {
         val ctx = InstrumentationRegistry.getInstrumentation().targetContext
         ctx.getSharedPreferences("FocusRefinePrefs", android.content.Context.MODE_PRIVATE).edit().putBoolean("use_ai_model", true).commit()
-        val engine = EmbeddingClassifier.create(ctx)
+        val engine = EmbeddingClassifier.shared(ctx)
         assertNotNull("embedding model must load", engine)
         engine!!
         engine.warmUp()
@@ -150,6 +150,5 @@ class PersonalModelBenchmarkTest {
         val t0 = System.nanoTime()
         PersonalModel(examples.first().vector.size, best.params).train(examples, margins)
         Log.i(tag, "TRAIN_TIME 80 examples ms=%.1f".format((System.nanoTime() - t0) / 1e6))
-        engine.close()
     }
 }

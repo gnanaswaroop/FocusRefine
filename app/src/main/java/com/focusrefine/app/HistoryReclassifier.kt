@@ -34,7 +34,7 @@ object HistoryReclassifier {
         val mode = prefs.getString("current_mode", defaultMode) ?: defaultMode
 
         val history = dao.getHistory()
-        val embeddingClassifier = EmbeddingClassifier.create(context)
+        val embeddingClassifier = EmbeddingClassifier.shared(context)
         val classifier = NotificationClassifier(context, database, embeddingClassifier)
 
         var toShown = 0
@@ -55,7 +55,6 @@ object HistoryReclassifier {
                 }
             }
         } finally {
-            embeddingClassifier?.close()
         }
 
         // The muted counter in the ongoing notification tracks muted items; keep it in step.

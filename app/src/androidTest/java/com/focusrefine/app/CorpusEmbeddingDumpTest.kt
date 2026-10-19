@@ -23,7 +23,7 @@ class CorpusEmbeddingDumpTest {
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         val context = instrumentation.targetContext
         context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE).edit().putBoolean("use_ai_model", true).commit()
-        val engine = EmbeddingClassifier.create(context)
+        val engine = EmbeddingClassifier.shared(context)
         assertNotNull(engine)
         engine!!
         engine.warmUp()
@@ -44,6 +44,5 @@ class CorpusEmbeddingDumpTest {
                 }
             }
         }
-        engine.close()
     }
 }
