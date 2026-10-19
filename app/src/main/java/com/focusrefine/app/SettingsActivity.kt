@@ -247,6 +247,7 @@ fun SettingsStudioScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .heightIn(min = 48.dp)
                             .clickable { isEngineExpanded = !isEngineExpanded },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
@@ -257,12 +258,7 @@ fun SettingsStudioScreen(
                             fontSize = 15.sp,
                             color = Color.White
                         )
-                        Text(
-                            text = if (isEngineExpanded) "˅" else "›",
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = StudioColors.TextSecondary
-                        )
+                        StudioChevron(expanded = isEngineExpanded)
                     }
 
                     if (isEngineExpanded) {
@@ -378,6 +374,7 @@ fun SettingsStudioScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .heightIn(min = 48.dp)
                             .clickable { isStrengthExpanded = !isStrengthExpanded },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
@@ -404,12 +401,7 @@ fun SettingsStudioScreen(
                                 )
                             }
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(
-                                text = if (isStrengthExpanded) "˅" else "›",
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = StudioColors.TextSecondary
-                            )
+                            StudioChevron(expanded = isStrengthExpanded)
                         }
                     }
 
@@ -438,6 +430,7 @@ fun SettingsStudioScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .heightIn(min = 48.dp)
                             .clickable { isExceptionsExpanded = !isExceptionsExpanded },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
@@ -448,12 +441,7 @@ fun SettingsStudioScreen(
                             fontSize = 15.sp,
                             color = Color.White
                         )
-                        Text(
-                            text = if (isExceptionsExpanded) "˅" else "›",
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = StudioColors.TextSecondary
-                        )
+                        StudioChevron(expanded = isExceptionsExpanded)
                     }
 
                     if (isExceptionsExpanded) {
@@ -503,6 +491,7 @@ fun SettingsStudioScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .heightIn(min = 48.dp)
                             .clickable { isModesExpanded = !isModesExpanded },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
@@ -528,12 +517,7 @@ fun SettingsStudioScreen(
                                 )
                             }
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(
-                                text = if (isModesExpanded) "˅" else "›",
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = StudioColors.TextSecondary
-                            )
+                            StudioChevron(expanded = isModesExpanded)
                         }
                     }
 
@@ -597,7 +581,7 @@ fun SettingsStudioScreen(
                                 Text("Manage mode definitions & custom modes", fontWeight = FontWeight.Bold, fontSize = 13.sp, color = StudioColors.ActiveVioletLight)
                                 Text("Custom prompts, allow/mute rule summaries", fontSize = 11.sp, color = StudioColors.TextMuted)
                             }
-                            Text("›", fontSize = 18.sp, color = StudioColors.ActiveVioletLight)
+                            StudioNavChevron(tint = StudioColors.ActiveVioletLight)
                         }
                     }
                 }
@@ -611,6 +595,7 @@ fun SettingsStudioScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .heightIn(min = 48.dp)
                             .clickable { isLearnExpanded = !isLearnExpanded },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
@@ -621,12 +606,7 @@ fun SettingsStudioScreen(
                             fontSize = 15.sp,
                             color = Color.White
                         )
-                        Text(
-                            text = if (isLearnExpanded) "˅" else "›",
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = StudioColors.TextSecondary
-                        )
+                        StudioChevron(expanded = isLearnExpanded)
                     }
 
                     if (isLearnExpanded) {
@@ -664,7 +644,7 @@ fun SettingsStudioScreen(
                                 Text("View & Manage Learned Rules", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = StudioColors.ActiveVioletLight)
                                 Text("Review AI rules generated from your feedback", fontSize = 11.sp, color = StudioColors.TextMuted)
                             }
-                            Text("›", fontSize = 18.sp, color = StudioColors.ActiveVioletLight)
+                            StudioNavChevron(tint = StudioColors.ActiveVioletLight)
                         }
 
                         HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), color = StudioColors.StudioBorder)
@@ -722,6 +702,7 @@ fun SettingsStudioScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .heightIn(min = 48.dp)
                             .clickable { isAdvancedExpanded = !isAdvancedExpanded },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
@@ -732,12 +713,7 @@ fun SettingsStudioScreen(
                             fontSize = 15.sp,
                             color = Color.White
                         )
-                        Text(
-                            text = if (isAdvancedExpanded) "˅" else "›",
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = StudioColors.TextSecondary
-                        )
+                        StudioChevron(expanded = isAdvancedExpanded)
                     }
 
                     if (isAdvancedExpanded) {
@@ -780,7 +756,7 @@ fun SettingsStudioScreen(
                         Text("Learned Rules", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color.White)
                         Text("Manage AI rules learned from swipes & choices", fontSize = 11.sp, color = StudioColors.TextMuted)
                     }
-                    Text("›", fontSize = 20.sp, color = StudioColors.TextSecondary)
+                    StudioNavChevron()
                 }
             }
 
@@ -798,7 +774,7 @@ fun SettingsStudioScreen(
                         Text("App Rules", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color.White)
                         Text("Per-app exceptions and filtering rules", fontSize = 11.sp, color = StudioColors.TextMuted)
                     }
-                    Text("›", fontSize = 20.sp, color = StudioColors.TextSecondary)
+                    StudioNavChevron()
                 }
             }
 
@@ -816,7 +792,7 @@ fun SettingsStudioScreen(
                         Text("Privacy & Insights", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color.White)
                         Text("On-device processing & privacy stats", fontSize = 11.sp, color = StudioColors.TextMuted)
                     }
-                    Text("›", fontSize = 20.sp, color = StudioColors.TextSecondary)
+                    StudioNavChevron()
                 }
             }
 

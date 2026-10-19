@@ -315,7 +315,7 @@ fun PrivacyInsightsScreen(
                             fontWeight = FontWeight.Bold,
                             color = StudioColors.ActiveVioletLight
                         )
-                        Text("›", fontSize = 18.sp, color = StudioColors.ActiveVioletLight)
+                        StudioNavChevron(tint = StudioColors.ActiveVioletLight)
                     }
                 }
             }

@@ -78,7 +78,7 @@ In `NotificationDetailActivity` the user can flip a notification to Shown/Muted.
 - **Assets** (`app/src/main/assets/`): `prompts.json` (OOTB modes `Commute`, `Deep Work / Focus`, `Do Not Disturb (DND)`, `Sleeping / Rest`, `Workout / Gym` -> `{prompt, enabled}`; loaded by `PromptManager`; first enabled entry is the default mode), `exceptions.json` (`ExceptionManager`), `samples.json` (test notifications for "Send Sample Notifications"). Mode names in `prompts.json` are used as pref-key suffixes, so renaming one orphans saved user prompts.
 
 ### UI
-All screens are Compose with a shared "Dark Studio" design system in `FocusRefineTheme.kt` (`StudioColors`, `StudioCard`, `PillBadge`, `StudioSegmentedControl`, `StudioFooter`, `AppIconImage`); dark-first, palette base `#0F0E17` with violet `#8B5CF6` accent. Reuse these components rather than raw Material widgets. Settings sections are collapsible cards.
+All screens are Compose with a shared "Dark Studio" design system in `FocusRefineTheme.kt` (`StudioColors`, `StudioCard`, `PillBadge`, `StudioSegmentedControl`, `StudioFooter`, `AppIconImage`, `StudioChevron` / `StudioNavChevron` for expand-collapse and navigation arrows: never use a text glyph like "˅" or "›"); dark-first, palette base `#0F0E17` with violet `#8B5CF6` accent. Reuse these components rather than raw Material widgets. Settings sections are collapsible cards.
 
 | Activity | Role |
 | --- | --- |
