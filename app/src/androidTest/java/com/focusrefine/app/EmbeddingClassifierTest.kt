@@ -1,7 +1,6 @@
 package com.focusrefine.app
 
 import androidx.test.platform.app.InstrumentationRegistry
-import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
@@ -23,13 +22,8 @@ class EmbeddingClassifierTest {
     fun setUp() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val prefs = context.getSharedPreferences("FocusRefinePrefs", android.content.Context.MODE_PRIVATE)
-        check(prefs.getBoolean("use_ai_model", true)) { "use_ai_model is off on this device; the model will not load" }
-        engine = EmbeddingClassifier.create(context)
-    }
-
-    @After
-    fun tearDown() {
-        engine?.close()
+        prefs.edit().putBoolean("use_ai_model", true).commit() // other tests switch it off
+        engine = EmbeddingClassifier.shared(context)
     }
 
     @Test
@@ -74,8 +68,7 @@ class EmbeddingClassifierTest {
 
     @Test
     fun usingAClosedClassifierFailsFast() {
-        val e = engine!!
-        engine = null // tearDown must not close it twice
+        val e = EmbeddingClassifier.create(InstrumentationRegistry.getInstrumentation().targetContext)!! // a separate engine: the shared one is never closed
         e.close()
         try {
             e.classify("anything", "Commute", 1)

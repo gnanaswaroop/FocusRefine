@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -44,6 +45,7 @@ class NotificationDetailActivity : ComponentActivity() {
         val timestamp = intent.getLongExtra("timestamp", System.currentTimeMillis())
         val initialUrgent = intent.getBooleanExtra("is_urgent", false)
         val explanation = intent.getStringExtra("explanation")
+        val confidence = intent.getFloatExtra("confidence", -1f).takeIf { it >= 0f }
 
         setContent {
             FocusRefineTheme {
@@ -55,6 +57,7 @@ class NotificationDetailActivity : ComponentActivity() {
                     timestamp = timestamp,
                     initialUrgent = initialUrgent,
                     explanation = explanation,
+                    confidence = confidence,
                     onBack = { finish() }
                 )
             }
@@ -71,7 +74,8 @@ fun NotificationDetailScreen(
     timestamp: Long,
     initialUrgent: Boolean,
     explanation: String?,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    confidence: Float? = null
 ) {
     val context = androidx.compose.ui.platform.LocalContext.current
     val prefs = context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
@@ -81,6 +85,7 @@ fun NotificationDetailScreen(
 
     var isUrgent by remember { mutableStateOf(initialUrgent) }
     var learnFromChoice by remember { mutableStateOf(true) }
+    var decidedByUser by remember { mutableStateOf(false) }
     var feedbackSubmitted by remember { mutableStateOf<Boolean?>(null) }
 
     val appLabel = remember(packageName) {
@@ -188,6 +193,25 @@ fun NotificationDetailScreen(
                         fontSize = 11.sp,
                         color = StudioColors.TextMuted
                     )
+
+                    // How sure was the app? Only shown while the app's own decision stands (not after the user's choice).
+                    if (!decidedByUser && confidence != null) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(text = "How sure: ", fontSize = 11.sp, color = StudioColors.TextMuted)
+                            Text(
+                                text = Confidence.label(confidence) ?: "",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = if (Confidence.isUncertain(confidence)) StudioColors.GoldText else StudioColors.TextSecondary
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            ConfidenceMeter(confidence)
+                        }
+                    } else if (decidedByUser) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(text = "You decided this one.", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = StudioColors.GreenText)
+                    }
                 }
             }
 
@@ -240,25 +264,38 @@ fun NotificationDetailScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            if (!decidedByUser && Confidence.isUncertain(confidence)) {
+                Surface(
+                    shape = RoundedCornerShape(14.dp),
+                    color = StudioColors.GoldSurface.copy(alpha = 0.55f),
+                    border = BorderStroke(1.dp, StudioColors.GoldAccent.copy(alpha = 0.4f)),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Column(modifier = Modifier.padding(12.dp)) {
+                        Text("Close call", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = StudioColors.GoldText)
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(
+                            text = "The app wasn't sure whether this should interrupt you. Telling it what you want takes one tap, " +
+                                "stays on this phone, and helps it get similar ones right.",
+                            fontSize = 12.sp,
+                            color = StudioColors.TextSecondary,
+                            lineHeight = 17.sp
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.height(12.dp))
+            }
+
             // 3. Action Buttons
             Button(
                 onClick = {
                     isUrgent = !isUrgent
+                    decidedByUser = true
                     CoroutineScope(Dispatchers.IO).launch {
                         val dao = database.notificationDao()
                         if (notifId != -1) {
                             val notif = dao.getLearnedRules().find { it.id == notifId } ?: dao.getAll().find { it.id == notifId }
-                            if (notif != null) {
-                                val ruleText = if (learnFromChoice) AiRuleSynthesizer.synthesizeRule(
-                                    packageName = notif.packageName,
-                                    title = notif.title,
-                                    text = notif.text,
-                                    isUrgent = isUrgent,
-                                    activeMode = activeMode
-                                ) else notif.synthesizedRule
-
-                                dao.insert(notif.copy(isUrgent = isUrgent, isLearned = learnFromChoice, synthesizedRule = ruleText))
-                            }
+                            if (notif != null) FeedbackRecorder.apply(context, notif, isUrgent, activeMode, learn = learnFromChoice)
                         }
                         withContext(Dispatchers.Main) {
                             Toast.makeText(context, if (isUrgent) "Preference saved: Show in future" else "Preference saved: Hide in future", Toast.LENGTH_SHORT).show()
@@ -267,7 +304,7 @@ fun NotificationDetailScreen(
                 },
                 modifier = Modifier.fillMaxWidth(),
                 shape = CircleShape,
-                colors = ButtonDefaults.buttonColors(containerColor = StudioColors.ActiveViolet)
+                colors = ButtonDefaults.buttonColors(containerColor = StudioColors.ActiveViolet, contentColor = Color.White)
             ) {
                 Text(
                     text = if (!isUrgent) "🔔 Show notifications like these in the future" else "🔕 Hide notifications like these in the future",

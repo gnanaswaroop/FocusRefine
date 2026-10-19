@@ -51,6 +51,8 @@ class SettingsActivity : ComponentActivity() {
                     onNavigateToAppRules = { startActivity(Intent(this, ConfigureModesActivity::class.java)) },
                     onNavigateToContextModes = { startActivity(Intent(this, ContextModesActivity::class.java)) },
                     onNavigateToPrivacy = { startActivity(Intent(this, PrivacyInsightsActivity::class.java)) },
+                    onNavigateToHelp = { startActivity(Intent(this, HelpActivity::class.java)) },
+                    onNavigateToChangelog = { startActivity(Intent(this, ChangelogActivity::class.java)) },
                     onNavigateToLearnedRules = { startActivity(Intent(this, LearnedRulesActivity::class.java)) },
                     onSendSampleNotifications = {
                         lifecycleScope.launch(Dispatchers.IO) {
@@ -137,6 +139,8 @@ fun SettingsStudioScreen(
     onNavigateToAppRules: () -> Unit,
     onNavigateToContextModes: () -> Unit,
     onNavigateToPrivacy: () -> Unit,
+    onNavigateToHelp: () -> Unit = {},
+    onNavigateToChangelog: () -> Unit = {},
     onNavigateToLearnedRules: () -> Unit,
     onSendSampleNotifications: () -> Unit,
     onClearAllNotifications: () -> Unit,
@@ -214,6 +218,27 @@ fun SettingsStudioScreen(
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
+                Spacer(modifier = Modifier.weight(1f))
+                var menuOpen by remember { mutableStateOf(false) }
+                Box {
+                    IconButton(onClick = { menuOpen = true }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_more_vert),
+                            contentDescription = "More options",
+                            tint = Color.White
+                        )
+                    }
+                    DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+                        DropdownMenuItem(
+                            text = { Text("Help & how it works") },
+                            onClick = { menuOpen = false; onNavigateToHelp() }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("What's new") },
+                            onClick = { menuOpen = false; onNavigateToChangelog() }
+                        )
+                    }
+                }
             }
 
             // 1. Classification Engine Toggle Card (Collapsible)

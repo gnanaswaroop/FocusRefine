@@ -21,6 +21,7 @@ import kotlin.math.max
 class EmbedderBenchmarkTest {
 
     private val tag = "EMB_BENCH"
+    private lateinit var modelBuffer: java.nio.ByteBuffer
 
     private data class Item(val title: String, val text: String, val urgentIn: Set<String>) {
         val content get() = "$title $text".lowercase()
@@ -130,7 +131,8 @@ class EmbedderBenchmarkTest {
         val heapBefore = Debug.getNativeHeapAllocatedSize()
         lateinit var embedder: TextEmbedder
         val loadMs = measureMs {
-            val base = BaseOptions.builder().setModelAssetPath("text_embedder.tflite").build()
+            modelBuffer = EmbeddingClassifier.loadModelBuffer(ctx) // keep a reference: native code reads the weights in place
+            val base = BaseOptions.builder().setModelAssetBuffer(modelBuffer).build()
             val opts = TextEmbedder.TextEmbedderOptions.builder().setBaseOptions(base).build()
             embedder = TextEmbedder.createFromOptions(ctx, opts)
         }

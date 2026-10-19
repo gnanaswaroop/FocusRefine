@@ -16,8 +16,15 @@ interface NotificationDao {
     @Query("SELECT * FROM notifications WHERE isLearned = 0 ORDER BY timestamp DESC")
     fun getHistory(): List<NotificationEntity>
 
-    @Query("UPDATE notifications SET isUrgent = :isUrgent, explanation = :explanation WHERE id = :id")
-    fun updateClassification(id: Int, isUrgent: Boolean, explanation: String?)
+    @Query("UPDATE notifications SET isUrgent = :isUrgent, explanation = :explanation, confidence = :confidence WHERE id = :id")
+    fun updateClassification(id: Int, isUrgent: Boolean, explanation: String?, confidence: Float?)
+
+    /** Decisions the app was not sure about (not yet corrected by the user), least sure first. */
+    @Query("SELECT * FROM notifications WHERE isLearned = 0 AND confidence IS NOT NULL AND confidence < :below ORDER BY confidence ASC, timestamp DESC")
+    fun getUncertain(below: Float): List<NotificationEntity>
+
+    @Query("SELECT COUNT(*) FROM notifications WHERE isLearned = 0 AND confidence IS NOT NULL AND confidence < :below")
+    fun countUncertain(below: Float): Int
 
     @Query("SELECT * FROM notifications WHERE isUrgent = :isUrgent ORDER BY timestamp DESC")
     fun getByUrgency(isUrgent: Boolean): List<NotificationEntity>

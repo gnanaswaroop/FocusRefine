@@ -49,7 +49,7 @@ FocusRefine relies on Android's foundational security model to ensure that notif
 ## 3. Privacy & Data Lifecycle Management
 
 1. **100% On-Device Processing:** All notification inspection, classification (via MediaPipe AI or local heuristics), and persistence occur entirely on-device. No notification text or metadata ever leaves the physical device.
-2. **Data Retention Controls:** Users can configure automatic data purging in `SettingsActivity` to delete database records older than a specified threshold (e.g., 1, 3, or 7 days), limiting data retention.
+2. **Data Retention:** History is kept until the user clears it (**Settings > Clear Inbox**); there is no automatic purge. (`NotificationDao.deleteOlderThan` exists but nothing calls it yet.)
 3. **Manual Clearing:** Users have full control to clear all inbox items or reset learned rules instantly via the in-app settings interface.
 4. **Re-running Classification:** Settings → Learning & Feedback → *Re-run classification on history* re-evaluates stored notifications entirely on-device and updates only `isUrgent` and `explanation`. Learned-rule rows (`isLearned = 1`) are never modified, and no notification text is sent anywhere.
 

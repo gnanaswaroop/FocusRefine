@@ -331,6 +331,7 @@ fun PrivacyInsightsScreen(
                                 showClearDataDialog = false
                                 CoroutineScope(Dispatchers.IO).launch {
                                     database.notificationDao().deleteLearnedRules()
+                                    PersonalLearning.clear(context)
                                     prefs.edit().putInt("suppressed_count", 0).apply()
                                     withContext(Dispatchers.Main) {
                                         Toast.makeText(context, "Local learning data cleared", Toast.LENGTH_SHORT).show()

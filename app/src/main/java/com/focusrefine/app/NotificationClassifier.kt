@@ -6,7 +6,9 @@ import android.util.Log
 
 data class ClassificationResult(
     val isUrgent: Boolean,
-    val explanation: String
+    val explanation: String,
+    /** See [Confidence]; null when the engine cannot say (keyword matching). */
+    val confidence: Float? = null
 )
 
 /**
@@ -50,7 +52,8 @@ class NotificationClassifier(
         Log.d(TAG, "$SEMANTIC Learned rule override matched: isUrgent = ${rule.isUrgent}")
         return ClassificationResult(
             isUrgent = rule.isUrgent,
-            explanation = "$SEMANTIC Matched user learned preference rule '$ruleTag'. Action: ${actionLabel(rule.isUrgent)}."
+            explanation = "$SEMANTIC Matched user learned preference rule '$ruleTag'. Action: ${actionLabel(rule.isUrgent)}.",
+            confidence = Confidence.RULE
         )
     }
 
@@ -69,7 +72,8 @@ class NotificationClassifier(
         Log.d(TAG, "$SEMANTIC Matched AI synthesized rule: isUrgent = ${match.isUrgent}")
         return ClassificationResult(
             isUrgent = match.isUrgent,
-            explanation = "$SEMANTIC Matched AI synthesized preference rule '$ruleText'. Action: ${actionLabel(match.isUrgent)}."
+            explanation = "$SEMANTIC Matched AI synthesized preference rule '$ruleText'. Action: ${actionLabel(match.isUrgent)}.",
+            confidence = Confidence.RULE
         )
     }
 
@@ -83,7 +87,8 @@ class NotificationClassifier(
         Log.d(TAG, "$SEMANTIC Matched user-enabled exception '${exception.title}': showing notification")
         return ClassificationResult(
             isUrgent = true,
-            explanation = "$SEMANTIC Matched user exception '${exception.title}'. Priority override allowed notification."
+            explanation = "$SEMANTIC Matched user exception '${exception.title}'. Priority override allowed notification.",
+            confidence = Confidence.RULE
         )
     }
 
@@ -103,13 +108,19 @@ class NotificationClassifier(
 
         val score = "%.3f".format(verdict.score)
         val threshold = "%.3f".format(verdict.threshold)
+        val personal = when {
+            verdict.adjustment >= PERSONAL_NOTE_MIN -> " Your past choices pushed this toward shown."
+            verdict.adjustment <= -PERSONAL_NOTE_MIN -> " Your past choices pushed this toward muted."
+            else -> ""
+        }
         return ClassificationResult(
             isUrgent = verdict.isUrgent,
             explanation = if (verdict.isUrgent) {
-                "$AI_PIPELINE On-device embedding model scored this $score for $mode, at or above the $threshold urgency threshold; shown."
+                "$AI_PIPELINE On-device embedding model scored this $score for $mode, at or above the $threshold urgency threshold; shown.$personal"
             } else {
-                "$AI_PIPELINE On-device embedding model scored this $score for $mode, below the $threshold urgency threshold; muted as routine."
-            }
+                "$AI_PIPELINE On-device embedding model scored this $score for $mode, below the $threshold urgency threshold; muted as routine.$personal"
+            },
+            confidence = verdict.confidence
         )
     }
 
@@ -163,6 +174,9 @@ class NotificationClassifier(
         private const val PREFS_NAME = "FocusRefinePrefs"
         private const val PREF_USE_AI = "use_ai_model"
         private const val PREF_FILTER_STRENGTH = "filter_strength"
+
+        /** A personal adjustment smaller than this is not worth mentioning in the explanation. */
+        private const val PERSONAL_NOTE_MIN = 0.5
 
         private const val SEMANTIC = "🔍 [Semantic Search]"
         private const val AI_PIPELINE = "🤖 [AI Pipeline]"

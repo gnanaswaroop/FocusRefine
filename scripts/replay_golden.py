@@ -62,12 +62,15 @@ def sh_quote(s):
     return "'" + s.replace("'", "'\\''") + "'"
 
 
-def set_prefs(adb, values):
+def set_prefs(adb, values, drop_prefixes=()):
     xml = adb.run("shell", f"run-as {PKG} cat {PREFS_PATH}", check=False).decode("utf-8", errors="replace").strip()
     try:
         root = ET.fromstring(xml)
     except ET.ParseError:
         root = ET.Element("map")
+    for el in list(root):
+        if any(el.get("name", "").startswith(prefix) for prefix in drop_prefixes):
+            root.remove(el)
     for name, (tag, val) in values.items():
         for el in root.findall(f".//*[@name='{name}']"):
             root.remove(el)
@@ -93,13 +96,18 @@ def reset_app(adb, mode, use_ai):
     time.sleep(1)
     adb.shell(f"am force-stop {PKG}")
     adb.shell(f"run-as {PKG} rm -f databases/focusrefine_database databases/focusrefine_database-wal databases/focusrefine_database-shm")
+    adb.shell(f"run-as {PKG} rm -f files/personal_model.bin")  # corrections from an earlier run must not leak into this one
     set_prefs(adb, {
         "current_mode": ("string", mode),
         "use_ai_model": ("boolean", use_ai),
         "filter_strength": ("int", 1),  # Balanced; a leftover Gentle/Strict would silently shift every threshold
+        # The instrumented tests leave exception toggles and edited prompts behind; replay with the shipped defaults.
+        "exception_nav_prompts": ("boolean", True),
+        "exception_calls": ("boolean", True),
+        "exception_security_otps": ("boolean", True),
         "service_running": ("boolean", True),
         "suppressed_count": ("int", 0),
-    })
+    }, drop_prefixes=("prompt_", "custom_mode_prompt_"))
     adb.shell(f"cmd notification allow_listener {LISTENER}")
     for _ in range(20):  # wait for the listener process to come up
         if adb.shell(f"pidof {PKG}", check=False).strip():
@@ -133,7 +141,7 @@ def post_all(adb, items, delay, tag_prefix="g"):
     for i, it in enumerate(items):
         lines.append(f"cmd notification post -t {sh_quote(it['title'])} {sh_quote('%s%02d' % (tag_prefix, i % TAG_POOL))} {sh_quote(it['text'])} >/dev/null 2>&1")
         lines.append(f"sleep {delay}")
-    with tempfile.NamedTemporaryFile("w", suffix=".sh", delete=False, newline="\n") as f:
+    with tempfile.NamedTemporaryFile("w", suffix=".sh", delete=False, newline="\n", encoding="utf-8") as f:
         f.write("\n".join(lines) + "\n")
         local = f.name
     try:
@@ -181,6 +189,10 @@ def backup_state(adb, out_dir):
     prefs = adb.run("exec-out", f"run-as {PKG} cat {PREFS_PATH}", check=False)
     with open(os.path.join(out_dir, "FocusRefinePrefs.xml"), "wb") as f:
         f.write(prefs)
+    personal = adb.run("exec-out", f"run-as {PKG} cat files/personal_model.bin", check=False)
+    if personal:
+        with open(os.path.join(out_dir, "personal_model.bin"), "wb") as f:
+            f.write(personal)
     zen = adb.shell("settings get global zen_mode", check=False).strip()
     return {"zen_mode": zen, "dir": out_dir}
 
@@ -217,6 +229,12 @@ def restore_state(adb, saved):
         push_app_file(adb, PREFS_PATH, prefs)
         print("restored original preferences")
 
+    adb.shell(f"run-as {PKG} rm -f files/personal_model.bin files/corrections.json", check=False)
+    saved_model = os.path.join(out_dir, "personal_model.bin")
+    if os.path.exists(saved_model):
+        with open(saved_model, "rb") as f:
+            push_app_file(adb, "files/personal_model.bin", f.read())
+        print("restored the personal model")
     adb.shell(f"cmd notification allow_listener {LISTENER}", check=False)
     clear_test_notifications(adb)
     print("cleared leftover test notifications from the notification shade")

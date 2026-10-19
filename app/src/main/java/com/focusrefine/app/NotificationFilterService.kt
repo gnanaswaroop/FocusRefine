@@ -77,7 +77,7 @@ class NotificationFilterService : NotificationListenerService() {
         createNotificationChannel()
 
         val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
-        embeddingClassifier = EmbeddingClassifier.create(this)
+        embeddingClassifier = EmbeddingClassifier.shared(this)
         classifier = NotificationClassifier(this, database, embeddingClassifier)
         embeddingClassifier?.let { engine ->
             Thread {
@@ -144,8 +144,10 @@ class NotificationFilterService : NotificationListenerService() {
         )
 
         val actionText = if (isRunning) "STOP" else "START"
+        val toReview = ReviewQueue.count(this)
         val statusText = if (isRunning) {
-            "Suppressed: $suppressedCount notifications"
+            "Suppressed: $suppressedCount notifications" +
+                if (toReview > 0) " · $toReview close ${if (toReview == 1) "call" else "calls"} to review" else ""
         } else {
             "Filtering stopped — showing all notifications"
         }
@@ -209,10 +211,12 @@ class NotificationFilterService : NotificationListenerService() {
                     packageName = packageName,
                     timestamp = System.currentTimeMillis(),
                     isUrgent = true,
-                    explanation = classification.explanation
+                    explanation = classification.explanation,
+                    confidence = classification.confidence
                 )
                 database.notificationDao().insert(entity)
                 sendBroadcast(Intent(ACTION_NOTIFICATION_ARRIVED).setPackage(this@NotificationFilterService.packageName))
+                if (ReviewQueue.refresh(this@NotificationFilterService)) updateForegroundNotification(true, prefs.getInt("suppressed_count", 0))
             } else {
                 if (sbn.isClearable) {
                     cancelNotification(sbn.key)
@@ -228,10 +232,12 @@ class NotificationFilterService : NotificationListenerService() {
                         packageName = packageName,
                         timestamp = System.currentTimeMillis(),
                         isUrgent = false,
-                        explanation = classification.explanation
+                        explanation = classification.explanation,
+                    confidence = classification.confidence
                     )
                     database.notificationDao().insert(entity)
                     sendBroadcast(Intent(ACTION_NOTIFICATION_ARRIVED).setPackage(this@NotificationFilterService.packageName))
+                    if (ReviewQueue.refresh(this@NotificationFilterService)) updateForegroundNotification(true, prefs.getInt("suppressed_count", 0))
                 }
             }
         }
@@ -264,7 +270,7 @@ class NotificationFilterService : NotificationListenerService() {
             manager.cancel(NOTIFICATION_ID)
         } catch (_: Exception) {
         }
-        embeddingClassifier?.close()
+        // The shared model stays loaded: the service is restarted often, and closing it is what made it fragile.
         super.onDestroy()
     }
 
