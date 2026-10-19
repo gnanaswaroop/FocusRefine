@@ -288,77 +288,7 @@ fun MainStudioScreen(
                 .padding(horizontal = 16.dp, vertical = 12.dp)
         ) {
             // 1. Top Bar Header
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 4.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(38.dp)
-                        .clip(CircleShape)
-                        .background(StudioColors.CardSurfaceHighlight)
-                        .border(1.dp, StudioColors.ActiveViolet.copy(alpha = 0.5f), CircleShape),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.adaptive_foreground),
-                        contentDescription = "App Logo",
-                        modifier = Modifier.size(32.dp)
-                    )
-                }
-                Spacer(modifier = Modifier.width(10.dp))
-                Text(
-                    text = "FocusRefine",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.ExtraBold,
-                    color = Color.White
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Surface(
-                    shape = CircleShape,
-                    color = StudioColors.GreenSurface,
-                    border = BorderStroke(1.dp, StudioColors.GreenAccent.copy(alpha = 0.3f))
-                ) {
-                    Row(
-                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(6.dp)
-                                .clip(CircleShape)
-                                .background(StudioColors.GreenAccent)
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(
-                            text = "On Device AI",
-                            fontSize = 10.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = StudioColors.GreenText
-                        )
-                    }
-                }
-                Spacer(modifier = Modifier.weight(1f))
-                IconButton(
-                    onClick = onOpenHelp,
-                    modifier = Modifier.size(32.dp).semantics { contentDescription = "Help" }
-                ) {
-                    Text(text = "?", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = StudioColors.TextPrimary)
-                }
-                IconButton(
-                    onClick = onOpenSettings,
-                    modifier = Modifier.size(32.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_settings),
-                        contentDescription = "Settings",
-                        tint = StudioColors.TextPrimary,
-                        modifier = Modifier.size(20.dp)
-                    )
-                }
-            }
+            HomeHeader(onOpenHelp = onOpenHelp, onOpenSettings = onOpenSettings)
 
             Spacer(modifier = Modifier.height(10.dp))
 
