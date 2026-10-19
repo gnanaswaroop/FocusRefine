@@ -62,29 +62,39 @@ class PersonalCorpusSimulationTest {
         return Triple(sets[0], sets[1], sets[2])
     }
 
-    private class Score(val f1: Double, val correct: BooleanArray)
+    /** [f1] on the test set as it is; [f1Realistic] with the negatives re-weighted so only 10% of decisions are urgent, as in real traffic. */
+    private class Score(val f1: Double, val f1Realistic: Double, val correct: BooleanArray)
 
     /** Macro F1 over modes; [decide] gives Shown/Muted for (item, mode). */
     private fun score(test: List<Item>, persona: String, decide: (Item, Int) -> Boolean): Score {
         val correct = BooleanArray(test.size * 5)
         var sum = 0.0
+        var sumRealistic = 0.0
         for (m in 0 until 5) {
-            var tp = 0; var fp = 0; var fn = 0
+            var tp = 0; var fp = 0; var fn = 0; var positives = 0
             for ((i, item) in test.withIndex()) {
                 val actual = fullNames[m] in item.labels.getValue(persona)
                 val predicted = decide(item, m)
                 correct[i * 5 + m] = predicted == actual
+                if (actual) positives++
                 if (predicted && actual) tp++ else if (predicted && !actual) fp++ else if (!predicted && actual) fn++
             }
+            val negatives = test.size - positives
             val p = if (tp + fp == 0) 0.0 else tp.toDouble() / (tp + fp)
             val r = if (tp + fn == 0) 0.0 else tp.toDouble() / (tp + fn)
             sum += if (p + r == 0.0) 0.0 else 2 * p * r / (p + r)
+            // Re-weight negatives so that positives : negatives = 10 : 90 (precision is the part that changes).
+            val w = if (negatives == 0 || positives == 0) 1.0 else 9.0 * positives / negatives
+            val pr = if (tp + w * fp == 0.0) 0.0 else tp / (tp + w * fp)
+            sumRealistic += if (pr + r == 0.0) 0.0 else 2 * pr * r / (pr + r)
         }
-        return Score(sum / 5, correct)
+        return Score(sum / 5, sumRealistic / 5, correct)
     }
 
     private class Cell {
         val deltas = mutableListOf<Double>()
+        val realisticBase = mutableListOf<Double>()
+        val realisticAfter = mutableListOf<Double>()
         val after = mutableListOf<Double>()
         val base = mutableListOf<Double>()
         var fixed = 0
@@ -143,6 +153,8 @@ class PersonalCorpusSimulationTest {
                 val after = score(test, persona) { item, m -> model.decision(item.vector, modeNames[m], item.margins[m]) >= 0 }
                 val cell = cells.getOrPut("$persona|$kind|$variant|$n") { Cell() }
                 cell.deltas += after.f1 - base.f1
+                cell.realisticBase += base.f1Realistic
+                cell.realisticAfter += after.f1Realistic
                 cell.after += after.f1
                 cell.base += base.f1
                 for (i in base.correct.indices) {
@@ -156,18 +168,23 @@ class PersonalCorpusSimulationTest {
         val sb = StringBuilder()
         sb.appendLine("# Personal model simulation (embedding model alone, macro F1 over 5 modes)")
         sb.appendLine("corpus=${corpus.size} items in ${corpus.map { it.template }.distinct().size} templates, holdout=${holdout.size}, seeds=$seeds, params=$params")
-        fun row(label: String, c: Cell) = "| $label | %.3f | %.3f | %+.3f | %+.3f..%+.3f | %.1f%% | %.1f%% |".format(
+        fun row(label: String, c: Cell) = "| $label | %.3f | %.3f | %+.3f | %+.3f..%+.3f | %.3f -> %.3f | %.1f%% | %.1f%% |".format(
             c.base.average(), c.after.average(), c.deltas.average(), c.deltas.min(), c.deltas.max(),
+            c.realisticBase.average(), c.realisticAfter.average(),
             100.0 * c.fixed / c.pairs, 100.0 * c.broken / c.pairs
         )
         for (kind in kinds) for (variant in variants) {
             sb.appendLine("\n## split=$kind, corrections chosen: $variant\n")
-            sb.appendLine("| persona / corrections | built-in F1 | with learning F1 | mean delta | delta min..max | decisions fixed | decisions broken |")
-            sb.appendLine("| :--- | :--- | :--- | :--- | :--- | :--- | :--- |")
+            sb.appendLine("| persona / corrections | built-in F1 | with learning F1 | mean delta | delta min..max | F1 at 10% urgent traffic (before -> after) | decisions fixed | decisions broken |")
+            sb.appendLine("| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |")
             for (persona in personas) for (n in sizes) cells["$persona|$kind|$variant|$n"]?.let { sb.appendLine(row("$persona / $n", it)) }
             sb.appendLine("\nAll personas, mean delta by number of corrections: " + sizes.joinToString("  ") { n ->
                 val all = personas.mapNotNull { cells["$it|$kind|$variant|$n"] }.flatMap { it.deltas }
                 if (all.isEmpty()) "" else "N=$n: %+.3f".format(all.average())
+            })
+            sb.appendLine("\nAll personas, F1 at 10% urgent traffic, before -> after: " + sizes.joinToString("  ") { n ->
+                val cs = personas.mapNotNull { cells["$it|$kind|$variant|$n"] }
+                if (cs.isEmpty()) "" else "N=$n: %.3f -> %.3f".format(cs.flatMap { it.realisticBase }.average(), cs.flatMap { it.realisticAfter }.average())
             })
         }
         val report = sb.toString()

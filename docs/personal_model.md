@@ -70,39 +70,43 @@ for example, 12 of 14 Sleeping-mode mistakes and 19 of 24 Workout-mode mistakes 
 golden mistakes (across the five modes) were the model's, so the two sizes of "errors" are nearly the same set.
 
 ### 3.2 Large-scale simulation (`PersonalCorpusSimulationTest`)
-The 590-item corpus, six simulated users, 12 random seeds per cell, 2 sampling variants, 6 sizes, 3 ways of splitting
-pool from test: 3,000+ trained models. It runs on the host JVM in about 40 seconds using the real model's embeddings
-(dumped from the emulator by `CorpusEmbeddingDumpTest`) and the real `PersonalModel` class. It scores the **embedding
-model alone** (no rules or exceptions), macro F1 over the five modes, **mean change over all six users**:
+The 1,209-item corpus (section 3.3), six simulated users, 12 random seeds per cell, 2 sampling variants, 6 sizes, 3 ways of
+splitting pool from test: 3,000+ trained models. It runs on the host JVM in about 45 seconds using the real model's
+embeddings (dumped from the emulator by `CorpusEmbeddingDumpTest`) and the real `PersonalModel` class. It scores the
+**embedding model alone** (no rules or exceptions), macro F1 over the five modes, **mean change over all six users**:
 
 | Split | Corrections chosen | N=10 | N=25 | N=50 | N=100 | N=200 | N=300 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| same kind of notification (new instances of kinds already corrected) | random sample | -0.001 | +0.009 | +0.021 | +0.047 | +0.084 | +0.129 |
-| same kind | the model's mistakes | +0.025 | +0.062 | +0.107 | +0.163 | +0.225 | +0.244 |
-| new kind (templates never corrected) | random sample | -0.001 | +0.003 | +0.008 | +0.015 | +0.024 | +0.036 |
-| new kind | the model's mistakes | +0.012 | +0.026 | +0.035 | +0.053 | +0.063 | +0.066 |
-| separate hand-written holdout set | random sample | +0.008 | +0.015 | +0.016 | +0.035 | +0.048 | +0.079 |
-| separate holdout set | the model's mistakes | +0.019 | +0.064 | +0.084 | +0.099 | +0.123 | +0.125 |
+| same kind of notification (new instances of kinds already corrected) | random sample | +0.007 | +0.017 | +0.033 | +0.064 | +0.112 | +0.151 |
+| same kind | the model's mistakes | +0.038 | +0.079 | +0.126 | +0.180 | +0.209 | +0.215 |
+| new kind (templates never corrected) | random sample | +0.006 | +0.016 | +0.022 | +0.042 | +0.065 | +0.081 |
+| new kind | the model's mistakes | +0.023 | +0.051 | +0.079 | +0.103 | +0.113 | +0.116 |
+| separate hand-written holdout set | random sample | +0.011 | +0.013 | +0.030 | +0.042 | +0.078 | +0.094 |
+| separate holdout set | the model's mistakes | +0.024 | +0.064 | +0.062 | +0.086 | +0.069 | +0.068 |
 
 (N is the total number of corrections across all modes; the app keeps at most 300.) The full per-user tables, including
-the range over seeds and the share of decisions fixed or broken, are in
+the range over seeds, the share of decisions fixed or broken and a score at realistic traffic mix, are in
 [`personal_model_simulation.md`](personal_model_simulation.md).
 
 What this says:
-- **It helps, and the effect grows with the number of corrections.** The mean change is positive in every row once
-  there are about 25 corrections.
-- **Corrections that fix the model's mistakes are worth much more than random ones**, about 3x at 100 corrections. That
-  matches how the app collects them: a user only flips a notification when the app got it wrong.
+- **It helps, and the effect grows with the number of corrections.** The mean change is positive in every row.
+- **Corrections that fix the model's mistakes are worth more than random ones**, about 2 to 3 times at 100 corrections.
+  That matches how the app collects them: a user only flips a notification when the app got it wrong.
 - **It helps most for a user whose tastes differ from the built-in ones.** A "minimalist" who wants only genuine safety
-  alerts goes from F1 0.38 to 0.78 with 300 corrections of the model's mistakes (same-kind split); the user whose tastes
-  already match the defaults ("standard") goes from 0.60 to 0.82.
+  alerts goes from F1 0.37 to 0.66 with 300 of the model's mistakes corrected (same-kind split), against 0.50 to 0.69 for the
+  "standard" user.
 - **It generalises mostly to the same kinds of notification** (the kernel is deliberately local). For kinds of message the
-  user has never corrected the gain is real but about a third as large.
-- **It is not free of harm.** With 100 or more corrections, 0.6% to 8% of previously correct decisions were broken while
-  4% to 18% of wrong ones were fixed. Broken decisions are highest for users whose tastes conflict with the model's clusters (workaholic, chatty) and when
-  all corrections target mistakes. In the new-kind split, single seeds reached -0.08 (the average stayed positive).
-  The test asserts that the mean change never drops below -0.02 in any cell.
-- **Few corrections do almost nothing, by design.** With 10 random corrections the mean change is about zero.
+  user has never corrected the gain is real but roughly 60% as large.
+- **It is not free of harm.** With 100 or more corrections (same-kind and new-kind splits), 1% to 14% of previously correct
+  decisions were broken while 4% to 19% of wrong ones were fixed. Broken decisions grow with the number of corrections and
+  are highest for users whose tastes conflict with the model's clusters (workaholic, chatty). The test asserts that the
+  mean change never drops below -0.02 in any cell.
+- **At realistic traffic the gain is smaller in absolute terms.** The corpus is about half urgent, while real traffic is
+  mostly noise. Re-weighting the negatives so 10% of decisions are urgent, the built-in model's F1 is about 0.39 and with
+  100 of its own mistakes corrected it reaches about 0.51 (same-kind). In the new-kind split the benefit levels off and
+  drifts back down after about 100 corrections of mistakes (0.451 at 100, 0.438 at 300) because extra corrections add false
+  positives.
+- **Few corrections do almost nothing, by design.** With 10 random corrections the mean change is under +0.01.
 
 Caveats: the labels are rules applied to synthetic templates, so notifications within a template are near paraphrases of
 each other, which flatters the same-kind split. The new-kind split and the separate holdout are the conservative figures.
@@ -110,25 +114,43 @@ The users are simulated, not people; real corrections will be noisier and may co
 tuned on the golden set only (cross-validation); the corpus and the holdout set are independent confirmation.
 
 ### 3.3 The corpus (`testdata/corpus/corpus_notifications.json`)
-590 synthetic notifications built by `scripts/generate_corpus.py` from 94 hand-written templates in 37 categories (about
-8 instances per template, deterministic, disjoint from the golden and holdout sets). Each item records its `category`,
-its `template` and `labels` for six simulated users:
+1,209 synthetic notifications built by `scripts/generate_corpus.py` from 185 hand-written templates in 48 categories
+(deterministic, disjoint from the golden and holdout sets, no duplicates). Each item records its `category`, `template`,
+surface-form `variant` and `labels` for six simulated users:
 
 | User | What they want Shown |
 | :--- | :--- |
 | standard | the same rules as the golden set |
 | chatty | also casual chat in Commute, Focus and Workout |
 | workaholic | work alerts (incidents, build failures, meetings, deadlines) in Commute, Focus and Workout as well |
-| minimalist | only genuine safety alerts (family distress, public emergencies, home alarms, critical health), in every mode |
+| minimalist | only genuine safety alerts (family distress, public emergencies, home alarms, critical health, door security), in every mode |
 | news fan | also headlines and weather in Commute and Workout |
 | parent | school alerts in every mode, and parcels while commuting |
 
-About 40% of items are urgent in some mode; 41 are deliberate near-misses ("Build #4413 succeeded", "Fire sale: 50% off",
-"Heart rate summary for last week"). To grow the corpus, add templates to `scripts/generate_corpus.py` and re-run it;
-prefer adding real, anonymised notifications of your own over inflating the synthetic ones.
+**Version 1 (590 items, 94 templates)** covered everyday English traffic. **Version 2 (619 more items, 91 more
+templates)** was added after measuring where the built-in model fails (see
+[`model_coverage_gaps.md`](model_coverage_gaps.md)). The v1 items are unchanged, so earlier results (sections 3.1 and 3.4) still
+apply to them. v2 adds:
 
-### 3.4 Real service on the corpus (`replay_personal.py --corpus`)
-The same real-service experiment as 3.1, on the corpus, one random seed per row. Half of each template's instances are the
+| Addition | Why |
+| :--- | :--- |
+| More phrasings of safety alerts (public emergencies, home alarms, critical health, school, family distress, door security) | the model was weakest here and these must reach the user in every mode |
+| Typos and abbreviations ("bus 42 arrivng in 2 mins", "pls cll me asap") | real people write like this |
+| ALL CAPS and emoji ("URGENT: ... IS DOWN", "🔥🔥 MEGA SALE 🔥🔥") | common in alerts and promotions |
+| Hinglish and Devanagari Hindi | the app's users include Hindi speakers and the encoder is English-only |
+| Long, multi-sentence messages | alerts are not always one short line |
+| Group-chat format ("Family group", "Office group") and sender prefixes | urgent news often arrives in a group |
+| Very short messages ("Ok", "Delivered", "Sale!") | little context to go on |
+| Missed calls, flight delays and cancellations, train status, ongoing/system notifications, sports scores, stock alerts, payments, kids' location, school notices, ordinary email and subscription traffic | new categories and more everyday noise |
+
+About 52% of items are urgent in some mode, far above real traffic; the simulation therefore also reports a score
+re-weighted to 10% urgent. 41 items are deliberate near-misses ("Build #4413 succeeded", "Fire sale: 50% off").
+To grow the corpus, add templates at the end of `scripts/generate_corpus.py` (older templates must keep their order so
+existing items stay stable) and re-run it; prefer adding real, anonymised notifications of your own over inflating the
+synthetic ones.
+
+### 3.4 Real service on the v1 corpus (`replay_personal.py --corpus`)
+The same real-service experiment as 3.1, on the 590-item v1 corpus, one random seed per row. Half of each template's instances are the
 pool the corrections come from; the other half (295 notifications of the same kinds, never corrected) is posted to the app
 and scored. Macro F1 over the five modes. Here the baseline's mistakes are almost all the embedding model's (the corpus
 avoids exception keywords), so the personal model can reach them:

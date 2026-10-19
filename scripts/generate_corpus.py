@@ -37,8 +37,15 @@ NEGATIVE = ["promo", "social", "chat_casual", "newsletter", "news", "game", "app
 for cat in NEGATIVE:
     STANDARD[cat] = []
 
+# Categories added in corpus v2 (the extra templates at the end of the template list).
+STANDARD.update({
+    "missed_call_family": [C, D, S], "flight_disruption": [C], "train_status": [C], "door_security": [D, S],
+    "missed_call_other": [], "ongoing": [], "sports": [], "stock_alert": [], "payment_received": [],
+    "school_info": [], "kid_location": [],
+})
+
 WORK = {"work_incident", "build_failure", "meeting_soon", "deadline"}
-SAFETY = {"family_distress", "public_emergency", "home_alarm", "medical_critical"}
+SAFETY = {"family_distress", "public_emergency", "home_alarm", "medical_critical", "door_security"}
 
 
 def persona_labels(persona, category):
@@ -70,8 +77,9 @@ BRANCH = ["main", "release/2.4", "hotfix/login", "develop", "release/3.0", "feat
 T = []
 
 
-def t(cat, titles, text, **slots):
-    T.append((cat, titles, text, slots))
+def t(cat, titles, text, _v="plain", **slots):
+    """_v tags the surface form: plain, sms_style, emoji_caps, hinglish, devanagari, long, group, short."""
+    T.append((cat, titles, text, slots, _v))
 
 
 # ---- commute ----
@@ -182,6 +190,123 @@ t("near_miss", ["Apollo Clinic", "City Hospital", "Practo"], "Annual checkup rem
 t("near_miss", ["Instagram", "TikTok", "X"], "A storm of likes: your post is trending")
 
 
+BASE_TEMPLATES = len(T)  # v1 templates; their realisations use one shared RNG so the first 590 items never change
+# ===================== corpus v2: gaps found by measuring the built-in model on v1 =====================
+# The built-in model was weakest on safety categories (school alerts, home alarms, critical health, public
+# emergencies), and v1 had no typos, ALL CAPS, emoji, Hinglish/Hindi, long text, group chats, very short messages,
+# missed calls, or ongoing system notifications. Everything below is appended; v1 items are unchanged.
+REL2 = ["Papa", "Mummy", "Didi", "Bhaiya", "Nani", "Dadu", "Chacha", "Mausi"]
+AREA = ["your district", "coastal areas", "the Pune region", "your zone", "low-lying areas", "the city centre"]
+PLACE = ["Sector 12", "Main Market", "your street", "the industrial estate", "Station Road", "the old town"]
+ROOM = ["kitchen", "basement", "garage", "bedroom", "living room", "nursery"]
+
+# -- safety: more phrasings of things that must get through in every mode --
+t("public_emergency", ["Civil Defense", "Public Safety", "Disaster Alert", "Weather Service", "Met Office"], "{w} warning for {area} until {t}: {act}", w=["Cyclone", "Heatwave", "Flood", "Thunderstorm", "Landslide", "Storm surge"], area=AREA, t=["6 pm", "8 pm", "midnight", "tomorrow morning"], act=["stay indoors", "avoid all travel", "move to higher ground", "follow local instructions"])
+t("public_emergency", ["Civil Defense", "Gas Authority", "Public Safety"], "Gas leak reported near {place}. Evacuate the area immediately", place=PLACE)
+t("public_emergency", ["Disaster Alert", "Civil Defense", "Public Safety"], "Chemical spill near {place}: shelter in place and close all windows", place=PLACE)
+t("public_emergency", ["Public Safety", "Police Alert", "Civil Defense"], "{what}", what=["Missing child alert: last seen near the railway station, call the police if you see them", "Air quality is hazardous, avoid going outdoors", "Dam release downstream tonight, leave the riverbank area now", "Curfew imposed in your area from 8 pm, stay at home"])
+t("home_alarm", ["Ring Alarm", "Nest Protect", "ADT Home", "SimpliSafe", "Kidde"], "{what}", what=["Alarm triggered: intrusion detected at the {room} window", "Gas sensor alert: high level detected in the {room}", "Temperature in the {room} dropped below freezing, pipes at risk", "Sump pump failure detected in the basement", "Smoke alarm in the {room} has been sounding for 2 minutes"], room=ROOM)
+t("door_security", ["Ring Doorbell", "Yale Home", "August Lock", "Nest Cam", "Arlo"], "{what}", what=["Front door unlocked at {t} while in away mode", "Unrecognised person at the front door at {t}", "Back door opened at {t} but nobody is home", "Garage door opened at {t}, no one scheduled"], t=["2:14 am", "3:40 am", "11:52 pm", "4:05 am", "1:30 am"])
+t("medical_critical", ["Apple Watch", "Fitbit Health", "Galaxy Watch", "Garmin Health", "Withings"], "{what}", what=["Fall detected. Are you OK? Emergency call in 60 seconds", "Blood oxygen below {n}%: please seek care", "Possible car crash detected. Call for help?", "Heart rate has been below 40 BPM for 10 minutes", "Skin temperature very high: {n} degrees, seek medical attention"], n=["88", "85", "82", "40", "39"])
+t("medical_critical", ["Dexcom", "Medtronic", "Omnipod", "FreeStyle Libre"], "{what}", what=["Insulin pump: reservoir low, {n} units left", "Glucose is falling rapidly, urgent low predicted in 15 minutes", "Pump delivery stopped, check your device now", "Sensor reading {n} mg/dL and dropping, treat now"], n=["20", "15", "10", "50", "46"])
+t("school_alert", ["Greenwood School", "Oakview Elementary", "St. Mary's Academy", "City High", "Little Stars Daycare"], "{what}", what=["Bus {n} for {c} is delayed by {m} minutes", "{c} was marked absent today, please confirm", "{c} has a fever, please come to collect them", "Pickup change: please collect {c} from the main gate now", "{c} is missing from the afternoon roll call, please contact the office"], n=["12", "7", "21", "4"], c=NAMES, m=["20", "30", "45"])
+t("school_info", ["Greenwood School", "Oakview Elementary", "City High", "Class Teacher"], "{what}", what=["Reminder: school photo day next month", "Fee receipt generated for term {n}", "Homework posted for {sub}", "Parent meeting scheduled for next {d}", "Library books are due next week"], n=["1", "2", "3"], sub=["maths", "science", "English", "history"], d=["Monday", "Friday", "week"])
+t("family_distress", ["Sister", "Brother", "Cousin", "Neighbour", "Aunt"], "{what}", what=["Pls call asap, it is important", "Where are you? {rel} is not responding", "We are at the hospital, come to ward {n}", "{rel} fell down and is in pain, come home", "Emergency at home, please come immediately", "Doctor says the family should be here, please hurry"], rel=["Grandpa", "Grandma", "Uncle", "our neighbour", "Aunt"], n=["4", "7", "12", "3B"])
+t("missed_call_family", ["Sister", "Brother", "Mummy", "Papa", "Aunt", "Cousin"], "Missed call ({n})", n=["2", "3", "4", "5", "6", "7"])
+t("missed_call_other", ["Unknown", "+91 98765 43210", "Spam Risk", "Delivery Guy", "Plumber"], "Missed call from {n}", n=["an unknown number", "a new number", "a toll-free number", "Neha", "Karan", "your landlord"])
+
+# -- travel disruptions and status --
+t("flight_disruption", ["IndiGo", "Air India", "Vistara", "Emirates", "British Airways"], "{what}", what=["Flight {f} is delayed by {m} minutes", "Flight {f} has been cancelled, tap to rebook", "Your flight {f} now departs from gate {g}", "Boarding for {f} will close in {m} minutes"], f=["6E 2174", "AI 505", "UK 944", "EK 501", "BA 118"], m=["20", "45", "90", "10", "15"], g=["B4", "C7", "D19", "A2"])
+t("train_status", ["IRCTC", "Railway Alerts", "RailYatri", "Trainman"], "{what}", what=["PNR {p}: chart prepared, your berth is {b}", "Train {n} is running {m} minutes late", "Platform change: train {n} now arrives on platform {pl}", "Your train {n} departs in 30 minutes from platform {pl}"], p=["4521908833", "2418830012", "8120097345"], b=["S4/32", "B2/18", "A1/9"], n=["12951", "12627", "22691", "12009"], m=["15", "35", "50", "70"], pl=["1", "3", "5", "8"])
+
+# -- robustness: the same kinds of notification, written differently --
+# SMS-style: abbreviations, missing vowels, lower case, typos
+t("transit", ["Moovit", "Transit", "Citymapper"], "bus {n} arrivng in {m} mins at {stop}", _v="sms_style", n=["12", "42", "101", "7A", "9"], m=["2", "3", "5", "7"], stop=["central stop", "park st", "tech park", "lake rd"])
+t("nav_prompt", ["Waze", "Sygic", "TomTom GO"], "turn rt in {d}m on {r}, then cont straight", _v="sms_style", d=["200", "300", "500", "800"], r=["ring rd", "mg rd", "station rd", "link rd"])
+t("rideshare", ["Uber", "Ola", "Bolt", "Lyft"], "ur driver {n} is 2 mins away, pls be ready", _v="sms_style", n=NAMES)
+t("flight", ["IndiGo", "Air India", "Vistara"], "boardng started fr {f}, gate {g}, pls proceed", _v="sms_style", f=["6E 2174", "AI 505", "UK 944", "6E 331"], g=["B4", "C7", "D19", "A2"])
+t("work_incident", ["PagerDuty", "Opsgenie", "Datadog", "Slack"], "prod {svc} down!! pls check asap", _v="sms_style", svc=["payments", "login", "search", "checkout", "api gateway", "billing"])
+t("build_failure", ["Jenkins", "CircleCI", "GitHub Actions"], "build failed on {b} :( tests broken", _v="sms_style", b=BRANCH)
+t("meeting_soon", ["Calendar", "Teams", "Zoom"], "mtg w/ {p} in {m} min, join now", _v="sms_style", p=["client", "mgr", "vp", "design team", "hr"], m=["5", "10", "15"])
+t("family_distress", ["Sister", "Brother", "Cousin"], "pls cll me asap its abt {rel}", _v="sms_style", rel=["papa", "mummy", "nani", "dadu", "chacha", "didi"])
+t("public_emergency", ["Civil Defense", "Public Safety", "Met Office"], "FLOOD WARNING in ur area. mv to hgher ground NOW {t}", _v="sms_style", t=["tonight", "by 8pm", "immediately", "asap"])
+t("home_alarm", ["Ring Alarm", "Nest Protect", "ADT Home"], "smoke alrm triggered at hm, {room} sensor", _v="sms_style", room=["kitchen", "bedroom", "garage", "hall"])
+t("promo", ["Amazon", "Flipkart", "Myntra", "Zomato"], "FLAT {p}% OFF!! shop now, ends tonite", _v="sms_style", p=["30", "40", "50", "60", "70"])
+t("chat_casual", ["WhatsApp", "Telegram", "Messenger"], "{n}: lol cn u cll l8r? at lunch", _v="sms_style", n=NAMES)
+t("social", ["Instagram", "Facebook", "TikTok"], "{n} liked ur pic and {k} others", _v="sms_style", n=NAMES, k=["2", "5", "9"])
+t("workout_timer", ["Interval Timer", "Peloton", "Garmin"], "rnd {n} strtng in {s}s, get rdy", _v="sms_style", n=["2", "3", "4", "5", "6"], s=["5", "10", "15"])
+# ALL CAPS and emoji
+t("work_incident", ["PagerDuty", "Opsgenie", "Datadog"], "URGENT: {svc} IS DOWN, ALL HANDS NEEDED", _v="emoji_caps", svc=["PAYMENTS", "LOGIN", "SEARCH", "CHECKOUT", "BILLING", "AUTH"])
+t("promo", ["Amazon", "Flipkart", "Myntra", "Swiggy"], "🔥🔥 MEGA SALE: {p}% OFF EVERYTHING 🔥🔥 TODAY ONLY", _v="emoji_caps", p=["40", "50", "60", "70", "80"])
+t("promo", ["Zomato", "Swiggy", "Uber Eats"], "🎉 You won a reward! Claim your {x} now 🎁", _v="emoji_caps", x=["free meal", "cashback", "voucher", "discount", "gift"])
+t("chat_casual", ["WhatsApp", "Messenger", "Telegram"], "😂😂 {n}: omg look at this {x}", _v="emoji_caps", n=NAMES, x=["meme", "video", "photo", "reel"])
+t("public_emergency", ["Civil Defense", "Public Safety"], "🚨 {what} 🚨", _v="emoji_caps", what=["FLASH FLOOD WARNING: MOVE TO HIGHER GROUND NOW", "EARTHQUAKE ALERT: DROP, COVER, HOLD ON", "EVACUATE NOW: WILDFIRE APPROACHING", "TORNADO WARNING: TAKE SHELTER IMMEDIATELY"])
+t("home_alarm", ["Ring Alarm", "Nest Protect", "Kidde"], "⚠️ Smoke detected in the {room} ⚠️", _v="emoji_caps", room=ROOM)
+t("workout_timer", ["Peloton", "Nike Training", "Garmin"], "🏃 Round {n} starts in {s}s 💪 get ready", _v="emoji_caps", n=["2", "3", "4", "5", "6"], s=["5", "10", "15"])
+t("social", ["Instagram", "Facebook", "TikTok"], "❤️ {n} liked your photo", _v="emoji_caps", n=NAMES)
+# Hinglish (Hindi in Latin script)
+t("family_distress", ["Didi", "Bhaiya", "Chacha", "Mausi"], "{rel} ki tabiyat kharab hai, jaldi call karo", _v="hinglish", rel=REL2)
+t("family_distress", ["Didi", "Bhaiya", "Padosi"], "{rel} hospital mein hain, turant aao", _v="hinglish", rel=REL2)
+t("transit", ["IRCTC", "Moovit", "RailYatri"], "Aapki train platform {p} par {m} minute mein aa rahi hai", _v="hinglish", p=["1", "2", "3", "4", "6"], m=["5", "10", "15", "20"])
+t("flight", ["IndiGo", "Air India", "Vistara"], "Flight {f} ki boarding gate {g} par shuru ho gayi hai", _v="hinglish", f=["6E 2174", "AI 505", "UK 944", "6E 331"], g=["B4", "C7", "D19", "A2"])
+t("rideshare", ["Ola", "Uber", "Rapido"], "Aapka driver {m} min mein pahunch raha hai", _v="hinglish", m=["1", "2", "3", "4", "5"])
+t("work_incident", ["PagerDuty", "Opsgenie", "Slack"], "Production mein {svc} down hai, turant dekhein", _v="hinglish", svc=["payments", "login", "search", "checkout", "billing", "auth"])
+t("meeting_soon", ["Calendar", "Teams", "Google Meet"], "Meeting {m} minute mein shuru hogi, abhi join karein", _v="hinglish", m=["5", "10", "15"])
+t("public_emergency", ["Civil Defense", "Public Safety", "Met Office"], "{w} ki chetavani: turant surakshit jagah par jayein", _v="hinglish", w=["Baadh", "Toofan", "Bhookamp", "Cyclone", "Aag"])
+t("promo", ["Amazon", "Flipkart", "Myntra", "Zomato"], "Sirf aaj: {p}% ki chhoot, abhi order karein", _v="hinglish", p=["30", "40", "50", "60", "70"])
+t("chat_casual", ["WhatsApp", "Telegram", "Messenger"], "{n}: kal dinner pe chalein?", _v="hinglish", n=NAMES)
+t("chat_casual", ["WhatsApp", "Telegram"], "{n}: haha yaar kya baat hai", _v="hinglish", n=NAMES)
+t("social", ["Instagram", "Facebook", "Snapchat"], "{n} ne aapki photo like ki", _v="hinglish", n=NAMES)
+# Devanagari
+t("family_distress", ["दीदी", "भैया", "चाचा", "मौसी"], "{rel} की तबीयत ठीक नहीं है, जल्दी फोन करें", _v="devanagari", rel=["पापा", "मम्मी", "नानी", "दादू", "चाचा", "दीदी"])
+t("transit", ["IRCTC", "Moovit", "रेल यात्री"], "आपकी ट्रेन {m} मिनट में प्लेटफॉर्म {p} पर आ रही है", _v="devanagari", m=["5", "10", "15", "20"], p=["1", "2", "3", "4", "6"])
+t("rideshare", ["Ola", "Uber", "Rapido"], "आपका ड्राइवर {m} मिनट में पहुँच रहा है", _v="devanagari", m=["1", "2", "3", "4", "5"])
+t("work_incident", ["PagerDuty", "Opsgenie", "Slack"], "प्रोडक्शन में {svc} बंद है, कृपया तुरंत देखें", _v="devanagari", svc=["पेमेंट", "लॉगिन", "सर्च", "चेकआउट", "बिलिंग", "ऑथ"])
+t("public_emergency", ["नागरिक सुरक्षा", "आपदा चेतावनी", "मौसम विभाग"], "{w} की चेतावनी: तुरंत ऊँची और सुरक्षित जगह पर जाएँ", _v="devanagari", w=["बाढ़", "तूफान", "भूकंप", "चक्रवात", "आग"])
+t("promo", ["अमेज़न", "फ्लिपकार्ट", "ज़ोमैटो", "स्विगी"], "आज ही {p}% की छूट, अभी ऑर्डर करें", _v="devanagari", p=["30", "40", "50", "60", "70"])
+t("chat_casual", ["व्हाट्सऐप", "टेलीग्राम", "मैसेंजर"], "{n}: कल डिनर पर चलें?", _v="devanagari", n=["प्रिया", "अर्जुन", "मीरा", "राहुल", "सना", "विक्रम"])
+# long, multi-sentence text
+t("work_incident", ["PagerDuty", "Opsgenie", "Datadog"], "Heads up: the {svc} has been failing since {t}. {n} customers are affected and error rates keep rising. Please join the incident channel and acknowledge as soon as you can.", _v="long", svc=SVC, t=["9:40", "10:15", "11:05", "2:30"], n=["120", "450", "1,200", "3,000"])
+t("flight_disruption", ["IndiGo", "Air India", "Vistara", "Emirates"], "Your flight {f} has been delayed by {m} minutes. The new departure is from gate {g}. Please stay near the gate for further updates from the airline.", _v="long", f=["6E 2174", "AI 505", "UK 944", "EK 501"], m=["45", "75", "90", "120"], g=["B4", "C7", "D19", "A2"])
+t("family_distress", ["Sister", "Brother", "Aunt", "Cousin"], "Hi, I know you are busy but please call me back as soon as you can. {rel} is not well and the doctor wants to talk to the whole family.", _v="long", rel=["Grandpa", "Grandma", "Uncle", "Aunt Rita", "Papa", "Mummy"])
+t("promo", ["Amazon", "Flipkart", "Myntra", "Zomato"], "Our biggest sale of the year is here! Get up to {p}% off on thousands of products, plus free delivery on your first order. Hurry, offers end at midnight and stocks are limited.", _v="long", p=["50", "60", "70", "80"])
+t("chat_casual", ["WhatsApp", "Messenger", "Telegram"], "{n}: so I was thinking about the weekend, we could go hiking or maybe just stay home and cook something. Let me know what you prefer, no rush at all!", _v="long", n=NAMES)
+t("newsletter", ["Substack", "Medium", "Gmail"], "This week: five lessons from running a small team, a reading list for long flights, and why I stopped using three of my favourite productivity apps. Read it in your browser.", _v="long")
+t("public_emergency", ["Civil Defense", "Public Safety", "Weather Service"], "Severe weather alert for {area}: heavy rain and strong winds are expected from {t}. Avoid travel, stay away from trees and power lines, and keep emergency supplies ready.", _v="long", area=AREA, t=["6 pm", "8 pm", "midnight", "4 am"])
+# group chats and sender prefixes
+t("chat_casual", ["Family group", "Friends group", "Office group", "Society group", "Cricket group"], "{n}: {m}", _v="group", n=NAMES, m=["good morning everyone", "who is bringing the snacks?", "see you all at 7", "anyone free this weekend?", "happy birthday!!", "thanks for the update"])
+t("family_distress", ["Family group", "Cousins group"], "{n}: {rel} is in the hospital, everyone please come", _v="group", n=NAMES, rel=["Papa", "Mummy", "Nani", "Dadu", "Uncle", "Aunt"])
+t("work_incident", ["Office group", "Engineering group", "On-call group"], "{n}: {svc} is down, all hands please join the call", _v="group", n=NAMES, svc=["payments", "login", "search", "checkout", "billing", "the API"])
+t("home_alarm", ["Society group", "Neighbours group"], "{n}: fire in tower {b}, everyone evacuate now", _v="group", n=NAMES, b=["A", "B", "C", "D"])
+# very short messages and title-only notifications
+t("chat_casual", ["WhatsApp", "Messenger", "Telegram", "Signal", "Slack"], "{m}", _v="short", m=["Ok", "Thanks!", "On my way", "Lol", "Sure", "Got it", "See you", "Nice"])
+t("delivery_status", ["Amazon", "Swiggy", "Zomato", "FedEx", "BlueDart"], "Delivered", _v="short")
+t("promo", ["Amazon", "Flipkart", "Myntra", "Zomato", "Swiggy"], "Sale!", _v="short")
+t("calendar_routine", ["Calendar", "Google Calendar", "Outlook"], "Reminder", _v="short")
+# other everyday noise that should stay quiet
+t("ongoing", ["Spotify", "YouTube Music", "Files", "Settings", "VPN"], "{what}", _v="plain", what=["Now playing: {song}", "Downloading {file}: {p}%", "VPN is active", "Hotspot is on", "Screen recording in progress", "Syncing your photos"], song=["Kun Faya Kun", "Blinding Lights", "Tum Hi Ho", "Shape of You"], file=["report.pdf", "update.zip", "movie.mp4", "photos.zip"], p=["12", "47", "73", "95"])
+t("sports", ["ESPN", "Cricbuzz", "Sports Live", "FIFA"], "{what}", what=["GOAL! {a} {x}-{y} {b}", "Match starts in 15 minutes: {a} vs {b}", "Full time: {a} {x}-{y} {b}", "Wicket! {a} are {x}/{y}"], a=["India", "Arsenal", "Mumbai", "Chennai", "Barcelona"], b=["Australia", "Chelsea", "Delhi", "Kolkata", "Madrid"], x=["1", "2", "3", "4"], y=["0", "1", "2", "3"])
+t("stock_alert", ["Zerodha", "Robinhood", "Groww", "Yahoo Finance"], "{t} is {dir} {p}% today", t=["TCS", "RELIANCE", "AAPL", "TSLA", "INFY"], dir=["up", "down"], p=["1.2", "2.4", "3.1", "0.8"])
+t("payment_received", ["PhonePe", "Google Pay", "Paytm", "Revolut"], "{what}", what=["You received Rs {n} from {name}", "Payment of Rs {n} to {shop} was successful", "Rs {n} was added to your wallet"], n=["250", "500", "1,200", "75", "3,400"], name=NAMES, shop=["Big Bazaar", "Cafe Coffee Day", "Reliance Fresh", "Uber"])
+t("kid_location", ["Life360", "Family Link", "Find My"], "{c} {what}", c=NAMES, what=["arrived at school", "left home", "arrived at the tuition centre", "is on the way home"])
+t("deadline", ["Slack", "Teams", "GitHub", "Jira"], "{what}", what=["{n} mentioned you in #incidents", "Can you review PR #{pr} before standup?", "Your approval is needed on {thing} today", "RE: {thing} - please approve before noon"], n=NAMES, pr=["482", "1190", "77", "2031"], thing=["the Q3 budget", "the vendor contract", "the hiring plan", "the release checklist"])
+# -- ordinary, low-priority traffic (real inboxes are mostly this, so the corpus needs more of it) --
+t("newsletter", ["Gmail", "Outlook", "Proton Mail"], "New email from {n}: {subj}", n=NAMES, subj=["Weekend plans", "Photos from last week", "Invoice attached", "Quick question", "Re: lunch?", "Newsletter: October edition"])
+t("calendar_routine", ["Calendar", "Google Calendar", "Outlook"], "Invitation: {ev} on {d}", ev=["Team lunch", "Book club", "Yoga class", "Farewell party", "Town hall"], d=["Friday", "next Tuesday", "Saturday", "the 15th"])
+t("system_info", ["Google Photos", "Files", "Drive", "Settings"], "{what}", what=["Backup complete: {n} photos saved", "Your storage is {p}% full", "Free up space to keep backing up", "Memories: a look back at {y}"], n=["24", "112", "340"], p=["80", "90", "95"], y=["2023", "last summer", "your trip"])
+t("promo", ["Netflix", "Prime Video", "Hotstar", "Spotify"], "{what}", what=["Your free trial ends in {d} days", "New season of {show} is here, watch now", "Upgrade to Premium for {p}% off", "Top picks for you this weekend"], d=["2", "3", "5"], show=["Sacred Games", "The Crown", "Mirzapur", "Succession"], p=["30", "40", "50"])
+t("social", ["Instagram", "YouTube", "Facebook", "Reddit"], "{what}", what=["{n} commented on your video", "{n} replied to your comment", "{n} started following you", "Your friend {n} joined the app", "New posts from accounts you follow"], n=NAMES)
+t("news", ["Inshorts", "Google News", "Flipboard", "Pulse"], "Trending: {topic}", topic=["a new phone launch", "the festival season sales", "election results explained", "five tips for better sleep", "a viral cooking video", "the weekend box office"])
+t("health_summary", ["Fitbit", "Apple Health", "Google Fit", "Samsung Health"], "{what}", what=["You reached {n} steps today", "Daily goal: {n} steps to go", "Your resting heart rate this week: {h} BPM", "Time to move! You have been still for an hour"], n=["4,000", "6,500", "8,000", "10,000", "2,500"], h=["62", "66", "70", "58"])
+t("music", ["Spotify", "Pocket Casts", "YouTube Music", "Audible"], "{what}", what=["New episode: {ep}", "Your podcast {ep} just dropped", "Continue listening: {ep}", "Daily Drive is ready"], ep=["The Daily", "Freakonomics", "Lex Fridman", "TED Talks", "Stuff You Should Know"])
+t("delivery_status", ["Amazon", "Flipkart", "Swiggy", "Zomato", "BlueDart"], "{what}", what=["Your package is arriving today", "Out for delivery: {item}", "Your order {item} has been picked up", "Delivery slot confirmed for {d}"], item=["headphones", "a book", "groceries", "running shoes", "a phone case"], d=["tomorrow", "Saturday", "Monday"])
+t("weather_info", ["Weather", "AccuWeather", "AQI India"], "{what}", what=["Air quality is {q} today, AQI {n}", "UV index is {u} today, wear sunscreen", "Sunset at {t} today", "Pollen levels are {q} this week"], q=["moderate", "poor", "good", "low", "high"], n=["85", "120", "160", "60"], u=["high", "very high", "moderate"], t=["6:12 pm", "6:30 pm", "5:58 pm"])
+t("forum", ["Quora", "Reddit", "Stack Overflow", "Medium"], "{what}", what=["Top answer to a question you follow", "{n} upvotes on your answer", "Daily digest: {topic}", "Recommended for you: {topic}"], n=["12", "40", "150"], topic=["productivity tips", "travel hacks", "career advice", "cooking basics"])
+t("system_info", ["Android System", "Digital Wellbeing", "Settings"], "{what}", what=["Wi-Fi connected to {ssid}", "You used your phone for {h} hours today", "Battery saver is on", "App permissions reviewed", "Software update installed successfully"], ssid=["HomeNet", "OfficeWiFi", "CafeGuest"], h=["3", "4", "5", "6"])
+t("rating", ["Zomato", "Swiggy", "Uber", "Airbnb", "Google Maps"], "How was {x}? Tell us in one tap", x=["your meal", "your ride", "your stay", "your visit", "the delivery"])
+t("job_alerts", ["LinkedIn", "Indeed", "Naukri", "Glassdoor"], "{what}", what=["Jobs you may be interested in: {role}", "A company viewed your profile", "{n} people in your network got promoted", "Set a goal for your career this week"], role=["Android developer", "Product manager", "Data analyst", "Designer"], n=["3", "7", "12"])
+
+
 def realisations(slots, rng, k):
     names = list(slots)
     if not names:
@@ -204,9 +329,14 @@ def main():
         for it in json.load(open(os.path.join(GOLDEN, name), encoding="utf-8")):
             seen.add((it["title"], it["text"]))
     items = []
-    for ti, (cat, titles, text, slots) in enumerate(T):
+    for ti, (cat, titles, text, slots, variant) in enumerate(T):
         per_template = 8
-        for j, vals in enumerate(realisations(slots, rng, per_template)):
+        # v2 templates get their own RNG so adding more never reshuffles anything that already exists
+        trng = rng if ti < BASE_TEMPLATES else random.Random(f"corpus-v2-{ti}")
+        reals = realisations(slots, trng, per_template)
+        if not slots and ti >= BASE_TEMPLATES:  # slot-less v2 templates: one instance per title
+            reals = [{}] * min(len(titles), per_template)
+        for j, vals in enumerate(reals):
             # values that contain slots of their own are expanded with the same dictionary
             local = dict(vals)
             for kk, vv in slots.items():
@@ -217,7 +347,7 @@ def main():
                 continue
             seen.add((title, rendered))
             items.append({
-                "title": title, "text": rendered, "category": cat, "template": f"t{ti:03d}",
+                "title": title, "text": rendered, "category": cat, "template": f"t{ti:03d}", "variant": variant,
                 "urgentIn": persona_labels("standard", cat),
                 "labels": {p: persona_labels(p, cat) for p in PERSONAS},
             })
