@@ -33,6 +33,29 @@ object AccessibilityDriver {
         return null
     }
 
+    private var scrollingDown = true
+
+    /** The texts currently in the accessibility tree, for failure messages. */
+    fun visibleTexts(limit: Int = 25): List<String> {
+        val out = ArrayList<String>()
+        fun walk(n: AccessibilityNodeInfo) {
+            n.text?.let { if (out.size < limit) out += it.toString().take(40) }
+            for (i in 0 until n.childCount) n.getChild(i)?.let { walk(it) }
+        }
+        automation.rootInActiveWindow?.let { walk(it) }
+        return out
+    }
+
+    /**
+     * One page of scrolling, down until the end and then back up, and so on. Paging in a single direction can leave
+     * a row that straddles two pages half visible every time; the return trip lands on different offsets.
+     */
+    private fun scrollOnePage(root: AccessibilityNodeInfo) {
+        val node = scrollable(root) ?: return
+        val action = if (scrollingDown) AccessibilityNodeInfo.ACTION_SCROLL_FORWARD else AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD
+        if (!node.performAction(action)) scrollingDown = !scrollingDown
+    }
+
     fun hasText(text: String): Boolean = automation.rootInActiveWindow?.let { find(it, text) != null } ?: false
 
     /**
@@ -43,10 +66,17 @@ object AccessibilityDriver {
         val deadline = System.currentTimeMillis() + timeoutMs
         while (System.currentTimeMillis() < deadline) {
             if (hasText(text) == present) return true
-            if (scroll && present) automation.rootInActiveWindow?.let { scrollable(it)?.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD) }
+            if (scroll && present) automation.rootInActiveWindow?.let { scrollOnePage(it) }
             Thread.sleep(300)
         }
         return false
+    }
+
+    /** Like [waitForText] but throws with what the window actually shows, so a failure explains itself. */
+    fun expectText(text: String, present: Boolean = true, scroll: Boolean = false, timeoutMs: Long = 20_000, why: String = "") {
+        if (!waitForText(text, present, timeoutMs, scroll)) {
+            throw AssertionError("expected '$text' to be ${if (present) "on" else "off"} screen $why; window shows: ${visibleTexts()}; scrolling down=$scrollingDown")
+        }
     }
 
     /** Taps the clickable element containing [text], scrolling the screen while it is not yet visible. */
@@ -63,10 +93,10 @@ object AccessibilityDriver {
                     while (node != null && !node.isClickable) node = node.parent
                     if (node != null && node.performAction(AccessibilityNodeInfo.ACTION_CLICK)) return
                 }
-                scrollable(root)?.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD)
+                scrollOnePage(root)
             }
             Thread.sleep(500)
         }
-        throw AssertionError("could not find and tap '$text' ($last)")
+        throw AssertionError("could not find and tap '$text' ($last; window shows: ${visibleTexts()}; scrolling down=$scrollingDown)")
     }
 }

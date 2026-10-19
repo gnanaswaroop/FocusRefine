@@ -1,0 +1,45 @@
+{
+  "releases": [
+    {
+      "version": "1.0",
+      "date": "2026-10-19",
+      "title": "Smarter, more private, and easier to correct",
+      "sections": [
+        {
+          "heading": "New",
+          "items": [
+            "An on-device AI model now understands what a notification means, not just which words it contains. It works offline and never leaves your phone.",
+            "Close calls: when the app is not sure, the notification is outlined in gold with a \"Not sure\" tag. A banner at the top of the inbox counts them, Review lists them least sure first, and one tap settles each (Show it, Mute it, Keep muted, Keep shown).",
+            "The app learns from your corrections, on your phone. What you teach it changes how similar notifications are handled. It is stored as numbers, never as message text.",
+            "Help & how it works: a plain-language guide with a live privacy check of this installation (network permission, cloud backup, AI model status, what is stored).",
+            "Re-run classification on history, in Settings, to re-check saved notifications with your current mode and rules.",
+            "The details screen shows how sure the app was, and the ongoing notification tells you how many close calls are waiting.",
+            "What's new: this screen."
+          ]
+        },
+        {
+          "heading": "Improved",
+          "items": [
+            "Settings and Privacy now show the engine that is really running (the AI model or the keyword matcher) instead of guessing.",
+            "Every correction teaches the app, whether you make it from the inbox or from the details screen.",
+            "Corrections are faster: the AI model is loaded once and shared instead of being set up again each time."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "Guards against a crash that was seen on a Pixel 9 Pro XL when the AI model's data was read straight from the app package.",
+            "Button labels in the notification details are easier to read."
+          ]
+        },
+        {
+          "heading": "Privacy",
+          "items": [
+            "Removed network permissions that a library had added. The app has no internet permission and cloud backup is off.",
+            "Notification text is no longer written to system logs."
+          ]
+        }
+      ]
+    }
+  ]
+}

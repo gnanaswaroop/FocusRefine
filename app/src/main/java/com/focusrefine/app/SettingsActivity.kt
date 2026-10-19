@@ -52,6 +52,7 @@ class SettingsActivity : ComponentActivity() {
                     onNavigateToContextModes = { startActivity(Intent(this, ContextModesActivity::class.java)) },
                     onNavigateToPrivacy = { startActivity(Intent(this, PrivacyInsightsActivity::class.java)) },
                     onNavigateToHelp = { startActivity(Intent(this, HelpActivity::class.java)) },
+                    onNavigateToChangelog = { startActivity(Intent(this, ChangelogActivity::class.java)) },
                     onNavigateToLearnedRules = { startActivity(Intent(this, LearnedRulesActivity::class.java)) },
                     onSendSampleNotifications = {
                         lifecycleScope.launch(Dispatchers.IO) {
@@ -139,6 +140,7 @@ fun SettingsStudioScreen(
     onNavigateToContextModes: () -> Unit,
     onNavigateToPrivacy: () -> Unit,
     onNavigateToHelp: () -> Unit = {},
+    onNavigateToChangelog: () -> Unit = {},
     onNavigateToLearnedRules: () -> Unit,
     onSendSampleNotifications: () -> Unit,
     onClearAllNotifications: () -> Unit,
@@ -216,6 +218,27 @@ fun SettingsStudioScreen(
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
+                Spacer(modifier = Modifier.weight(1f))
+                var menuOpen by remember { mutableStateOf(false) }
+                Box {
+                    IconButton(onClick = { menuOpen = true }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_more_vert),
+                            contentDescription = "More options",
+                            tint = Color.White
+                        )
+                    }
+                    DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+                        DropdownMenuItem(
+                            text = { Text("Help & how it works") },
+                            onClick = { menuOpen = false; onNavigateToHelp() }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("What's new") },
+                            onClick = { menuOpen = false; onNavigateToChangelog() }
+                        )
+                    }
+                }
             }
 
             // 1. Classification Engine Toggle Card (Collapsible)
@@ -774,24 +797,6 @@ fun SettingsStudioScreen(
                     Column {
                         Text("App Rules", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color.White)
                         Text("Per-app exceptions and filtering rules", fontSize = 11.sp, color = StudioColors.TextMuted)
-                    }
-                    Text("›", fontSize = 20.sp, color = StudioColors.TextSecondary)
-                }
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            StudioCard(onClick = onNavigateToHelp, modifier = Modifier.fillMaxWidth()) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column {
-                        Text("Help & how it works", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color.White)
-                        Text("How decisions are made, and why it is offline and private", fontSize = 11.sp, color = StudioColors.TextMuted)
                     }
                     Text("›", fontSize = 20.sp, color = StudioColors.TextSecondary)
                 }

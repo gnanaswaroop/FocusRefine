@@ -47,16 +47,22 @@ class HelpActivity : ComponentActivity() {
         val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
         @Suppress("WrongConstant")
         AppCompatDelegate.setDefaultNightMode(prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM))
+        val section = intent.getStringExtra(EXTRA_SECTION)
         setContent {
             FocusRefineTheme {
-                HelpScreen(onBack = { finish() })
+                HelpScreen(onBack = { finish() }, onlyOpen = section)
             }
         }
+    }
+
+    companion object {
+        /** Optional: open the screen with just this section expanded (see the keys passed to HelpSection). */
+        const val EXTRA_SECTION = "section"
     }
 }
 
 @Composable
-fun HelpScreen(onBack: () -> Unit) {
+fun HelpScreen(onBack: () -> Unit, onlyOpen: String? = null) {
     val context = LocalContext.current
     var facts by remember { mutableStateOf<PrivacyFacts?>(null) }
     LaunchedEffect(Unit) {
@@ -97,14 +103,14 @@ fun HelpScreen(onBack: () -> Unit) {
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            HelpSection("📱", "What it does", open = true) {
+            HelpSection("what", onlyOpen, "📱", "What it does", open = true) {
                 Body("Android lets an app you approve read incoming notifications. You gave FocusRefine that access (\"Notification access\"), and it uses it for one thing: deciding Shown or Muted.")
                 Bullet("Shown: the notification stays where it is, as usual.")
                 Bullet("Muted: it is removed from your notification shade and saved in the Muted tab of your Smart Inbox. Nothing is deleted, so you can always read it later.")
                 Bullet("The decision depends on your current mode (Commute, Deep Work, Sleeping, and so on). Switch modes from the home screen.")
             }
 
-            HelpSection("🧭", "How it decides", open = true) {
+            HelpSection("decides", onlyOpen, "🧭", "How it decides", open = true) {
                 Body("Each notification goes through these steps in order. The first one that applies decides.")
                 Numbered(1, "Your own rules", "Anything you taught it by tapping Show or Mute on a notification.")
                 Numbered(2, "Safety exceptions", "Calls and priority contacts, navigation, and security codes always come through. You can switch each one off in Settings.")
@@ -113,7 +119,7 @@ fun HelpScreen(onBack: () -> Unit) {
                 Body("Tap any notification to see which step decided and why.")
             }
 
-            HelpSection("🔒", "Offline-first and private", open = true) {
+            HelpSection("privacy", onlyOpen, "🔒", "Offline-first and private", open = true) {
                 Body("FocusRefine does all of its work on your phone. It has no account, no server, no analytics and no ads, and it is built so that it cannot send your notifications anywhere.")
                 PrivacyCheck(facts)
                 Spacer(modifier = Modifier.height(8.dp))
@@ -125,7 +131,7 @@ fun HelpScreen(onBack: () -> Unit) {
                 Body("What stays outside the app's control: the apps that send you notifications still know what they sent, and Android itself still delivers them.")
             }
 
-            HelpSection("👆", "Teach it what you want", open = false) {
+            HelpSection("teach", onlyOpen, "👆", "Teach it what you want", open = false) {
                 Body("Sometimes the app is not sure. Those \"close calls\" are outlined in gold with a \"Not sure\" tag, and a banner at the top of the inbox counts them.")
                 Bullet("Tap Review to see only the close calls, least sure first.")
                 Bullet("Show it / Mute it flips the decision. Keep muted / Keep shown confirms it. Either way the app learns.")
@@ -134,7 +140,7 @@ fun HelpScreen(onBack: () -> Unit) {
                 Bullet("See or remove what it learned: Settings > Learned Rules. Deleting a rule also forgets the lesson. Privacy & Insights > Clear local learning data removes everything it learned.")
             }
 
-            HelpSection("⚙️", "Settings that matter", open = false) {
+            HelpSection("settings", onlyOpen, "⚙️", "Settings that matter", open = false) {
                 Bullet("Mode: what counts as important right now.")
                 Bullet("Filtering strength: Gentle lets more through, Strict hides more. Strict can hide urgent alerts that score close to the line, so use it with care.")
                 Bullet("Exceptions: calls, navigation and security codes always show. Switch off only what you do not need.")
@@ -142,7 +148,7 @@ fun HelpScreen(onBack: () -> Unit) {
                 Bullet("Re-run classification on history: re-checks your saved notifications with your current mode and rules.")
             }
 
-            HelpSection("⚠️", "What it cannot do well", open = false) {
+            HelpSection("limits", onlyOpen, "⚠️", "What it cannot do well", open = false) {
                 Body("FocusRefine is a helper, not a guarantee. Please keep this in mind:")
                 Bullet("It can mute something urgent, especially an unusual wording or a language other than English. The AI model was built for English.")
                 Bullet("Close calls are flagged, but a confident mistake is not. Glance at the Muted tab now and then.")
@@ -150,7 +156,7 @@ fun HelpScreen(onBack: () -> Unit) {
                 Bullet("Never rely on FocusRefine alone for emergency alerts: keep your phone's own emergency and public safety alerts switched on.")
             }
 
-            HelpSection("🗂️", "Your data", open = false) {
+            HelpSection("data", onlyOpen, "🗂️", "Your data", open = false) {
                 Body("What is stored on this phone:")
                 Bullet("Your notification history: app, title, text, time, the decision and the reason.")
                 Bullet("The rules and lessons you taught it.")
@@ -158,7 +164,7 @@ fun HelpScreen(onBack: () -> Unit) {
                 Body("It all lives in the app's private storage, is removed when you uninstall the app, and is never uploaded. History is kept until you clear it: Settings > Clear Inbox. To erase what it learned: Privacy & Insights > Clear local learning data.")
             }
 
-            HelpSection("🛠️", "Not working?", open = false) {
+            HelpSection("troubleshoot", onlyOpen, "🛠️", "Not working?", open = false) {
                 Bullet("Not filtering anything: on the home screen, check that the switch says \"AI Filtering Active\", not \"Filtering Paused\".")
                 Bullet("Still nothing: Android Settings > Notifications > Device & app notifications > FocusRefine must be on.")
                 Bullet("Stops after a while: allow FocusRefine to run in the background (battery settings) so Android does not stop it.")
@@ -174,8 +180,9 @@ fun HelpScreen(onBack: () -> Unit) {
 
 /** A collapsible card. */
 @Composable
-private fun HelpSection(emoji: String, title: String, open: Boolean, content: @Composable () -> Unit) {
-    var expanded by remember { mutableStateOf(open) }
+private fun HelpSection(key: String, onlyOpen: String?, emoji: String, title: String, open: Boolean, content: @Composable () -> Unit) {
+    // With a requested section, only that one starts expanded; otherwise the default set does.
+    var expanded by remember { mutableStateOf(if (onlyOpen != null) key == onlyOpen else open) }
     StudioCard(onClick = { expanded = !expanded }, modifier = Modifier.fillMaxWidth().padding(bottom = 10.dp)) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
