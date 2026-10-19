@@ -7,6 +7,7 @@ The app now says when it is not sure, and makes a correction a single tap. Every
 ## What the user sees
 - **A banner above the inbox** counts the decisions the app was not sure about ("2 close calls to review"). **Review** lists only those, across the Shown and Muted tabs, least sure first. **Done** returns to the normal tabs; the banner disappears when nothing is left.
 - **A close-call card** has an amber outline, a "Not sure" pill with a small three-bar meter, and a box that says whether the app muted or showed it and could be wrong. Two buttons settle it without opening the details: **Show it** / **Mute it** (flip the decision) and **Keep muted** / **Keep shown** (confirm it). Both are lessons: the app learns from either.
+- **A "Close calls (N)" chip** sits next to the Muted and Shown tabs (also in the full-screen inbox) whenever something needs review. One tap filters the list to close calls; tap it again, or pick a tab, to go back. It combines with search.
 - **The detail screen** shows "How sure: Not sure" with the meter and a "Close call" note: telling the app what you want takes one tap, stays on this phone, and helps it get similar ones right. After a choice it says "You decided this one."
 
 ![Detail screen for a close call](assets/detail_close_call.png)

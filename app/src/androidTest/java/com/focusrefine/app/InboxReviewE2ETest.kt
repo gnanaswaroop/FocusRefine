@@ -83,4 +83,16 @@ class InboxReviewE2ETest {
             assertEquals(1, PersonalLearning.correctionCount(context))
         }
     }
+
+    @Test
+    fun quickFilterChipListsOnlyCloseCallsAndTogglesOff() {
+        ActivityScenario.launch(MainActivity::class.java).use {
+            assertTrue("the chip counts the close calls", AccessibilityDriver.waitForText("Close calls (1)"))
+            AccessibilityDriver.tapText("Close calls (1)")
+            assertTrue(AccessibilityDriver.waitForText("Reviewing close calls"))
+            assertTrue("only the close call is listed", AccessibilityDriver.waitForText("Lightning deal", present = false))
+            AccessibilityDriver.tapText("Muted (2)")
+            assertTrue("a tab leaves the filter", AccessibilityDriver.waitForText("Amazon"))
+        }
+    }
 }

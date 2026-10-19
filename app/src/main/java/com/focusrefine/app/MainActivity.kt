@@ -1,3 +1,4 @@
+@file:OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 package com.focusrefine.app
 
 import android.Manifest
@@ -596,60 +597,66 @@ fun MainStudioScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             // 4. Smart Inbox Section Header & Tabs
-            Row(
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = "Smart Inbox",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+                Spacer(modifier = Modifier.width(6.dp))
+                IconButton(
+                    onClick = { isFullScreenInbox = true },
+                    modifier = Modifier.size(28.dp)
+                ) {
+                    Text(text = "⛶", fontSize = 14.sp, color = StudioColors.TextSecondary)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // The pills wrap onto a second line on narrow screens instead of squeezing their labels.
+            FlowRow(
                 modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = "Smart Inbox",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
-                    )
-                    Spacer(modifier = Modifier.width(6.dp))
-                    IconButton(
-                        onClick = { isFullScreenInbox = true },
-                        modifier = Modifier.size(28.dp)
+                Surface(
+                    onClick = { reviewMode = false; currentTabUrgent = false },
+                    shape = CircleShape,
+                    color = if (!reviewMode && !currentTabUrgent) StudioColors.ActiveViolet else StudioColors.CardSurface,
+                    border = BorderStroke(1.dp, StudioColors.StudioBorder)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(text = "⛶", fontSize = 14.sp, color = StudioColors.TextSecondary)
+                        Text(text = "🔕 Muted ($mutedCount)", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = Color.White, maxLines = 1)
                     }
                 }
 
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Surface(
-                        onClick = { currentTabUrgent = false },
-                        shape = CircleShape,
-                        color = if (!currentTabUrgent) StudioColors.ActiveViolet else StudioColors.CardSurface,
-                        border = BorderStroke(1.dp, StudioColors.StudioBorder)
+                Surface(
+                    onClick = { reviewMode = false; currentTabUrgent = true },
+                    shape = CircleShape,
+                    color = if (!reviewMode && currentTabUrgent) StudioColors.GoldAccent else StudioColors.CardSurface,
+                    border = BorderStroke(1.dp, StudioColors.StudioBorder)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Row(
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(text = "🔕 Muted ($mutedCount)", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                        }
+                        Text(
+                            text = "🔔 Shown ($urgentCount)",
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = if (!reviewMode && currentTabUrgent) Color.Black else Color.White,
+                            maxLines = 1
+                        )
                     }
+                }
 
-                    Surface(
-                        onClick = { currentTabUrgent = true },
-                        shape = CircleShape,
-                        color = if (currentTabUrgent) StudioColors.GoldAccent else StudioColors.CardSurface,
-                        border = BorderStroke(1.dp, StudioColors.StudioBorder)
-                    ) {
-                        Row(
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = "🔔 Shown ($urgentCount)",
-                                fontSize = 11.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = if (currentTabUrgent) Color.Black else Color.White
-                            )
-                        }
-                    }
+                if (uncertainCount > 0 || reviewMode) {
+                    CloseCallsChip(count = uncertainCount, active = reviewMode, onClick = { reviewMode = !reviewMode })
                 }
             }
 
@@ -810,10 +817,10 @@ fun MainStudioScreen(
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             Surface(
-                                onClick = { currentTabUrgent = false },
+                                onClick = { reviewMode = false; currentTabUrgent = false },
                                 shape = CircleShape,
                                 modifier = Modifier.weight(1f),
-                                color = if (!currentTabUrgent) StudioColors.ActiveViolet else StudioColors.CardSurface,
+                                color = if (!reviewMode && !currentTabUrgent) StudioColors.ActiveViolet else StudioColors.CardSurface,
                                 border = BorderStroke(1.dp, StudioColors.StudioBorder)
                             ) {
                                 Box(modifier = Modifier.padding(vertical = 10.dp), contentAlignment = Alignment.Center) {
@@ -822,10 +829,10 @@ fun MainStudioScreen(
                             }
 
                             Surface(
-                                onClick = { currentTabUrgent = true },
+                                onClick = { reviewMode = false; currentTabUrgent = true },
                                 shape = CircleShape,
                                 modifier = Modifier.weight(1f),
-                                color = if (currentTabUrgent) StudioColors.GoldAccent else StudioColors.CardSurface,
+                                color = if (!reviewMode && currentTabUrgent) StudioColors.GoldAccent else StudioColors.CardSurface,
                                 border = BorderStroke(1.dp, StudioColors.StudioBorder)
                             ) {
                                 Box(modifier = Modifier.padding(vertical = 10.dp), contentAlignment = Alignment.Center) {
@@ -833,9 +840,13 @@ fun MainStudioScreen(
                                         text = "🔔 Shown ($urgentCount)",
                                         fontSize = 12.sp,
                                         fontWeight = FontWeight.Bold,
-                                        color = if (currentTabUrgent) Color.Black else Color.White
+                                        color = if (!reviewMode && currentTabUrgent) Color.Black else Color.White
                                     )
                                 }
+                            }
+
+                            if (uncertainCount > 0 || reviewMode) {
+                                CloseCallsChip(count = uncertainCount, active = reviewMode, onClick = { reviewMode = !reviewMode }, modifier = Modifier.weight(1f))
                             }
                         }
 
