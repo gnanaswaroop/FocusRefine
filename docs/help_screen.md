@@ -6,6 +6,8 @@ not exported, so other apps cannot open it. Internally it can open with just one
 `what`, `decides`, `privacy`, `teach`, `settings`, `limits`, `data`, `troubleshoot`), which the tests use and which lets other
 screens link straight to, say, the privacy section.
 
+![The Help screen](../assets/HelpActivity.png)
+
 ## What it covers
 | Section | What it says |
 | :--- | :--- |
@@ -31,6 +33,8 @@ If a future change adds a network permission or turns backup on, the screen says
 The screen states what the app cannot do well (see [`model_coverage_gaps.md`](model_coverage_gaps.md)), and only describes features that exist: there is no automatic history deletion, so it says history is kept until you clear it.
 
 ## The Settings menu and the change log
+![What's new](../assets/ChangelogActivity.png)
+
 The **⋮ menu** in the Settings top bar has two items: **Help & how it works** and **What's new**. **What's new** opens the change
 log (`ChangelogActivity`): release cards, newest first, with the version, the date, a title and the entries grouped under New,
 Improved, Fixed and Privacy, plus "You have version X" and an "Installed" tag on the release you are running.
