@@ -6,6 +6,7 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,18 +27,20 @@ class ChevronE2ETest {
     private fun checkSettingsChevrons() {
         ActivityScenario.launch(SettingsActivity::class.java).use {
             AccessibilityDriver.expectText("Classification Engine")
-            assertTrue("open sections show a Collapse chevron", AccessibilityDriver.countOf("Collapse") >= 1)
+            // Settings opens with every section collapsed.
+            AccessibilityDriver.expectText("Use On-Device AI Engine", present = false, why = "the section starts collapsed")
+            assertTrue("collapsed sections show an Expand chevron", AccessibilityDriver.countOf("Expand") >= 1)
+            assertEquals("and none starts open", 0, AccessibilityDriver.countOf("Collapse"))
 
             val heightPx = AccessibilityDriver.clickableHeightPx("Classification Engine")!!
             val minPx = 48 * context.resources.displayMetrics.density
             assertTrue("the header is at least 48dp tall: $heightPx px vs ${minPx.toInt()} px", heightPx >= minPx - 1)
 
-            AccessibilityDriver.expectText("Use On-Device AI Engine", why = "the section starts open")
             AccessibilityDriver.tapText("Classification Engine")
-            AccessibilityDriver.expectText("Use On-Device AI Engine", present = false, why = "after collapsing")
-            AccessibilityDriver.expectText("Expand", why = "a collapsed section offers Expand")
+            AccessibilityDriver.expectText("Use On-Device AI Engine", why = "after expanding")
+            AccessibilityDriver.expectText("Collapse", why = "an open section offers Collapse")
             AccessibilityDriver.tapText("Classification Engine")
-            AccessibilityDriver.expectText("Use On-Device AI Engine", why = "after expanding again")
+            AccessibilityDriver.expectText("Use On-Device AI Engine", present = false, why = "after collapsing again")
         }
     }
 

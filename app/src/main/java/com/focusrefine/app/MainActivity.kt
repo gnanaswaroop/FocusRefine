@@ -36,6 +36,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
@@ -221,6 +223,7 @@ fun MainStudioScreen(
     var isRunning by remember(isFilteringActive) { mutableStateOf(isFilteringActive) }
     var currentTabUrgent by remember { mutableStateOf(false) } // false = Muted, true = Shown
     var searchQuery by remember { mutableStateOf("") }
+    var searchOpen by remember { mutableStateOf(false) } // the search bar is hidden until the magnifier is tapped
     val defaultMode = remember { PromptManager.getDefaultModeName(context) }
     var currentMode by remember { mutableStateOf(prefs.getString("current_mode", defaultMode) ?: defaultMode) }
     var notifications by remember { mutableStateOf(emptyList<NotificationEntity>()) }
@@ -497,17 +500,24 @@ fun MainStudioScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Context mode (Long press to manage)",
+                    text = "Mode (long press to manage)",
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Medium,
-                    color = StudioColors.TextSecondary
+                    color = StudioColors.TextSecondary,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.weight(1f)
                 )
-                Text(
-                    text = "$currentMode · Active",
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = StudioColors.ActiveVioletLight
-                )
+                if (session == null) {
+                    Spacer(modifier = Modifier.width(8.dp))
+                    SessionStartChip(
+                        mode = currentMode,
+                        onStart = { minutes ->
+                            ModeSession.start(context, currentMode, minutes)
+                            refreshTrigger++
+                        }
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -550,22 +560,18 @@ fun MainStudioScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(10.dp))
-
-            SessionCard(
-                session = session,
-                now = sessionNow,
-                mode = currentMode,
-                onStart = { minutes ->
-                    ModeSession.start(context, currentMode, minutes)
-                    refreshTrigger++
-                },
-                onEnd = {
-                    ModeSession.end(context)
-                    currentMode = prefs.getString("current_mode", currentMode) ?: currentMode
-                    refreshTrigger++
-                }
-            )
+            if (session != null) {
+                Spacer(modifier = Modifier.height(10.dp))
+                SessionActiveCard(
+                    session = session,
+                    now = sessionNow,
+                    onEnd = {
+                        ModeSession.end(context)
+                        currentMode = prefs.getString("current_mode", currentMode) ?: currentMode
+                        refreshTrigger++
+                    }
+                )
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -583,6 +589,15 @@ fun MainStudioScreen(
                     modifier = Modifier.size(28.dp)
                 ) {
                     Text(text = "⛶", fontSize = 14.sp, color = StudioColors.TextSecondary)
+                }
+                IconButton(
+                    onClick = {
+                        if (searchOpen) searchQuery = ""
+                        searchOpen = !searchOpen
+                    },
+                    modifier = Modifier.size(28.dp).semantics { contentDescription = if (searchOpen) "Close search" else "Search notifications" }
+                ) {
+                    Text(text = if (searchOpen) "✕" else "🔍", fontSize = 14.sp, color = StudioColors.TextSecondary)
                 }
             }
 
@@ -633,31 +648,33 @@ fun MainStudioScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(10.dp))
-
-            // Search Bar
-            OutlinedTextField(
-                value = searchQuery,
-                onValueChange = { searchQuery = it },
-                placeholder = { Text("Search notifications...", color = StudioColors.TextMuted, fontSize = 13.sp) },
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth(),
-                shape = CircleShape,
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = StudioColors.CardSurface,
-                    unfocusedContainerColor = StudioColors.CardSurface,
-                    focusedBorderColor = StudioColors.ActiveViolet,
-                    unfocusedBorderColor = StudioColors.StudioBorder,
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White
+            if (searchOpen) {
+                val searchFocus = remember { FocusRequester() }
+                LaunchedEffect(Unit) { searchFocus.requestFocus() }
+                Spacer(modifier = Modifier.height(10.dp))
+                OutlinedTextField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    placeholder = { Text("Search notifications...", color = StudioColors.TextMuted, fontSize = 13.sp) },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth().focusRequester(searchFocus),
+                    shape = CircleShape,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedContainerColor = StudioColors.CardSurface,
+                        unfocusedContainerColor = StudioColors.CardSurface,
+                        focusedBorderColor = StudioColors.ActiveViolet,
+                        unfocusedBorderColor = StudioColors.StudioBorder,
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White
+                    )
                 )
-            )
+            }
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Close calls: surfaced above the list so they are not buried in a long inbox
-            if (uncertainCount > 0 || reviewMode) {
-                ReviewBanner(count = uncertainCount, reviewing = reviewMode, onToggle = { reviewMode = !reviewMode })
+            // Close calls: the chip above is the way in; the banner only appears while reviewing, to say so and to end it
+            if (reviewMode) {
+                ReviewBanner(count = uncertainCount, reviewing = true, onToggle = { reviewMode = false })
                 Spacer(modifier = Modifier.height(12.dp))
             }
 

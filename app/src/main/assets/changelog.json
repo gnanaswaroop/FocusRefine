@@ -24,7 +24,9 @@
           "items": [
             "Settings and Privacy now show the engine that is really running (the AI model or the keyword matcher) instead of guessing.",
             "Every correction teaches the app, whether you make it from the inbox or from the details screen.",
-            "Corrections are faster: the AI model is loaded once and shared instead of being set up again each time."
+            "Corrections are faster: the AI model is loaded once and shared instead of being set up again each time.",
+            "Home is tidier: the search bar opens from a magnifier, close calls are one chip instead of a chip plus a banner, the timed-session button shares the mode row, and the header is one line.",
+            "Settings opens with every section collapsed, so you can see all of them at once and open the one you need."
           ]
         },
         {

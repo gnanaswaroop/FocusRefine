@@ -44,11 +44,11 @@ class InboxReviewE2ETest {
     @Test
     fun closeCallsAreFlaggedAndOneTapSettlesThem() {
         ActivityScenario.launch(MainActivity::class.java).use {
-            assertTrue("the banner should count the close call", AccessibilityDriver.waitForText("1 close call to review"))
+            assertTrue("the chip counts the close call", AccessibilityDriver.waitForText("Close calls (1)"))
             assertTrue("the uncertain card carries a 'Not sure' pill", AccessibilityDriver.waitForText("Not sure"))
             assertTrue("and the one-tap choices", AccessibilityDriver.hasText("Show it"))
 
-            AccessibilityDriver.tapText("Review")
+            AccessibilityDriver.tapText("Close calls (1)")
             assertTrue(AccessibilityDriver.waitForText("Reviewing close calls"))
             assertTrue("the confident decision is not in the review list", AccessibilityDriver.waitForText("Lightning deal", present = false))
 
@@ -71,7 +71,7 @@ class InboxReviewE2ETest {
     @Test
     fun keepingTheDecisionAlsoSettlesItAndTeachesTheApp() {
         ActivityScenario.launch(MainActivity::class.java).use {
-            assertTrue(AccessibilityDriver.waitForText("1 close call to review"))
+            assertTrue(AccessibilityDriver.waitForText("Close calls (1)"))
             AccessibilityDriver.tapText("Keep muted")
 
             val deadline = System.currentTimeMillis() + 60_000

@@ -156,13 +156,13 @@ fun SettingsStudioScreen(
     var useAiModel by remember { mutableStateOf(prefs?.getBoolean("use_ai_model", true) ?: true) }
     var enableSwipeAnimations by remember { mutableStateOf(prefs?.getBoolean("enable_swipe_animations", true) ?: true) }
 
-    // Collapsible Card States (Open/Expanded by default)
-    var isEngineExpanded by remember { mutableStateOf(true) }
-    var isStrengthExpanded by remember { mutableStateOf(true) }
-    var isExceptionsExpanded by remember { mutableStateOf(true) }
-    var isModesExpanded by remember { mutableStateOf(true) }
-    var isLearnExpanded by remember { mutableStateOf(true) }
-    var isAdvancedExpanded by remember { mutableStateOf(true) }
+    // Collapsible card states (all collapsed when the screen opens)
+    var isEngineExpanded by remember { mutableStateOf(false) }
+    var isStrengthExpanded by remember { mutableStateOf(false) }
+    var isExceptionsExpanded by remember { mutableStateOf(false) }
+    var isModesExpanded by remember { mutableStateOf(false) }
+    var isLearnExpanded by remember { mutableStateOf(false) }
+    var isAdvancedExpanded by remember { mutableStateOf(false) }
 
     val modeOptions = listOf("Commute", "Deep Focus", "Sleep", "Gaming")
 

@@ -105,14 +105,14 @@ class ModeSessionE2ETest {
     @Test
     fun homeStartsAndEndsASessionInTwoTaps() {
         androidx.test.core.app.ActivityScenario.launch(MainActivity::class.java).use {
-            assertTrue(AccessibilityDriver.waitForText("Start a timed session"))
-            AccessibilityDriver.tapText("Start a timed session")
+            assertTrue(AccessibilityDriver.waitForText("Timed session"))
+            AccessibilityDriver.tapText("Timed session")
             AccessibilityDriver.tapText("25 minutes")
             assertTrue("the session card shows", AccessibilityDriver.waitForText("min left"))
             assertTrue(ModeSession.isActive(context))
             assertNotNull(live())
             AccessibilityDriver.tapText("End session")
-            assertTrue(AccessibilityDriver.waitForText("Start a timed session"))
+            assertTrue(AccessibilityDriver.waitForText("Timed session"))
             assertFalse(ModeSession.isActive(context))
             assertNull(live())
         }

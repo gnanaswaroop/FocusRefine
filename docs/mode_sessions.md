@@ -8,7 +8,7 @@ A session keeps one context mode on for a set time ("Deep Focus for 45 minutes")
 | --- | --- | --- |
 | ![Session length picker](assets/session_picker.png) | ![Session card on Home](assets/session_active.png) | ![Live notification in the shade](assets/session_notification.png) |
 
-- On Home, under the mode chips, tap **Start a timed session** and pick 25, 45, 60 or 90 minutes. The session uses the mode that is selected.
+- On Home, tap the **⏱ Timed session** chip at the right of the mode row and pick 25, 45, 60 or 90 minutes. The session uses the mode that is selected.
 - While it runs, Home shows a card with the time left, how many notifications were muted during the session, a progress bar and **End session**.
 - A **live notification** shows the same: title "Deep Focus session started" for the first minute, then "Deep Focus · 32 min left", a progress bar, a system countdown, and **End session** and **Open FocusRefine** buttons. On Android 16 it asks to be promoted to a Live Update (status bar chip) through `android.requestPromotedOngoing` and the `POST_PROMOTED_NOTIFICATIONS` permission; earlier versions show a normal ongoing notification.
 - When time is up, or when you press End session, the previous mode returns. A finished session also posts one "session complete" note with the muted count.
