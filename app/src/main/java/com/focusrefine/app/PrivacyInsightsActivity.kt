@@ -303,14 +303,30 @@ fun PrivacyInsightsScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable {
-                                Toast.makeText(context, "All notification processing is 100% on-device", Toast.LENGTH_LONG).show()
-                            },
+                            .clickable { LegalActivity.open(context, LegalDoc.PRIVACY) },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
                             text = "View privacy information",
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = StudioColors.ActiveVioletLight
+                        )
+                        StudioNavChevron(tint = StudioColors.ActiveVioletLight)
+                    }
+
+                    Spacer(modifier = Modifier.height(14.dp))
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { LegalActivity.open(context, LegalDoc.TERMS) },
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Terms of use",
                             fontSize = 13.sp,
                             fontWeight = FontWeight.Bold,
                             color = StudioColors.ActiveVioletLight

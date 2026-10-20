@@ -70,6 +70,10 @@
             android:name=".ChangelogActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".LegalActivity"
+            android:exported="false" />
+
         <service
             android:name=".NotificationFilterService"
             android:label="FocusRefine Notification Filter"
