@@ -86,6 +86,15 @@ object AccessibilityDriver {
     /** Number of nodes whose text or description contains [text]. */
     fun countOf(text: String): Int = automation.rootInActiveWindow?.let { findAll(it, text).size } ?: 0
 
+
+    /** Scrolls the screen's scrollable content down by [pages] pages (stops early at the end). */
+    fun scrollDown(pages: Int) {
+        repeat(pages) {
+            automation.rootInActiveWindow?.let { root -> scrollable(root)?.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD) }
+            Thread.sleep(500)
+        }
+    }
+
     /** Like [waitForText] but throws with what the window actually shows, so a failure explains itself. */
     fun expectText(text: String, present: Boolean = true, scroll: Boolean = false, timeoutMs: Long = 20_000, why: String = "") {
         if (!waitForText(text, present, timeoutMs, scroll)) {

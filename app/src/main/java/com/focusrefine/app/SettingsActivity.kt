@@ -191,35 +191,11 @@ fun SettingsStudioScreen(
         modifier = Modifier.fillMaxSize(),
         color = StudioColors.DarkBackground
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp)
-        ) {
-            // Header
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                IconButton(onClick = onBack) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_arrow_back),
-                        contentDescription = "Back",
-                        tint = Color.White
-                    )
-                }
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = "Settings",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                var menuOpen by remember { mutableStateOf(false) }
+        val scrollState = rememberScrollState()
+        var menuOpen by remember { mutableStateOf(false) }
+        Column(modifier = Modifier.fillMaxSize()) {
+            // The title bar is outside the scrolling column, so Back and the menu stay in view while the content scrolls.
+            StudioTopBar(title = "Settings", onBack = onBack, showDivider = scrollState.value > 0) {
                 Box {
                     IconButton(onClick = { menuOpen = true }) {
                         Icon(
@@ -240,7 +216,13 @@ fun SettingsStudioScreen(
                     }
                 }
             }
-
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .verticalScroll(scrollState)
+                    .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 16.dp)
+            ) {
             // 1. Classification Engine Toggle Card (Collapsible)
             StudioCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
@@ -823,6 +805,7 @@ fun SettingsStudioScreen(
             }
 
             StudioFooter(text = "Private by design. Refined by you.")
+            }
         }
     }
 }
