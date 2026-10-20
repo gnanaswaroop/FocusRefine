@@ -573,7 +573,11 @@ fun MainStudioScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(12.dp))
+
+            HorizontalDivider(color = StudioColors.StudioBorder)
+
+            Spacer(modifier = Modifier.height(12.dp))
 
             // 4. Smart Inbox Section Header & Tabs
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -720,13 +724,6 @@ fun MainStudioScreen(
                         items(notifications, key = { it.id }) { notif ->
                             InboxNotificationCard(notif = notif, onChanged = { refreshTrigger++ })
                         }
-
-                        item {
-                            StudioFooter(
-                                text = "🔒 Your notifications stay on this device.",
-                                modifier = Modifier.padding(top = 12.dp, bottom = 16.dp)
-                            )
-                        }
                     }
                     }
                 }
@@ -757,15 +754,14 @@ fun MainStudioScreen(
                     items(notifications, key = { it.id }) { notif ->
                         InboxNotificationCard(notif = notif, onChanged = { refreshTrigger++ })
                     }
-
-                    item {
-                        StudioFooter(
-                            text = "🔒 Your notifications stay on this device.",
-                            modifier = Modifier.padding(top = 12.dp, bottom = 16.dp)
-                        )
-                    }
                 }
             }
+
+            // Pinned under the list so it stays visible even when the inbox is empty
+            StudioFooter(
+                text = "🔒 Your notifications stay on this device.",
+                modifier = Modifier.fillMaxWidth().padding(top = 12.dp, bottom = 16.dp)
+            )
         }
 
         // Full Screen Smart Inbox Dialog
