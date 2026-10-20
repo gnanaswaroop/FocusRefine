@@ -92,7 +92,8 @@ class InboxReviewE2ETest {
             assertTrue(AccessibilityDriver.waitForText("Reviewing close calls"))
             assertTrue("only the close call is listed", AccessibilityDriver.waitForText("Lightning deal", present = false))
             AccessibilityDriver.tapText("Muted (2)")
-            assertTrue("a tab leaves the filter", AccessibilityDriver.waitForText("Reviewing close calls", present = false))
+            // The chip drops its "✕" once a tab is chosen (the list below it can lag in the accessibility tree).
+            assertTrue("a tab leaves the filter", AccessibilityDriver.waitForText("✕", present = false))
         }
     }
 }
