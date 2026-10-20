@@ -31,4 +31,20 @@ class ModeSessionTest {
         assertEquals(ModeSession.Phase.ACTIVE, ModeSession.phase(0, 45 * min, 5 * min))
         assertEquals(ModeSession.Phase.COMPLETE, ModeSession.phase(0, 45 * min, 45 * min))
     }
+
+    @Test
+    fun anOpenEndedSessionNeverCompletesOrShowsProgress() {
+        val start = 1_000 * min
+        assertEquals(ModeSession.Phase.STARTED, ModeSession.phase(start, ModeSession.OPEN_ENDED, start + 10_000))
+        assertEquals(ModeSession.Phase.ACTIVE, ModeSession.phase(start, ModeSession.OPEN_ENDED, start + 600 * min))
+        assertEquals(ModeSession.Phase.ACTIVE, ModeSession.phase(start, ModeSession.OPEN_ENDED, start + 365 * 24 * 60 * min))
+        assertEquals(0, ModeSession.percent(start, ModeSession.OPEN_ENDED, start + 600 * min))
+        assertEquals(true, ModeSession.State("Deep Focus", start, ModeSession.OPEN_ENDED, 0).openEnded)
+        assertEquals(false, ModeSession.State("Deep Focus", start, start + 45 * min, 0).openEnded)
+    }
+
+    @Test
+    fun theOfferedLengthsAreFiveFifteenThirtyAndFortyFiveMinutes() {
+        assertEquals(listOf(5, 15, 30, 45), ModeSession.DURATIONS_MIN)
+    }
 }

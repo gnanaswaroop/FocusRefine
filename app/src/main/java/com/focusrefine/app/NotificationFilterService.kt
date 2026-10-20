@@ -14,6 +14,7 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -170,7 +171,7 @@ class NotificationFilterService : NotificationListenerService() {
 
         val appIconBitmap = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
 
-        return NotificationCompat.Builder(this, CHANNEL_ID)
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(statusText)
             .setSmallIcon(R.drawable.ic_notification)
@@ -182,7 +183,9 @@ class NotificationFilterService : NotificationListenerService() {
             .setSilent(true)
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setCategory(NotificationCompat.CATEGORY_SERVICE)
-            .build()
+        // While a timed session runs this is the only live notification: it takes the session's look and buttons.
+        ModeSession.applyTo(this, builder)
+        return builder.build()
     }
 
     private fun updateForegroundNotification(isRunning: Boolean, suppressedCount: Int) {
@@ -210,7 +213,10 @@ class NotificationFilterService : NotificationListenerService() {
             return
         }
 
-        CoroutineScope(Dispatchers.IO).launch {
+        // A failure while handling one notification must never take the whole app down (the listener can be unbound
+        // by the system at any moment); log the class only, never the content.
+        val onError = CoroutineExceptionHandler { _, e -> Log.w(TAG, "Could not handle a notification: ${e.javaClass.simpleName}") }
+        CoroutineScope(Dispatchers.IO + onError).launch {
             val defaultMode = PromptManager.getDefaultModeName(this@NotificationFilterService)
             val currentMode = prefs.getString("current_mode", defaultMode) ?: defaultMode
             val classification = classifier.classify(title, text, currentMode)
@@ -231,7 +237,14 @@ class NotificationFilterService : NotificationListenerService() {
                 if (ReviewQueue.refresh(this@NotificationFilterService)) updateForegroundNotification(true, prefs.getInt("suppressed_count", 0))
             } else {
                 if (sbn.isClearable) {
-                    cancelNotification(sbn.key)
+                    try {
+                        cancelNotification(sbn.key)
+                    } catch (e: SecurityException) {
+                        // The system has already unbound this listener (it is being rebound, or access was revoked).
+                        // The notification stays in the shade, so nothing is counted or stored as muted.
+                        Log.w(TAG, "Listener is no longer connected; left a notification alone")
+                        return@launch
+                    }
                     Log.d(TAG, "Suppressed/Muted notification: ${sbn.key}")
 
                     val count = prefs.getInt("suppressed_count", 0) + 1

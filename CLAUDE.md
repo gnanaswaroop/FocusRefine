@@ -93,7 +93,7 @@ All screens are Compose with a shared "Dark Studio" design system in `FocusRefin
 | `LearnedRulesActivity` | View/remove learned rules |
 | `PrivacyInsightsActivity` | Privacy status, noise-filtered %, reset learning data |
 | `HelpActivity` | In-app help with a live privacy check (`PrivacyFacts`); not exported; opened from the home screen `?` and the Settings `⋮` menu; `section` extra opens one section. See `docs/help_screen.md` |
-| `Home` timed sessions | `ModeSession` + `SessionCard` + `ModeSessionReceiver`: timed mode with a live countdown notification (id 1002); see `docs/mode_sessions.md` |
+| `Home` timed sessions | `ModeSession` + `SessionCard` + `ModeSessionReceiver`: timed (5, 15, 30, 45 min) or open-ended mode; ONE live notification: the service's own (id 1001) takes the session's look via `ModeSession.applyTo`, a standalone one (id 1002) is posted only when the service is not running; see `docs/mode_sessions.md` |
 | `ChangelogActivity` | "What's new" release notes from `assets/changelog.json`; opened from the Settings `⋮` menu. **Add an entry for every user-visible change; `ChangelogTest` requires the newest entry to equal `versionName`** |
 
 Other components: `App` (applies saved night mode at startup), `NotificationToggleReceiver` (STOP/START action in the ongoing notification, action `com.focusrefine.app.ACTION_TOGGLE_SERVICE`), `AutoActivationReceiver` (Bluetooth ACL connect/disconnect to set `current_mode`), `AndroidAutoDetector`.

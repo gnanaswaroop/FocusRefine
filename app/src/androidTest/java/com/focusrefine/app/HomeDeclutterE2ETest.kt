@@ -65,7 +65,7 @@ class HomeDeclutterE2ETest {
             assertTrue("the chip is on Home", AccessibilityDriver.hasText("Timed session"))
             assertTrue("no duplicate 'Active' text next to the label", AccessibilityDriver.hasText("· Active").not())
             AccessibilityDriver.tapText("Timed session")
-            AccessibilityDriver.tapText("25 minutes")
+            AccessibilityDriver.tapText("15 minutes")
             assertTrue("the running card replaces the chip", AccessibilityDriver.waitForText("min left"))
             assertTrue(AccessibilityDriver.waitForText("Timed session", present = false))
             AccessibilityDriver.tapText("End session")

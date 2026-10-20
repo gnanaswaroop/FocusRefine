@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.sp
  * duration picker. While a session runs, [SessionActiveCard] takes its place.
  */
 @Composable
-fun SessionStartChip(mode: String, onStart: (minutes: Int) -> Unit, modifier: Modifier = Modifier) {
+fun SessionStartChip(mode: String, onStart: (minutes: Int?) -> Unit, modifier: Modifier = Modifier) {
     var picking by remember { mutableStateOf(false) }
 
     Surface(
@@ -74,6 +74,21 @@ fun SessionStartChip(mode: String, onStart: (minutes: Int) -> Unit, modifier: Mo
                             )
                         }
                     }
+                    Surface(
+                        onClick = { picking = false; onStart(null) },
+                        shape = CircleShape,
+                        color = StudioColors.CardSurface,
+                        border = BorderStroke(1.dp, StudioColors.ActiveViolet),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            "Until I turn it off",
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White,
+                            modifier = Modifier.padding(vertical = 10.dp, horizontal = 16.dp)
+                        )
+                    }
                 }
             },
             confirmButton = {},
@@ -88,26 +103,31 @@ fun SessionStartChip(mode: String, onStart: (minutes: Int) -> Unit, modifier: Mo
  */
 @Composable
 fun SessionActiveCard(session: ModeSession.State, now: Long, onEnd: () -> Unit, modifier: Modifier = Modifier) {
+    // Home's clock can be a little older than a session that has just started; never show more than the full length.
+    val now = maxOf(now, session.startMs)
     StudioCard(modifier = modifier.fillMaxWidth()) {
         Column(modifier = Modifier.padding(14.dp)) {
             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text("${session.mode} session", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.White)
                     Text(
-                        "${ModeSession.minutesLeft(session.endMs, now)} min left · ${session.mutedSoFar} muted so far",
+                        if (session.openEnded) "On until you turn it off · ${session.mutedSoFar} muted so far"
+                        else "${ModeSession.minutesLeft(session.endMs, now)} min left · ${session.mutedSoFar} muted so far",
                         fontSize = 12.sp,
                         color = StudioColors.TextSecondary
                     )
                 }
                 TextButton(onClick = onEnd) { Text("End session", color = StudioColors.ActiveVioletLight) }
             }
-            Spacer(modifier = Modifier.height(8.dp))
-            LinearProgressIndicator(
-                progress = { ModeSession.percent(session.startMs, session.endMs, now) / 100f },
-                modifier = Modifier.fillMaxWidth(),
-                color = StudioColors.ActiveViolet,
-                trackColor = StudioColors.StudioBorder
-            )
+            if (!session.openEnded) {
+                Spacer(modifier = Modifier.height(8.dp))
+                LinearProgressIndicator(
+                    progress = { ModeSession.percent(session.startMs, session.endMs, now) / 100f },
+                    modifier = Modifier.fillMaxWidth(),
+                    color = StudioColors.ActiveViolet,
+                    trackColor = StudioColors.StudioBorder
+                )
+            }
         }
     }
 }
