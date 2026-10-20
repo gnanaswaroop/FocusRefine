@@ -16,3 +16,10 @@
 
 # Room generates its implementations; keep the entity and DAO shapes it relies on.
 -keep class com.focusrefine.app.NotificationEntity { *; }
+
+# EmbeddingClassifier.modelBuffer is written but never read: it only keeps the model's native memory reachable while
+# MediaPipe reads the weights in place. R8 removes such fields, the buffer is garbage collected, and the model's worker
+# threads then fault (SIGSEGV/SIGBUS in libmediapipe_tasks_jni.so) a few notifications after start.
+-keepclassmembers class com.focusrefine.app.EmbeddingClassifier {
+    private java.nio.ByteBuffer modelBuffer;
+}
