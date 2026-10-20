@@ -121,14 +121,32 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    /** Re-reads the notification-access grant, starts the service if it is now allowed, and tells Home to reload. */
+    private fun refreshAccess() {
         val isCurrentlyEnabled = isNotificationServiceEnabled()
         isNotifAccessEnabledState.value = isCurrentlyEnabled
+        if (isCurrentlyEnabled) startNotificationService()
+        sendBroadcast(Intent("com.focusrefine.app.ACTION_LIVE_REFRESH").setPackage(packageName))
+    }
 
-        if (isCurrentlyEnabled) {
-            startNotificationService()
-        }
+    // The system can update the grant a moment after we resume from its settings screen, so also watch the setting.
+    private val accessObserver = object : android.database.ContentObserver(android.os.Handler(android.os.Looper.getMainLooper())) {
+        override fun onChange(selfChange: Boolean) = refreshAccess()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        contentResolver.registerContentObserver(Settings.Secure.getUriFor("enabled_notification_listeners"), false, accessObserver)
+    }
+
+    override fun onStop() {
+        contentResolver.unregisterContentObserver(accessObserver)
+        super.onStop()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refreshAccess()
 
         val currentThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         AppCompatDelegate.setDefaultNightMode(currentThemeMode)
@@ -139,8 +157,6 @@ class MainActivity : ComponentActivity() {
         }
         lastThemeMode = currentThemeMode
 
-        val liveRefreshIntent = Intent("com.focusrefine.app.ACTION_LIVE_REFRESH")
-        sendBroadcast(liveRefreshIntent)
     }
 
     override fun onDestroy() {
@@ -282,9 +298,14 @@ fun MainStudioScreen(
 
     LaunchedEffect(isNotificationAccessEnabled) {
         if (!isNotificationAccessEnabled) {
+            // Remember that we paused it, so granting access again turns filtering back on (a pause the user chose stays).
+            if (prefs.getBoolean("service_running", true)) prefs.edit().putBoolean("paused_for_access", true).apply()
             isRunning = false
             prefs.edit().putBoolean("service_running", false).apply()
         } else {
+            if (prefs.getBoolean("paused_for_access", false)) {
+                prefs.edit().putBoolean("service_running", true).putBoolean("paused_for_access", false).apply()
+            }
             isRunning = prefs.getBoolean("service_running", true)
         }
     }
