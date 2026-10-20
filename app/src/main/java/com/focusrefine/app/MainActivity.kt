@@ -237,6 +237,7 @@ fun MainStudioScreen(
     val database = AppDatabase.getDatabase(context)
 
     var isRunning by remember(isFilteringActive) { mutableStateOf(isFilteringActive) }
+    var askingDuration by remember { mutableStateOf(false) }
     var currentTabUrgent by remember { mutableStateOf(false) } // false = Muted, true = Shown
     var searchQuery by remember { mutableStateOf("") }
     var searchOpen by remember { mutableStateOf(false) } // the search bar is hidden until the magnifier is tapped
@@ -488,6 +489,9 @@ fun MainStudioScreen(
                                     if (!isNotificationAccessEnabled) {
                                         Toast.makeText(context, "Please enable Notification Access first", Toast.LENGTH_SHORT).show()
                                         onEnableNotificationAccess()
+                                    } else if (isChecked) {
+                                        // Switching on asks how long to work first; the service starts once a length is picked
+                                        askingDuration = true
                                     } else {
                                         isRunning = isChecked
                                         prefs.edit().putBoolean("service_running", isChecked).apply()
@@ -512,6 +516,24 @@ fun MainStudioScreen(
                 }
             }
 
+            if (askingDuration) {
+                SessionDurationDialog(
+                    mode = currentMode,
+                    onStart = { minutes ->
+                        askingDuration = false
+                        isRunning = true
+                        // The service flips its flag when it gets the toggle, so send it once and let it set the state
+                        val toggleIntent = Intent(NotificationFilterService.ACTION_TOGGLE_SERVICE).apply {
+                            setPackage(context.packageName)
+                        }
+                        context.sendBroadcast(toggleIntent)
+                        ModeSession.start(context, currentMode, minutes)
+                        refreshTrigger++
+                    },
+                    onDismiss = { askingDuration = false }
+                )
+            }
+
             Spacer(modifier = Modifier.height(14.dp))
 
             // 3. Context Mode Selector (Long press opens ContextModesActivity)
@@ -529,16 +551,6 @@ fun MainStudioScreen(
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.weight(1f)
                 )
-                if (session == null) {
-                    Spacer(modifier = Modifier.width(8.dp))
-                    SessionStartChip(
-                        mode = currentMode,
-                        onStart = { minutes ->
-                            ModeSession.start(context, currentMode, minutes)
-                            refreshTrigger++
-                        }
-                    )
-                }
             }
 
             Spacer(modifier = Modifier.height(8.dp))

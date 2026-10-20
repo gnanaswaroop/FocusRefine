@@ -15,10 +15,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,62 +23,26 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 /**
- * Home entry point for timed sessions, shown at the end of the mode row while no session runs: a small chip that opens a
- * duration picker. While a session runs, [SessionActiveCard] takes its place.
+ * Asked when Focus Refine is switched on: how long it should work before the usual mode comes back. [onStart] gets the
+ * chosen length in minutes, or null for "until I turn it off". Cancel leaves Focus Refine off.
  */
 @Composable
-fun SessionStartChip(mode: String, onStart: (minutes: Int?) -> Unit, modifier: Modifier = Modifier) {
-    var picking by remember { mutableStateOf(false) }
-
-    Surface(
-        onClick = { picking = true },
-        shape = CircleShape,
-        color = StudioColors.CardSurface,
-        border = BorderStroke(1.dp, StudioColors.StudioBorder),
-        modifier = modifier
-    ) {
-        Text(
-            text = "⏱ Timed session",
-            fontSize = 12.sp,
-            fontWeight = FontWeight.Medium,
-            color = Color.White,
-            maxLines = 1,
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
-        )
-    }
-
-    if (picking) {
-        AlertDialog(
-            onDismissRequest = { picking = false },
-            title = { Text("Start a $mode session") },
-            text = {
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text("$mode stays on for the time you pick, then your usual mode comes back.", fontSize = 13.sp)
-                    for (minutes in ModeSession.DURATIONS_MIN) {
-                        Surface(
-                            onClick = { picking = false; onStart(minutes) },
-                            shape = CircleShape,
-                            color = StudioColors.ActiveViolet,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(
-                                "$minutes minutes",
-                                fontSize = 13.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White,
-                                modifier = Modifier.padding(vertical = 10.dp, horizontal = 16.dp)
-                            )
-                        }
-                    }
+fun SessionDurationDialog(mode: String, onStart: (minutes: Int?) -> Unit, onDismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("How long should Focus Refine work?") },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text("$mode stays on for the time you pick, then your usual mode comes back.", fontSize = 13.sp)
+                for (minutes in ModeSession.DURATIONS_MIN) {
                     Surface(
-                        onClick = { picking = false; onStart(null) },
+                        onClick = { onStart(minutes) },
                         shape = CircleShape,
-                        color = StudioColors.CardSurface,
-                        border = BorderStroke(1.dp, StudioColors.ActiveViolet),
+                        color = StudioColors.ActiveViolet,
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text(
-                            "Until I turn it off",
+                            "$minutes minutes",
                             fontSize = 13.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color.White,
@@ -90,11 +50,26 @@ fun SessionStartChip(mode: String, onStart: (minutes: Int?) -> Unit, modifier: M
                         )
                     }
                 }
-            },
-            confirmButton = {},
-            dismissButton = { TextButton(onClick = { picking = false }) { Text("Cancel") } }
-        )
-    }
+                Surface(
+                    onClick = { onStart(null) },
+                    shape = CircleShape,
+                    color = StudioColors.CardSurface,
+                    border = BorderStroke(1.dp, StudioColors.ActiveViolet),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        "Until I turn it off",
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                        modifier = Modifier.padding(vertical = 10.dp, horizontal = 16.dp)
+                    )
+                }
+            }
+        },
+        confirmButton = {},
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
+    )
 }
 
 /**
