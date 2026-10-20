@@ -72,6 +72,20 @@ object AccessibilityDriver {
         return false
     }
 
+    /** Height in pixels of the clickable element that contains [text] (its touch target), or null if not found. */
+    fun clickableHeightPx(text: String): Int? {
+        val root = automation.rootInActiveWindow ?: return null
+        val match = find(root, text) ?: return null
+        var node: AccessibilityNodeInfo? = match
+        while (node != null && !node.isClickable) node = node.parent
+        val r = android.graphics.Rect()
+        node?.getBoundsInScreen(r) ?: return null
+        return r.height()
+    }
+
+    /** Number of nodes whose text or description contains [text]. */
+    fun countOf(text: String): Int = automation.rootInActiveWindow?.let { findAll(it, text).size } ?: 0
+
     /** Like [waitForText] but throws with what the window actually shows, so a failure explains itself. */
     fun expectText(text: String, present: Boolean = true, scroll: Boolean = false, timeoutMs: Long = 20_000, why: String = "") {
         if (!waitForText(text, present, timeoutMs, scroll)) {

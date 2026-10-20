@@ -225,12 +225,7 @@ fun AppRulesScreen(
                                     }
                                 }
 
-                                Text(
-                                    text = if (isExpanded) "˅" else "›",
-                                    fontSize = 18.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = StudioColors.TextSecondary
-                                )
+                                StudioChevron(expanded = isExpanded)
                             }
 
                             // Expanded Tuner Drawer (e.g. for WhatsApp)

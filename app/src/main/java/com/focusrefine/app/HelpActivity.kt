@@ -188,7 +188,7 @@ private fun HelpSection(key: String, onlyOpen: String?, emoji: String, title: St
         Column(modifier = Modifier.padding(16.dp)) {
             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
                 Text("$emoji  $title", fontSize = 15.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                Text(if (expanded) "˅" else "›", fontSize = 18.sp, color = StudioColors.TextSecondary)
+                StudioChevron(expanded = expanded)
             }
             if (expanded) {
                 Spacer(modifier = Modifier.height(8.dp))
