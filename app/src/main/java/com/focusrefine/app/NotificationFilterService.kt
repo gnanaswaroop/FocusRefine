@@ -22,7 +22,10 @@ class NotificationFilterService : NotificationListenerService() {
 
     private val TAG = "NotificationFilter"
     private lateinit var database: AppDatabase
-    private val CHANNEL_ID = "focusrefine_service_channel"
+    // v2: the first channel was IMPORTANCE_DEFAULT, which makes sound and vibration on every count update, and a channel's
+    // importance cannot be lowered after creation, so the quiet one is a new channel and the old one is deleted.
+    private val CHANNEL_ID = "focusrefine_service_quiet"
+    private val OLD_CHANNEL_ID = "focusrefine_service_channel"
     private val NOTIFICATION_ID = 1001
     private var embeddingClassifier: EmbeddingClassifier? = null
     private lateinit var classifier: NotificationClassifier
@@ -64,6 +67,8 @@ class NotificationFilterService : NotificationListenerService() {
     }
 
     companion object {
+        /** True while this process has the service created. Home checks it so coming back to the app does not restart (and re-post) it. */
+        @Volatile var isCreated = false
         const val ACTION_TOGGLE_SERVICE = "com.focusrefine.app.ACTION_TOGGLE_SERVICE"
         const val ACTION_UPDATE_COUNT = "com.focusrefine.app.ACTION_UPDATE_COUNT"
         const val ACTION_SERVICE_STATE_CHANGED = "com.focusrefine.app.ACTION_SERVICE_STATE_CHANGED"
@@ -73,6 +78,7 @@ class NotificationFilterService : NotificationListenerService() {
 
     override fun onCreate() {
         super.onCreate()
+        isCreated = true
         database = AppDatabase.getDatabase(this)
         createNotificationChannel()
 
@@ -124,11 +130,15 @@ class NotificationFilterService : NotificationListenerService() {
             val channel = NotificationChannel(
                 CHANNEL_ID,
                 "FocusRefine Live Update & Filtering Service",
-                NotificationManager.IMPORTANCE_DEFAULT
+                NotificationManager.IMPORTANCE_LOW
             ).apply {
                 description = "Ongoing Live Update notification showing suppression count and quick STOP/START toggle."
+                setSound(null, null)
+                enableVibration(false)
+                setShowBadge(false)
             }
             val manager = getSystemService(NotificationManager::class.java)
+            manager.deleteNotificationChannel(OLD_CHANNEL_ID)
             manager.createNotificationChannel(channel)
         }
     }
@@ -168,7 +178,9 @@ class NotificationFilterService : NotificationListenerService() {
             .setContentIntent(openAppPendingIntent)
             .addAction(android.R.drawable.ic_menu_close_clear_cancel, actionText, togglePendingIntent)
             .setOngoing(true)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setOnlyAlertOnce(true)
+            .setSilent(true)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
             .setCategory(NotificationCompat.CATEGORY_SERVICE)
             .build()
     }
@@ -225,6 +237,7 @@ class NotificationFilterService : NotificationListenerService() {
                     val count = prefs.getInt("suppressed_count", 0) + 1
                     prefs.edit().putInt("suppressed_count", count).apply()
                     updateForegroundNotification(true, count)
+                    ModeSession.refresh(this@NotificationFilterService)
 
                     val entity = NotificationEntity(
                         title = title,
@@ -248,6 +261,7 @@ class NotificationFilterService : NotificationListenerService() {
     }
 
     override fun onDestroy() {
+        isCreated = false
         try {
             unregisterReceiver(toggleReceiver)
         } catch (_: Exception) {

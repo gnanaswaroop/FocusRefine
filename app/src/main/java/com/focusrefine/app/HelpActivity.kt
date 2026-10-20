@@ -152,6 +152,7 @@ fun HelpScreen(onBack: () -> Unit, onlyOpen: String? = null) {
                 Body("FocusRefine is a helper, not a guarantee. Please keep this in mind:")
                 Bullet("It can mute something urgent, especially an unusual wording or a language other than English. The AI model was built for English.")
                 Bullet("Close calls are flagged, but a confident mistake is not. Glance at the Muted tab now and then.")
+                Bullet("You may still feel one short buzz or hear a sound when a muted notification arrives. Android alerts at the moment a notification lands, before FocusRefine can remove it. To avoid it, make that app's own notifications silent, or use Android's Do Not Disturb.")
                 Bullet("For people and alerts that must never be missed, also use Android's own priority and emergency alert settings.")
                 Bullet("Never rely on FocusRefine alone for emergency alerts: keep your phone's own emergency and public safety alerts switched on.")
             }

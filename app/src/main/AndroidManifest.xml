@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Android 16 Live Updates: lets the focus-session countdown show as a status bar chip. Normal permission, no data access. -->
+    <uses-permission android:name="android.permission.POST_PROMOTED_NOTIFICATIONS" />
 
     <!-- Privacy guarantee: the app has no network access. MediaPipe's tasks-core pulls in Google's
          datatransport library, which declares these; strip them so the OS blocks every socket. -->
@@ -93,6 +95,10 @@
                 <action android:name="com.focusrefine.app.ACTION_TOGGLE_SERVICE" />
             </intent-filter>
         </receiver>
+
+        <receiver
+            android:name=".ModeSessionReceiver"
+            android:exported="false" />
 
     </application>
 </manifest>

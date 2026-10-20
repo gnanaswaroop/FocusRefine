@@ -12,6 +12,7 @@ This document provides a comprehensive technical breakdown of all Android permis
 | `android.permission.FOREGROUND_SERVICE` | API 28+ | Keeps the background filtering service running reliably without OS termination. |
 | `android.permission.FOREGROUND_SERVICE_SPECIAL_USE` | API 34+ | Compliant foreground service declaration for continuous real-time notification filtering utility. |
 | `android.permission.POST_NOTIFICATIONS` | API 33+ | Displays the persistent ongoing live service notification with suppression counts and quick toggle. |
+| `android.permission.POST_PROMOTED_NOTIFICATIONS` | API 36+ | A normal permission that lets the timed focus-session countdown appear as an Android 16 Live Update (status bar chip). It gives no access to data; older versions ignore it. |
 
 ---
 

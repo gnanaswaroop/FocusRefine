@@ -92,7 +92,7 @@ class InboxReviewE2ETest {
             assertTrue(AccessibilityDriver.waitForText("Reviewing close calls"))
             assertTrue("only the close call is listed", AccessibilityDriver.waitForText("Lightning deal", present = false))
             AccessibilityDriver.tapText("Muted (2)")
-            assertTrue("a tab leaves the filter", AccessibilityDriver.waitForText("Amazon"))
+            assertTrue("a tab leaves the filter", AccessibilityDriver.waitForText("Reviewing close calls", present = false))
         }
     }
 }

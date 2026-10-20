@@ -161,7 +161,8 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun startNotificationService() {
-        if (isNotificationServiceEnabled()) {
+        // startForeground re-posts the ongoing notification, so only start the service when it is not already running.
+        if (isNotificationServiceEnabled() && !NotificationFilterService.isCreated) {
             val serviceIntent = Intent(this, NotificationFilterService::class.java)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(serviceIntent)
@@ -184,6 +185,17 @@ fun MainStudioScreen(
 ) {
     val context = LocalContext.current
     var liveRefreshTrigger by remember { mutableStateOf(0) }
+
+    // Reload whenever the screen comes back (e.g. from Settings after adding samples): a stopped activity does not
+    // recompose, so a broadcast that arrived meanwhile is not enough on its own.
+    DisposableEffect(context) {
+        val owner = context as? androidx.lifecycle.LifecycleOwner
+        val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
+            if (event == androidx.lifecycle.Lifecycle.Event.ON_RESUME) liveRefreshTrigger++
+        }
+        owner?.lifecycle?.addObserver(observer)
+        onDispose { owner?.lifecycle?.removeObserver(observer) }
+    }
 
     DisposableEffect(Unit) {
         val receiver = object : BroadcastReceiver() {
@@ -217,6 +229,20 @@ fun MainStudioScreen(
     var uncertainCount by remember { mutableStateOf(0) } // decisions the app was not sure about
     var reviewMode by remember { mutableStateOf(false) } // list only those, least sure first
     var refreshTrigger by remember { mutableStateOf(0) }
+
+    // Timed session: re-read on every refresh and every 30 s so the countdown and the finish are picked up.
+    var sessionNow by remember { mutableStateOf(System.currentTimeMillis()) }
+    LaunchedEffect(Unit) {
+        while (true) {
+            kotlinx.coroutines.delay(30_000)
+            sessionNow = System.currentTimeMillis()
+        }
+    }
+    val session = remember(refreshTrigger, liveRefreshTrigger, sessionNow) {
+        ModeSession.refresh(context)
+        ModeSession.current(context)
+    }
+    LaunchedEffect(session == null) { currentMode = prefs.getString("current_mode", currentMode) ?: currentMode }
     var isFullScreenInbox by remember { mutableStateOf(false) }
 
     val enableSwipeAnimations = remember(refreshTrigger, liveRefreshTrigger) {
@@ -593,6 +619,23 @@ fun MainStudioScreen(
                     }
                 }
             }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            SessionCard(
+                session = session,
+                now = sessionNow,
+                mode = currentMode,
+                onStart = { minutes ->
+                    ModeSession.start(context, currentMode, minutes)
+                    refreshTrigger++
+                },
+                onEnd = {
+                    ModeSession.end(context)
+                    currentMode = prefs.getString("current_mode", currentMode) ?: currentMode
+                    refreshTrigger++
+                }
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
 
