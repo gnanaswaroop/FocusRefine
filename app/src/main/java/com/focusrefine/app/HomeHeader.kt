@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
@@ -34,6 +35,8 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.constrainHeight
+import androidx.compose.ui.unit.constrainWidth
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -63,9 +66,6 @@ fun BrandLogo(modifier: Modifier = Modifier, size: Dp = BrandLogoSize) {
 /** Below this width the header switches to a compact layout so the app name is never cut off. */
 private val CompactWidth = 360.dp
 
-/** Content width (screen minus padding) needed to fit logo, 22sp name, badge and both buttons on one line without cutting the name. */
-private val InlineBadgeWidth = 368.dp
-
 /**
  * The title row of the Home screen: logo, app name with the on-device badge beside it (under it on narrow screens), and the Help and Settings buttons.
  *
@@ -77,7 +77,6 @@ fun HomeHeader(onOpenHelp: () -> Unit, onOpenSettings: () -> Unit, modifier: Mod
     val fontScale = LocalDensity.current.fontScale
     BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
         val compact = maxWidth < CompactWidth
-        val roomForBadge = maxWidth >= InlineBadgeWidth
         val showHelp = !(compact && fontScale > 1.15f)
         val buttonModifier = if (compact) Modifier.size(44.dp) else Modifier
         Row(
@@ -87,35 +86,24 @@ fun HomeHeader(onOpenHelp: () -> Unit, onOpenSettings: () -> Unit, modifier: Mod
             verticalAlignment = Alignment.CenterVertically
         ) {
             BrandLogo(size = if (compact) 44.dp else BrandLogoSize)
-            Spacer(modifier = Modifier.width(if (compact) 10.dp else 12.dp))
+            Spacer(modifier = Modifier.width(if (compact) 10.dp else 8.dp))
             // weight(1f): the name and badge take what is left, so the buttons can never be pushed off a narrow screen.
-            // On a normal-width screen at normal text size the badge sits beside the name (one line instead of two);
-            // narrow screens and large text keep it underneath so the name is never squeezed.
-            val inline = roomForBadge && fontScale <= 1.15f
-            val name: @Composable (Modifier) -> Unit = { m ->
-                Text(
-                    text = "FocusRefine",
-                    fontSize = if (compact) 20.sp else 22.sp,
-                    fontWeight = FontWeight.ExtraBold,
-                    color = Color.White,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = m
-                )
-            }
-            if (inline) {
-                Row(modifier = Modifier.weight(1f), verticalAlignment = Alignment.CenterVertically) {
-                    name(Modifier.weight(1f, fill = false))
-                    Spacer(modifier = Modifier.width(6.dp))
-                    OnDeviceBadge()
-                }
-            } else {
-                Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Center) {
-                    name(Modifier)
-                    Spacer(modifier = Modifier.height(3.dp))
-                    OnDeviceBadge()
-                }
-            }
+            // The badge goes beside the name whenever both fit in that width (whatever the screen, display size or font),
+            // and under it otherwise, so the name is never cut off.
+            TitleBlock(
+                modifier = Modifier.weight(1f),
+                name = {
+                    Text(
+                        text = "FocusRefine",
+                        fontSize = if (compact) 20.sp else 22.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                        color = Color.White,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                },
+                badge = { OnDeviceBadge() }
+            )
             if (showHelp) {
                 IconButton(onClick = onOpenHelp, modifier = buttonModifier.semantics { contentDescription = "Help" }) {
                     Text(text = "?", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = StudioColors.TextPrimary)
@@ -128,6 +116,36 @@ fun HomeHeader(onOpenHelp: () -> Unit, onOpenSettings: () -> Unit, modifier: Mod
                     tint = StudioColors.TextPrimary,
                     modifier = Modifier.size(22.dp)
                 )
+            }
+        }
+    }
+}
+
+/**
+ * The app name with a badge: side by side (centred on each other) when the name's natural width plus the badge fit in
+ * the width available, otherwise the badge sits under the name.
+ */
+@Composable
+private fun TitleBlock(name: @Composable () -> Unit, badge: @Composable () -> Unit, modifier: Modifier = Modifier) {
+    Layout(content = { name(); badge() }, modifier = modifier) { measurables, constraints ->
+        val gap = 6.dp.roundToPx()
+        val stackedGap = 3.dp.roundToPx()
+        val loose = constraints.copy(minWidth = 0, minHeight = 0)
+        val badgeP = measurables[1].measure(loose)
+        val nameWanted = measurables[0].maxIntrinsicWidth(constraints.maxHeight)
+        if (nameWanted + gap + badgeP.width <= constraints.maxWidth) {
+            val nameP = measurables[0].measure(loose.copy(maxWidth = nameWanted))
+            val h = maxOf(nameP.height, badgeP.height)
+            layout(constraints.constrainWidth(nameP.width + gap + badgeP.width), constraints.constrainHeight(h)) {
+                nameP.placeRelative(0, (h - nameP.height) / 2)
+                badgeP.placeRelative(nameP.width + gap, (h - badgeP.height) / 2)
+            }
+        } else {
+            val nameP = measurables[0].measure(loose)
+            val h = nameP.height + stackedGap + badgeP.height
+            layout(constraints.constrainWidth(maxOf(nameP.width, badgeP.width)), constraints.constrainHeight(h)) {
+                nameP.placeRelative(0, 0)
+                badgeP.placeRelative(0, nameP.height + stackedGap)
             }
         }
     }

@@ -122,6 +122,40 @@ class HomeHeaderE2ETest {
         check(minLogoDp = 40, buttonMinDp = 44, expectHelp = false) // the app name wins over the "?" button here
     }
 
+    /** True when the "On Device AI" badge sits to the right of the app name on the same line, not under it. */
+    private fun badgeBesideName(): Boolean {
+        AccessibilityDriver.expectText("FocusRefine")
+        val title = boundsOf("FocusRefine")!!
+        val badge = boundsOf("On Device AI")!!
+        return badge.left >= title.right - 2 && badge.centerY() in title.top..title.bottom
+    }
+
+    @Test
+    fun theBadgeSitsBesideTheNameAtTheDefaultWidth() {
+        ActivityScenario.launch(MainActivity::class.java).use {
+            assertTrue("one line: badge beside the name", badgeBesideName())
+        }
+    }
+
+    @Test
+    fun theBadgeSitsBesideTheNameOnAPixelSizedScreenWithItsDisplaySizeSetting() {
+        // The user's Pixel 9 Pro XL: 1008x2244 at 408dpi is 395dp wide, which the first version of this layout missed.
+        ServiceHarness.shell("wm size 1008x2244; wm density 408")
+        Thread.sleep(2000)
+        ActivityScenario.launch(MainActivity::class.java).use {
+            assertTrue("one line at 395dp: badge beside the name", badgeBesideName())
+            check(minLogoDp = 48, buttonMinDp = 48, expectHelp = true)
+        }
+    }
+
+    @Test
+    fun theBadgeGoesUnderTheNameWhenThereIsNoRoomBesideIt() {
+        narrowPhone()
+        ActivityScenario.launch(MainActivity::class.java).use {
+            assertTrue("stacked on a 320dp phone", !badgeBesideName())
+        }
+    }
+
     @Test
     fun theHelpAndSettingsButtonsStillOpenTheirScreens() {
         ActivityScenario.launch(MainActivity::class.java).use {
