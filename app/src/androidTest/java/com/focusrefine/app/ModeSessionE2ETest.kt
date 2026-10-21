@@ -79,7 +79,8 @@ class ModeSessionE2ETest {
         assertTrue(extras.getCharSequence(Notification.EXTRA_TEXT).toString().contains("45 min"))
         assertEquals(100, extras.getInt(Notification.EXTRA_PROGRESS_MAX))
         assertTrue("it counts down", extras.getBoolean(Notification.EXTRA_CHRONOMETER_COUNT_DOWN))
-        assertEquals(listOf("End session", "Open FocusRefine"), n.notification.actions.map { it.title.toString() })
+        assertEquals(listOf("End session", "+15 min"), n.notification.actions.map { it.title.toString() })
+        assertNotNull("tapping it opens the app", n.notification.contentIntent)
         assertTrue("silent", n.notification.flags and Notification.FLAG_ONLY_ALERT_ONCE != 0)
         assertTrue("ongoing", n.notification.flags and Notification.FLAG_ONGOING_EVENT != 0)
     }
@@ -161,6 +162,22 @@ class ModeSessionE2ETest {
         ModeSession.start(context, "Deep Focus", 5, nowMs = now - 6 * 60_000L)
         ModeSession.refresh(context, nowMs = now)
         assertTrue(prefs.getBoolean("service_running", false))
+    }
+
+    @Test
+    fun plus15MinutesExtendsATimedSessionAndOpenEndedHasNoExtend() {
+        val now = System.currentTimeMillis()
+        ModeSession.start(context, "Deep Focus", 30, nowMs = now)
+        val before = ModeSession.current(context)!!.endMs
+        ModeSession.extend(context, nowMs = now)
+        assertEquals(before + 15 * 60_000L, ModeSession.current(context)!!.endMs)
+        // In the first minute the title says "started" and the text carries the length, so check the text.
+        val n = awaitLive { it.notification.extras.getCharSequence(Notification.EXTRA_TEXT).toString().startsWith("45 min") }
+        assertNotNull("the notification now shows 45 minutes", n)
+        ModeSession.end(context)
+        ModeSession.start(context, "Deep Focus", null, nowMs = now)
+        val open = awaitLive { it.notification.actions.size == 1 }
+        assertEquals("open-ended: End session only", listOf("End session"), open!!.notification.actions.map { it.title.toString() })
     }
 
     @Test

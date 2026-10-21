@@ -16,7 +16,7 @@
             "The details screen shows how sure the app was, and the ongoing notification tells you how many close calls are waiting.",
             "What's new: this screen.",
             "Close calls filter: a gold \"Close calls\" chip next to Muted and Shown lists only the decisions the app was unsure about.",
-            "Timed filtering: turn the switch on Home and choose how long FocusRefine should work: 5, 15, 30 or 45 minutes, or until you turn it off. A live countdown sits beside the switch, one notification shows it with End session and Open FocusRefine buttons, and filtering pauses when time is up."
+            "Timed filtering: turn the switch on Home and choose how long FocusRefine should work: 5, 15, 30 or 45 minutes, or until you turn it off. A live countdown sits beside the switch, one notification shows it with End session and +15 min buttons (tap the notification to open the app), and filtering pauses when time is up."
           ]
         },
         {

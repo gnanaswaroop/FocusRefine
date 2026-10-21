@@ -14,7 +14,7 @@ import androidx.core.app.NotificationCompat
 /**
  * A timed context-mode session: "Deep Focus for 45 minutes", or open-ended ("until I turn it off"). While it runs, the
  * chosen mode is active and ONE live notification shows it: a countdown with a progress bar (a count-up for an
- * open-ended session), the number of notifications muted so far, and End session / Open FocusRefine actions. That
+ * open-ended session), the number of notifications muted so far, and End session and +15 min actions (tapping the notification opens the app). That
  * notification is the filtering service's own ongoing notification (see [applyTo]); only when the service is not
  * running is a separate one posted. When the time is up (or the user ends it) the previous mode is restored and a
  * completion notification summarises the session.
@@ -25,6 +25,9 @@ import androidx.core.app.NotificationCompat
 object ModeSession {
     const val ACTION_TICK = "com.focusrefine.app.ACTION_SESSION_TICK"
     const val ACTION_END = "com.focusrefine.app.ACTION_SESSION_END"
+    const val ACTION_EXTEND = "com.focusrefine.app.ACTION_SESSION_EXTEND"
+    /** How much a notification button adds to a timed session. */
+    const val EXTEND_MIN = 15
     const val NOTIFICATION_ID = 1002
     private const val DONE_NOTIFICATION_ID = 1003
     private const val CHANNEL_ACTIVE = "focusrefine_session"
@@ -128,6 +131,16 @@ object ModeSession {
         }
         context.sendBroadcast(Intent("com.focusrefine.app.ACTION_LIVE_REFRESH"))
         refreshServiceNotification(context) // the service's notification goes back to its normal look
+    }
+
+    /** Adds [EXTEND_MIN] minutes to a timed session (the notification's button). Open-ended sessions have no end to move. */
+    fun extend(context: Context, nowMs: Long = System.currentTimeMillis()) {
+        val state = current(context) ?: return
+        if (state.openEnded) return
+        prefs(context).edit().putLong(K_END, state.endMs + EXTEND_MIN * 60_000L).commit()
+        scheduleTick(context, nowMs + TICK_MS)
+        refresh(context, nowMs)
+        context.sendBroadcast(Intent("com.focusrefine.app.ACTION_LIVE_REFRESH"))
     }
 
     /** Re-posts the live notification with the current numbers; finishes the session if its time is up. */
@@ -249,8 +262,9 @@ object ModeSession {
             builder.setProgress(100, percent(state.startMs, state.endMs, nowMs), false)
                 .setUsesChronometer(true).setChronometerCountDown(true).setWhen(state.endMs)
         }
+        // Tapping the notification itself opens the app (contentIntent above), so the buttons are only for session control.
         builder.addAction(0, "End session", receiverIntent(context, ACTION_END, 12))
-            .addAction(0, "Open FocusRefine", openApp(context))
+        if (!open) builder.addAction(0, "+$EXTEND_MIN min", receiverIntent(context, ACTION_EXTEND, 13))
         // Android 16 "Live Updates": ask to be promoted to the status bar chip. Older versions ignore these extras.
         builder.addExtras(android.os.Bundle().apply {
             putBoolean("android.requestPromotedOngoing", true)
@@ -280,6 +294,7 @@ class ModeSessionReceiver : BroadcastReceiver() {
         when (intent.action) {
             ModeSession.ACTION_TICK -> ModeSession.tick(context)
             ModeSession.ACTION_END -> ModeSession.end(context)
+            ModeSession.ACTION_EXTEND -> ModeSession.extend(context)
         }
     }
 }
