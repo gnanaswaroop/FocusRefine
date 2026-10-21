@@ -237,6 +237,12 @@ fun MainStudioScreen(
     val database = AppDatabase.getDatabase(context)
 
     var isRunning by remember(isFilteringActive) { mutableStateOf(isFilteringActive) }
+    var askLength by remember { mutableStateOf(false) }
+    fun setFiltering(on: Boolean) {
+        isRunning = on
+        prefs.edit().putBoolean("service_running", on).apply()
+        context.sendBroadcast(Intent(NotificationFilterService.ACTION_TOGGLE_SERVICE).setPackage(context.packageName))
+    }
     var currentTabUrgent by remember { mutableStateOf(false) } // false = Muted, true = Shown
     var searchQuery by remember { mutableStateOf("") }
     var searchOpen by remember { mutableStateOf(false) } // the search bar is hidden until the magnifier is tapped
@@ -257,9 +263,17 @@ fun MainStudioScreen(
             sessionNow = System.currentTimeMillis()
         }
     }
+    // Ticks every second, only while a timed session runs, so the countdown beside the switch moves.
+    var clockMs by remember { mutableStateOf(System.currentTimeMillis()) }
     val session = remember(refreshTrigger, liveRefreshTrigger, sessionNow) {
         ModeSession.refresh(context)
         ModeSession.current(context)
+    }
+    LaunchedEffect(session?.endMs) {
+        while (session != null && !session.openEnded) {
+            clockMs = System.currentTimeMillis()
+            kotlinx.coroutines.delay(1_000)
+        }
     }
     LaunchedEffect(session == null) { currentMode = prefs.getString("current_mode", currentMode) ?: currentMode }
     var isFullScreenInbox by remember { mutableStateOf(false) }
@@ -294,6 +308,24 @@ fun MainStudioScreen(
             list.add(Pair("Deep Focus", "🎧"))
         }
         list
+    }
+
+    // A session that ends can pause filtering from outside this screen (alarm, notification button): follow the pref.
+    LaunchedEffect(liveRefreshTrigger, refreshTrigger) {
+        if (isNotificationAccessEnabled) isRunning = prefs.getBoolean("service_running", true)
+    }
+
+    if (askLength) {
+        SessionLengthDialog(
+            mode = currentMode,
+            onPick = { minutes ->
+                askLength = false
+                setFiltering(true)
+                ModeSession.start(context, currentMode, minutes, pauseWhenDone = true)
+                refreshTrigger++
+            },
+            onDismiss = { askLength = false }
+        )
     }
 
     LaunchedEffect(isNotificationAccessEnabled) {
@@ -488,13 +520,13 @@ fun MainStudioScreen(
                                     if (!isNotificationAccessEnabled) {
                                         Toast.makeText(context, "Please enable Notification Access first", Toast.LENGTH_SHORT).show()
                                         onEnableNotificationAccess()
+                                    } else if (isChecked) {
+                                        askLength = true // filtering starts once a length is picked
                                     } else {
-                                        isRunning = isChecked
-                                        prefs.edit().putBoolean("service_running", isChecked).apply()
-                                        val toggleIntent = Intent(NotificationFilterService.ACTION_TOGGLE_SERVICE).apply {
-                                            setPackage(context.packageName)
-                                        }
-                                        context.sendBroadcast(toggleIntent)
+                                        // Turning it off ends any "work for this long" session without pausing twice.
+                                        if (session != null) ModeSession.end(context, pauseFiltering = false)
+                                        setFiltering(false)
+                                        refreshTrigger++
                                     }
                                 },
                                 colors = SwitchDefaults.colors(
@@ -507,6 +539,16 @@ fun MainStudioScreen(
                                 fontSize = 10.sp,
                                 color = if (isRunning) StudioColors.ActiveVioletLight else StudioColors.TextMuted
                             )
+                            if (session != null && isRunning) {
+                                // The "work for this long" session: a live countdown beside the switch, or a note when it has no end.
+                                Text(
+                                    text = if (session.openEnded) "until you turn it off"
+                                    else ModeSession.countdown(session.endMs, maxOf(clockMs, session.startMs)) + " left",
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.White
+                                )
+                            }
                         }
                     }
                 }
@@ -529,16 +571,6 @@ fun MainStudioScreen(
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.weight(1f)
                 )
-                if (session == null) {
-                    Spacer(modifier = Modifier.width(8.dp))
-                    SessionStartChip(
-                        mode = currentMode,
-                        onStart = { minutes ->
-                            ModeSession.start(context, currentMode, minutes)
-                            refreshTrigger++
-                        }
-                    )
-                }
             }
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -579,19 +611,6 @@ fun MainStudioScreen(
                         }
                     }
                 }
-            }
-
-            if (session != null) {
-                Spacer(modifier = Modifier.height(10.dp))
-                SessionActiveCard(
-                    session = session,
-                    now = sessionNow,
-                    onEnd = {
-                        ModeSession.end(context)
-                        currentMode = prefs.getString("current_mode", currentMode) ?: currentMode
-                        refreshTrigger++
-                    }
-                )
             }
 
             Spacer(modifier = Modifier.height(16.dp))

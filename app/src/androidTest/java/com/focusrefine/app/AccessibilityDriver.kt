@@ -102,6 +102,22 @@ object AccessibilityDriver {
         }
     }
 
+    /** Taps the first on/off switch on screen (Home's filtering switch). */
+    fun tapSwitch(timeoutMs: Long = 20_000) {
+        fun firstCheckable(n: AccessibilityNodeInfo): AccessibilityNodeInfo? {
+            if (n.isCheckable) return n
+            for (i in 0 until n.childCount) n.getChild(i)?.let { c -> firstCheckable(c)?.let { return it } }
+            return null
+        }
+        val deadline = System.currentTimeMillis() + timeoutMs
+        while (System.currentTimeMillis() < deadline) {
+            val node = automation.rootInActiveWindow?.let { firstCheckable(it) }
+            if (node != null && node.performAction(AccessibilityNodeInfo.ACTION_CLICK)) return
+            Thread.sleep(300)
+        }
+        throw AssertionError("no switch to tap; window shows: ${visibleTexts()}")
+    }
+
     /** Taps the clickable element containing [text], scrolling the screen while it is not yet visible. */
     fun tapText(text: String, timeoutMs: Long = 20_000) {
         val deadline = System.currentTimeMillis() + timeoutMs

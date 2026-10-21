@@ -36,6 +36,7 @@ object ModeSession {
     private const val K_MODE = "session_mode"
     private const val K_PREVIOUS = "session_previous_mode"
     private const val K_BASE_COUNT = "session_base_count"
+    private const val K_PAUSE = "session_pause_when_done"
 
     /** Lengths offered on Home; the picker adds an open-ended "until I turn it off" choice after these. */
     val DURATIONS_MIN = listOf(5, 15, 30, 45)
@@ -61,6 +62,12 @@ object ModeSession {
     /** Whole minutes left, rounded up, never negative. Pure. */
     fun minutesLeft(endMs: Long, nowMs: Long): Int = (((endMs - nowMs).coerceAtLeast(0) + 59_999) / 60_000).toInt()
 
+    /** Time left as m:ss, or h:mm:ss from an hour up; 0:00 once it has passed. Pure. */
+    fun countdown(endMs: Long, nowMs: Long): String {
+        val s = ((endMs - nowMs).coerceAtLeast(0) + 999) / 1000
+        return if (s >= 3600) "%d:%02d:%02d".format(s / 3600, s % 3600 / 60, s % 60) else "%d:%02d".format(s / 60, s % 60)
+    }
+
     fun phase(startMs: Long, endMs: Long, nowMs: Long): Phase = when {
         endMs <= 0 -> Phase.NONE
         nowMs >= endMs -> Phase.COMPLETE
@@ -84,7 +91,7 @@ object ModeSession {
     fun isActive(context: Context) = current(context) != null
 
     /** Starts a session in [mode] for [minutes] (null = until the user ends it), remembering the mode to go back to. Replaces a running session. */
-    fun start(context: Context, mode: String, minutes: Int?, nowMs: Long = System.currentTimeMillis()) {
+    fun start(context: Context, mode: String, minutes: Int?, nowMs: Long = System.currentTimeMillis(), pauseWhenDone: Boolean = false) {
         val p = prefs(context)
         val previous = if (isActive(context)) p.getString(K_PREVIOUS, null) else p.getString("current_mode", null)
         p.edit()
@@ -93,6 +100,7 @@ object ModeSession {
             .putLong(K_START, nowMs)
             .putLong(K_END, if (minutes == null) OPEN_ENDED else nowMs + minutes * 60_000L)
             .putInt(K_BASE_COUNT, p.getInt("suppressed_count", 0))
+            .putBoolean(K_PAUSE, pauseWhenDone)
             .putString("current_mode", mode)
             .commit()
         post(context, nowMs)
@@ -100,17 +108,24 @@ object ModeSession {
     }
 
     /** Ends the session now (the user pressed End session) and restores the earlier mode. */
-    fun end(context: Context, completed: Boolean = false, nowMs: Long = System.currentTimeMillis()) {
+    fun end(context: Context, completed: Boolean = false, nowMs: Long = System.currentTimeMillis(), pauseFiltering: Boolean = true) {
         val state = current(context) ?: return
         val p = prefs(context)
         val previous = p.getString(K_PREVIOUS, null)
-        p.edit().remove(K_END).remove(K_START).remove(K_MODE).remove(K_PREVIOUS).remove(K_BASE_COUNT)
+        val pause = p.getBoolean(K_PAUSE, false) && pauseFiltering
+        p.edit().remove(K_PAUSE).remove(K_END).remove(K_START).remove(K_MODE).remove(K_PREVIOUS).remove(K_BASE_COUNT)
             .apply { if (previous != null) putString("current_mode", previous) }
             .commit()
         cancelTick(context)
         val manager = context.getSystemService(NotificationManager::class.java)
         manager.cancel(NOTIFICATION_ID)
         if (completed) postComplete(context, state)
+        if (pause) {
+            // Filtering was switched on "for this long": time is up (or the user ended it), so pause it again.
+            p.edit().putBoolean("service_running", false).putInt("suppressed_count", 0).commit()
+            context.sendBroadcast(Intent(NotificationFilterService.ACTION_SERVICE_STATE_CHANGED)
+                .setPackage(context.packageName).putExtra("is_running", false))
+        }
         context.sendBroadcast(Intent("com.focusrefine.app.ACTION_LIVE_REFRESH"))
         refreshServiceNotification(context) // the service's notification goes back to its normal look
     }

@@ -47,4 +47,12 @@ class ModeSessionTest {
     fun theOfferedLengthsAreFiveFifteenThirtyAndFortyFiveMinutes() {
         assertEquals(listOf(5, 15, 30, 45), ModeSession.DURATIONS_MIN)
     }
+
+    @Test
+    fun countdownShowsMinutesAndSecondsThenHours() {
+        assertEquals("4:59", ModeSession.countdown(300_000, 1_000))
+        assertEquals("0:01", ModeSession.countdown(1_000, 0))
+        assertEquals("0:00", ModeSession.countdown(1_000, 5_000))
+        assertEquals("1:05:00", ModeSession.countdown(3_900_000, 0))
+    }
 }

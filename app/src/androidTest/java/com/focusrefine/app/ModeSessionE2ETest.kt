@@ -130,19 +130,37 @@ class ModeSessionE2ETest {
     }
 
     @Test
-    fun homeStartsAndEndsASessionInTwoTaps() {
+    fun turningTheSwitchOnStartsAFilteringSessionAndTurningItOffEndsIt() {
+        prefs.edit().putBoolean("service_running", false).commit()
         androidx.test.core.app.ActivityScenario.launch(MainActivity::class.java).use {
-            assertTrue(AccessibilityDriver.waitForText("Timed session"))
-            AccessibilityDriver.tapText("Timed session")
+            assertTrue(AccessibilityDriver.waitForText("Filtering Paused"))
+            AccessibilityDriver.tapSwitch()
             AccessibilityDriver.tapText("15 minutes")
-            assertTrue("the session card shows", AccessibilityDriver.waitForText("min left"))
+            assertTrue("the countdown shows by the switch", AccessibilityDriver.waitForText(" left"))
             assertTrue(ModeSession.isActive(context))
+            assertTrue(prefs.getBoolean("service_running", false))
             assertNotNull(awaitLive())
-            AccessibilityDriver.tapText("End session")
-            assertTrue(AccessibilityDriver.waitForText("Timed session"))
+            AccessibilityDriver.tapSwitch()
+            assertTrue(AccessibilityDriver.waitForText("Filtering Paused"))
             assertFalse(ModeSession.isActive(context))
+            assertFalse(prefs.getBoolean("service_running", true))
             assertTrue(awaitNoSessionNotification())
         }
+    }
+
+    @Test
+    fun aSessionStartedFromTheSwitchPausesFilteringWhenItEnds() {
+        prefs.edit().putBoolean("service_running", true).commit()
+        val now = System.currentTimeMillis()
+        ModeSession.start(context, "Deep Focus", 5, nowMs = now - 6 * 60_000L, pauseWhenDone = true)
+        ModeSession.refresh(context, nowMs = now)
+        assertFalse(ModeSession.isActive(context))
+        assertFalse("filtering is paused again", prefs.getBoolean("service_running", true))
+        // A session started some other way leaves filtering on.
+        prefs.edit().putBoolean("service_running", true).commit()
+        ModeSession.start(context, "Deep Focus", 5, nowMs = now - 6 * 60_000L)
+        ModeSession.refresh(context, nowMs = now)
+        assertTrue(prefs.getBoolean("service_running", false))
     }
 
     @Test
@@ -178,17 +196,31 @@ class ModeSessionE2ETest {
 
     @Test
     fun thePickerOffersFiveFifteenThirtyFortyFiveAndUntilTurnedOff() {
+        prefs.edit().putBoolean("service_running", false).commit()
         androidx.test.core.app.ActivityScenario.launch(MainActivity::class.java).use {
-            assertTrue(AccessibilityDriver.waitForText("Timed session"))
-            AccessibilityDriver.tapText("Timed session")
+            assertTrue(AccessibilityDriver.waitForText("Filtering Paused"))
+            AccessibilityDriver.tapSwitch()
             for (label in listOf("5 minutes", "15 minutes", "30 minutes", "45 minutes", "Until I turn it off")) {
                 assertTrue("the picker offers '$label'", AccessibilityDriver.waitForText(label))
             }
             AccessibilityDriver.tapText("Until I turn it off")
-            assertTrue("the card says it runs until turned off", AccessibilityDriver.waitForText("until you turn it off"))
+            assertTrue("it says it runs until turned off", AccessibilityDriver.waitForText("until you turn it off"))
             assertTrue(ModeSession.current(context)!!.openEnded)
-            AccessibilityDriver.tapText("End session")
-            assertTrue(AccessibilityDriver.waitForText("Timed session"))
+            AccessibilityDriver.tapSwitch()
+            assertTrue(AccessibilityDriver.waitForText("Filtering Paused"))
+        }
+    }
+
+    @Test
+    fun cancellingThePickerLeavesFilteringOff() {
+        prefs.edit().putBoolean("service_running", false).commit()
+        androidx.test.core.app.ActivityScenario.launch(MainActivity::class.java).use {
+            assertTrue(AccessibilityDriver.waitForText("Filtering Paused"))
+            AccessibilityDriver.tapSwitch()
+            AccessibilityDriver.tapText("Cancel")
+            assertTrue(AccessibilityDriver.waitForText("How long should FocusRefine work?", present = false))
+            assertTrue(AccessibilityDriver.hasText("Filtering Paused"))
+            assertFalse(ModeSession.isActive(context))
         }
     }
 }

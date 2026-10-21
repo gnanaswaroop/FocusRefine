@@ -59,17 +59,21 @@ class HomeDeclutterE2ETest {
     }
 
     @Test
-    fun theTimedSessionChipSitsOnTheModeRowAndGivesWayToTheCardWhileRunning() {
+    fun turningFilteringOnAsksHowLongAndTheCountdownSitsBesideTheSwitch() {
+        context.getSharedPreferences("FocusRefinePrefs", android.content.Context.MODE_PRIVATE).edit()
+            .putBoolean("service_running", false).commit()
+        ModeSession.end(context)
         ActivityScenario.launch(MainActivity::class.java).use {
             assertTrue(AccessibilityDriver.waitForText("Mode (long press to manage)"))
-            assertTrue("the chip is on Home", AccessibilityDriver.hasText("Timed session"))
-            assertTrue("no duplicate 'Active' text next to the label", AccessibilityDriver.hasText("· Active").not())
-            AccessibilityDriver.tapText("Timed session")
+            assertTrue("no separate timed-session button", AccessibilityDriver.hasText("Timed session").not())
+            AccessibilityDriver.tapSwitch()
+            assertTrue("it asks how long", AccessibilityDriver.waitForText("How long should FocusRefine work?"))
             AccessibilityDriver.tapText("15 minutes")
-            assertTrue("the running card replaces the chip", AccessibilityDriver.waitForText("min left"))
-            assertTrue(AccessibilityDriver.waitForText("Timed session", present = false))
-            AccessibilityDriver.tapText("End session")
-            assertTrue(AccessibilityDriver.waitForText("Timed session"))
+            assertTrue("the countdown is beside the switch", AccessibilityDriver.waitForText(" left"))
+            assertTrue("no session card below", AccessibilityDriver.hasText("End session").not())
+            AccessibilityDriver.tapSwitch()
+            assertTrue("switching off ends it", AccessibilityDriver.waitForText(" left", present = false))
+            assertTrue(!ModeSession.isActive(context))
         }
     }
 }

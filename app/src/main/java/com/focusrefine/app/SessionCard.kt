@@ -27,40 +27,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 /**
- * Home entry point for timed sessions, shown at the end of the mode row while no session runs: a small chip that opens a
- * duration picker. While a session runs, [SessionActiveCard] takes its place.
+ * Asks how long FocusRefine should work for; shown when the Home switch is turned on. Choosing a length turns filtering
+ * on for that long (a session in [mode]); "Until I turn it off" has no end time. Cancel leaves filtering off.
  */
 @Composable
-fun SessionStartChip(mode: String, onStart: (minutes: Int?) -> Unit, modifier: Modifier = Modifier) {
-    var picking by remember { mutableStateOf(false) }
-
-    Surface(
-        onClick = { picking = true },
-        shape = CircleShape,
-        color = StudioColors.CardSurface,
-        border = BorderStroke(1.dp, StudioColors.StudioBorder),
-        modifier = modifier
-    ) {
-        Text(
-            text = "⏱ Timed session",
-            fontSize = 12.sp,
-            fontWeight = FontWeight.Medium,
-            color = Color.White,
-            maxLines = 1,
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
-        )
-    }
-
-    if (picking) {
+fun SessionLengthDialog(mode: String, onPick: (minutes: Int?) -> Unit, onDismiss: () -> Unit) {
+    run {
         AlertDialog(
-            onDismissRequest = { picking = false },
-            title = { Text("Start a $mode session") },
+            onDismissRequest = onDismiss,
+            title = { Text("How long should FocusRefine work?") },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text("$mode stays on for the time you pick, then your usual mode comes back.", fontSize = 13.sp)
+                    Text("Filtering stays on in $mode mode for the time you pick, then pauses.", fontSize = 13.sp)
                     for (minutes in ModeSession.DURATIONS_MIN) {
                         Surface(
-                            onClick = { picking = false; onStart(minutes) },
+                            onClick = { onPick(minutes) },
                             shape = CircleShape,
                             color = StudioColors.ActiveViolet,
                             modifier = Modifier.fillMaxWidth()
@@ -75,7 +56,7 @@ fun SessionStartChip(mode: String, onStart: (minutes: Int?) -> Unit, modifier: M
                         }
                     }
                     Surface(
-                        onClick = { picking = false; onStart(null) },
+                        onClick = { onPick(null) },
                         shape = CircleShape,
                         color = StudioColors.CardSurface,
                         border = BorderStroke(1.dp, StudioColors.ActiveViolet),
@@ -92,42 +73,7 @@ fun SessionStartChip(mode: String, onStart: (minutes: Int?) -> Unit, modifier: M
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { picking = false }) { Text("Cancel") } }
+            dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
         )
-    }
-}
-
-/**
- * The card shown while a session runs: mode, time left, muted count, a progress bar and End session. [now] is the
- * current time in ms; Home refreshes it every 30 seconds so the card stays current without a broadcast.
- */
-@Composable
-fun SessionActiveCard(session: ModeSession.State, now: Long, onEnd: () -> Unit, modifier: Modifier = Modifier) {
-    // Home's clock can be a little older than a session that has just started; never show more than the full length.
-    val now = maxOf(now, session.startMs)
-    StudioCard(modifier = modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(14.dp)) {
-            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                Column(modifier = Modifier.weight(1f)) {
-                    Text("${session.mode} session", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                    Text(
-                        if (session.openEnded) "On until you turn it off · ${session.mutedSoFar} muted so far"
-                        else "${ModeSession.minutesLeft(session.endMs, now)} min left · ${session.mutedSoFar} muted so far",
-                        fontSize = 12.sp,
-                        color = StudioColors.TextSecondary
-                    )
-                }
-                TextButton(onClick = onEnd) { Text("End session", color = StudioColors.ActiveVioletLight) }
-            }
-            if (!session.openEnded) {
-                Spacer(modifier = Modifier.height(8.dp))
-                LinearProgressIndicator(
-                    progress = { ModeSession.percent(session.startMs, session.endMs, now) / 100f },
-                    modifier = Modifier.fillMaxWidth(),
-                    color = StudioColors.ActiveViolet,
-                    trackColor = StudioColors.StudioBorder
-                )
-            }
-        }
     }
 }
