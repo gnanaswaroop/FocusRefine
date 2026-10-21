@@ -26,3 +26,8 @@ tools/config.json
 
 # Python
 __pycache__/
+
+# Release signing (never commit)
+keystore.properties
+*.jks
+*.keystore

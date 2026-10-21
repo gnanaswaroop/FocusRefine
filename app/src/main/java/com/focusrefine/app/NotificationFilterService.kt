@@ -14,6 +14,7 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,7 +23,10 @@ class NotificationFilterService : NotificationListenerService() {
 
     private val TAG = "NotificationFilter"
     private lateinit var database: AppDatabase
-    private val CHANNEL_ID = "focusrefine_service_channel"
+    // v2: the first channel was IMPORTANCE_DEFAULT, which makes sound and vibration on every count update, and a channel's
+    // importance cannot be lowered after creation, so the quiet one is a new channel and the old one is deleted.
+    private val CHANNEL_ID = "focusrefine_service_quiet"
+    private val OLD_CHANNEL_ID = "focusrefine_service_channel"
     private val NOTIFICATION_ID = 1001
     private var embeddingClassifier: EmbeddingClassifier? = null
     private lateinit var classifier: NotificationClassifier
@@ -64,6 +68,8 @@ class NotificationFilterService : NotificationListenerService() {
     }
 
     companion object {
+        /** True while this process has the service created. Home checks it so coming back to the app does not restart (and re-post) it. */
+        @Volatile var isCreated = false
         const val ACTION_TOGGLE_SERVICE = "com.focusrefine.app.ACTION_TOGGLE_SERVICE"
         const val ACTION_UPDATE_COUNT = "com.focusrefine.app.ACTION_UPDATE_COUNT"
         const val ACTION_SERVICE_STATE_CHANGED = "com.focusrefine.app.ACTION_SERVICE_STATE_CHANGED"
@@ -73,6 +79,7 @@ class NotificationFilterService : NotificationListenerService() {
 
     override fun onCreate() {
         super.onCreate()
+        isCreated = true
         database = AppDatabase.getDatabase(this)
         createNotificationChannel()
 
@@ -124,11 +131,15 @@ class NotificationFilterService : NotificationListenerService() {
             val channel = NotificationChannel(
                 CHANNEL_ID,
                 "FocusRefine Live Update & Filtering Service",
-                NotificationManager.IMPORTANCE_DEFAULT
+                NotificationManager.IMPORTANCE_LOW
             ).apply {
                 description = "Ongoing Live Update notification showing suppression count and quick STOP/START toggle."
+                setSound(null, null)
+                enableVibration(false)
+                setShowBadge(false)
             }
             val manager = getSystemService(NotificationManager::class.java)
+            manager.deleteNotificationChannel(OLD_CHANNEL_ID)
             manager.createNotificationChannel(channel)
         }
     }
@@ -160,7 +171,7 @@ class NotificationFilterService : NotificationListenerService() {
 
         val appIconBitmap = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
 
-        return NotificationCompat.Builder(this, CHANNEL_ID)
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(statusText)
             .setSmallIcon(R.drawable.ic_notification)
@@ -168,9 +179,13 @@ class NotificationFilterService : NotificationListenerService() {
             .setContentIntent(openAppPendingIntent)
             .addAction(android.R.drawable.ic_menu_close_clear_cancel, actionText, togglePendingIntent)
             .setOngoing(true)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setOnlyAlertOnce(true)
+            .setSilent(true)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
             .setCategory(NotificationCompat.CATEGORY_SERVICE)
-            .build()
+        // While a timed session runs this is the only live notification: it takes the session's look and buttons.
+        ModeSession.applyTo(this, builder)
+        return builder.build()
     }
 
     private fun updateForegroundNotification(isRunning: Boolean, suppressedCount: Int) {
@@ -198,7 +213,10 @@ class NotificationFilterService : NotificationListenerService() {
             return
         }
 
-        CoroutineScope(Dispatchers.IO).launch {
+        // A failure while handling one notification must never take the whole app down (the listener can be unbound
+        // by the system at any moment); log the class only, never the content.
+        val onError = CoroutineExceptionHandler { _, e -> Log.w(TAG, "Could not handle a notification: ${e.javaClass.simpleName}") }
+        CoroutineScope(Dispatchers.IO + onError).launch {
             val defaultMode = PromptManager.getDefaultModeName(this@NotificationFilterService)
             val currentMode = prefs.getString("current_mode", defaultMode) ?: defaultMode
             val classification = classifier.classify(title, text, currentMode)
@@ -219,12 +237,20 @@ class NotificationFilterService : NotificationListenerService() {
                 if (ReviewQueue.refresh(this@NotificationFilterService)) updateForegroundNotification(true, prefs.getInt("suppressed_count", 0))
             } else {
                 if (sbn.isClearable) {
-                    cancelNotification(sbn.key)
+                    try {
+                        cancelNotification(sbn.key)
+                    } catch (e: SecurityException) {
+                        // The system has already unbound this listener (it is being rebound, or access was revoked).
+                        // The notification stays in the shade, so nothing is counted or stored as muted.
+                        Log.w(TAG, "Listener is no longer connected; left a notification alone")
+                        return@launch
+                    }
                     Log.d(TAG, "Suppressed/Muted notification: ${sbn.key}")
 
                     val count = prefs.getInt("suppressed_count", 0) + 1
                     prefs.edit().putInt("suppressed_count", count).apply()
                     updateForegroundNotification(true, count)
+                    ModeSession.refresh(this@NotificationFilterService)
 
                     val entity = NotificationEntity(
                         title = title,
@@ -248,6 +274,7 @@ class NotificationFilterService : NotificationListenerService() {
     }
 
     override fun onDestroy() {
+        isCreated = false
         try {
             unregisterReceiver(toggleReceiver)
         } catch (_: Exception) {

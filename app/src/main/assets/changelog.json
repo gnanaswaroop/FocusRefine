@@ -14,7 +14,9 @@
             "Help & how it works: a plain-language guide with a live privacy check of this installation (network permission, cloud backup, AI model status, what is stored).",
             "Re-run classification on history, in Settings, to re-check saved notifications with your current mode and rules.",
             "The details screen shows how sure the app was, and the ongoing notification tells you how many close calls are waiting.",
-            "What's new: this screen."
+            "What's new: this screen.",
+            "Close calls filter: a gold \"Close calls\" chip next to Muted and Shown lists only the decisions the app was unsure about.",
+            "Timed filtering: turn the switch on Home and choose how long FocusRefine should work: 5, 15, 30 or 45 minutes, or until you turn it off. A live countdown sits beside the switch, one notification shows it with End session and +15 min buttons (tap the notification to open the app), and filtering pauses when time is up."
           ]
         },
         {
@@ -22,14 +24,20 @@
           "items": [
             "Settings and Privacy now show the engine that is really running (the AI model or the keyword matcher) instead of guessing.",
             "Every correction teaches the app, whether you make it from the inbox or from the details screen.",
-            "Corrections are faster: the AI model is loaded once and shared instead of being set up again each time."
+            "Corrections are faster: the AI model is loaded once and shared instead of being set up again each time.",
+            "Home is tidier: the search bar opens from a magnifier, close calls are one chip instead of a chip plus a banner, the timed-session button shares the mode row, and the header is one line.",
+            "Home has more room: the mode is a line in the status card (tap it to see what each mode lets through and change it), and the timed-session countdown sits on that line instead of a separate row.",
+            "Settings opens with every section collapsed, so you can see all of them at once and open the one you need.",
+            "Privacy Policy and Terms of Use now have their own screens (Privacy Insights), with a live check of this installation, instead of a pop-up message."
           ]
         },
         {
           "heading": "Fixed",
           "items": [
             "Guards against a crash that was seen on a Pixel 9 Pro XL when the AI model's data was read straight from the app package.",
-            "Button labels in the notification details are easier to read."
+            "Button labels in the notification details are easier to read.",
+            "The ongoing FocusRefine notification no longer makes a sound or vibrates each time it updates after muting something.",
+            "Home now refreshes by itself when you come back from Settings, for example after adding sample notifications."
           ]
         },
         {

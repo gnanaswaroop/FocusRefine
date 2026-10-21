@@ -55,24 +55,21 @@ fun ChangelogScreen(onBack: () -> Unit) {
     }
 
     Surface(modifier = Modifier.fillMaxSize(), color = StudioColors.DarkBackground) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp)
-        ) {
-            Row(modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp), verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = onBack) {
-                    Icon(painter = painterResource(id = R.drawable.ic_arrow_back), contentDescription = "Back", tint = Color.White)
-                }
-                Spacer(modifier = Modifier.width(8.dp))
-                Text("What's new", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White)
-            }
+        val scrollState = rememberScrollState()
+        Column(modifier = Modifier.fillMaxSize()) {
+            StudioTopBar(title = "What's new", onBack = onBack, showDivider = scrollState.value > 0)
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .verticalScroll(scrollState)
+                    .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 16.dp)
+            ) {
             if (installed.isNotEmpty()) {
                 Text(
                     "You have version $installed",
                     fontSize = 12.sp, color = StudioColors.TextMuted,
-                    modifier = Modifier.padding(start = 16.dp, bottom = 12.dp)
+                    modifier = Modifier.padding(start = 4.dp, bottom = 12.dp)
                 )
             }
 
@@ -127,6 +124,7 @@ fun ChangelogScreen(onBack: () -> Unit) {
             }
 
             StudioFooter(text = "Private by design. Refined by you.", modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp))
+            }
         }
     }
 }

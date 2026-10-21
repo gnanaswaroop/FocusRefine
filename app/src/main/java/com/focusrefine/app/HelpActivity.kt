@@ -70,20 +70,16 @@ fun HelpScreen(onBack: () -> Unit, onlyOpen: String? = null) {
     }
 
     Surface(modifier = Modifier.fillMaxSize(), color = StudioColors.DarkBackground) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp)
-        ) {
-            Row(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp), verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = onBack) {
-                    Icon(painter = painterResource(id = R.drawable.ic_arrow_back), contentDescription = "Back", tint = Color.White)
-                }
-                Spacer(modifier = Modifier.width(8.dp))
-                Text("Help & how it works", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White)
-            }
-
+        val scrollState = rememberScrollState()
+        Column(modifier = Modifier.fillMaxSize()) {
+            StudioTopBar(title = "Help & how it works", onBack = onBack, showDivider = scrollState.value > 0)
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .verticalScroll(scrollState)
+                    .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 16.dp)
+            ) {
             StudioCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text("Keep the noise out. Let what matters through.", fontSize = 17.sp, fontWeight = FontWeight.Bold, color = Color.White)
@@ -152,6 +148,7 @@ fun HelpScreen(onBack: () -> Unit, onlyOpen: String? = null) {
                 Body("FocusRefine is a helper, not a guarantee. Please keep this in mind:")
                 Bullet("It can mute something urgent, especially an unusual wording or a language other than English. The AI model was built for English.")
                 Bullet("Close calls are flagged, but a confident mistake is not. Glance at the Muted tab now and then.")
+                Bullet("You may still feel one short buzz or hear a sound when a muted notification arrives. Android alerts at the moment a notification lands, before FocusRefine can remove it. To avoid it, make that app's own notifications silent, or use Android's Do Not Disturb.")
                 Bullet("For people and alerts that must never be missed, also use Android's own priority and emergency alert settings.")
                 Bullet("Never rely on FocusRefine alone for emergency alerts: keep your phone's own emergency and public safety alerts switched on.")
             }
@@ -174,6 +171,7 @@ fun HelpScreen(onBack: () -> Unit, onlyOpen: String? = null) {
 
             Spacer(modifier = Modifier.height(8.dp))
             StudioFooter(text = "Private by design. Refined by you.", modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp))
+            }
         }
     }
 }
@@ -187,7 +185,7 @@ private fun HelpSection(key: String, onlyOpen: String?, emoji: String, title: St
         Column(modifier = Modifier.padding(16.dp)) {
             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
                 Text("$emoji  $title", fontSize = 15.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                Text(if (expanded) "˅" else "›", fontSize = 18.sp, color = StudioColors.TextSecondary)
+                StudioChevron(expanded = expanded)
             }
             if (expanded) {
                 Spacer(modifier = Modifier.height(8.dp))

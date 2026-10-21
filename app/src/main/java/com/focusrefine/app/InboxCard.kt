@@ -31,6 +31,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -309,6 +313,39 @@ fun ReviewBanner(count: Int, reviewing: Boolean, onToggle: () -> Unit, modifier:
             ) {
                 Text(if (reviewing) "Done" else "Review", fontSize = 12.sp, fontWeight = FontWeight.Bold)
             }
+        }
+    }
+}
+
+/**
+ * The quick filter for close calls, shown with the Muted and Shown tabs whenever there is something to review. One tap
+ * lists only the decisions the app was not sure about (least sure first, across both tabs); tap again, or pick a tab, to
+ * go back. [count] is the number waiting.
+ */
+@Composable
+fun CloseCallsChip(count: Int, active: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
+    Surface(
+        onClick = onClick,
+        shape = CircleShape,
+        color = if (active) StudioColors.GoldAccent else StudioColors.GoldSurface.copy(alpha = 0.6f),
+        border = BorderStroke(1.dp, StudioColors.GoldAccent.copy(alpha = if (active) 1f else 0.5f)),
+        modifier = modifier.semantics {
+            role = Role.Switch
+            stateDescription = if (active) "On" else "Off"
+        }
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "\u26A0 Close calls ($count)" + if (active) "  \u2715" else "",
+                fontSize = 11.sp,
+                fontWeight = FontWeight.Bold,
+                color = if (active) Color.Black else StudioColors.GoldText,
+                maxLines = 1
+            )
         }
     }
 }

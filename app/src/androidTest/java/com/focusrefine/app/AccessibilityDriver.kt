@@ -72,11 +72,50 @@ object AccessibilityDriver {
         return false
     }
 
+    /** Height in pixels of the clickable element that contains [text] (its touch target), or null if not found. */
+    fun clickableHeightPx(text: String): Int? {
+        val root = automation.rootInActiveWindow ?: return null
+        val match = find(root, text) ?: return null
+        var node: AccessibilityNodeInfo? = match
+        while (node != null && !node.isClickable) node = node.parent
+        val r = android.graphics.Rect()
+        node?.getBoundsInScreen(r) ?: return null
+        return r.height()
+    }
+
+    /** Number of nodes whose text or description contains [text]. */
+    fun countOf(text: String): Int = automation.rootInActiveWindow?.let { findAll(it, text).size } ?: 0
+
+
+    /** Scrolls the screen's scrollable content down by [pages] pages (stops early at the end). */
+    fun scrollDown(pages: Int) {
+        repeat(pages) {
+            automation.rootInActiveWindow?.let { root -> scrollable(root)?.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD) }
+            Thread.sleep(500)
+        }
+    }
+
     /** Like [waitForText] but throws with what the window actually shows, so a failure explains itself. */
     fun expectText(text: String, present: Boolean = true, scroll: Boolean = false, timeoutMs: Long = 20_000, why: String = "") {
         if (!waitForText(text, present, timeoutMs, scroll)) {
             throw AssertionError("expected '$text' to be ${if (present) "on" else "off"} screen $why; window shows: ${visibleTexts()}; scrolling down=$scrollingDown")
         }
+    }
+
+    /** Taps the first on/off switch on screen (Home's filtering switch). */
+    fun tapSwitch(timeoutMs: Long = 20_000) {
+        fun firstCheckable(n: AccessibilityNodeInfo): AccessibilityNodeInfo? {
+            if (n.isCheckable) return n
+            for (i in 0 until n.childCount) n.getChild(i)?.let { c -> firstCheckable(c)?.let { return it } }
+            return null
+        }
+        val deadline = System.currentTimeMillis() + timeoutMs
+        while (System.currentTimeMillis() < deadline) {
+            val node = automation.rootInActiveWindow?.let { firstCheckable(it) }
+            if (node != null && node.performAction(AccessibilityNodeInfo.ACTION_CLICK)) return
+            Thread.sleep(300)
+        }
+        throw AssertionError("no switch to tap; window shows: ${visibleTexts()}")
     }
 
     /** Taps the clickable element containing [text], scrolling the screen while it is not yet visible. */

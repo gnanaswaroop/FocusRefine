@@ -193,4 +193,48 @@ class PipelineE2ETest {
         assertNotNull(prefs)
         h.shell("cmd notification set_dnd off")
     }
+
+    @Test
+    fun theOngoingNotificationIsSilentAndDoesNotBuzzOnEveryMutedOne() {
+        h.start(sleep)
+        postAndRead(clearlyRoutine)
+        val manager = h.context.getSystemService(NotificationManager::class.java)
+        val deadline = System.currentTimeMillis() + 20_000
+        while (System.currentTimeMillis() < deadline && manager.activeNotifications.none { it.id == 1001 }) Thread.sleep(300)
+        val ongoing = manager.activeNotifications.first { it.id == 1001 }.notification
+        val channel = manager.getNotificationChannel(ongoing.channelId)
+        assertTrue("low importance, so no sound or vibration: ${channel.importance}", channel.importance <= NotificationManager.IMPORTANCE_LOW)
+        assertFalse("channel does not vibrate", channel.shouldVibrate())
+        assertNull("channel has no sound", channel.sound)
+        assertTrue("alerts at most once", ongoing.flags and Notification.FLAG_ONLY_ALERT_ONCE != 0)
+        assertNull("the old default-importance channel is gone", manager.getNotificationChannel("focusrefine_service_channel"))
+    }
+
+    @Test
+    fun aMutedNotificationIsCancelledQuickly() {
+        h.start(sleep)
+        postAndRead(clearlyUrgent) // warms the model and anchors, as the first real notification would
+        val tag = h.post(clearlyRoutine.first, clearlyRoutine.second)
+        val start = System.currentTimeMillis()
+        h.awaitRow(clearlyRoutine.first, clearlyRoutine.second)
+        val took = System.currentTimeMillis() - start
+        android.util.Log.i("VIBE_BENCH", "post to stored row: $took ms")
+        assertTrue("decision took $took ms", took < 5_000)
+    }
+
+    @Test
+    fun comingBackToTheAppDoesNotRepostTheOngoingNotification() {
+        h.start(sleep)
+        val manager = h.context.getSystemService(NotificationManager::class.java)
+        val deadline = System.currentTimeMillis() + 20_000
+        while (System.currentTimeMillis() < deadline && manager.activeNotifications.none { it.id == 1001 }) Thread.sleep(300)
+        val before = manager.activeNotifications.first { it.id == 1001 }.postTime
+        // Opening the app, leaving it and coming back is what used to restart the service and buzz each time.
+        repeat(3) {
+            androidx.test.core.app.ActivityScenario.launch(MainActivity::class.java).use { Thread.sleep(1500) }
+            Thread.sleep(500)
+        }
+        val after = manager.activeNotifications.first { it.id == 1001 }.postTime
+        assertEquals("the ongoing notification was not re-posted", before, after)
+    }
 }

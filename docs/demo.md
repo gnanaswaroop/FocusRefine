@@ -9,12 +9,13 @@ This document provides a feature walkthrough and visual demonstration guide for 
 ### 1. Main Dashboard & Smart Inbox (`MainActivity.kt`)
 ![MainActivity](../assets/MainActivity.png)
 
-- **Top Bar**: Displays the app logo, `FocusRefine` header, `● On Device AI` green badge, and Settings gear icon button in a single row.
+- **Top Bar**: Displays the app logo, `FocusRefine` header with the `● On Device AI` green badge beside it (under it on narrow screens), and the Help and Settings buttons in a single row.
 - **Noise Filter Stat Banner Card**: Displays dynamic noise filtered percentage (e.g., `84% Noise Filtered`) and live counters (`42 Muted • 8 Urgent Shown Today`).
+- **Search**: the search bar is hidden until you tap the magnifier (🔍) beside the Smart Inbox title, which keeps the list near the top.
 - **Context Mode Row**: Interactive chips for enabled context modes (🚗 `Commute` and 🎧 `Deep Focus` by default). **Long-pressing** any mode bubble opens [`ContextModesActivity`](file:///E:/Projects/do-i-care-app/app/src/main/java/com/focusrefine/app/ContextModesActivity.kt) directly.
 - **Smart Inbox Tabs, Swipe Gesture & Animations**: Toggle between `🔕 Muted` and `🔔 Shown` pill tabs or **swipe left / right** across the notification list to switch tabs with smooth Compose spring slide animations.
 - **Native App Icon Cards**: Displays authentic native app icons (`AppIconImage`) for installed applications.
-- **Close calls**: a gold banner counts decisions the app was not sure about ("2 close calls to review"); **Review** lists them least sure first. Each has a "Not sure" pill and one-tap **Show it / Mute it** and **Keep muted / Keep shown** buttons. See [Close calls](inbox_review.md).
+- **Close calls**: a gold "Close calls (2)" chip next to the tabs counts decisions the app was not sure about; tapping it lists them least sure first. Each has a "Not sure" pill and one-tap **Show it / Mute it** and **Keep muted / Keep shown** buttons. See [Close calls](inbox_review.md).
 - **Full-Screen Smart Inbox (`⛶`)**: Tapping the full-screen icon expands the Smart Inbox into a full-height dialog view.
 
 ---
@@ -64,11 +65,13 @@ This document provides a feature walkthrough and visual demonstration guide for 
 ---
 
 ### 8. What's new (`ChangelogActivity.kt`)
+![ChangelogActivity](../assets/ChangelogActivity.png)
 - Opened from the **⋮ menu** in the Settings top bar. Release notes, newest first, grouped as New, Improved, Fixed and Privacy, with the installed version marked. The text lives in `assets/changelog.json`. See [Help screen](help_screen.md).
 
 ---
 
 ### 7. Help & how it works (`HelpActivity.kt`)
+![HelpActivity](../assets/HelpActivity.png)
 - Opened from the **?** button on the home screen or from the **⋮ menu** in Settings. Plain-language sections on what the app does, how it decides, how to teach it, what it cannot do well, what is stored, and troubleshooting. Its **Offline-first and private** section includes a live privacy check of the installed app (no network permission, cloud backup off, AI model status, what is stored). See [Help screen](help_screen.md).
 
 ---

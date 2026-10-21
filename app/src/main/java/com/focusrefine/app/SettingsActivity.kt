@@ -156,13 +156,13 @@ fun SettingsStudioScreen(
     var useAiModel by remember { mutableStateOf(prefs?.getBoolean("use_ai_model", true) ?: true) }
     var enableSwipeAnimations by remember { mutableStateOf(prefs?.getBoolean("enable_swipe_animations", true) ?: true) }
 
-    // Collapsible Card States (Open/Expanded by default)
-    var isEngineExpanded by remember { mutableStateOf(true) }
-    var isStrengthExpanded by remember { mutableStateOf(true) }
-    var isExceptionsExpanded by remember { mutableStateOf(true) }
-    var isModesExpanded by remember { mutableStateOf(true) }
-    var isLearnExpanded by remember { mutableStateOf(true) }
-    var isAdvancedExpanded by remember { mutableStateOf(true) }
+    // Collapsible card states (all collapsed when the screen opens)
+    var isEngineExpanded by remember { mutableStateOf(false) }
+    var isStrengthExpanded by remember { mutableStateOf(false) }
+    var isExceptionsExpanded by remember { mutableStateOf(false) }
+    var isModesExpanded by remember { mutableStateOf(false) }
+    var isLearnExpanded by remember { mutableStateOf(false) }
+    var isAdvancedExpanded by remember { mutableStateOf(false) }
 
     val modeOptions = listOf("Commute", "Deep Focus", "Sleep", "Gaming")
 
@@ -191,35 +191,11 @@ fun SettingsStudioScreen(
         modifier = Modifier.fillMaxSize(),
         color = StudioColors.DarkBackground
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp)
-        ) {
-            // Header
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                IconButton(onClick = onBack) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_arrow_back),
-                        contentDescription = "Back",
-                        tint = Color.White
-                    )
-                }
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = "Settings",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                var menuOpen by remember { mutableStateOf(false) }
+        val scrollState = rememberScrollState()
+        var menuOpen by remember { mutableStateOf(false) }
+        Column(modifier = Modifier.fillMaxSize()) {
+            // The title bar is outside the scrolling column, so Back and the menu stay in view while the content scrolls.
+            StudioTopBar(title = "Settings", onBack = onBack, showDivider = scrollState.value > 0) {
                 Box {
                     IconButton(onClick = { menuOpen = true }) {
                         Icon(
@@ -240,13 +216,20 @@ fun SettingsStudioScreen(
                     }
                 }
             }
-
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .verticalScroll(scrollState)
+                    .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 16.dp)
+            ) {
             // 1. Classification Engine Toggle Card (Collapsible)
             StudioCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .heightIn(min = 48.dp)
                             .clickable { isEngineExpanded = !isEngineExpanded },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
@@ -257,12 +240,7 @@ fun SettingsStudioScreen(
                             fontSize = 15.sp,
                             color = Color.White
                         )
-                        Text(
-                            text = if (isEngineExpanded) "˅" else "›",
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = StudioColors.TextSecondary
-                        )
+                        StudioChevron(expanded = isEngineExpanded)
                     }
 
                     if (isEngineExpanded) {
@@ -378,6 +356,7 @@ fun SettingsStudioScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .heightIn(min = 48.dp)
                             .clickable { isStrengthExpanded = !isStrengthExpanded },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
@@ -404,12 +383,7 @@ fun SettingsStudioScreen(
                                 )
                             }
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(
-                                text = if (isStrengthExpanded) "˅" else "›",
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = StudioColors.TextSecondary
-                            )
+                            StudioChevron(expanded = isStrengthExpanded)
                         }
                     }
 
@@ -438,6 +412,7 @@ fun SettingsStudioScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .heightIn(min = 48.dp)
                             .clickable { isExceptionsExpanded = !isExceptionsExpanded },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
@@ -448,12 +423,7 @@ fun SettingsStudioScreen(
                             fontSize = 15.sp,
                             color = Color.White
                         )
-                        Text(
-                            text = if (isExceptionsExpanded) "˅" else "›",
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = StudioColors.TextSecondary
-                        )
+                        StudioChevron(expanded = isExceptionsExpanded)
                     }
 
                     if (isExceptionsExpanded) {
@@ -503,6 +473,7 @@ fun SettingsStudioScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .heightIn(min = 48.dp)
                             .clickable { isModesExpanded = !isModesExpanded },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
@@ -528,12 +499,7 @@ fun SettingsStudioScreen(
                                 )
                             }
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(
-                                text = if (isModesExpanded) "˅" else "›",
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = StudioColors.TextSecondary
-                            )
+                            StudioChevron(expanded = isModesExpanded)
                         }
                     }
 
@@ -597,7 +563,7 @@ fun SettingsStudioScreen(
                                 Text("Manage mode definitions & custom modes", fontWeight = FontWeight.Bold, fontSize = 13.sp, color = StudioColors.ActiveVioletLight)
                                 Text("Custom prompts, allow/mute rule summaries", fontSize = 11.sp, color = StudioColors.TextMuted)
                             }
-                            Text("›", fontSize = 18.sp, color = StudioColors.ActiveVioletLight)
+                            StudioNavChevron(tint = StudioColors.ActiveVioletLight)
                         }
                     }
                 }
@@ -611,6 +577,7 @@ fun SettingsStudioScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .heightIn(min = 48.dp)
                             .clickable { isLearnExpanded = !isLearnExpanded },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
@@ -621,12 +588,7 @@ fun SettingsStudioScreen(
                             fontSize = 15.sp,
                             color = Color.White
                         )
-                        Text(
-                            text = if (isLearnExpanded) "˅" else "›",
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = StudioColors.TextSecondary
-                        )
+                        StudioChevron(expanded = isLearnExpanded)
                     }
 
                     if (isLearnExpanded) {
@@ -664,7 +626,7 @@ fun SettingsStudioScreen(
                                 Text("View & Manage Learned Rules", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = StudioColors.ActiveVioletLight)
                                 Text("Review AI rules generated from your feedback", fontSize = 11.sp, color = StudioColors.TextMuted)
                             }
-                            Text("›", fontSize = 18.sp, color = StudioColors.ActiveVioletLight)
+                            StudioNavChevron(tint = StudioColors.ActiveVioletLight)
                         }
 
                         HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), color = StudioColors.StudioBorder)
@@ -722,6 +684,7 @@ fun SettingsStudioScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .heightIn(min = 48.dp)
                             .clickable { isAdvancedExpanded = !isAdvancedExpanded },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
@@ -732,12 +695,7 @@ fun SettingsStudioScreen(
                             fontSize = 15.sp,
                             color = Color.White
                         )
-                        Text(
-                            text = if (isAdvancedExpanded) "˅" else "›",
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = StudioColors.TextSecondary
-                        )
+                        StudioChevron(expanded = isAdvancedExpanded)
                     }
 
                     if (isAdvancedExpanded) {
@@ -780,7 +738,7 @@ fun SettingsStudioScreen(
                         Text("Learned Rules", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color.White)
                         Text("Manage AI rules learned from swipes & choices", fontSize = 11.sp, color = StudioColors.TextMuted)
                     }
-                    Text("›", fontSize = 20.sp, color = StudioColors.TextSecondary)
+                    StudioNavChevron()
                 }
             }
 
@@ -798,7 +756,7 @@ fun SettingsStudioScreen(
                         Text("App Rules", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color.White)
                         Text("Per-app exceptions and filtering rules", fontSize = 11.sp, color = StudioColors.TextMuted)
                     }
-                    Text("›", fontSize = 20.sp, color = StudioColors.TextSecondary)
+                    StudioNavChevron()
                 }
             }
 
@@ -816,7 +774,7 @@ fun SettingsStudioScreen(
                         Text("Privacy & Insights", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color.White)
                         Text("On-device processing & privacy stats", fontSize = 11.sp, color = StudioColors.TextMuted)
                     }
-                    Text("›", fontSize = 20.sp, color = StudioColors.TextSecondary)
+                    StudioNavChevron()
                 }
             }
 
@@ -847,6 +805,7 @@ fun SettingsStudioScreen(
             }
 
             StudioFooter(text = "Private by design. Refined by you.")
+            }
         }
     }
 }

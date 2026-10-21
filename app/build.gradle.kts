@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -32,10 +34,30 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.8"
     }
+    // Release signing: put the upload key in keystore.properties at the repo root (git-ignored) with storeFile,
+    // storePassword, keyAlias and keyPassword. Without it the release build falls back to the debug key, which works
+    // for installing and testing but is rejected by Google Play.
+    val keystoreProps = Properties().apply {
+        val f = rootProject.file("keystore.properties")
+        if (f.exists()) f.inputStream().use { load(it) }
+    }
+    val hasUploadKey = keystoreProps.getProperty("storeFile") != null
+    if (hasUploadKey) {
+        signingConfigs.create("upload") {
+            storeFile = rootProject.file(keystoreProps.getProperty("storeFile"))
+            storePassword = keystoreProps.getProperty("storePassword")
+            keyAlias = keystoreProps.getProperty("keyAlias")
+            keyPassword = keystoreProps.getProperty("keyPassword")
+        }
+    }
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("debug")
-            isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName(if (hasUploadKey) "upload" else "debug")
+            // Shrink code and resources. Phones only need the ARM libraries; pass -PallAbis to also keep x86/x86_64
+            // (for running a release build on an emulator).
+            isMinifyEnabled = !project.hasProperty("noMinify")
+            isShrinkResources = !project.hasProperty("noMinify")
+            if (!project.hasProperty("allAbis")) ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -45,6 +67,8 @@ android {
     packaging {
         jniLibs {
             useLegacyPackaging = false
+            // The text-generation (LLM) library that MediaPipe tasks-text bundles; the app only uses TextEmbedder.
+            excludes += "**/libmediapipe_tasks_textgenai_jni.so"
         }
     }
     lint {

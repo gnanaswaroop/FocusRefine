@@ -197,7 +197,7 @@ class EmbeddingClassifier private constructor(
                     buffer
                 )
             } catch (e: Throwable) {
-                Log.w(TAG, "Embedding model unavailable; using keyword engine: ${e.message}")
+                Log.w(TAG, "Embedding model unavailable; using keyword engine: ${e.javaClass.name}: ${e.message}", e)
                 null
             }
             prefs.edit().putBoolean(PREF_ENGINE_LOADED, engine != null).apply()

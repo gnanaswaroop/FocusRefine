@@ -1,56 +1,54 @@
-# FocusRefine - Google Play Store Submission Material
+# FocusRefine: Google Play submission
 
-## 1. App Store Listing Details
+What to enter in the Play Console, checked against the code on 2026-10-21 (`versionName` 1.0, `versionCode` 1). Items marked **BLOCKER** must be done before the first upload is published.
 
-### App Name (Max 30 chars)
-**FocusRefine: Distraction Free**
+## 1. Blockers before publishing
 
-### Short Description (Max 80 chars)
-FocusRefine: Privacy first notification blocker with on device AI
+1. **Embedding model licence.** `THIRD_PARTY_MODELS.md` does not confirm the licence of the bundled text model. Confirm the terms (or swap the model) before publishing. See `CLAUDE.md`.
+2. **Target API level.** `targetSdk` is 34 (`app/build.gradle.kts`). Google Play requires new apps and updates to target Android 15 (API 35) or higher. Raising it changes runtime behaviour (edge-to-edge, background limits), so it needs a full device test run first.
+3. **Privacy policy URL.** Play needs a public web address for the policy. The in-app Privacy Policy screen (`LegalActivity`) does not count. Options: enable GitHub Pages for this repo (Settings, Pages, source: GitHub Actions) and publish the same text from `docs/`, or host it elsewhere you control.
+4. **Store graphics.** `assets/feature_graphic.png` is a 1080x2400 phone screenshot. Play needs a 1024x500 feature graphic. A 512x512 high-resolution icon is also required; only the in-app launcher icon exists.
+5. **Upload.** The signed bundle is `app/build/outputs/bundle/release/app-release.aab` (about 24 MB, ARM only, signed with the upload key `1A:3F:83:22:…:08:DF`). Play App Signing must be accepted when the first release is created.
 
-### Full Description
-FocusRefine is a modern, privacy-first Android notification filtering application designed to help you reclaim your attention and eliminate daily digital distractions. 
+## 2. Store listing
 
-Powered by on-device intelligence (MediaPipe local semantic heuristics) and customizable filtering modes (Commute, Do Not Disturb, Work Focus, and custom user-defined modes), FocusRefine automatically categorizes incoming notifications into **Shown (Urgent)** and **Muted (Archived)** feeds.
+- **App name (30 max):** FocusRefine: Distraction Free
+- **Short description (80 max):** FocusRefine: Privacy first notification blocker with on device AI
+- **Full description:** FocusRefine filters your notifications by the mode you are in (Commute, Deep Focus, Do Not Disturb, Sleep, Workout, or your own). Urgent notifications are shown. The rest are muted and kept in an inbox you can check. A timed session keeps filtering on for 5, 15, 30 or 45 minutes, or until you turn it off. Everything runs on your phone. The app has no internet permission, so nothing you receive is sent anywhere.
+- **Category:** Productivity. **Contact:** the repository issues page (`github.com/gnanaswaroop/FocusRefine`) until a support address exists.
+- **Screenshots:** the phone screenshots in `assets/` (1080x2400), taken from the release build. Retake them after UI changes.
 
-#### Key Features:
-- **Smart On-Device AI Filtering**: Automatically filters out low-priority notifications while ensuring critical alerts (emergencies, family calls, work deadlines) always get through.
-- **Customizable Modes**: Tailor prompts and natural language rules for Commute, DND, or custom workflows.
-- **Right-Swipe Learning**: Swipe right on any notification in your inbox to hide/unhide and teach FocusRefine your personal preferences with automatic sensitive data sanitization.
-- **Live Update Ongoing Notification**: Keep track of suppressed notification counts in real-time with quick-toggle start/stop controls from your notification shade.
-- **Material Design 3 UI**: Clean, dark-mode-first Material 3 interface with edge-to-edge cards and seamless navigation.
-- **100% Privacy Focused**: All classification and data processing happen entirely on-device. No notification data ever leaves your phone.
+## 3. Permissions and what they are for
 
----
+| Permission | Why |
+| --- | --- |
+| `BIND_NOTIFICATION_LISTENER_SERVICE` | Reads incoming notifications to decide Shown or Muted, and moves muted ones out of the shade. Declare this in the Play Console's notification access declaration. |
+| `FOREGROUND_SERVICE`, `FOREGROUND_SERVICE_SPECIAL_USE` | Keeps the filter running while the phone is in use. Special use is declared as "keeps the notification filter running". |
+| `POST_NOTIFICATIONS` | The ongoing status notification and the timed-session notification. |
+| `POST_PROMOTED_NOTIFICATIONS` | Lets a timed session show as a status bar chip on Android 16. Normal permission, no data access. |
 
-## 2. Required Permissions & Justifications
+The app declares no `INTERNET` or network state permission. `PrivacyGuardsTest` fails the build if one is added back.
 
-1. **`BIND_NOTIFICATION_LISTENER_SERVICE`**:
-   - Required core functionality to read incoming system notifications, evaluate them against your active mode rules, and suppress non-urgent notifications.
-2. **`FOREGROUND_SERVICE` / `FOREGROUND_SERVICE_SPECIAL_USE`**:
-   - Required to run FocusRefine's background filtering engine and maintain the live update suppression counter notification in the status bar.
-3. **`POST_NOTIFICATIONS`**:
-   - Required on Android 13+ to display the ongoing foreground service status notification and alert indicators.
+## 4. Data safety form
 
----
+- **Does the app collect or share user data?** No.
+- **Is data processed on the device?** Yes. Notification text is read to filter it and stored only on the device, in the app's private storage. Nothing is sent off the device.
+- **Is data encrypted in transit?** Not applicable: nothing is transmitted.
+- **Can users request deletion?** Yes: clear the inbox, reset learned feedback in Privacy Insights, or uninstall the app. Automatic deletion is not implemented.
+- **Backup:** cloud backup is off (`allowBackup="false"`).
 
-## 3. Data Safety & Privacy Disclosures
+## 5. Content and policy questionnaires
 
-- **Does the app collect or share any user data?** No.
-- **Is all data processed locally on-device?** Yes. All notification filtering, AI classification, and user learning rule adjustments are stored locally in a secure Room database on your device.
-- **Data Sharing:** None.
-- **Security Practices:** Data is processed entirely locally on-device. No third-party tracking or analytics SDKs are embedded.
+- **Target audience:** 18 and over, or general audience with no child-directed features. The app collects no personal data from anyone.
+- **Ads:** none. **In-app purchases:** none.
+- **Export compliance:** the app uses on-device machine learning (MediaPipe). Declare it, and that it complies with export law.
+- **Content rating:** complete the IARC questionnaire. The app contains no user-generated content and no violence or sexual content.
 
----
+## 6. Release checklist
 
-## 4. Google Play Console Pre-Publication Checklist & Compliance
-
-### A. Developer Program Policies Compliance
-- **Core Functionality Declaration:** FocusRefine's primary core purpose is notification management and distraction filtering.
-- **Prominent Disclosure:** FocusRefine includes an explicit in-app disclosure during first-time launch (`OnboardingActivity`) informing users that notification access is used locally on-device to filter distractions and is never uploaded to cloud servers. This satisfies Google Play's restricted permissions policy requirements.
-
-### B. Play App Signing Terms of Service
-- **Acceptance:** You must accept the Play App Signing Terms of Service in the Google Play Console when creating your first release before uploading your production Android App Bundle (`app-release.aab`).
-
-### C. US Export Laws & Encryption Compliance
-- **Export Compliance:** Acknowledge in the Play Console that FocusRefine is subject to United States export laws due to its on-device AI/machine learning capabilities (MediaPipe). Certified that the application complies with all such laws and is authorized for export.
+- [ ] Blockers in section 1 resolved
+- [ ] `./gradlew bundleRelease` succeeds, and the AAB is signed with the upload key (`keytool -printcert -jarfile …aab` shows `1A:3F:83:…`)
+- [ ] Release build tested on the Pixel and the emulator (filter on, session on, extend, end, permission revoke and re-grant)
+- [ ] `ChangelogTest` passes (newest changelog entry equals `versionName`)
+- [ ] `PrivacyGuardsTest` passes (no INTERNET or network state in the merged manifest)
+- [ ] `docs/` and the in-app Privacy Policy and Terms text still match the behaviour
