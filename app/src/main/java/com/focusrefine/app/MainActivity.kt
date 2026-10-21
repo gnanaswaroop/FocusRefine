@@ -21,17 +21,17 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -238,6 +238,7 @@ fun MainStudioScreen(
 
     var isRunning by remember(isFilteringActive) { mutableStateOf(isFilteringActive) }
     var askLength by remember { mutableStateOf(false) }
+    var showModeSheet by remember { mutableStateOf(false) }
     fun setFiltering(on: Boolean) {
         isRunning = on
         prefs.edit().putBoolean("service_running", on).apply()
@@ -309,6 +310,8 @@ fun MainStudioScreen(
         }
         list
     }
+
+    val currentModeIcon = modeOptions.firstOrNull { currentMode.contains(it.first, ignoreCase = true) || currentMode == it.first }?.second ?: "⚡"
 
     // A session that ends can pause filtering from outside this screen (alarm, notification button): follow the pref.
     LaunchedEffect(liveRefreshTrigger, refreshTrigger) {
@@ -539,81 +542,67 @@ fun MainStudioScreen(
                                 fontSize = 10.sp,
                                 color = if (isRunning) StudioColors.ActiveVioletLight else StudioColors.TextMuted
                             )
-                            if (session != null && isRunning) {
-                                // The "work for this long" session: a live countdown beside the switch, or a note when it has no end.
-                                Text(
-                                    text = if (session.openEnded) "until you turn it off"
-                                    else ModeSession.countdown(session.endMs, maxOf(clockMs, session.startMs)) + " left",
-                                    fontSize = 11.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color.White
-                                )
-                            }
                         }
                     }
-                }
-            }
 
-            Spacer(modifier = Modifier.height(14.dp))
-
-            // 3. Context Mode Selector (Long press opens ContextModesActivity)
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "Mode (long press to manage)",
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = StudioColors.TextSecondary,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.weight(1f)
-                )
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                items(modeOptions) { (modeName, modeIcon) ->
-                    val isSelected = currentMode.contains(modeName, ignoreCase = true) || (currentMode == modeName)
-                    Box(
+                    // The mode you are filtering for, with the time left when a timed session runs. Tap it to change mode.
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Row(
                         modifier = Modifier
-                            .clip(CircleShape)
-                            .background(if (isSelected) StudioColors.ActiveViolet else StudioColors.CardSurface)
-                            .border(1.dp, if (isSelected) StudioColors.ActiveViolet else StudioColors.StudioBorder, CircleShape)
-                            .combinedClickable(
-                                onClick = {
-                                    currentMode = modeName
-                                    prefs.edit().putString("current_mode", modeName).apply()
-                                    refreshTrigger++
-                                },
-                                onLongClick = {
-                                    context.startActivity(Intent(context, ContextModesActivity::class.java))
-                                    Toast.makeText(context, "Opening details for $modeName", Toast.LENGTH_SHORT).show()
-                                }
-                            )
-                            .padding(horizontal = 14.dp, vertical = 8.dp)
+                            .fillMaxWidth()
+                            .clickable { showModeSheet = true }
+                            .padding(vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(text = modeIcon, fontSize = 14.sp)
-                            Spacer(modifier = Modifier.width(6.dp))
+                        Text(text = currentModeIcon, fontSize = 14.sp)
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            text = currentMode,
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.weight(1f, fill = false)
+                        )
+                        if (session != null && isRunning) {
+                            // A timed session: the countdown, or a note when it has no end.
+                            Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = modeName,
+                                text = if (session.openEnded) "until you turn it off"
+                                else ModeSession.countdown(session.endMs, maxOf(clockMs, session.startMs)) + " left",
                                 fontSize = 12.sp,
-                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
-                                color = Color.White
+                                fontWeight = FontWeight.SemiBold,
+                                color = StudioColors.ActiveVioletLight,
+                                maxLines = 1
                             )
                         }
+                        Spacer(modifier = Modifier.weight(1f))
+                        StudioNavChevron(tint = StudioColors.TextSecondary)
                     }
                 }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
+
+            if (showModeSheet) {
+                ModeChooserSheet(
+                    modes = modeOptions,
+                    current = currentMode,
+                    summaryOf = { PromptManager.summaryFor(context, it) ?: "Uses the prompt you wrote for it in Edit modes." },
+                    onPick = { name ->
+                        currentMode = name
+                        prefs.edit().putString("current_mode", name).apply()
+                        refreshTrigger++
+                        showModeSheet = false
+                    },
+                    onManage = {
+                        showModeSheet = false
+                        context.startActivity(Intent(context, ContextModesActivity::class.java))
+                    },
+                    onDismiss = { showModeSheet = false }
+                )
+            }
 
             // 4. Smart Inbox Section Header & Tabs
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -929,5 +918,55 @@ fun MainStudioPreview() {
             onEnableNotificationAccess = {},
             onOpenSettings = {}
         )
+    }
+}
+
+/** Bottom sheet opened from the mode line on Home: each enabled mode, what it lets through, and a way to pick it. */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ModeChooserSheet(
+    modes: List<Pair<String, String>>,
+    current: String,
+    summaryOf: (String) -> String,
+    onPick: (String) -> Unit,
+    onManage: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    ModalBottomSheet(onDismissRequest = onDismiss, containerColor = StudioColors.CardSurface) {
+        Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 24.dp)) {
+            Text("Choose a mode", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
+            Text(
+                "A mode decides which notifications still get through. Each one is sorted by the AI, and anything it is unsure about goes to Review.",
+                fontSize = 12.sp, color = StudioColors.TextSecondary, lineHeight = 17.sp,
+                modifier = Modifier.padding(top = 4.dp, bottom = 12.dp)
+            )
+            modes.forEach { (name, icon) ->
+                val selected = current.contains(name, ignoreCase = true) || current == name
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(if (selected) StudioColors.ActiveViolet.copy(alpha = 0.18f) else Color.Transparent)
+                        .clickable { onPick(name) }
+                        .padding(12.dp),
+                    verticalAlignment = Alignment.Top
+                ) {
+                    Text(text = icon, fontSize = 18.sp)
+                    Spacer(modifier = Modifier.width(12.dp))
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(name, fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(summaryOf(name), fontSize = 12.sp, color = StudioColors.TextSecondary, lineHeight = 17.sp)
+                    }
+                    if (selected) {
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("Active", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = StudioColors.ActiveVioletLight)
+                    }
+                }
+            }
+            TextButton(onClick = onManage) {
+                Text("Edit modes and prompts", color = StudioColors.ActiveVioletLight)
+            }
+        }
     }
 }

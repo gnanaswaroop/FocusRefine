@@ -64,16 +64,32 @@ class HomeDeclutterE2ETest {
             .putBoolean("service_running", false).commit()
         ModeSession.end(context)
         ActivityScenario.launch(MainActivity::class.java).use {
-            assertTrue(AccessibilityDriver.waitForText("Mode (long press to manage)"))
+            assertTrue("the mode line shows the current mode", AccessibilityDriver.waitForText("Sleeping / Rest"))
             assertTrue("no separate timed-session button", AccessibilityDriver.hasText("Timed session").not())
             AccessibilityDriver.tapSwitch()
             assertTrue("it asks how long", AccessibilityDriver.waitForText("How long should FocusRefine work?"))
             AccessibilityDriver.tapText("15 minutes")
-            assertTrue("the countdown is beside the switch", AccessibilityDriver.waitForText(" left"))
+            assertTrue("the countdown is on the mode line", AccessibilityDriver.waitForText(" left"))
             assertTrue("no session card below", AccessibilityDriver.hasText("End session").not())
             AccessibilityDriver.tapSwitch()
             assertTrue("switching off ends it", AccessibilityDriver.waitForText(" left", present = false))
             assertTrue(!ModeSession.isActive(context))
+        }
+    }
+
+    @Test
+    fun theModeLineOpensAChooserThatSaysWhatEachModeLetsThrough() {
+        ActivityScenario.launch(MainActivity::class.java).use {
+            AccessibilityDriver.tapText("Sleeping / Rest")
+            assertTrue("the chooser opens", AccessibilityDriver.waitForText("Choose a mode"))
+            assertTrue("each mode says what it lets through", AccessibilityDriver.waitForText("Lets through"))
+            // Tap the Commute row through its explanation: the name also appears on the mode line behind the sheet.
+            AccessibilityDriver.tapText("Lets through navigation")
+            assertTrue("the chooser closes", AccessibilityDriver.waitForText("Choose a mode", present = false))
+            assertTrue(
+                "Commute is now the mode",
+                context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE).getString("current_mode", null) == "Commute"
+            )
         }
     }
 }

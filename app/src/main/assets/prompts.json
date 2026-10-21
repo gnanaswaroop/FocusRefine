@@ -1,21 +1,26 @@
 {
   "Commute": {
+    "summary": "Lets through navigation, transit and ride alerts, and calls from family or VIPs. Mutes promotions and social updates.",
     "prompt": "Active navigation alerts, transit arrivals, real-time traffic updates, urgent calls from family members or VIP contacts, rideshare arrival notices, and flight boarding gates.",
     "enabled": true
   },
   "Deep Work / Focus": {
+    "summary": "Lets through meeting pings, project deadlines, build failures and manager escalations. Mutes chat, social and promotions.",
     "prompt": "Urgent meeting pings, project deadlines, critical build/deploy failures, manager escalations, and calendar reminders.",
     "enabled": true
   },
   "Do Not Disturb (DND)": {
+    "summary": "Lets through emergencies, hospital and emergency-service messages, and urgent family calls. Mutes everything else.",
     "prompt": "Critical safety emergencies, hospital notifications, emergency services, urgent family distress calls, and critical system alarms.",
     "enabled": false
   },
   "Sleeping / Rest": {
+    "summary": "Lets through family distress calls, school and medical alerts. Mutes everything else.",
     "prompt": "Family distress calls, school alerts, medical notifications, immediate family member messages, and vital health updates.",
     "enabled": false
   },
   "Workout / Gym": {
+    "summary": "Lets through timers, fitness alerts and emergencies. Mutes everything else.",
     "prompt": "Workout timer completion, fitness intervals, health tracking notifications, and emergency alerts.",
     "enabled": false
   }

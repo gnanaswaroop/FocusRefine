@@ -7,7 +7,7 @@ import org.json.JSONObject
 object PromptManager {
     private const val TAG = "PromptManager"
 
-    data class PromptConfig(val prompt: String, val enabled: Boolean)
+    data class PromptConfig(val prompt: String, val enabled: Boolean, val summary: String = "")
 
     fun getAllOotbConfigs(context: Context): Map<String, PromptConfig> {
         val map = mutableMapOf<String, PromptConfig>()
@@ -26,7 +26,7 @@ object PromptManager {
                 if (value is JSONObject) {
                     val prompt = value.optString("prompt", "")
                     val enabled = value.optBoolean("enabled", false)
-                    map[key] = PromptConfig(prompt, enabled)
+                    map[key] = PromptConfig(prompt, enabled, value.optString("summary", ""))
                 } else if (value is String) {
                     map[key] = PromptConfig(value, false)
                 }
@@ -60,6 +60,20 @@ object PromptManager {
         return configs.entries.firstOrNull { it.value.enabled }?.key
             ?: configs.keys.firstOrNull()
             ?: "Default"
+    }
+
+    /**
+     * The one-line "what gets through" for a mode on Home, from `summary` in prompts.json. A name matches a built-in
+     * entry exactly or by a shared word ("Sleep" finds "Sleeping / Rest"); null when there is none (custom modes).
+     */
+    fun summaryFor(context: Context, modeName: String): String? {
+        val configs = getAllOotbConfigs(context)
+        configs[modeName]?.summary?.takeIf { it.isNotEmpty() }?.let { return it }
+        fun words(s: String) = s.lowercase().split(' ', '/', '(', ')').filter { it.length >= 4 }
+        val mine = words(modeName)
+        return configs.entries.firstOrNull { (key, cfg) ->
+            cfg.summary.isNotEmpty() && words(key).any { k -> mine.any { w -> k.startsWith(w) || w.startsWith(k) } }
+        }?.value?.summary
     }
 
     fun getEnrichedModePrompt(basePrompt: String, synthesizedRules: List<String>): String {
