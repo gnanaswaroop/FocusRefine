@@ -26,6 +26,7 @@
             "Every correction teaches the app, whether you make it from the inbox or from the details screen.",
             "Corrections are faster: the AI model is loaded once and shared instead of being set up again each time.",
             "Home is tidier: the search bar opens from a magnifier, close calls are one chip instead of a chip plus a banner, the timed-session button shares the mode row, and the header is one line.",
+            "Home has more room: the mode is a line in the status card (tap it to see what each mode lets through and change it), and the timed-session countdown sits on that line instead of a separate row.",
             "Settings opens with every section collapsed, so you can see all of them at once and open the one you need.",
             "Privacy Policy and Terms of Use now have their own screens (Privacy Insights), with a live check of this installation, instead of a pop-up message."
           ]
