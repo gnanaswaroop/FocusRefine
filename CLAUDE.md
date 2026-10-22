@@ -8,7 +8,7 @@ Guidance for working in this repository. Facts marked *(verified)* were checked 
 
 - Package / applicationId: `com.focusrefine.app` (all code in one package, `app/src/main/java/com/focusrefine/app/`)
 - Single Gradle module `:app`. Kotlin, Jetpack Compose (Material3) UI, Room, **MediaPipe Tasks Text 1.1.1** (`TextEmbedder`; 16 KB-aligned natives for all four ABIs, including `x86_64`).
-- `minSdk 28`, `compileSdk/targetSdk 34`, versionName `1.0`, `versionCode 1`. Java/Kotlin target 1.8. AGP 9.4.1, Kotlin 2.2.10, KSP 2.3.6 (root `build.gradle.kts`); `composeOptions.kotlinCompilerExtensionVersion = 1.5.8`.
+- `minSdk 28`, `compileSdk 37`, `targetSdk 36`, versionName `1.1`, `versionCode 2` (Play rejected code 1). Java/Kotlin target 1.8. AGP 9.4.1, Kotlin 2.2.10, KSP 2.3.6 (root `build.gradle.kts`); `composeOptions.kotlinCompilerExtensionVersion = 1.5.8`.
 
 ## Repo state
 
@@ -114,7 +114,7 @@ Note: `AutoActivationReceiver` writes mode names `"Commute"` and `"Focus"`, whil
 ## Docs, CI, and tooling
 
 - `docs/` is a GitHub Pages site (Jekyll, `_config.yml`). Key pages: `internals.md` (architecture, testing, measured results), `ai_classification_and_modes.md` (pipeline flowchart, modes, exceptions, results), `database_security.md`, `permissions_reference.md`, `play_store_submission.md`, `demo.md`, `index.md`. Update them when you change behavior they describe; `testdata/README.md` documents the datasets.
-- **CI state (verified 2026-10-18):** `deploy_github_pages.yml` is active but fails at `Setup Pages` because GitHub Pages is **not enabled** for the repo (Settings -> Pages -> Source: GitHub Actions); it also still lists the stale branch `feature/dark-studio-redesign`. `play_store_deploy.yml` is **disabled** in GitHub; if re-enabled it passes the invalid input `service_account_json_raw_key` to `r0adkll/upload-google-play@v1` (valid: `serviceAccountJsonPlainText`) and `versionCode` is `1`. Merges to `main` currently deploy nothing.
+- **CI state (verified 2026-10-18):** `deploy_github_pages.yml` is active but fails at `Setup Pages` because GitHub Pages is **not enabled** for the repo (Settings -> Pages -> Source: GitHub Actions); it also still lists the stale branch `feature/dark-studio-redesign`. `play_store_deploy.yml` is **disabled** in GitHub; if re-enabled it passes the invalid input `service_account_json_raw_key` to `r0adkll/upload-google-play@v1` (valid: `serviceAccountJsonPlainText`). Merges to `main` currently deploy nothing.
 - `assets/` (repo root) holds README/docs screenshots; `tmp/` holds a demo video. Neither is app code.
 - `tools/telegram_bridge.py` is a local-only helper that relays status/messages to Telegram. `tools/`, `.tg.env`, `tmp/`, `.artifacts/` are git-ignored. **Never commit credentials** (`tools/config.json`, bot tokens, keystores).
 

@@ -1,11 +1,11 @@
 # FocusRefine: Google Play submission
 
-What to enter in the Play Console, checked against the code on 2026-10-21 (`versionName` 1.0, `versionCode` 1). Items marked **BLOCKER** must be done before the first upload is published.
+What to enter in the Play Console, checked against the code on 2026-10-21 (`versionName` 1.1, `versionCode` 2). Items marked **BLOCKER** must be done before the first upload is published.
 
 ## 1. Blockers before publishing
 
 1. **Embedding model licence.** `THIRD_PARTY_MODELS.md` does not confirm the licence of the bundled text model. Confirm the terms (or swap the model) before publishing. See `CLAUDE.md`.
-2. **Target API level.** `targetSdk` is 34 (`app/build.gradle.kts`). Google Play requires new apps and updates to target Android 15 (API 35) or higher. Raising it changes runtime behaviour (edge-to-edge, background limits), so it needs a full device test run first.
+2. **Target API level.** `targetSdk` is 36 (`app/build.gradle.kts`), the level Play currently requires. It has not yet had a full device test run on this target: run the device suite before publishing.
 3. **Privacy policy URL.** Play needs a public web address for the policy. The in-app Privacy Policy screen (`LegalActivity`) does not count. The text is now in `docs/privacy.md`, published at `https://gnanaswaroop.github.io/FocusRefine/privacy/` once GitHub Pages is enabled (Settings, Pages, source: GitHub Actions). Until then, the URL does not resolve.
 4. **Store graphics.** `assets/feature_graphic.png` is a 1080x2400 phone screenshot. Play needs a 1024x500 feature graphic. A 512x512 high-resolution icon is also required; only the in-app launcher icon exists.
 5. **Upload.** The signed bundle is `app/build/outputs/bundle/release/app-release.aab` (about 24 MB, ARM only, signed with the upload key `1A:3F:83:22:…:08:DF`). Play App Signing must be accepted when the first release is created.
