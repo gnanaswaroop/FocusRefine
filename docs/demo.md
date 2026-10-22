@@ -12,7 +12,7 @@ This document provides a feature walkthrough and visual demonstration guide for 
 - **Top Bar**: Displays the app logo, `FocusRefine` header with the `● On Device AI` green badge beside it (under it on narrow screens), and the Help and Settings buttons in a single row.
 - **Noise Filter Stat Banner Card**: Displays dynamic noise filtered percentage (e.g., `84% Noise Filtered`) and live counters (`42 Muted • 8 Urgent Shown Today`).
 - **Search**: the search bar is hidden until you tap the magnifier (🔍) beside the Smart Inbox title, which keeps the list near the top.
-- **Context Mode Row**: Interactive chips for enabled context modes (🚗 `Commute` and 🎧 `Deep Focus` by default). **Long-pressing** any mode bubble opens [`ContextModesActivity`](file:///E:/Projects/do-i-care-app/app/src/main/java/com/focusrefine/app/ContextModesActivity.kt) directly.
+- **Mode line**: the mode is a line in the status card on Home (for example `Commute`, or the mode you last chose). Tap it to see what each mode lets through and switch modes; **Edit modes and prompts** opens `ContextModesActivity`.
 - **Smart Inbox Tabs, Swipe Gesture & Animations**: Toggle between `🔕 Muted` and `🔔 Shown` pill tabs or **swipe left / right** across the notification list to switch tabs with smooth Compose spring slide animations.
 - **Native App Icon Cards**: Displays authentic native app icons (`AppIconImage`) for installed applications.
 - **Close calls**: a gold "Close calls (2)" chip next to the tabs counts decisions the app was not sure about; tapping it lists them least sure first. Each has a "Not sure" pill and one-tap **Show it / Mute it** and **Keep muted / Keep shown** buttons. See [Close calls](inbox_review.md).
