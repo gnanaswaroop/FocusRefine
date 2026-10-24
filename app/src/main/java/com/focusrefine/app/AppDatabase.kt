@@ -30,6 +30,10 @@ abstract class AppDatabase : RoomDatabase() {
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val passphrase = getOrGenerateDbKey(context)
+
+                // Migrate from plaintext to SQLCipher if upgrading
+                DatabaseMigrator.migrateToEncryptedIfNecessary(context, "focusrefine_database", passphrase)
+
                 val factory = SupportFactory(passphrase)
 
                 val instance = Room.databaseBuilder(

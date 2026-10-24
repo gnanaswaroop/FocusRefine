@@ -106,42 +106,12 @@ class MainActivity : FragmentActivity() {
 
         setContent {
             FocusRefineTheme {
-                val appLockEnabled = prefs.getBoolean("app_lock_enabled", false)
-                val requiresAuth = appLockEnabled && BiometricHelper.isBiometricAvailable(this)
-
-                if (requiresAuth && !isUnlocked.value) {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = StudioColors.DarkBackground
-                    ) {
-                        Column(
-                            modifier = Modifier.fillMaxSize(),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
-                        ) {
-                            Text(
-                                "FocusRefine is Locked",
-                                color = Color.White,
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                            Spacer(modifier = Modifier.height(16.dp))
-                            if (showAuthError.value) {
-                                Text("Authentication failed. Please try again.", color = Color.Red)
-                                Spacer(modifier = Modifier.height(16.dp))
-                            }
-                            Button(
-                                onClick = { promptBiometric() },
-                                colors = ButtonDefaults.buttonColors(containerColor = StudioColors.ActiveViolet)
-                            ) {
-                                Text("Unlock")
-                            }
-                        }
-                    }
-                    LaunchedEffect(Unit) {
-                        promptBiometric()
-                    }
-                } else {
+                AuthWrapper(
+                    activity = this@MainActivity,
+                    prefs = prefs,
+                    isUnlocked = isUnlocked,
+                    showAuthError = showAuthError
+                ) {
                     MainStudioScreen(
                         isNotificationAccessEnabled = isNotifAccessEnabledState.value,
                         isFilteringActive = prefs.getBoolean("service_running", true),
@@ -160,20 +130,6 @@ class MainActivity : FragmentActivity() {
             }
         }
     }
-
-    private fun promptBiometric() {
-        BiometricHelper.showBiometricPrompt(
-            this,
-            onSuccess = {
-                isUnlocked.value = true
-                showAuthError.value = false
-            },
-            onError = {
-                showAuthError.value = true
-            }
-        )
-    }
-
 
     /** Re-reads the notification-access grant, starts the service if it is now allowed, and tells Home to reload. */
     private fun refreshAccess() {
