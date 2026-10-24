@@ -1,0 +1,60 @@
+{"id": "es-test-00001", "gloss_title": "Mom", "gloss_text": "Come to the hospital now, dad fell down the stairs and isn't moving well. Call me as soon as you read this"}
+{"id": "es-test-00002", "gloss_title": "Brother", "gloss_text": "My dad had an accident on the highway, we're in the emergency room. Please answer 🙏"}
+{"id": "es-dev-00003", "gloss_title": "Missed call", "gloss_text": "Mom (5 missed calls)"}
+{"id": "es-test-00004", "gloss_title": "Missed call", "gloss_text": "Dad · 3 missed calls in the last 10 minutes"}
+{"id": "es-test-00005", "gloss_title": "Missed call", "gloss_text": "Unknown number +52 5XXXXXXXXX"}
+{"id": "es-dev-00006", "gloss_title": "Possible spam", "gloss_text": "Incoming call from +34 9XXXXXXXX. Marked as telemarketing by 312 users"}
+{"id": "es-test-00007", "gloss_title": "Suspicious call", "gloss_text": "Someone claiming to be from your bank is asking for your details over the phone. Possible fraud, don't share anything"}
+{"id": "es-test-00008", "gloss_title": "Your account will be suspended", "gloss_text": "We have detected unusual activity. Verify your identity within the next 24 hours: http://acceso-seguro.example.invalid/x"}
+{"id": "es-dev-00009", "gloss_title": "+52 5XXXXXXXXX", "gloss_text": "Congratulations! You won $50,000 pesos in the monthly draw 🎉 Claim your prize: http://premio.example.invalid/mx"}
+{"id": "es-test-00010", "gloss_title": "Post Office", "gloss_text": "Your package is being held. Pay 1,99 euros in customs fees at http://aduana-pago.example.invalid/p"}
+{"id": "es-test-00011", "gloss_title": "Weather alert", "gloss_text": "Red warning for torrential rain in your area until 22:00. Avoid travel and do not cross flood-prone areas."}
+{"id": "es-dev-00012", "gloss_title": "Tomorrow's forecast", "gloss_text": "Light rain in the afternoon, high of 24°. Bring an umbrella ☂️"}
+{"id": "es-test-00013", "gloss_title": "Earthquake detected", "gloss_text": "Strong shaking is expected in a few seconds. Drop, cover and hold on."}
+{"id": "es-test-00014", "gloss_title": "Los Olmos Building Community - President", "gloss_text": "There's a strong smell of gas in entrance 3. Get out to the street, don't use the elevators. We've already notified the fire department"}
+{"id": "es-dev-00015", "gloss_title": "Colonia Jardines Neighbors - Lupita", "gloss_text": "Hahaha the tamale guy is coming, does anyone want me to set some aside for you? 😂"}
+{"id": "es-test-00016", "gloss_title": "Good morning 🌞", "gloss_text": "Have a day full of blessings. Forward to 10 contacts or you'll have bad luck all week"}
+{"id": "es-test-00017", "gloss_title": "Chain of help", "gloss_text": "URGENT!!! Forward: they say there will be a blackout across the whole country today at 8, tell everyone 🚨🚨"}
+{"id": "es-dev-00018", "gloss_title": "Smoke alarm detected", "gloss_text": "A smoke alarm has been detected near your phone. Check your surroundings now."}
+{"id": "es-test-00019", "gloss_title": "Doorbell detected", "gloss_text": "A doorbell was detected near your phone"}
+{"id": "es-test-00020", "gloss_title": "Dog barking", "gloss_text": "A dog barking was detected near you"}
+{"id": "es-dev-00021", "gloss_title": "Your driver has arrived", "gloss_text": "Carlos is waiting for you at the pickup point · Gray Nissan Versa"}
+{"id": "es-test-00022", "gloss_title": "Your Bolt is arriving", "gloss_text": "Marta arrives in 1 minute. White Mazda 3. Go to the pickup point."}
+{"id": "es-test-00023", "gloss_title": "Turn right", "gloss_text": "In 200 m, turn right onto Calle de Alcalá"}
+{"id": "es-dev-00024", "gloss_title": "Heavy traffic ahead", "gloss_text": "Alternate route via Periférico: saves you 8 min. Take the detour?"}
+{"id": "es-test-00025", "gloss_title": "Raúl Ortega in #incidentes", "gloss_text": "@you the payments API is down and customers can't charge. We need you to connect now"}
+{"id": "es-test-00026", "gloss_title": "On call · Critical incident", "gloss_text": "The orders service is not responding. You are the on-call person: confirm receipt within 5 minutes"}
+{"id": "es-dev-00027", "gloss_title": "Meeting in 5 minutes", "gloss_text": "Quarterly review with Management starts at 10:00. Tap to join"}
+{"id": "es-test-00028", "gloss_title": "Invitation from Ana Ruiz", "gloss_text": "Planning workshop next Tuesday at 11:00"}
+{"id": "es-test-00029", "gloss_title": "Interval completed", "gloss_text": "You have finished interval 4 of 8. Rest for 60 seconds"}
+{"id": "es-dev-00030", "gloss_title": "Goal reached 🎉", "gloss_text": "You reached 5 km! Average pace 5:48 /km"}
+{"id": "es-test-00031", "gloss_title": "High heart rate", "gloss_text": "Your heart rate has exceeded 150 bpm at rest for 10 minutes. If you feel unwell, seek medical help."}
+{"id": "es-test-00032", "gloss_title": "Fall detected", "gloss_text": "It looks like you fell. If you need help, tap to call emergency services"}
+{"id": "es-dev-00033", "gloss_title": "Weekly summary", "gloss_text": "You walked an average of 8.200 steps a day. Keep it up!"}
+{"id": "es-test-00034", "gloss_title": "Your subscription renews", "gloss_text": "Premium Individual will renew on November 3 for 10,99 €"}
+{"id": "es-test-00035", "gloss_title": "Payment problem", "gloss_text": "We couldn't process your payment this month. Update your payment method to keep watching."}
+{"id": "es-dev-00036", "gloss_title": "Your weekly Mix is here", "gloss_text": "Discover 30 new songs chosen for you 🎧"}
+{"id": "es-test-00037", "gloss_title": "New episode", "gloss_text": "You can now watch episode 6 of «La casa del faro»"}
+{"id": "es-test-00038", "gloss_title": "⚡ FINAL HOURS: Flash deals", "gloss_text": "Ends tonight at midnight. Up to 60% off electronics"}
+{"id": "es-dev-00039", "gloss_title": "Deal storm alert! ⛈️", "gloss_text": "Coupons up to 70% off today only. Don't miss out on yours!"}
+{"id": "es-test-00040", "gloss_title": "Boarding now", "gloss_text": "Your flight to Sevilla is boarding now at gate B22. Closes in 15 minutes."}
+{"id": "es-test-00041", "gloss_title": "Flight cancelled", "gloss_text": "Your 18:40 flight to Monterrey has been cancelled. Check the rebooking options."}
+{"id": "es-dev-00042", "gloss_title": "Person detected", "gloss_text": "Living room camera: a person was detected at 03:12"}
+{"id": "es-test-00043", "gloss_title": "Motion at the entrance", "gloss_text": "The entrance camera detected motion at 14:20"}
+{"id": "es-test-00044", "gloss_title": "Alexa Guard", "gloss_text": "A smoke alarm was heard in your home. Check now."}
+{"id": "es-dev-00045", "gloss_title": "Missed call", "gloss_text": "Hospital Comarcal Santa Lucía (3 calls). They're trying to reach you about your father's admission"}
+{"id": "es-test-00046", "gloss_title": "Colegio San Ignacio", "gloss_text": "Your son hit his head at recess. Please come pick him up as soon as possible"}
+{"id": "es-test-00047", "gloss_title": "Your order is out for delivery", "gloss_text": "It will arrive today between 14:00 and 18:00"}
+{"id": "es-dev-00048", "gloss_title": "You received money", "gloss_text": "Ana Torres sent you $350.00 MXN"}
+{"id": "es-test-00049", "gloss_title": "Upcoming bill", "gloss_text": "Your electricity bill of 62,40 € is due in 5 days"}
+{"id": "es-test-00050", "gloss_title": "Lic. Fernanda Salas", "gloss_text": "I need the signed proposal within the next hour, the client is already waiting"}
+{"id": "es-dev-00051", "gloss_title": "Due today", "gloss_text": "Submit the sales report before 17:00"}
+{"id": "es-test-00052", "gloss_title": "#general · Pablo", "gloss_text": "URGENT: who's in for the set lunch menu? 🍕"}
+{"id": "es-test-00053", "gloss_title": "Dani 😎", "gloss_text": "OMG call me!!! you have to see what happened to me hahaha it's nothing serious"}
+{"id": "es-dev-00054", "gloss_title": "Missed call", "gloss_text": "Jorge (coworker) · 1 missed call"}
+{"id": "es-test-00055", "gloss_title": "Road closure", "gloss_text": "Bridge closed on Av. Insurgentes due to an accident. 40 min delays on your route"}
+{"id": "es-test-00056", "gloss_title": "ES-Alert system test", "gloss_text": "This is a test of the alert system. No action is necessary."}
+{"id": "es-dev-00057", "gloss_title": "Dad", "gloss_text": "I've got home, what's for dinner?"}
+{"id": "es-test-00058", "gloss_title": "GOAL ALERT! ⚽", "gloss_text": "Tigres 2-1 Pumas, min 78"}
+{"id": "es-test-00059", "gloss_title": "ALERT! Your village is under attack ⚔️", "gloss_text": "A player just attacked your village. Log in to see the battle report"}
+{"id": "es-dev-00060", "gloss_title": "Rate your driver", "gloss_text": "How did it go with Carlos? Tell us how your trip today went"}

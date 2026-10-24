@@ -1,0 +1,60 @@
+{"id": "id-test-00001", "gloss_title": "Mom", "gloss_text": "Son/daughter, dad fell off his motorbike, he's at Harapan Hospital now. Call mom quickly, okay!"}
+{"id": "id-test-00002", "gloss_title": "Sis Rani", "gloss_text": "Hey, mom fainted at home, I'm taking her to the ER. Pick up the phone please, it's really important"}
+{"id": "id-dev-00003", "gloss_title": "Missed call", "gloss_text": "Bapak (4 missed calls)"}
+{"id": "id-test-00004", "gloss_title": "Missed voice call", "gloss_text": "Kak Rina (older sister) - 3 missed calls"}
+{"id": "id-test-00005", "gloss_title": "Missed call", "gloss_text": "+62 8XXXXXXXXXX (unknown number)"}
+{"id": "id-dev-00006", "gloss_title": "Possible spam", "gloss_text": "+62 8XXXXXXXXXX - Credit card offer, reported by many users"}
+{"id": "id-test-00007", "gloss_title": "Scam warning", "gloss_text": "Call from +62 8XXXXXXXXXX claiming to be a bank officer and asking for personal data. Suspected scam."}
+{"id": "id-test-00008", "gloss_title": "Your account will be blocked", "gloss_text": "We detected suspicious activity. Confirm your identity at http://verifikasi-akun.example.invalid/x or your account will be closed today."}
+{"id": "id-dev-00009", "gloss_title": "Prize Admin", "gloss_text": "Congratulations! Your number won a Rp50 million draw. Claim now at http://hadiah-klaim.example.invalid/x"}
+{"id": "id-test-00010", "gloss_title": "Quick Loan", "gloss_text": "Rp10 million loan disbursed in 5 minutes, no collateral! Sign up: http://pinjam-kilat.example.invalid/x"}
+{"id": "id-test-00011", "gloss_title": "Express Courier", "gloss_text": "Your package is held at the warehouse. Pay shipping Rp12.500 at http://cek-paket.example.invalid/x so it can be sent right away."}
+{"id": "id-dev-00012", "gloss_title": "Extreme weather warning", "gloss_text": "Heavy rain with thunder and strong winds in South Jakarta within the next 2 hours. Avoid big trees and stay indoors."}
+{"id": "id-test-00013", "gloss_title": "Earthquake alert", "gloss_text": "Earthquake detected near you. Take cover now: drop, cover, and hold on."}
+{"id": "id-test-00014", "gloss_title": "RT 05 Residents - Pak Hendra", "gloss_text": "Residents, there's a strong gas smell in block C and a small fire near the tank. Get out immediately and stay away from the area!"}
+{"id": "id-dev-00015", "gloss_title": "Canteen Gang - Dito", "gloss_text": "lmaooo did you see the new stickers 😂"}
+{"id": "id-test-00016", "gloss_title": "Extended Family - Aunt Wati", "gloss_text": "Forwarded: IMPORTANT INFO!! Drinking warm water every morning can prevent all diseases. Share to 10 groups now!"}
+{"id": "id-test-00017", "gloss_title": "Sound detected: fire alarm", "gloss_text": "A smoke alarm is sounding near your device."}
+{"id": "id-dev-00018", "gloss_title": "Sound detected: doorbell", "gloss_text": "The doorbell rang."}
+{"id": "id-test-00019", "gloss_title": "Driver has arrived", "gloss_text": "Pak Budi with Honda Beat B 1234 XXX is waiting at the pickup point. Get in quickly!"}
+{"id": "id-test-00020", "gloss_title": "Turn left in 200 m", "gloss_text": "Enter Jl. Sudirman, then turn left. Arrive around 08.42."}
+{"id": "id-dev-00021", "gloss_title": "#prod-incident", "gloss_text": "Payment service is down, error 500 in all regions. Need everyone on call to join now."}
+{"id": "id-test-00022", "gloss_title": "Meeting starts in 5 minutes", "gloss_text": "Sprint review - Zoom link is in the invite. Tap to join."}
+{"id": "id-dev-00024", "gloss_title": "High heart rate", "gloss_text": "Your heart rate was above 150 bpm for 10 minutes while resting. Sit down and calm yourself, contact a doctor if it continues."}
+{"id": "id-test-00025", "gloss_title": "Subscription renewed", "gloss_text": "Your Premium will auto-renew on 28 Oct for Rp54.990."}
+{"id": "id-test-00026", "gloss_title": "Payment failed", "gloss_text": "We couldn't process this month's payment. Update your payment method so you can keep watching."}
+{"id": "id-dev-00027", "gloss_title": "Your Weekly Mix is ready", "gloss_text": "New songs from your favorite artists are waiting. Play now 🎧"}
+{"id": "id-test-00028", "gloss_title": "Recommended for you", "gloss_text": "New video: 10 fried rice recipes in 10 minutes"}
+{"id": "id-test-00029", "gloss_title": "FLASH SALE 12.12 🔥", "gloss_text": "DISCOUNT up to 90%! Only 2 hours, hurry before it sells out!!"}
+{"id": "id-test-00031", "gloss_title": "Person detected", "gloss_text": "Porch Camera detected someone at 02.14 while Away mode was active."}
+{"id": "id-test-00032", "gloss_title": "Klinik Sehat Sentosa", "gloss_text": "Mrs. Sari's lab results show critical levels. Please contact the doctor on duty today."}
+{"id": "id-dev-00033", "gloss_title": "Bu Ani (Class 4B Homeroom Teacher)", "gloss_text": "Good afternoon, Dimas has a high fever and vomited at school. Please pick him up soon, sir/ma'am."}
+{"id": "id-test-00034", "gloss_title": "Order is on its way", "gloss_text": "The courier is delivering your order, estimated to arrive today before 17.00."}
+{"id": "id-test-00035", "gloss_title": "Payment received", "gloss_text": "You received Rp150.000 from Dewi."}
+{"id": "id-dev-00036", "gloss_title": "DISCOUNT FLOOD ⚡", "gloss_text": "Warning: stock running low! Rp100k voucher expires in 1 hour."}
+{"id": "id-test-00037", "gloss_title": "Your village is under attack!", "gloss_text": "Enemy troops are approaching. Gather your troops now before your resources get plundered!"}
+{"id": "id-test-00038", "gloss_title": "SYSTEM EMERGENCY", "gloss_text": "Your account will be deleted in 1 hour! Click now http://selamatkan-akun.example.invalid/x"}
+{"id": "id-dev-00039", "gloss_title": "Hotel discount storm 🌪️", "gloss_text": "Price alert: down up to 60% for weekend getaways. Book now!"}
+{"id": "id-test-00040", "gloss_title": "Important call", "gloss_text": "From 'Info Tagihan Listrik' +62 8XXXXXXXXXX - possible spam"}
+{"id": "id-test-00041", "gloss_title": "EMERGENCY LIVE 🚨", "gloss_text": "Insane discounts on your favorite seller's live, join before it runs out!"}
+{"id": "id-dev-00042", "gloss_title": "Important: action required", "gloss_text": "Your YouTube Premium subscription ends tomorrow. Renew to stay ad-free."}
+{"id": "id-test-00043", "gloss_title": "#office - Mira", "gloss_text": "URGENT everyone: order lunch before 11 okay 🍜"}
+{"id": "id-test-00044", "gloss_title": "17th of August Committee RT 05", "gloss_text": "IMPORTANT!! Committee meeting for the pole-climbing contest tonight at 8 at the neighborhood watch post."}
+{"id": "id-dev-00045", "gloss_title": "Dito", "gloss_text": "BRO EMERGENCY!!! where are you, super hungry here 😭"}
+{"id": "id-test-00046", "gloss_title": "Missed voice call", "gloss_text": "Rizky (office colleague) - 1 missed call"}
+{"id": "id-test-00047", "gloss_title": "Bang Tono", "gloss_text": "Bro, call me later okay, not urgent, it's about Saturday's futsal"}
+{"id": "id-dev-00048", "gloss_title": "Sari", "gloss_text": "if you get a chance let me know about the documents, no rush"}
+{"id": "id-test-00049", "gloss_title": "Front door opened", "gloss_text": "Front door opened at 14.30. Home mode active."}
+{"id": "id-test-00050", "gloss_title": "Weekly summary", "gloss_text": "Resting heart rate averaged 72 bpm this week, still within normal range."}
+{"id": "id-dev-00051", "gloss_title": "Klinik Sehat Sentosa", "gloss_text": "Reminder: routine dental check-up next Thursday at 10.00."}
+{"id": "id-test-00052", "gloss_title": "School announcement", "gloss_text": "School holiday on 2 Nov due to collective leave. Classes resume 3 Nov."}
+{"id": "id-dev-00054", "gloss_title": "Your 5-day streak is about to be lost!", "gloss_text": "Do a 5-minute workout now so your streak flame keeps burning 🔥"}
+{"id": "id-test-00055", "gloss_title": "#product-team - Andi", "gloss_text": "evaluation meeting tomorrow at 3 okay, relax, not pressing yet"}
+{"id": "id-test-00056", "gloss_title": "Safety warning", "gloss_text": "There is a flash flood threat around you. Head to higher ground immediately."}
+{"id": "id-dev-00057", "gloss_title": "Road closed", "gloss_text": "Jagorawi Toll toward Jakarta is closed due to a fallen tree. Choose an alternative route via Jl. Raya Bogor."}
+{"id": "id-test-00058", "gloss_title": "Pak Hartono (Client)", "gloss_text": "Sir, the contract must be signed before 3 this afternoon, please let me know right away."}
+{"id": "id-test-00059", "gloss_title": "Trip finished", "gloss_text": "Thanks for riding with us! Total Rp27.000, rate your driver okay."}
+{"id": "id-dev-00060", "gloss_title": "Build failed: main", "gloss_text": "Workflow deploy-staging failed at the test step. 14 tests errored, needs review now."}
+{"id": "id-test-00023", "gloss_title": "Time to run!", "gloss_text": "Weekly target 20 km, only 6 km to go. Let's continue with this afternoon's session 🏃"}
+{"id": "id-dev-00030", "gloss_title": "Booking needs attention", "gloss_text": "The villa in Ubud is unavailable tonight due to flooding. Contact the host before check-in at 14.00."}
+{"id": "id-test-00053", "gloss_title": "Driver heading to you", "gloss_text": "The driver is on the way to the pickup point, about 12 minutes away."}

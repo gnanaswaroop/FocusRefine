@@ -1,0 +1,60 @@
+{"id": "ru-test-00001", "gloss_title": "Sister Katya", "gloss_text": "Dad suddenly felt ill, we called an ambulance, we're heading to the city hospital. Call back urgently!!"}
+{"id": "ru-test-00002", "gloss_title": "Missed call", "gloss_text": "Mom (4 missed in the last 5 minutes)"}
+{"id": "ru-test-00003", "gloss_title": "Missed call", "gloss_text": "+7 9XXXXXXXXX"}
+{"id": "ru-test-00004", "gloss_title": "Possible spam", "gloss_text": "Incoming: \"Urgent bank survey\". 37 complaints, call rejected"}
+{"id": "ru-test-00005", "gloss_title": "Scammer blocked", "gloss_text": "A \"security service employee\" tried to reach you from number +7 9XXXXXXXXX and asked you to give personal details"}
+{"id": "ru-dev-00006", "gloss_title": "Account security service", "gloss_text": "Your account will be blocked in 24 hours! Confirm your identity: http://account-secure.example.invalid/login"}
+{"id": "ru-test-00007", "gloss_title": "Giveaway 2024", "gloss_text": "🎉 Congratulations, you won five hundred thousand rubles! Claim your prize today: http://prize-claim.example.invalid/x"}
+{"id": "ru-test-00008", "gloss_title": "Emergency alert", "gloss_text": "Storm warning: tonight hurricane-force wind up to 30 m/s, downpour. Stay home, do not park under trees."}
+{"id": "ru-dev-00009", "gloss_title": "Earthquake nearby", "gloss_text": "Noticeable tremors in your area. Move away from windows and take cover under a sturdy table."}
+{"id": "ru-test-00010", "gloss_title": "Our Yard - Building 14", "gloss_text": "ATTENTION! Smell of gas in entrance 2, everyone get outside urgently. The emergency service is already on its way, do not use the elevator!"}
+{"id": "ru-test-00011", "gloss_title": "Groupmates - 3rd year", "gloss_text": "Did anyone do the physics lab? at least send a photo 😅"}
+{"id": "ru-dev-00012", "gloss_title": "Ivanov Family", "gloss_text": "Forwarded message: ❗️Read this and forward to 10 friends, otherwise your wish won't come true! 🍀"}
+{"id": "ru-test-00013", "gloss_title": "Sound detected", "gloss_text": "Fire alarm siren. Loud signal near you."}
+{"id": "ru-test-00014", "gloss_title": "Sound detected", "gloss_text": "Doorbell"}
+{"id": "ru-dev-00015", "gloss_title": "Driver has arrived", "gloss_text": "Your driver has pulled up to the entrance: gray Kia Rio. He is waiting for you, free waiting time 3 minutes."}
+{"id": "ru-test-00016", "gloss_title": "In 300 m", "gloss_text": "Turn right onto Sadovaya Street"}
+{"id": "ru-test-00017", "gloss_title": "#prod-alerts", "gloss_text": "🔴 Payment service is not responding, 5xx errors rising. We need the on-call engineer right now."}
+{"id": "ru-dev-00018", "gloss_title": "Release meeting", "gloss_text": "Starts in 5 minutes, room \"Baikal\""}
+{"id": "ru-test-00020", "gloss_title": "High heart rate", "gloss_text": "Heart rate 148 bpm at rest for 10 minutes now. If you feel unwell, seek medical help."}
+{"id": "ru-dev-00021", "gloss_title": "Premium renews tomorrow", "gloss_text": "We will charge 269 ₽ for the next month. You can manage the subscription in account settings."}
+{"id": "ru-test-00022", "gloss_title": "Payment failed", "gloss_text": "Update your payment method, otherwise access to the subscription will be suspended."}
+{"id": "ru-test-00023", "gloss_title": "Mix of the day is ready 🎧", "gloss_text": "A new selection for you: 90s Russian rock and indie you missed"}
+{"id": "ru-dev-00024", "gloss_title": "New video on the channel \"Unhurried Kitchen\"", "gloss_text": "Borscht in 40 minutes: a simple everyday recipe"}
+{"id": "ru-test-00025", "gloss_title": "STORM SALE ⚡", "gloss_text": "URGENT! Discounts up to -70% for only 3 hours. Hurry before the end of the day!"}
+{"id": "ru-dev-00027", "gloss_title": "Camera: living room", "gloss_text": "A person detected in the living room while \"Away\" mode is on. Open the stream."}
+{"id": "ru-test-00029", "gloss_title": "School 1234 - class teacher", "gloss_text": "Class 3B lessons are canceled due to a heating failure. Please pick up the children before 12:00."}
+{"id": "ru-dev-00030", "gloss_title": "Courier order", "gloss_text": "Your order has been handed to the courier. Expected delivery: today between 14:00 and 18:00."}
+{"id": "ru-test-00031", "gloss_title": "Transfer received", "gloss_text": "You received 1 500 ₽ from Alexey P. The funds are already in your balance."}
+{"id": "ru-test-00032", "gloss_title": "Dasha Orlova", "gloss_text": "wanna go to the movies tonight?) a new comedy came out"}
+{"id": "ru-dev-00033", "gloss_title": "Dad", "gloss_text": "Buy bread and milk on the way, okay?"}
+{"id": "ru-test-00034", "gloss_title": "Igor Leonidovich (manager)", "gloss_text": "Urgently need the report for the client, send it within the next 15 minutes, they're already waiting."}
+{"id": "ru-test-00035", "gloss_title": "Lena Design", "gloss_text": "When you have time, take a look at the mockup, no rush 🙂"}
+{"id": "ru-dev-00036", "gloss_title": "Residents of building 14 - announcements", "gloss_text": "Cleanup day in the yard on Saturday at 11:00, we'll hand out gloves and bags on site"}
+{"id": "ru-test-00037", "gloss_title": "Information for residents", "gloss_text": "Planned hot water shutoff from 10 to 24 July in your area."}
+{"id": "ru-test-00038", "gloss_title": "Smoke detector", "gloss_text": "The smoke detector went off in the kitchen. Check the room immediately!"}
+{"id": "ru-dev-00039", "gloss_title": "Door sensor", "gloss_text": "Front door opened at 18:05"}
+{"id": "ru-test-00040", "gloss_title": "Emergency alert", "gloss_text": "Fire at the industrial zone. Close the windows and do not go outside unless necessary. Follow Emergency Ministry (MChS) messages."}
+{"id": "ru-test-00041", "gloss_title": "Highway closed", "gloss_text": "Accident at the city exit, traffic blocked. The detour will add about 40 minutes."}
+{"id": "ru-dev-00042", "gloss_title": "Deadline in 2 hours", "gloss_text": "The task \"Send the commercial proposal\" must be completed today by 17:00"}
+{"id": "ru-test-00043", "gloss_title": "Build main failed", "gloss_text": "The release build failed at the build-android stage, check the build log"}
+{"id": "ru-test-00044", "gloss_title": "URGENT: your picks of the week", "gloss_text": "Don't miss the main stories of the week. You can unsubscribe via the link at the bottom of the email."}
+{"id": "ru-dev-00045", "gloss_title": "VKontakte", "gloss_text": "Anna Smirnova tagged you in a photo"}
+{"id": "ru-test-00046", "gloss_title": "🔥 You missed this!", "gloss_text": "URGENT check out what everyone is talking about today. Come in right now!"}
+{"id": "ru-test-00047", "gloss_title": "Alert! ⚔️", "gloss_text": "Your village is under attack! Urgently log into the game and defend your resources."}
+{"id": "ru-dev-00048", "gloss_title": "Streak at risk! 🔥", "gloss_text": "2 hours left to not lose your 87-day streak. Do a lesson!"}
+{"id": "ru-test-00049", "gloss_title": "Weather for tomorrow", "gloss_text": "Cloudy, +4°, slight rain possible. Westerly wind 5 m/s."}
+{"id": "ru-test-00050", "gloss_title": "URGENT", "gloss_text": "A new metro station has opened in the city. Details on the website."}
+{"id": "ru-dev-00051", "gloss_title": "Goal! ⚽", "gloss_text": "Spartak 1:0 Zenit, 67'"}
+{"id": "ru-test-00053", "gloss_title": "Appointment", "gloss_text": "Appointment with the general practitioner confirmed: Monday, 10:20. Routine visit, bring your insurance policy."}
+{"id": "ru-dev-00054", "gloss_title": "New assignment: algebra", "gloss_text": "Due Friday. Paragraph 14, problems 3-8."}
+{"id": "ru-test-00055", "gloss_title": "Missed call", "gloss_text": "Colleague Andrey, 1 time"}
+{"id": "ru-test-00056", "gloss_title": "Voicemail", "gloss_text": "New message from +7 9XXXXXXXXX (0:12)"}
+{"id": "ru-dev-00057", "gloss_title": "How was your trip?", "gloss_text": "Rate your stay in Kazan and leave a review for future guests"}
+{"id": "ru-test-00058", "gloss_title": "BTC +5% in an hour 🚀", "gloss_text": "Don't miss the moment! The market is rising, top up your account and buy now."}
+{"id": "ru-test-00059", "gloss_title": "Trip completed", "gloss_text": "Thanks for riding with us! Rate the driver."}
+{"id": "ru-dev-00060", "gloss_title": "Parcel is waiting", "gloss_text": "Your parcel is held. Pay the 99 ₽ duty via the link: http://post-track.example.invalid/pay"}
+{"id": "ru-test-00019", "gloss_title": "Workout time", "gloss_text": "Today intervals 4×400 m. Start with a light 10-minute warm-up and tap \"Start\"."}
+{"id": "ru-test-00052", "gloss_title": "Goal reached 🎉", "gloss_text": "You walked 10 000 steps. Great day!"}
+{"id": "ru-test-00026", "gloss_title": "Driver canceled the ride", "gloss_text": "The ride to the airport at 05:30 is canceled. Order a new car to make your flight."}
+{"id": "ru-test-00028", "gloss_title": "Clinic No. 7", "gloss_text": "Your test results require an urgent doctor's consultation. Call the front desk today before 18:00."}

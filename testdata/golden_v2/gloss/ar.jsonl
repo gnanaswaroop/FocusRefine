@@ -1,0 +1,60 @@
+{"id": "ar-test-00001", "gloss_title": "Mom", "gloss_text": "Come quickly to Al-Salam Hospital, Dad fell in the bathroom and isn't answering me. Call me right now"}
+{"id": "ar-test-00002", "gloss_title": "Missed call", "gloss_text": "My brother Majid (3 missed calls)"}
+{"id": "ar-dev-00003", "gloss_title": "Missed call", "gloss_text": "Unknown number +971 5XXXXXXXX tried to call you twice"}
+{"id": "ar-test-00004", "gloss_title": "Suspected call", "gloss_text": "+20 1XXXXXXXXX - classified as spam: real estate marketing offers"}
+{"id": "ar-test-00005", "gloss_title": "Possible fraud", "gloss_text": "The caller claims to be from bank administration and asks you to update your details immediately. +966 5XXXXXXXX has been reported as a scam number."}
+{"id": "ar-dev-00006", "gloss_title": "+971 5XXXXXXXX", "gloss_text": "Final warning: your bank account will be suspended today. Log in to confirm within one hour http://secure-login.example.invalid/x"}
+{"id": "ar-test-00007", "gloss_title": "Grand Lucky Draw", "gloss_text": "Congratulations! You won 50000 pounds 🎉 To claim the prize enter here http://prize-claim.example.invalid/x"}
+{"id": "ar-test-00008", "gloss_title": "Heavy rain warning", "gloss_text": "Heavy thunderstorms and flash floods expected over the Jeddah area in the coming hours. Avoid valleys and low-lying areas and stay in safe places."}
+{"id": "ar-dev-00009", "gloss_title": "Earthquake alert", "gloss_text": "A tremor has been detected. Drop, cover, and hold on. Stay away from windows."}
+{"id": "ar-test-00010", "gloss_title": "Al-Nakheel Building - Security", "gloss_text": "Urgent alert: strong smell of gas on the third floor. Please evacuate the building immediately and do not use the elevators."}
+{"id": "ar-test-00011", "gloss_title": "Building 7 Group - Umm Karim", "gloss_text": "Does anyone have the roof key? I want to hang the laundry 😅"}
+{"id": "ar-dev-00012", "gloss_title": "Big Family Group - Abu Sultan", "gloss_text": "Very urgent!! The Ministry of Health warns against drinking cold water in the morning, share it with everyone you love 🙏🙏"}
+{"id": "ar-test-00013", "gloss_title": "Sound detected", "gloss_text": "Fire alarm: the sound of a smoke alarm was detected"}
+{"id": "ar-test-00014", "gloss_title": "Sound detected", "gloss_text": "Doorbell"}
+{"id": "ar-dev-00015", "gloss_title": "Your driver has arrived", "gloss_text": "Majid in a white car is waiting for you at the pickup point. Please head over now."}
+{"id": "ar-test-00016", "gloss_title": "Turn right in 300 m", "gloss_text": "onto Al-Thawra Street, then stay in the left lane"}
+{"id": "ar-test-00017", "gloss_title": "#instant-support", "gloss_text": "Alert: the payment service in production has been down for 10 minutes. We need an on-call engineer now."}
+{"id": "ar-dev-00018", "gloss_title": "Weekly team meeting", "gloss_text": "Starts in 5 minutes. Join now, the host is waiting for you."}
+{"id": "ar-test-00019", "gloss_title": "Interval 3 of 6 finished", "gloss_text": "Rest 30 seconds then start the next interval 💪"}
+{"id": "ar-test-00020", "gloss_title": "High heart rate", "gloss_text": "Your watch detected a high heart rate (165 bpm) at rest for more than 10 minutes. If you feel symptoms, seek help."}
+{"id": "ar-dev-00021", "gloss_title": "Your subscription renews soon", "gloss_text": "The trial period ends tomorrow and the Premium plan will renew automatically."}
+{"id": "ar-test-00022", "gloss_title": "Payment failed", "gloss_text": "We could not collect your subscription fee. Update your payment method to avoid service suspension."}
+{"id": "ar-test-00023", "gloss_title": "New release", "gloss_text": "Your favorite artist dropped a new album. Listen now 🎧"}
+{"id": "ar-dev-00024", "gloss_title": "Live stream now!", "gloss_text": "A tech channel started an urgent live stream. Don't miss the surprise!"}
+{"id": "ar-test-00025", "gloss_title": "🌪️ Storm of discounts", "gloss_text": "Up to 70% off - ends tonight! Shop before stock runs out"}
+{"id": "ar-test-00026", "gloss_title": "Urgent flight update", "gloss_text": "Your flight to Cairo is delayed 90 minutes. New boarding gate: B14."}
+{"id": "ar-dev-00027", "gloss_title": "Person detected", "gloss_text": "The back entrance camera detected a person at the door at 2:14 AM"}
+{"id": "ar-test-00028", "gloss_title": "Al-Amal Hospital - Missed call", "gloss_text": "Please call us about your father as soon as possible. The operation is over and there is an update on his condition."}
+{"id": "ar-test-00029", "gloss_title": "Al-Rowad School - Administration", "gloss_text": "Your son Yasser fell in the playground and may have a broken hand. Please come to the school immediately."}
+{"id": "ar-dev-00030", "gloss_title": "Your order is on the way", "gloss_text": "The courier will arrive within 10 minutes. Have the amount ready if payment is on delivery."}
+{"id": "ar-test-00031", "gloss_title": "Payment received", "gloss_text": "You received 250.00 dollars from Al-Sharq Design Company. It now appears in your balance."}
+{"id": "ar-test-00032", "gloss_title": "Manager - Khaled", "gloss_text": "I need the report right now, ten minutes before the client meeting. Reply immediately"}
+{"id": "ar-dev-00033", "gloss_title": "Smoke alert", "gloss_text": "The sensor in the kitchen detected smoke. Check the house immediately."}
+{"id": "ar-test-00034", "gloss_title": "Security alert", "gloss_text": "Chemical gas leak near the industrial zone. Stay indoors and close the windows and doors."}
+{"id": "ar-test-00035", "gloss_title": "Flood warning", "gloss_text": "Torrential floods expected. Evacuation orders issued for low-lying areas, head to higher ground immediately."}
+{"id": "ar-dev-00036", "gloss_title": "Road closed", "gloss_text": "Full closure of North Corniche Road due to an accident. Choose an alternative route."}
+{"id": "ar-test-00037", "gloss_title": "Due today", "gloss_text": "Review the final presentation for the client - deadline 5 PM"}
+{"id": "ar-test-00038", "gloss_title": "Build failed on main", "gloss_text": "The production pipeline failed at the tests step after the latest merge"}
+{"id": "ar-dev-00039", "gloss_title": "Sara", "gloss_text": "hahaha did you see the meme I sent? Unreal 😂"}
+{"id": "ar-test-00040", "gloss_title": "Mom", "gloss_text": "If you go to the market bring bread and milk"}
+{"id": "ar-test-00041", "gloss_title": "Missed call", "gloss_text": "Your colleague Ahmed Samir"}
+{"id": "ar-dev-00042", "gloss_title": "New voice message", "gloss_text": "Message text: Hello, this is Fahad. Just wanted to ask you about lunch on Thursday, no rush."}
+{"id": "ar-test-00043", "gloss_title": "We miss you!", "gloss_text": "You have unfinished draft videos. Come back and finish them now ⚡"}
+{"id": "ar-test-00044", "gloss_title": "Fast shipping", "gloss_text": "Your shipment is held at customs. Pay a fee of 12 dirhams to complete delivery http://customs-pay.example.invalid/a"}
+{"id": "ar-dev-00045", "gloss_title": "Emergency alert", "gloss_text": "Test message: this is a test of the public alert system, no action required."}
+{"id": "ar-test-00046", "gloss_title": "Price alert", "gloss_text": "BTC reached the price you set. Tap to review your wallet."}
+{"id": "ar-test-00047", "gloss_title": "Rate your trip", "gloss_text": "How was your trip with driver Ahmed? Rate him now"}
+{"id": "ar-dev-00048", "gloss_title": "Al-Waha Residents Association", "gloss_text": "Owners' meeting next Saturday at 7 PM in the main hall. Details in the attachment."}
+{"id": "ar-test-00049", "gloss_title": "#general", "gloss_text": "Who wants to order lunch today? Shawarma? 🌯"}
+{"id": "ar-test-00050", "gloss_title": "Weekly newsletter", "gloss_text": "Top 5 tech articles this week, read them in minutes."}
+{"id": "ar-dev-00051", "gloss_title": "Movement at the door", "gloss_text": "Movement was detected at the entrance door at 3:30 PM"}
+{"id": "ar-test-00052", "gloss_title": "Booking confirmation", "gloss_text": "Your stay in the sea-view apartment is confirmed. Check-in starts tomorrow at 3 PM."}
+{"id": "ar-test-00053", "gloss_title": "Top headlines", "gloss_text": "Today's brief: new economic developments, sports and culture news"}
+{"id": "ar-dev-00054", "gloss_title": "Tomorrow's weather", "gloss_text": "Partly cloudy, 34°, slight chance of light rain"}
+{"id": "ar-test-00055", "gloss_title": "Goal!", "gloss_text": "Blue Team 2 - 1 Red Team (78') ⚽"}
+{"id": "ar-test-00056", "gloss_title": "Instagram", "gloss_text": "Salma liked your post and started following you"}
+{"id": "ar-dev-00057", "gloss_title": "Drink water reminder", "gloss_text": "You haven't had water in two hours. Drink a glass now 💧"}
+{"id": "ar-test-00058", "gloss_title": "Attack incoming!", "gloss_text": "Your village is under attack! Come back now to defend it ⚔️"}
+{"id": "ar-dev-00059", "gloss_title": "Don't break your streak!", "gloss_text": "Your daily workout is waiting. 7 days in a row so far 🔥"}
+{"id": "ar-test-00060", "gloss_title": "System update ready", "gloss_text": "A new update is ready to install. Install it tonight while charging."}

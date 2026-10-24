@@ -1,0 +1,60 @@
+{"id": "kn-test-00001", "gloss_title": "Mom", "gloss_text": "Dad had chest pain, we're taking him to the hospital now. Call right away!"}
+{"id": "kn-test-00002", "gloss_title": "Missed call", "gloss_text": "Elder brother - called 5 times"}
+{"id": "kn-dev-00003", "gloss_title": "Unknown number", "gloss_text": "Missed call from +91 9XXXXXXXXX"}
+{"id": "kn-test-00004", "gloss_title": "Suspected spam", "gloss_text": "+91 8XXXXXXXXX - many have reported it as a loan-offer telemarketer. Not an urgent call."}
+{"id": "kn-test-00005", "gloss_title": "Fraud call warning", "gloss_text": "A call claiming to be a bank officer saying your account will be blocked if KYC is not updated - +91 7XXXXXXXXX"}
+{"id": "kn-test-00006", "gloss_title": "Your account will be suspended", "gloss_text": "Urgent! If your account details are not verified within 24 hours, the account will be permanently closed. Verify: http://account-verify.example.invalid/kn"}
+{"id": "kn-test-00007", "gloss_title": "Lucky draw team", "gloss_text": "Congratulations! 🎉 You have won a ₹25 lakh lottery. Click this link right now to claim the prize money: http://prize-claim.example.invalid/x"}
+{"id": "kn-test-00008", "gloss_title": "Severe weather warning", "gloss_text": "Bengaluru city: heavy rain and a thunderstorm likely in the next two hours. Stay in a safe place."}
+{"id": "kn-test-00009", "gloss_title": "Earthquake warning", "gloss_text": "Strong tremors are likely. Drop down, cover your head, hold on tight."}
+{"id": "kn-test-00010", "gloss_title": "Apartment emergency notice", "gloss_text": "There is a smell of gas leak in Block B. Everyone come downstairs immediately, do not use the lift."}
+{"id": "kn-dev-00011", "gloss_title": "Sahakara Nagar neighbourhood - Suma", "gloss_text": "Someone played loud music in the park last night 😅 Did you hear it too?"}
+{"id": "kn-test-00012", "gloss_title": "Family group - Maama", "gloss_text": "⚠️ Urgent forward: scientists have said the earth will shake tomorrow morning, send to everyone!"}
+{"id": "kn-test-00013", "gloss_title": "Smoke alarm detected", "gloss_text": "The sound of a smoke alarm was heard nearby."}
+{"id": "kn-dev-00014", "gloss_title": "Doorbell sound", "gloss_text": "A doorbell sound was heard near your door."}
+{"id": "kn-test-00015", "gloss_title": "Your cab has arrived", "gloss_text": "Driver Ramesh is waiting at your pickup location. White Swift."}
+{"id": "kn-dev-00016", "gloss_title": "Turn left", "gloss_text": "After 300 m, turn left onto Outer Ring Road"}
+{"id": "kn-test-00017", "gloss_title": "#prod-alerts", "gloss_text": "Payment service is down, you're on-call this week. Join the call immediately."}
+{"id": "kn-test-00018", "gloss_title": "Meeting starts in 5 minutes", "gloss_text": "Sprint Review - the host is waiting. Join now."}
+{"id": "kn-test-00019", "gloss_title": "Interval over", "gloss_text": "Rest is over. Start the next set 💪"}
+{"id": "kn-test-00020", "gloss_title": "Heart rate alert", "gloss_text": "Your heart rate at rest has gone above 150 per minute. If you feel unwell, get medical help immediately."}
+{"id": "kn-dev-00021", "gloss_title": "Membership renewal", "gloss_text": "Your plan will renew tomorrow. If you need any change, check account settings."}
+{"id": "kn-test-00022", "gloss_title": "Payment failed", "gloss_text": "Your payment method was declined. Add another method so the music is not interrupted."}
+{"id": "kn-dev-00023", "gloss_title": "New playlist for you", "gloss_text": "Kannada Hits Weekly Mix is ready 🎶 Listen now"}
+{"id": "kn-test-00024", "gloss_title": "Urgent! Live has started", "gloss_text": "The new episode of your favourite serial is now available. Don't miss it!"}
+{"id": "kn-test-00025", "gloss_title": "Storm sale ⚡", "gloss_text": "Ends tonight at 12! Up to 60% off on mobiles."}
+{"id": "kn-test-00026", "gloss_title": "Your bus is about to leave", "gloss_text": "Your bus from Majestic leaves in 20 minutes. Boarding point: Platform 12."}
+{"id": "kn-test-00027", "gloss_title": "Front door opened", "gloss_text": "The front door was opened at 2:14 AM. You are away from home."}
+{"id": "kn-test-00028", "gloss_title": "City Care Hospital", "gloss_text": "The doctor wants to speak with you immediately about your father's surgery. Please call."}
+{"id": "kn-test-00029", "gloss_title": "Class teacher - Shantha Madam", "gloss_text": "Your son got hurt in the playground. Please come to school right now."}
+{"id": "kn-dev-00030", "gloss_title": "Order on the way", "gloss_text": "Your masala dosa order is on the way. The delivery partner will arrive in about 15 minutes."}
+{"id": "kn-dev-00031", "gloss_title": "Money received", "gloss_text": "₹450 received from Soumya."}
+{"id": "kn-test-00032", "gloss_title": "Water leak detected", "gloss_text": "Water detected at the kitchen sensor. Check immediately."}
+{"id": "kn-test-00033", "gloss_title": "Flood warning", "gloss_text": "More water is being released from the reservoir. Residents of low-lying riverside areas, evacuate immediately."}
+{"id": "kn-test-00034", "gloss_title": "Missing child alert", "gloss_text": "A 6-year-old boy is missing in the Jayanagar area. If seen, inform the police immediately."}
+{"id": "kn-test-00035", "gloss_title": "Road closed on your route", "gloss_text": "The flyover on your route is closed. Heavy traffic, use an alternate route."}
+{"id": "kn-test-00036", "gloss_title": "Rajeev Sir (Client)", "gloss_text": "Join the call right now, I need to talk urgently about the presentation."}
+{"id": "kn-test-00037", "gloss_title": "Build failed: main", "gloss_text": "The CI pipeline on the main branch failed and the deploy was rolled back."}
+{"id": "kn-test-00038", "gloss_title": "Deadline today", "gloss_text": "The report review must be finished by 5 this evening. Your approval is pending."}
+{"id": "kn-dev-00039", "gloss_title": "Friend Kiran", "gloss_text": "Dude, shall we go to Coffee Day this evening? 😄"}
+{"id": "kn-test-00040", "gloss_title": "Pooja", "gloss_text": "Oh buddy, enough man. See you tomorrow 😂"}
+{"id": "kn-dev-00041", "gloss_title": "Akka", "gloss_text": "Bring half a kg of tomatoes when you come home, it's a bit urgent"}
+{"id": "kn-test-00042", "gloss_title": "Dad", "gloss_text": "Reached home. Will eat and sleep."}
+{"id": "kn-dev-00043", "gloss_title": "Ganesha Festival Committee", "gloss_text": "There is a meeting at the clubhouse this Sunday at 5 PM. Discussion on contributions and decorations."}
+{"id": "kn-test-00044", "gloss_title": "Guest at the gate", "gloss_text": "A delivery partner has come to flat 304. Should I let them in?"}
+{"id": "kn-test-00045", "gloss_title": "Missed call", "gloss_text": "Colleague Sunil called"}
+{"id": "kn-dev-00046", "gloss_title": "Voicemail", "gloss_text": "Hi, I'm Vinay. Call me when you have time, nothing that urgent."}
+{"id": "kn-test-00047", "gloss_title": "Items are waiting in your cart", "gloss_text": "Come quickly! Stock is running out, buy now 🛍️"}
+{"id": "kn-test-00048", "gloss_title": "Parcel held", "gloss_text": "A small fee is due for delivering your parcel, otherwise it will be sent back. Pay today: http://parcel-fee.example.invalid/kn"}
+{"id": "kn-test-00049", "gloss_title": "Power cut notice", "gloss_text": "Due to maintenance work, there will be no electricity in your area from 10 AM to 2 PM tomorrow."}
+{"id": "kn-test-00050", "gloss_title": "Price alert", "gloss_text": "A stock on your watchlist has reached the target price you set."}
+{"id": "kn-test-00051", "gloss_title": "Your trip receipt", "gloss_text": "₹212 for today's trip. Rate your driver."}
+{"id": "kn-dev-00052", "gloss_title": "Web check-in opens tomorrow", "gloss_text": "Web check-in for your flight to Mangaluru opens tomorrow morning."}
+{"id": "kn-dev-00053", "gloss_title": "Top news", "gloss_text": "State budget session begins next week; here is a summary of the key issues."}
+{"id": "kn-test-00054", "gloss_title": "Tomorrow's weather", "gloss_text": "Bengaluru: cloudy, maximum 28°, chance of light rain in the evening."}
+{"id": "kn-dev-00055", "gloss_title": "Match started", "gloss_text": "The team that won the toss has chosen to bat first. See live score."}
+{"id": "kn-dev-00056", "gloss_title": "Priya", "gloss_text": "Priya liked your photo ❤️"}
+{"id": "kn-dev-00057", "gloss_title": "Time to drink water", "gloss_text": "You have had only 3 glasses of water today. Drink a glass 💧"}
+{"id": "kn-test-00058", "gloss_title": "Alert! Clan war", "gloss_text": "Enemies are attacking your base! Defend it now ⚔️"}
+{"id": "kn-dev-00059", "gloss_title": "Urgent: data running out", "gloss_text": "90% of today's 1.5 GB data has been used. Tap to recharge."}
+{"id": "kn-dev-00060", "gloss_title": "Suma Clinic", "gloss_text": "Reminder that you have an appointment with Dr. Suma tomorrow at 10:30 AM."}

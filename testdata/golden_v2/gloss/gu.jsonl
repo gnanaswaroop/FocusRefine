@@ -1,0 +1,60 @@
+{"id": "gu-test-00001", "gloss_title": "Mom", "gloss_text": "Son, call quickly, Dad has severe chest pain. We are going to the Civil Hospital."}
+{"id": "gu-test-00002", "gloss_title": "Missed call", "gloss_text": "Elder brother (4 times)"}
+{"id": "gu-dev-00003", "gloss_title": "Unknown number", "gloss_text": "Missed call from +91 9XXXXXXXXX"}
+{"id": "gu-test-00004", "gloss_title": "Possible spam", "gloss_text": "+91 9XXXXXXXXX · Loan offer · Reported as spam by 120 people"}
+{"id": "gu-test-00005", "gloss_title": "Scam call?", "gloss_text": "A call is coming in from someone claiming to be a courier officer: 'An illegal item was found in your parcel.' Do not pick up the call."}
+{"id": "gu-dev-00006", "gloss_title": "Urgent: Account will be closed!", "gloss_text": "Your bank account will be closed within 24 hours. Complete your details right now to keep the account active: http://k.example.invalid/x"}
+{"id": "gu-test-00007", "gloss_title": "Prize department", "gloss_text": "Congratulations! 🎉 You have won a prize of ₹25 lakh. To claim the prize, click the link below and fill in your details: http://p.example.invalid/x"}
+{"id": "gu-test-00008", "gloss_title": "Severe weather warning", "gloss_text": "Cyclone likely on the coasts of Saurashtra and Kutch. Fishermen and people along the coast should move to a safe place immediately."}
+{"id": "gu-dev-00009", "gloss_title": "Earthquake alert", "gloss_text": "Earthquake detected. Drop to the ground, cover your head and hold on to something sturdy."}
+{"id": "gu-test-00010", "gloss_title": "Shreeji Apartment Group - Secretary", "gloss_text": "Gas leak suspected in Block C. Everyone come down immediately, do not use the lift and do not switch lights on or off."}
+{"id": "gu-test-00011", "gloss_title": "Friends Circle - Ketan", "gloss_text": "Where shall we meet for tea this evening? At the street stall or at a cafe? 😄"}
+{"id": "gu-dev-00012", "gloss_title": "Gyan Group - Forward", "gloss_text": "⚠️ Urgent warning! A big earthquake will hit tonight at 12 o'clock, NASA has said so. Send to everyone!"}
+{"id": "gu-test-00013", "gloss_title": "Smoke alarm", "gloss_text": "Smoke alarm heard"}
+{"id": "gu-test-00014", "gloss_title": "Doorbell", "gloss_text": "Doorbell rang 🔔"}
+{"id": "gu-dev-00015", "gloss_title": "Your driver has arrived", "gloss_text": "White Swift (GJ01XXXX) is standing at the pickup point. Driver: Rameshbhai"}
+{"id": "gu-test-00016", "gloss_title": "Turn right after 200 meters", "gloss_text": "Turn right towards S.G. Highway · 12 minutes left"}
+{"id": "gu-test-00017", "gloss_title": "#prod-alerts", "gloss_text": "Payment API is down and customer complaints are rising. On-call engineer join immediately."}
+{"id": "gu-dev-00018", "gloss_title": "Meeting in 5 minutes", "gloss_text": "The weekly review meeting starts at 11:00. Join now."}
+{"id": "gu-test-00019", "gloss_title": "Interval over", "gloss_text": "Rest time is over. Start the next round 💪"}
+{"id": "gu-test-00020", "gloss_title": "Heart rate is high", "gloss_text": "Your heart rate has been above 150 for the last 10 minutes while resting. If you feel unwell, seek medical help."}
+{"id": "gu-dev-00021", "gloss_title": "Premium will renew", "gloss_text": "Your premium plan will renew automatically in 3 days."}
+{"id": "gu-test-00022", "gloss_title": "Payment failed", "gloss_text": "Your payment method was declined. Update your card details to continue your membership."}
+{"id": "gu-test-00023", "gloss_title": "New mix for you", "gloss_text": "Today's Garba hits mix is ready 🎶"}
+{"id": "gu-dev-00024", "gloss_title": "Premiere tonight", "gloss_text": "The new Gujarati film will stream tonight at 8 o'clock. Don't miss watching it!"}
+{"id": "gu-test-00025", "gloss_title": "Stormy sale! ⚡ Lightning-fast shopping", "gloss_text": "Only tonight! Up to 70% off on sarees and kurtis. Hurry up, stock is almost finished!"}
+{"id": "gu-test-00026", "gloss_title": "Platform changed", "gloss_text": "Train no. 12XXX will now depart from platform 7 instead of platform 4."}
+{"id": "gu-dev-00027", "gloss_title": "Camera: Main door", "gloss_text": "At 2:14 at night a person appeared near the main door."}
+{"id": "gu-test-00028", "gloss_title": "City Hospital", "gloss_text": "The doctor wants to contact you regarding your father's operation. Please call immediately."}
+{"id": "gu-test-00029", "gloss_title": "Class teacher - Mrs. Patel", "gloss_text": "Your son got injured in the leg after falling while playing. Please come to the school right now."}
+{"id": "gu-dev-00030", "gloss_title": "Order on the way", "gloss_text": "Your order will arrive in 10 minutes. Delivery partner: Dinesh"}
+{"id": "gu-test-00031", "gloss_title": "Money received", "gloss_text": "Dhaval sent you ₹500. For the tea and snacks bill."}
+{"id": "gu-test-00032", "gloss_title": "Boss", "gloss_text": "The client is on the line, send the presentation file right now. Very important."}
+{"id": "gu-dev-00033", "gloss_title": "Flood warning", "gloss_text": "Water has been released from the dam. Villages along the riverbank must evacuate immediately."}
+{"id": "gu-test-00034", "gloss_title": "Missing child alert", "gloss_text": "A 6-year-old child is missing in the Vastrapur area, wearing a red shirt. If seen, call 100."}
+{"id": "gu-test-00035", "gloss_title": "Road closed", "gloss_text": "The bridge on your route is closed. 25-minute delay, see the alternative route."}
+{"id": "gu-dev-00036", "gloss_title": "Smoke detected", "gloss_text": "The kitchen sensor has detected smoke. Check immediately."}
+{"id": "gu-test-00037", "gloss_title": "Deadline today", "gloss_text": "The 'Quarter Report' must be submitted by 6 this evening."}
+{"id": "gu-test-00038", "gloss_title": "Build failed: main", "gloss_text": "The deploy pipeline failed on the main branch. 3 tests are red."}
+{"id": "gu-dev-00039", "gloss_title": "Kinjal", "gloss_text": "Haha, you're awesome man 😂 send that photo"}
+{"id": "gu-test-00040", "gloss_title": "Dad", "gloss_text": "Call when you're free, nothing special. Make khichdi-kadhi at night."}
+{"id": "gu-test-00041", "gloss_title": "Society notice", "gloss_text": "Water tank cleaning on Sunday morning. Water will be off from 8 to 11 in the morning."}
+{"id": "gu-dev-00042", "gloss_title": "Visitor at gate", "gloss_text": "A delivery person is at the gate. Approve to let them in?"}
+{"id": "gu-test-00043", "gloss_title": "Missed call", "gloss_text": "Friend Hitesh"}
+{"id": "gu-test-00044", "gloss_title": "Voicemail", "gloss_text": "Hello, we'll talk tomorrow when I come to the office. Nothing urgent."}
+{"id": "gu-dev-00045", "gloss_title": "Last chance! ⏰ Only 1 hour", "gloss_text": "2 items are waiting in your cart. Order now or the price will go up!"}
+{"id": "gu-test-00046", "gloss_title": "Courier service", "gloss_text": "🚨 Your parcel has been held at customs. Pay the ₹49 fee immediately or the parcel will be sent back: http://f.example.invalid/x"}
+{"id": "gu-test-00047", "gloss_title": "Power cut notice", "gloss_text": "Power will be off in your area for maintenance on Thursday from 10 in the morning to 2 in the afternoon."}
+{"id": "gu-dev-00048", "gloss_title": "Market closed", "gloss_text": "Nifty closed up 0.4% today. See your portfolio summary."}
+{"id": "gu-test-00049", "gloss_title": "Ride completed", "gloss_text": "Your ride is over. View the receipt and rate the driver."}
+{"id": "gu-test-00050", "gloss_title": "Check-in opens tomorrow", "gloss_text": "Web check-in for your flight to Udaipur opens tomorrow morning."}
+{"id": "gu-dev-00051", "gloss_title": "Breaking news 🔴", "gloss_text": "Breaking: New flyover inaugurated in the city, traffic starts from tomorrow."}
+{"id": "gu-test-00052", "gloss_title": "Tomorrow's rain", "gloss_text": "Light showers in Ahmedabad tomorrow, maximum temperature 31°. Carry an umbrella ☔"}
+{"id": "gu-test-00053", "gloss_title": "Thrilling final over! 😱", "gloss_text": "Six on the last ball! India won by 2 wickets. See the match scorecard."}
+{"id": "gu-dev-00054", "gloss_title": "You set it on fire! 🔥", "gloss_text": "Your reel got 500 likes and 20 new followers."}
+{"id": "gu-test-00055", "gloss_title": "Time to stand up!", "gloss_text": "You have been sitting for an hour. Walk a bit and drink water 🚶"}
+{"id": "gu-test-00056", "gloss_title": "Emergency! Clan war begins", "gloss_text": "Your clan needs you. Log in right now and get rewards 🎮"}
+{"id": "gu-dev-00057", "gloss_title": "Urgent: Monthly newsletter", "gloss_text": "Read this month's top articles and tips in a single email."}
+{"id": "gu-test-00058", "gloss_title": "#team-gossip - Nilesh", "gloss_text": "@channel urgent! What shall we order for lunch today? Pizza or thali? 🍕"}
+{"id": "gu-test-00059", "gloss_title": "Movement near door", "gloss_text": "Movement detected near the front door at 3:10 in the afternoon."}
+{"id": "gu-dev-00060", "gloss_title": "Parents Group - Class teacher", "gloss_text": "Parent meeting next Thursday at 5 in the evening. Everyone is requested to attend."}

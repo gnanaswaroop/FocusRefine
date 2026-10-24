@@ -41,12 +41,17 @@ def run(paths, max_show=15, check_leaks=True):
             problems.append((",".join(group[:3]), "leak", "same text in more than one split"))
         for fam in leakcheck.template_leaks(items):
             problems.append((fam, "leak", "template_family in train and an eval split"))
+    warnings = [(i["id"], i["difficulty"], i["usecase"]) for i in items
+                if i.get("difficulty") in ("near_miss", "hard_negative") and i.get("urgentIn")]
     kinds = Counter(k for _, k, _ in problems)
     print(f"{len(items)} items, {len(problems)} problems {dict(kinds)}")
     for where, kind, msg in problems[:max_show]:
         print(f"  [{kind}] {where}: {msg}")
     if len(problems) > max_show:
         print(f"  ... and {len(problems) - max_show} more")
+    if warnings:
+        print(f"  warning: {len(warnings)} near_miss or hard_negative items carry an urgent label "
+              f"(by definition they are routine; check the use case): {warnings[:5]}")
     return items, problems
 
 

@@ -1,0 +1,60 @@
+{"id": "hi-Latn-dev-00001", "gloss_title": "Dad", "gloss_text": "Son, call quickly, Mom had dizzy spells, they're taking her to the hospital. Pick up the phone now"}
+{"id": "hi-Latn-test-00002", "gloss_title": "Big brother", "gloss_text": "There's been an accident, Rohan is hurt. Come to City Hospital quickly 🙏"}
+{"id": "hi-Latn-dev-00004", "gloss_title": "Sharma Sir", "gloss_text": "The client just called, send the deck in 10 min. It's urgent"}
+{"id": "hi-Latn-test-00006", "gloss_title": "Society Alert", "gloss_text": "Complaint of a gas leak in Block C. Everyone please come out of the building immediately, don't use the lift."}
+{"id": "hi-Latn-dev-00007", "gloss_title": "Green Park RWA", "gloss_text": "Attention: thieves were seen roaming tonight in lane no. 4. Keep doors closed, tell the guard if you see anything."}
+{"id": "hi-Latn-test-00008", "gloss_title": "Sector 9 Gupshup", "gloss_text": "ATTENTION ATTENTION!! Nobody offered me chai today, I'm declaring an emergency in the group 😂"}
+{"id": "hi-Latn-test-00009", "gloss_title": "Missed call", "gloss_text": "Mummy (3 missed calls)"}
+{"id": "hi-Latn-dev-00010", "gloss_title": "Missed voice call", "gloss_text": "Missed call from Papa ji, at 2:14 at night"}
+{"id": "hi-Latn-test-00011", "gloss_title": "Missed call", "gloss_text": "Missed call from Rahul Colleague"}
+{"id": "hi-Latn-test-00012", "gloss_title": "Missed call", "gloss_text": "+91 9XXXXXXXXX (unknown number)"}
+{"id": "hi-Latn-dev-00013", "gloss_title": "Spam call", "gloss_text": "Suspected spam: Loan Offer +91 8XXXXXXXXX, 400 people have reported it as spam"}
+{"id": "hi-Latn-test-00014", "gloss_title": "Incoming call", "gloss_text": "Scam Likely: +91 7XXXXXXXXX. Call to update KYC, beware"}
+{"id": "hi-Latn-test-00015", "gloss_title": "Missed call", "gloss_text": "Bank Manager +91 9XXXXXXXXX - Your account will be blocked, call immediately"}
+{"id": "hi-Latn-dev-00016", "gloss_title": "+91 8XXXXXXXXX", "gloss_text": "Your bank account is about to be closed. Update now: http://bank-kyc.example.invalid/login"}
+{"id": "hi-Latn-test-00017", "gloss_title": "Income Tax Refund", "gloss_text": "Your refund has been approved, click immediately to claim. Last chance! http://refund-claim.example.invalid/x"}
+{"id": "hi-Latn-test-00018", "gloss_title": "Lucky Draw Team", "gloss_text": "Congratulations! You have won a prize of 25 lakh 🎉 send a 500 rupee fee to claim"}
+{"id": "hi-Latn-dev-00019", "gloss_title": "Instant Loan", "gloss_text": "Loan of 50,000 in 5 min without documents! Apply now http://quick-cash.example.invalid/go"}
+{"id": "hi-Latn-test-00020", "gloss_title": "Courier Update", "gloss_text": "Your parcel is stuck, pay 2 rupees to confirm the address: http://parcel-fix.example.invalid/p"}
+{"id": "hi-Latn-test-00021", "gloss_title": "Extreme alert", "gloss_text": "Red alert for heavy rain in Mumbai. Do not go out of the house, evacuate low-lying areas."}
+{"id": "hi-Latn-dev-00022", "gloss_title": "Today's weather", "gloss_text": "Light sunshine in Delhi today, max 34 degrees. Wind may pick up in the evening"}
+{"id": "hi-Latn-test-00023", "gloss_title": "STORM SALE", "gloss_text": "Stormy offer! Up to 60% off on mobiles, only till 12 midnight tonight. Hurry!"}
+{"id": "hi-Latn-test-00024", "gloss_title": "Earthquake alert", "gloss_text": "Strong earthquake tremors felt. Go to an open area, stay away from buildings."}
+{"id": "hi-Latn-dev-00025", "gloss_title": "Earthquake nearby", "gloss_text": "Earthquake likely in your area. Immediately DROP, COVER and HOLD ON."}
+{"id": "hi-Latn-test-00026", "gloss_title": "Sound detected", "gloss_text": "Sound of a fire alarm recognised"}
+{"id": "hi-Latn-test-00027", "gloss_title": "Sound detected", "gloss_text": "Sound of a doorbell or a knock at the door"}
+{"id": "hi-Latn-dev-00028", "gloss_title": "Sound alert", "gloss_text": "Sound of a dog barking heard"}
+{"id": "hi-Latn-test-00029", "gloss_title": "Driver has arrived", "gloss_text": "Rajesh is reaching the pickup point in 1 min with your Swift Dzire."}
+{"id": "hi-Latn-test-00030", "gloss_title": "Cab is here", "gloss_text": "Your cab has arrived. Driver Suresh is standing outside. Come quickly 🚕"}
+{"id": "hi-Latn-dev-00031", "gloss_title": "Trip receipt", "gloss_text": "Bill for your ride yesterday: Rs 243. Don't forget to give a rating"}
+{"id": "hi-Latn-test-00032", "gloss_title": "Left in 500 m", "gloss_text": "Turn left at the next turn, then go straight on Ring Road"}
+{"id": "hi-Latn-test-00033", "gloss_title": "Traffic ahead", "gloss_text": "Jam for the next 3 km, a new route saves 12 min. Reroute?"}
+{"id": "hi-Latn-dev-00034", "gloss_title": "#prod-alerts", "gloss_text": "Payment API is down, 5xx errors are rising. On-call needs to look at it immediately"}
+{"id": "hi-Latn-test-00035", "gloss_title": "P1 incident raised", "gloss_text": "Database CPU 98%, checkout is failing. Everyone on the team join the call"}
+{"id": "hi-Latn-test-00036", "gloss_title": "Meeting in 5 min", "gloss_text": "Team standup at 10:30, Meet link below. Join quickly"}
+{"id": "hi-Latn-test-00039", "gloss_title": "Heart rate alert", "gloss_text": "Your heart rate is above 150 bpm while you are resting. See a doctor."}
+{"id": "hi-Latn-dev-00040", "gloss_title": "Today's steps", "gloss_text": "You walked 4,500 steps today. The target was 10,000 🚶"}
+{"id": "hi-Latn-test-00041", "gloss_title": "Plan expires tomorrow!", "gloss_text": "Your Spotify Premium ends tomorrow, renew immediately or the music stops. Turn on auto-renew for Rs 119."}
+{"id": "hi-Latn-test-00042", "gloss_title": "Payment failed", "gloss_text": "Your Netflix payment has failed, please change your payment method."}
+{"id": "hi-Latn-dev-00043", "gloss_title": "Immediate action required", "gloss_text": "Payment for your Google Play subscription is pending. Update before access is cut off."}
+{"id": "hi-Latn-test-00044", "gloss_title": "Listen right now!", "gloss_text": "Emergency playlist is ready: new Arijit Singh songs just for you, play now 🎧"}
+{"id": "hi-Latn-test-00045", "gloss_title": "New episode", "gloss_text": "The new season of your favourite show is now streaming. Watch now!"}
+{"id": "hi-Latn-dev-00046", "gloss_title": "ALERT: cart is about to empty", "gloss_text": "The clothes in your cart are selling out! Flat 70% off only today, hurry 🛍️"}
+{"id": "hi-Latn-test-00047", "gloss_title": "Platform changed", "gloss_text": "The platform for train 12951 has changed to 9. Check before you leave."}
+{"id": "hi-Latn-test-00048", "gloss_title": "Trip reminder", "gloss_text": "Your Goa trip is 3 weeks away. See hotel and flight details."}
+{"id": "hi-Latn-dev-00049", "gloss_title": "Suspicion of movement at home", "gloss_text": "Movement seen on the front door camera at 3 at night. Watch live."}
+{"id": "hi-Latn-test-00050", "gloss_title": "Smoke alarm", "gloss_text": "The kitchen smoke sensor has detected smoke. Check immediately."}
+{"id": "hi-Latn-test-00051", "gloss_title": "Alexa Update", "gloss_text": "Your Echo has installed a new software update."}
+{"id": "hi-Latn-dev-00052", "gloss_title": "City Lab", "gloss_text": "Your Papa's report is critical, the doctor has called you immediately. Call on this number."}
+{"id": "hi-Latn-test-00053", "gloss_title": "Apollo Pharmacy", "gloss_text": "Your medicine refill is due. Order with 15% off 💊"}
+{"id": "hi-Latn-test-00054", "gloss_title": "School has called", "gloss_text": "Your child is unwell, please come to the school and take them home."}
+{"id": "hi-Latn-dev-00055", "gloss_title": "Class 6 Parents", "gloss_text": "PTM tomorrow at 11, all parents please come. Dress code normal."}
+{"id": "hi-Latn-test-00056", "gloss_title": "Order on the way", "gloss_text": "Your food will arrive in 10 min. Delivery partner Imran is coming 🛵"}
+{"id": "hi-Latn-test-00057", "gloss_title": "Payment successful", "gloss_text": "Rs 250 sent to Chai Wala. Transaction successful."}
+{"id": "hi-Latn-dev-00058", "gloss_title": "Dosti Forever", "gloss_text": "Rohit: Bro call quickly, need to tell you the match plan. Everyone is coming"}
+{"id": "hi-Latn-test-00059", "gloss_title": "Family Group - Mausi", "gloss_text": "An earthquake is going to come tomorrow morning, forward to everyone!! It's confirmed news, my neighbour told me 😱"}
+{"id": "hi-Latn-test-00060", "gloss_title": "Society Notice", "gloss_text": "Urgent urgent! Water supply will be off for 2 hours tomorrow for maintenance. Keep utensils filled."}
+{"id": "hi-Latn-test-00003", "gloss_title": "Didi", "gloss_text": "Hey call me when you're free, nothing important, just wanted to catch up"}
+{"id": "hi-Latn-dev-00037", "gloss_title": "Amit", "gloss_text": "Tomorrow's meeting time may change, I'll confirm later"}
+{"id": "hi-Latn-test-00038", "gloss_title": "Start workout", "gloss_text": "Start today's 30 min cardio now, your streak is 6 days 💪"}
+{"id": "hi-Latn-test-00005", "gloss_title": "Neha Kapoor (Manager)", "gloss_text": "If you get some time by the weekend, take a look at the Q3 slides, no rush"}
