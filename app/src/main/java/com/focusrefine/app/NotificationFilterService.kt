@@ -207,6 +207,12 @@ class NotificationFilterService : NotificationListenerService() {
             return
         }
 
+        // A group summary has no content of its own and stands for the notifications inside its group. Cancelling it
+        // would remove those children too, so a summary is never muted or counted; each child is decided on its own.
+        if (notification.flags and Notification.FLAG_GROUP_SUMMARY != 0) {
+            return
+        }
+
         val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
         val isRunning = prefs.getBoolean("service_running", true)
         if (!isRunning) {

@@ -44,7 +44,8 @@
           "heading": "Privacy",
           "items": [
             "Removed network permissions that a library had added. The app has no internet permission and cloud backup is off.",
-            "Notification text is no longer written to system logs."
+            "Notification text is no longer written to system logs.",
+            "Shown notifications are no longer removed when Android groups them: a group summary is left alone, so its children stay in the shade."
           ]
         }
       ]

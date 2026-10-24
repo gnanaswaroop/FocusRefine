@@ -46,7 +46,7 @@ CI uses JDK 17. Lint is non-fatal (`abortOnError = false`). The `release` build 
 ## Architecture
 
 ### Classification pipeline - the heart of the app
-`NotificationFilterService` (a `NotificationListenerService` that is also a `specialUse` foreground service) handles `onNotificationPosted`. It ignores its own package and `com.android.systemui`, returns early if the `service_running` pref is false, then on `Dispatchers.IO` calls `NotificationClassifier.classify(title, text, mode)` and persists/cancels based on the result. The same class is used by `HistoryReclassifier`, so **keep all decision logic in `NotificationClassifier` and nowhere else**. `ClassificationResult(isUrgent, explanation)` is a top-level data class.
+`NotificationFilterService` (a `NotificationListenerService` that is also a `specialUse` foreground service) handles `onNotificationPosted`. It ignores its own package and `com.android.systemui`, returns early if the `service_running` pref is false or the notification is a group summary (cancelling a summary removes its children, so summaries are never muted), then on `Dispatchers.IO` calls `NotificationClassifier.classify(title, text, mode)` and persists/cancels based on the result. The same class is used by `HistoryReclassifier`, so **keep all decision logic in `NotificationClassifier` and nowhere else**. `ClassificationResult(isUrgent, explanation)` is a top-level data class.
 
 `classify()` is a flat precedence chain, first match wins (a Mermaid flowchart is in `docs/ai_classification_and_modes.md` section 4):
 
