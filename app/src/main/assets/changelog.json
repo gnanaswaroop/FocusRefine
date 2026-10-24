@@ -37,7 +37,8 @@
             "Guards against a crash that was seen on a Pixel 9 Pro XL when the AI model's data was read straight from the app package.",
             "Button labels in the notification details are easier to read.",
             "The ongoing FocusRefine notification no longer makes a sound or vibrates each time it updates after muting something.",
-            "Home now refreshes by itself when you come back from Settings, for example after adding sample notifications."
+            "Home now refreshes by itself when you come back from Settings, for example after adding sample notifications.",
+            "Screens no longer draw under the status bar, the navigation bar or the keyboard on newer Android versions, so the header and icons are no longer covered."
           ]
         },
         {
