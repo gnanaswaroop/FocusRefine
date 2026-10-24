@@ -1,5 +1,6 @@
 package com.focusrefine.app
 
+import android.app.Activity
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.BorderStroke
@@ -12,6 +13,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,10 +22,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.WindowCompat
 
 object StudioColors {
     val DarkBackground = Color(0xFF0F0E17)
@@ -81,6 +85,17 @@ fun FocusRefineTheme(content: @Composable () -> Unit) {
         else -> isSystemInDarkTheme()
     }
 
+    // The app is always dark, so the system bar icons must be light whatever the phone's own theme is.
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as? Activity)?.window ?: return@SideEffect
+            val controller = WindowCompat.getInsetsController(window, view)
+            controller.isAppearanceLightStatusBars = false
+            controller.isAppearanceLightNavigationBars = false
+        }
+    }
+
     MaterialTheme(
         colorScheme = if (isDark) StudioColorScheme else darkColorScheme(
             background = StudioColors.DarkBackground,
@@ -92,9 +107,20 @@ fun FocusRefineTheme(content: @Composable () -> Unit) {
             small = RoundedCornerShape(12.dp),
             medium = RoundedCornerShape(20.dp),
             large = RoundedCornerShape(24.dp)
-        ),
-        content = content
-    )
+        )
+    ) {
+        // From target SDK 35 Android draws apps edge to edge, so every screen would sit under the status bar, the
+        // navigation bar and the keyboard. Paint the background behind the bars, then keep the content clear of them
+        // here once, for all screens. Where the system already fits the window (older targets) these insets are zero.
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .windowInsetsPadding(WindowInsets.safeDrawing)
+        ) {
+            content()
+        }
+    }
 }
 
 @Composable
