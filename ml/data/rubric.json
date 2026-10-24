@@ -77,6 +77,8 @@
     {"id": "travel_urgent", "family": "travel", "urgentIn": "C", "senders": ["service"], "apps": ["travel", "ride_maps"], "desc": "Gate change, boarding now, flight delayed or cancelled, train platform changed, bus departing"},
     {"id": "travel_routine", "family": "travel", "urgentIn": "", "senders": ["service"], "apps": ["travel"], "desc": "Booking confirmed, check-in opens tomorrow, hotel deals, trip suggestions"},
     {"id": "navigation_prompt", "family": "travel", "urgentIn": "C", "senders": ["service"], "apps": ["ride_maps"], "desc": "Turn-by-turn instruction, reroute due to traffic, arriving at destination"},
+    {"id": "maps_routine", "family": "travel", "urgentIn": "", "senders": ["service"], "apps": ["ride_maps"], "desc": "Routine map and navigation-app messages: rate your visit, saved places, weekly driving summary, timeline, new places near you, app tips"},
+    {"id": "work_tool_routine", "family": "work", "urgentIn": "", "senders": ["service", "system"], "apps": ["work", "email"], "desc": "Routine work-tool messages: new follower or star, weekly digest, task added, document shared, channel summary, calendar invite accepted"},
     {"id": "news_breaking_general", "family": "news_weather_sports", "urgentIn": "", "senders": ["service"], "apps": ["news"], "desc": "Breaking national or world news, headlines digest, trending stories"},
     {"id": "weather_routine", "family": "news_weather_sports", "urgentIn": "", "senders": ["service"], "apps": ["weather"], "desc": "Daily forecast, rain tomorrow, UV index, pollen"},
     {"id": "sports_update", "family": "news_weather_sports", "urgentIn": "", "senders": ["service"], "apps": ["sports"], "desc": "Live score, match starting, team news, transfer rumours"},

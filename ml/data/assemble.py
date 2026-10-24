@@ -42,10 +42,11 @@ def main():
     ap.add_argument("out")
     ap.add_argument("--lang", required=True, choices=sorted(schema.LANGS))
     ap.add_argument("--provenance", default="authored-pilot-v1")
+    ap.add_argument("--start", type=int, default=1, help="first running number in the ids (use 1000 for round 2)")
     args = ap.parse_args()
     rubric, catalogue = schema.load_rubric(), schema.load_catalogue()
     authored = schema.load_jsonl(args.authored)
-    good, bad = assemble(authored, args.lang, args.provenance, rubric, catalogue)
+    good, bad = assemble(authored, args.lang, args.provenance, rubric, catalogue, start=args.start)
     schema.dump_jsonl(good, args.out)
     with open(args.out + ".rejected.jsonl", "w", encoding="utf-8", newline="\n") as f:
         for b in bad:
