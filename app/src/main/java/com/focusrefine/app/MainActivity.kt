@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.animation.*
@@ -59,11 +60,13 @@ import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MainActivity : ComponentActivity() {
+class MainActivity : FragmentActivity() {
 
     private lateinit var prefs: SharedPreferences
     private var lastThemeMode = -99
     private var isNotifAccessEnabledState = mutableStateOf(false)
+    private var isUnlocked = mutableStateOf(false)
+    private var showAuthError = mutableStateOf(false)
 
     private val notifReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -103,23 +106,74 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             FocusRefineTheme {
-                MainStudioScreen(
-                    isNotificationAccessEnabled = isNotifAccessEnabledState.value,
-                    isFilteringActive = prefs.getBoolean("service_running", true),
-                    prefs = prefs,
-                    onEnableNotificationAccess = {
-                        try {
-                            startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
-                        } catch (_: Exception) {
-                            Toast.makeText(this, "Unable to open notification settings", Toast.LENGTH_SHORT).show()
+                val appLockEnabled = prefs.getBoolean("app_lock_enabled", false)
+                val requiresAuth = appLockEnabled && BiometricHelper.isBiometricAvailable(this)
+
+                if (requiresAuth && !isUnlocked.value) {
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = StudioColors.DarkBackground
+                    ) {
+                        Column(
+                            modifier = Modifier.fillMaxSize(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            Text(
+                                "FocusRefine is Locked",
+                                color = Color.White,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Spacer(modifier = Modifier.height(16.dp))
+                            if (showAuthError.value) {
+                                Text("Authentication failed. Please try again.", color = Color.Red)
+                                Spacer(modifier = Modifier.height(16.dp))
+                            }
+                            Button(
+                                onClick = { promptBiometric() },
+                                colors = ButtonDefaults.buttonColors(containerColor = StudioColors.ActiveViolet)
+                            ) {
+                                Text("Unlock")
+                            }
                         }
-                    },
-                    onOpenSettings = { startActivity(Intent(this, SettingsActivity::class.java)) },
-                    onOpenHelp = { startActivity(Intent(this, HelpActivity::class.java)) }
-                )
+                    }
+                    LaunchedEffect(Unit) {
+                        promptBiometric()
+                    }
+                } else {
+                    MainStudioScreen(
+                        isNotificationAccessEnabled = isNotifAccessEnabledState.value,
+                        isFilteringActive = prefs.getBoolean("service_running", true),
+                        prefs = prefs,
+                        onEnableNotificationAccess = {
+                            try {
+                                startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+                            } catch (_: Exception) {
+                                Toast.makeText(this, "Unable to open notification settings", Toast.LENGTH_SHORT).show()
+                            }
+                        },
+                        onOpenSettings = { startActivity(Intent(this, SettingsActivity::class.java)) },
+                        onOpenHelp = { startActivity(Intent(this, HelpActivity::class.java)) }
+                    )
+                }
             }
         }
     }
+
+    private fun promptBiometric() {
+        BiometricHelper.showBiometricPrompt(
+            this,
+            onSuccess = {
+                isUnlocked.value = true
+                showAuthError.value = false
+            },
+            onError = {
+                showAuthError.value = true
+            }
+        )
+    }
+
 
     /** Re-reads the notification-access grant, starts the service if it is now allowed, and tells Home to reload. */
     private fun refreshAccess() {
@@ -146,6 +200,10 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
+        // Note: BiometricPrompt can launch separate activities (like PIN fallback) that pause this activity.
+        // We do not blindly reset isUnlocked.value = false here, otherwise we create an infinite authentication loop
+        // when returning from a successful system auth screen. We rely on the user explicitly closing the app,
+        // or a more sophisticated foreground/background timeout logic if needed later.
         refreshAccess()
 
         val currentThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)

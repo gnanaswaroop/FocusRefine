@@ -155,6 +155,7 @@ fun SettingsStudioScreen(
     var learnFromChoices by remember { mutableStateOf(prefs?.getBoolean("learn_from_choices", true) ?: true) }
     var useAiModel by remember { mutableStateOf(prefs?.getBoolean("use_ai_model", true) ?: true) }
     var enableSwipeAnimations by remember { mutableStateOf(prefs?.getBoolean("enable_swipe_animations", true) ?: true) }
+    var appLockEnabled by remember { mutableStateOf(prefs?.getBoolean("app_lock_enabled", false) ?: false) }
 
     // Collapsible card states (all collapsed when the screen opens)
     var isEngineExpanded by remember { mutableStateOf(false) }
@@ -592,6 +593,41 @@ fun SettingsStudioScreen(
                     }
 
                     if (isLearnExpanded) {
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    val newVal = !appLockEnabled
+                                    if (newVal && !BiometricHelper.isBiometricAvailable(context)) {
+                                        Toast.makeText(context, "Biometric authentication is not available or not set up on this device.", Toast.LENGTH_LONG).show()
+                                    } else {
+                                        appLockEnabled = newVal
+                                        prefs?.edit()?.putBoolean("app_lock_enabled", newVal)?.apply()
+                                    }
+                                },
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("App Lock (Biometrics)", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                                Text("Require fingerprint or face unlock to view notifications.", fontSize = 11.sp, color = StudioColors.TextMuted)
+                            }
+                            Switch(
+                                checked = appLockEnabled,
+                                onCheckedChange = {
+                                    if (it && !BiometricHelper.isBiometricAvailable(context)) {
+                                        Toast.makeText(context, "Biometric authentication is not available or not set up on this device.", Toast.LENGTH_LONG).show()
+                                    } else {
+                                        appLockEnabled = it
+                                        prefs?.edit()?.putBoolean("app_lock_enabled", it)?.apply()
+                                    }
+                                },
+                                colors = SwitchDefaults.colors(checkedThumbColor = StudioColors.ActiveViolet)
+                            )
+                        }
+
                         Spacer(modifier = Modifier.height(12.dp))
 
                         Row(
