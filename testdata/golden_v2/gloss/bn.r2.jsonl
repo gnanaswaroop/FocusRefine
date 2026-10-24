@@ -1,0 +1,100 @@
+{"id": "bn-test-01000", "gloss_title": "Missed call", "gloss_text": "A call was missed from unknown number +880 1XXXXXXXXX."}
+{"id": "bn-test-01001", "gloss_title": "Unknown number", "gloss_text": "Incoming call from +91 9XXXXXXXXX. Not saved."}
+{"id": "bn-dev-01002", "gloss_title": "Missed video call", "gloss_text": "An unknown user called you on a video call."}
+{"id": "bn-test-01003", "gloss_title": "Caller ID not found", "gloss_text": "+91 8XXXXXXXXX called three times this morning, no name."}
+{"id": "bn-test-01004", "gloss_title": "Missed call", "gloss_text": "+880 1XXXXXXXXX called. No one left a voicemail."}
+{"id": "bn-dev-01005", "gloss_title": "Unknown caller", "gloss_text": "A call came from an unknown number in the Kolkata area."}
+{"id": "bn-test-01006", "gloss_title": "Incoming call", "gloss_text": "A voice call is coming from a number that is not in your contacts."}
+{"id": "bn-test-01007", "gloss_title": "Missed call", "gloss_text": "Missed a call from unknown number 07700 900123, no message."}
+{"id": "bn-dev-01008", "gloss_title": "Missed call (2)", "gloss_text": "+880 1XXXXXXXXX called twice; the number is not known to you."}
+{"id": "bn-test-01009", "gloss_title": "Private number", "gloss_text": "Missed a call from a hidden number."}
+{"id": "bn-test-01010", "gloss_title": "Call from unknown number", "gloss_text": "+880 1XXXXXXXXX called you at 9 pm. Will you call back?"}
+{"id": "bn-dev-01011", "gloss_title": "Meet", "gloss_text": "A call invitation came from an unknown account; you did not answer."}
+{"id": "bn-test-01012", "gloss_title": "Missed call", "gloss_text": "+880 1XXXXXXXXX: you have never talked to this number before. If something urgent, you can message them."}
+{"id": "bn-test-01013", "gloss_title": "Unknown number", "gloss_text": "A call came from +91 7XXXXXXXXX. The number is not saved under anyone's name."}
+{"id": "bn-test-01014", "gloss_title": "Possible spam", "gloss_text": "+91 9XXXXXXXXX: 4,200 people have called it spam. The call has been blocked."}
+{"id": "bn-test-01015", "gloss_title": "Suspected spam call", "gloss_text": "This number is flagged as telemarketing. +880 1XXXXXXXXX"}
+{"id": "bn-dev-01016", "gloss_title": "Spam likely", "gloss_text": "An advertising call about a credit card offer, calling repeatedly. Number +91 8XXXXXXXXX 📵"}
+{"id": "bn-test-01017", "gloss_title": "Spam risk: high", "gloss_text": "Sales representative calling repeatedly. Tap to block."}
+{"id": "bn-test-01018", "gloss_title": "Suspected spam", "gloss_text": "The suspected spam call was automatically silenced."}
+{"id": "bn-dev-01019", "gloss_title": "Spam call", "gloss_text": "A recorded message is playing; this is probably a robocall."}
+{"id": "bn-test-01020", "gloss_title": "+91 7XXXXXXXXX", "gloss_text": "Missed voice call. This number is reported to be used for business promotions."}
+{"id": "bn-test-01021", "gloss_title": "Telemarketer", "gloss_text": "Plot sale offer, land advertisement. Answering the call may cause trouble."}
+{"id": "bn-dev-01022", "gloss_title": "Spam alert", "gloss_text": "Advertising call about an insurance policy: +91 9XXXXXXXXX"}
+{"id": "bn-test-01023", "gloss_title": "Truecaller", "gloss_text": "Mobile loan promotion, reported as spam many times ⚠️"}
+{"id": "bn-test-01024", "gloss_title": "Spam call again", "gloss_text": "Five calls from this number today, each one an advertisement."}
+{"id": "bn-dev-01025", "gloss_title": "Possible spam", "gloss_text": "A call from an unknown company. The caller ID says: advertisement."}
+{"id": "bn-test-01026", "gloss_title": "AD-OFFERZ", "gloss_text": "Our customer care will call you. Wait to hear about new recharge offers."}
+{"id": "bn-test-01027", "gloss_title": "Possible fraud", "gloss_text": "A call posing as a bank officer. Be careful, this may be fraud!"}
+{"id": "bn-test-01028", "gloss_title": "Suspected fraud", "gloss_text": "+880 1XXXXXXXXX: a call posing as a courier office, saying your parcel is stuck."}
+{"id": "bn-dev-01029", "gloss_title": "Scam alert 🚨", "gloss_text": "A call in the name of tech support, frightening you that your phone has a virus."}
+{"id": "bn-test-01030", "gloss_title": "Fraud call", "gloss_text": "Posing as a government official and demanding a fine. This number was reported as a fraudster."}
+{"id": "bn-test-01031", "gloss_title": "Possible fraud call", "gloss_text": "Suspected video call threatening digital arrest. Do not pick up."}
+{"id": "bn-dev-01032", "gloss_title": "Suspicious video call", "gloss_text": "An unknown person called claiming to be a police officer. This may be a scam."}
+{"id": "bn-test-01033", "gloss_title": "+91 9XXXXXXXXX", "gloss_text": "Missed video call. Someone in a uniform in the profile picture; there is a risk of blackmail."}
+{"id": "bn-test-01034", "gloss_title": "Scammer caught", "gloss_text": "A call posing as a bKash agent: I sent money by mistake, please refund it. Over 1,200 scam reports."}
+{"id": "bn-dev-01035", "gloss_title": "Scam suspicion", "gloss_text": "A call in the name of a KYC update. A bank never asks for information over the phone."}
+{"id": "bn-test-01036", "gloss_title": "Risk of fraud", "gloss_text": "Called saying you won a car in a lottery, from +880 1XXXXXXXXX."}
+{"id": "bn-test-01037", "gloss_title": "Fake customs call", "gloss_text": "A parcel has arrived from abroad and the caller asks you to pay a customs fee. Possible fraud."}
+{"id": "bn-dev-01038", "gloss_title": "Scam", "gloss_text": "Asking for money with a threat to cut off the electricity connection. This is a fraud ring's number."}
+{"id": "bn-test-01039", "gloss_title": "Possible fraud", "gloss_text": "A caller offering a job and asking for an advance fee was reported."}
+{"id": "bn-test-01040", "gloss_title": "Suspected scammer", "gloss_text": "An automated call said your SIM will be blocked 🚫"}
+{"id": "bn-test-01041", "gloss_title": "Mom", "gloss_text": "Missed voice call (3)."}
+{"id": "bn-test-01042", "gloss_title": "Missed call", "gloss_text": "Dad: 4 missed calls."}
+{"id": "bn-dev-01043", "gloss_title": "Didi", "gloss_text": "Didi (older sister) called you three times. Call back quickly."}
+{"id": "bn-test-01044", "gloss_title": "Amma", "gloss_text": "Why aren't you picking up the phone? Call me right now 😟"}
+{"id": "bn-test-01045", "gloss_title": "Baba", "gloss_text": "Call me once, I need something."}
+{"id": "bn-dev-01046", "gloss_title": "Bhaiya", "gloss_text": "Bhaiya (older brother) invited you to a video call and it was missed. The calls keep coming."}
+{"id": "bn-test-01047", "gloss_title": "Missed call", "gloss_text": "Grandmother: 5 missed calls. The last call was one minute ago."}
+{"id": "bn-test-01048", "gloss_title": "Missed call", "gloss_text": "Middle brother: 3 missed calls in the last 10 minutes."}
+{"id": "bn-dev-01049", "gloss_title": "Boudi", "gloss_text": "Please pick up the phone, there is something about big brother. Call right now."}
+{"id": "bn-test-01050", "gloss_title": "Apu", "gloss_text": "Where are you? I have been calling for 20 minutes and there is no answer. Call me right now."}
+{"id": "bn-test-01051", "gloss_title": "Wife", "gloss_text": "Missed call x2. Call back as soon as you get the phone."}
+{"id": "bn-dev-01052", "gloss_title": "Mama", "gloss_text": "Uncle called you on imo and you did not pick up. He is calling again."}
+{"id": "bn-test-01053", "gloss_title": "Chhoto Kaka", "gloss_text": "Pick up, there is an important matter. I have tried 4 times."}
+{"id": "bn-test-01054", "gloss_title": "Son", "gloss_text": "Dad, pick up the phone. I want to talk right now."}
+{"id": "bn-test-02000", "gloss_title": "Your weekly timeline", "gloss_text": "You visited 12 places this week. See the summary."}
+{"id": "bn-test-02001", "gloss_title": "Traffic jam! 🚦", "gloss_text": "How was yesterday's trip? Leave a review of the restaurant and tell us about your experience."}
+{"id": "bn-dev-02002", "gloss_title": "Waze", "gloss_text": "Your driving summary is ready: 140 km this week, average speed is good."}
+{"id": "bn-test-02003", "gloss_title": "New tip", "gloss_text": "Sharing your arrival time with friends is now easier. Try it out."}
+{"id": "bn-test-02004", "gloss_title": "Jira", "gloss_text": "You have been assigned to task PROJ-482. Priority: low."}
+{"id": "bn-test-02005", "gloss_title": "GitHub", "gloss_text": "Your repository got a new star ⭐"}
+{"id": "bn-dev-02006", "gloss_title": "Todoist", "gloss_text": "Your weekly report: 23 tasks completed this week, 5 more than last week."}
+{"id": "bn-test-02007", "gloss_title": "Zoom", "gloss_text": "The recording of last week's meeting is ready. Tap to view."}
+{"id": "bn-test-02008", "gloss_title": "IRCTC Rail Connect", "gloss_text": "Your ticket is confirmed: Howrah to New Delhi. The chart will be prepared the day before the journey."}
+{"id": "bn-dev-02009", "gloss_title": "Garmin Connect", "gloss_text": "Your sleep score last night was 78. See the full analysis."}
+{"id": "bn-test-02010", "gloss_title": "Rakib commented", "gloss_text": "Look at it when you have time, no rush. Next week is fine too."}
+{"id": "bn-test-02011", "gloss_title": "Standup notes", "gloss_text": "Today's standup notes were added; no separate task is pending."}
+{"id": "bn-test-02012", "gloss_title": "Money received", "gloss_text": "You received 1,500 taka from Tanvir Ahmed (01XXXXXXXXX). Open the app to see your new balance. The transaction was successful and is saved in your detailed history. Thank you for using bKash."}
+{"id": "bn-dev-02013", "gloss_title": "Nagad", "gloss_text": "Your mobile bill payment was successful. Thank you."}
+{"id": "bn-test-02014", "gloss_title": "Google Pay", "gloss_text": "₹250 sent to Rumana Sen was successful ✅"}
+{"id": "bn-test-02015", "gloss_title": "YONO SBI", "gloss_text": "Your monthly account statement is ready to download. Log in to the app and download it from the Statement section. Do not share your secret information with anyone. This message has no link, so you can be at ease."}
+{"id": "bn-dev-02016", "gloss_title": "Kotak Mobile Banking", "gloss_text": "Your credit card bill is due within 5 days. Pay on time and you will get reward points."}
+{"id": "bn-test-02017", "gloss_title": "foodpanda", "gloss_text": "Your biryani is being prepared 🍛 The rider will leave soon."}
+{"id": "bn-test-02018", "gloss_title": "Swiggy", "gloss_text": "Your order was delivered successfully. Hope the food was hot and tasty. Rate the restaurant and the delivery partner to share your experience; this helps us serve you better. Don't forget to order again!"}
+{"id": "bn-dev-02019", "gloss_title": "Your order is coming", "gloss_text": "Your order has been handed to the courier and should arrive by tomorrow afternoon. Keep cash ready at delivery. Go to My Orders to check the status. If there is a problem, contact the helpline."}
+{"id": "bn-test-02020", "gloss_title": "Urgent! Ends tonight at 12 ⏰", "gloss_text": "Up to 70% off on sarees and kurtis! This special offer runs only until 12 midnight tonight. Add your favourite outfit to the cart now, before stock runs out. First order gets free delivery, no hidden costs."}
+{"id": "bn-dev-02021", "gloss_title": "Storm-like offers!", "gloss_text": "Flash sale on vegetables and fruit today, with delivery at storm speed. Offer is for a limited time."}
+{"id": "bn-test-02022", "gloss_title": "New mix for you", "gloss_text": "A new Rabindra Sangeet playlist has been created. Listen now 🎶"}
+{"id": "bn-test-02023", "gloss_title": "ZEE5", "gloss_text": "A new episode of your favourite serial is now available. Continue watching."}
+{"id": "bn-dev-02024", "gloss_title": "BookMyShow", "gloss_text": "A new Bengali film premiere in your city tonight. Tickets are open now."}
+{"id": "bn-test-02025", "gloss_title": "Payment failed ⚠️", "gloss_text": "The payment for your Sony LIV subscription could not be completed. Update your payment method, otherwise service may stop. There is no rush right now, but it is better to do it within next week."}
+{"id": "bn-dev-02026", "gloss_title": "Wynk Music", "gloss_text": "Your premium plan will renew next week."}
+{"id": "bn-test-02027", "gloss_title": "Pathao", "gloss_text": "Your rider will arrive within 3 minutes. Be ready at the pickup point."}
+{"id": "bn-test-02028", "gloss_title": "Rapido", "gloss_text": "Your captain has reached your address 🏍️ Check the bike number."}
+{"id": "bn-test-02029", "gloss_title": "Flight delayed", "gloss_text": "Your flight from Kolkata to Bengaluru will leave 2 hours late. New boarding time is 8:45 pm. The gate may change, so check the airport screen. We apologise for the inconvenience."}
+{"id": "bn-dev-02030", "gloss_title": "UMANG", "gloss_text": "Your applied-for certificate is ready. Open the app to download it. If needed, go to the nearby centre with the original document, and keep a digital copy of the document saved for future use."}
+{"id": "bn-test-02031", "gloss_title": "DigiLocker", "gloss_text": "A new document has been added to your locker."}
+{"id": "bn-test-02032", "gloss_title": "Para adda: Sohel", "gloss_text": "Sohel: Who is coming to the tea stall this afternoon? Nasrin: I'll come. Sohel: Great, then at 5."}
+{"id": "bn-test-02033", "gloss_title": "Durga Puja committee: Suman", "gloss_text": "Suman: Puja subscription collection starts from tomorrow. Anita: What time should I come? Suman: After 6 pm at the committee room."}
+{"id": "bn-dev-02034", "gloss_title": "Family group: Aunt", "gloss_text": "Aunt: Forwarded message: If you send this to 10 people good luck will come, and if you don't, bad luck will happen! 🙏 Please send it to everyone."}
+{"id": "bn-test-02035", "gloss_title": "Housing society: Safety", "gloss_text": "Safety staff: There is a gas leak on the ground floor of Block C! Everyone come out right now and do not use the lift. The fire brigade has been informed 🚒"}
+{"id": "bn-dev-02036", "gloss_title": "Younger sister", "gloss_text": "Bhaiya, please bring some sweets when you come 😋"}
+{"id": "bn-test-02037", "gloss_title": "Mom", "gloss_text": "Come to the hospital quickly, Abbu fell and got hurt. Call right away!"}
+{"id": "bn-test-02038", "gloss_title": "City Clinic", "gloss_text": "After seeing your father's report, the doctor has asked for an urgent consultation. Please call the clinic today or come in directly. Do not wait; contacting them is better because the doctor is there this morning."}
+{"id": "bn-dev-02039", "gloss_title": "Lucky draw winner", "gloss_text": "Congratulations! You have won a prize of 5 lakh taka. To claim it, open this link now and give your details: http://prize-claim.example.invalid/w"}
+{"id": "bn-test-02040", "gloss_title": "Manager: Faruk sir", "gloss_text": "Join the call right now, the client is waiting. I need your answer on the contract; it must be finalised today. Don't delay."}
+{"id": "bn-dev-02041", "gloss_title": "CRED", "gloss_text": "You earned 50 coins as a reward 🎁"}
+{"id": "bn-test-02042", "gloss_title": "BHIM", "gloss_text": "₹1,200 credited to your bank account via UPI from sender Saurav Dutta. The transaction is complete and your current balance is on the app's home page. If there is any problem, contact the support section."}
+{"id": "bn-test-02043", "gloss_title": "Zepto", "gloss_text": "Your order will arrive in 10 minutes 🛵"}
+{"id": "bn-test-02044", "gloss_title": "iMobile Pay", "gloss_text": "The last date to pay your electricity bill is in 3 days. Pay right now."}

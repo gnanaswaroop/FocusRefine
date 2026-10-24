@@ -185,4 +185,4 @@ def main(items_dir, out_path, contested_path):
 if __name__ == "__main__":
     main(sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "pilot_agreed"),
          sys.argv[2] if len(sys.argv) > 2 else os.path.join(ROOT, "COVERAGE_REPORT.md"),
-         os.path.join(ROOT, "contested_pilot.jsonl"))
+         sys.argv[3] if len(sys.argv) > 3 else os.path.join(ROOT, "contested_pilot.jsonl"))

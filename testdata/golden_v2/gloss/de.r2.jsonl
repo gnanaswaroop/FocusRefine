@@ -1,0 +1,99 @@
+{"id": "de-test-01000", "gloss_title": "Missed call", "gloss_text": "Unknown number +49 15XX XXXXXXX called at 10:42."}
+{"id": "de-test-01001", "gloss_title": "Missed call", "gloss_text": "0151 XXXXXXXX – no contact saved"}
+{"id": "de-dev-01002", "gloss_title": "Missed video call", "gloss_text": "Someone who is not in your contacts called you."}
+{"id": "de-test-01003", "gloss_title": "Incoming call", "gloss_text": "Unknown caller, Hamburg. No ratings from other users available."}
+{"id": "de-test-01004", "gloss_title": "Missed call", "gloss_text": "Number withheld, 3 calls since this morning"}
+{"id": "de-dev-01005", "gloss_title": "Missed call", "gloss_text": "+49 30 XXXXXXXX (Berlin) – number not known. Call back?"}
+{"id": "de-test-01006", "gloss_title": "Missed call", "gloss_text": "An unknown number called briefly after midnight and hung up again."}
+{"id": "de-test-01007", "gloss_title": "Unknown caller", "gloss_text": "+49 17X XXXXXXX tried to reach you twice."}
+{"id": "de-dev-01008", "gloss_title": "Incoming video call", "gloss_text": "An unknown number wants to call you by video"}
+{"id": "de-test-01009", "gloss_title": "Missed call", "gloss_text": "Unknown (040 XXXXXXX). No message was left."}
+{"id": "de-test-01010", "gloss_title": "Missed call", "gloss_text": "Number from Munich, not in the phone book. Last at 6:05 pm."}
+{"id": "de-dev-01011", "gloss_title": "Missed call", "gloss_text": "+49 16X XXXXXXXX"}
+{"id": "de-test-01012", "gloss_title": "Call from unknown number", "gloss_text": "Call back urgently? It only appears in the caller ID; the caller is not assigned to anyone."}
+{"id": "de-test-01013", "gloss_title": "Missed call", "gloss_text": "Unknown number, Cologne, 2 attempts this afternoon"}
+{"id": "de-test-01014", "gloss_title": "Suspected spam", "gloss_text": "+49 69 XXXXXXXX – 312 users report this number as telemarketing."}
+{"id": "de-dev-01015", "gloss_title": "Possible spam call", "gloss_text": "Suspected spam caller blocked. Number: 0800 XXXXXXX"}
+{"id": "de-test-01016", "gloss_title": "Telemarketing", "gloss_text": "Call from a prize-draw hotline recognised (telemarketing). Would you like to block the number?"}
+{"id": "de-test-01017", "gloss_title": "Suspected spam", "gloss_text": "Call from +49 32X XXXXXXX was classified as spam and silenced."}
+{"id": "de-test-01018", "gloss_title": "WhatsApp call", "gloss_text": "Missed voice call from +49 15X XXXXXXXX. This contact is often reported for advertising."}
+{"id": "de-dev-01019", "gloss_title": "Survey institute?", "gloss_text": "Probably an opinion poll. 48 reports as a nuisance call."}
+{"id": "de-test-01020", "gloss_title": "Spam warning", "gloss_text": "Possible spam: energy provider advertising. The call was not put through."}
+{"id": "de-test-01021", "gloss_title": "Call centre detected", "gloss_text": "The call from Düsseldorf probably comes from a call centre. Marked as spam."}
+{"id": "de-test-01022", "gloss_title": "Missed call", "gloss_text": "Caller reported as advertising. Nothing was saved."}
+{"id": "de-dev-01023", "gloss_title": "Call: urgent payment", "gloss_text": "Caller ID reports: debt-collection advertising, with a 90% spam probability. Call blocked."}
+{"id": "de-test-01024", "gloss_title": "Spam detected", "gloss_text": "📞 Insurance sales · +49 89 XXXXXXXX · 1,204 reports"}
+{"id": "de-test-01025", "gloss_title": "Missed Viber call", "gloss_text": "Unknown number, reported as spam. You missed 3 calls."}
+{"id": "de-dev-01026", "gloss_title": "Spam call blocked", "gloss_text": "A call from 0700 XXXXXXX was rejected automatically."}
+{"id": "de-test-01027", "gloss_title": "Annoying call", "gloss_text": "Presumably magazine subscription advertising – block the number now?"}
+{"id": "de-test-01028", "gloss_title": "Suspected fraud", "gloss_text": "The caller pretends to be a bank employee. Number +49 69 XXXXXXXX was reported 87 times as fraud."}
+{"id": "de-dev-01029", "gloss_title": "Possible fraud", "gloss_text": "Warning: this call could be a 'grandchild trick' scam. Do not answer the phone."}
+{"id": "de-test-01030", "gloss_title": "Fraud: fake policeman", "gloss_text": "The caller claims to be from the police. No real officer calls about money."}
+{"id": "de-test-01031", "gloss_title": "Missed call", "gloss_text": "+49 17X XXXXXXX called. Fraud warning: fake Microsoft support."}
+{"id": "de-test-01032", "gloss_title": "Fraud call blocked", "gloss_text": "Call from +49 22X XXXXXXX classified as fraud: an alleged parcel service demands customs fees."}
+{"id": "de-dev-01033", "gloss_title": "Call from your bank?", "gloss_text": "Your account is supposedly blocked, the caller claims. The caller ID warns: fraud, please do not call back."}
+{"id": "de-test-01034", "gloss_title": "Suspected fraud", "gloss_text": "Fake call from the tax office, 54 reports in the last 24 hours."}
+{"id": "de-test-01035", "gloss_title": "Fraud warning", "gloss_text": "The call from +49 15X XXXXXXXX was recognised as lottery fraud."}
+{"id": "de-dev-01036", "gloss_title": "Suspicious call", "gloss_text": "Possible shock call: alleged relatives in distress, demanding money. The call was not answered."}
+{"id": "de-test-01037", "gloss_title": "Fraud recognised", "gloss_text": "🚨 Fake Amazon employee · +44 20 XXXX XXXX · high fraud score"}
+{"id": "de-test-01038", "gloss_title": "Missed call", "gloss_text": "An unknown account called. This account has been reported several times for investment fraud."}
+{"id": "de-dev-01039", "gloss_title": "Call from Stadtwerke", "gloss_text": "Supposedly power cut-off today. According to the database the sender is a known fraudster; the call was rejected."}
+{"id": "de-test-01040", "gloss_title": "Fraud call", "gloss_text": "An alleged credit card service asks for personal data. Report: phishing by phone."}
+{"id": "de-test-01041", "gloss_title": "Viber – fraud warning", "gloss_text": "The call from +49 15X XXXXXXXX was flagged as a romance scam."}
+{"id": "de-test-01042", "gloss_title": "Missed call", "gloss_text": "Mum called 3 times"}
+{"id": "de-test-01043", "gloss_title": "Missed call", "gloss_text": "Dad (mobile) · 9:14 pm · 2 calls in a row"}
+{"id": "de-dev-01044", "gloss_title": "Sister Lena", "gloss_text": "Missed voice call"}
+{"id": "de-test-01045", "gloss_title": "Papa", "gloss_text": "Please call me back immediately when you see this."}
+{"id": "de-test-01046", "gloss_title": "Missed call", "gloss_text": "Grandma Hilde – 5 calls in the last 10 minutes"}
+{"id": "de-dev-01047", "gloss_title": "Brother Jonas", "gloss_text": "I just called you, please pick up! It is important."}
+{"id": "de-test-01048", "gloss_title": "Mama is calling", "gloss_text": "Missed at 6:12 am – that is the 4th time tonight."}
+{"id": "de-test-01049", "gloss_title": "Missed video call", "gloss_text": "Mum tried to video call you"}
+{"id": "de-dev-01050", "gloss_title": "Papa", "gloss_text": "📞 Missed call. Let me know briefly, okay?"}
+{"id": "de-test-01051", "gloss_title": "Missed call", "gloss_text": "Husband Tobias (mobile), 3:48 pm, 3 attempts"}
+{"id": "de-test-01052", "gloss_title": "Mutti", "gloss_text": "Missed call. Please call back as soon as you can, it is about Opa."}
+{"id": "de-dev-01053", "gloss_title": "Missed call", "gloss_text": "Mother-in-law Karin · 2 calls"}
+{"id": "de-test-01054", "gloss_title": "Sister Anna", "gloss_text": "Missed call from Anna. Anna: Where are you? Please call!"}
+{"id": "de-test-01055", "gloss_title": "Missed call", "gloss_text": "Daughter Mia, 7:30 am, 6 calls"}
+{"id": "de-test-02000", "gloss_title": "How was your visit?", "gloss_text": "You were at Bäckerei Sonnenschein today. Share your experience with others."}
+{"id": "de-test-02001", "gloss_title": "Traffic jam on your favourite route?", "gloss_text": "Your weekly overview is here: 312 km driven, stuck in traffic 4 times. See your driving statistics."}
+{"id": "de-dev-02002", "gloss_title": "New places near you", "gloss_text": "Discover 5 new cafés in Leipzig-Plagwitz that have just opened."}
+{"id": "de-test-02003", "gloss_title": "Tip from Waze", "gloss_text": "Save home and work so we can get you to your destination faster."}
+{"id": "de-test-02004", "gloss_title": "Jira", "gloss_text": "Svenja Albrecht added you to PROJ-482"}
+{"id": "de-test-02005", "gloss_title": "GitHub", "gloss_text": "Someone starred your repository fiktiv-demo."}
+{"id": "de-dev-02006", "gloss_title": "Todoist", "gloss_text": "Weekly review: you completed 17 tasks. Your karma level keeps rising!"}
+{"id": "de-test-02007", "gloss_title": "Zoom", "gloss_text": "The recording of your meeting 'Planung Q3' is now available."}
+{"id": "de-test-02008", "gloss_title": "Nextdoor - Eppendorf neighbourhood - Frau Brandt", "gloss_text": "Does anyone happen to have a ladder I could borrow briefly tomorrow? Thanks a lot!"}
+{"id": "de-dev-02009", "gloss_title": "Garmin Connect", "gloss_text": "Your sleep score for last night: 78. That was a solid night."}
+{"id": "de-test-02010", "gloss_title": "Zoom Team Chat - Jasmin Kruse", "gloss_text": "No stress, the report can also come next week. We will discuss it at the next regular meeting."}
+{"id": "de-test-02011", "gloss_title": "Jira - Comment", "gloss_text": "Mehmet Kaya: FYI, I added to the documentation for PROJ-310, take a look at it when you get a chance."}
+{"id": "de-test-02012", "gloss_title": "Mama", "gloss_text": "Please bring milk and bread on your way home 🙂"}
+{"id": "de-dev-02013", "gloss_title": "Building community Birkenweg 12 - Herr Lehmann", "gloss_text": "Dear neighbours, the barbecue evening on Saturday is on! Who is bringing salad? Please sign up on the list in the stairwell."}
+{"id": "de-test-02014", "gloss_title": "Sister Katrin", "gloss_text": "Dad had a car accident and is in hospital. Call me IMMEDIATELY!"}
+{"id": "de-test-02015", "gloss_title": "Reddit", "gloss_text": "u/waldspaziergang replied to your comment in r/de_IT"}
+{"id": "de-test-02016", "gloss_title": "Urgent: you are missing posts!", "gloss_text": "You have not been back for 3 days. Come back and see what is happening in your communities."}
+{"id": "de-test-02017", "gloss_title": "Asana - Due today", "gloss_text": "The task 'Send offer to customers' is due today at 4:00 pm."}
+{"id": "de-dev-02018", "gloss_title": "Asana", "gloss_text": "Lukas Ritter assigned you the task 'Revise slides'. Due date: the week after next."}
+{"id": "de-test-02019", "gloss_title": "Deezer", "gloss_text": "Your Flow has been updated: new songs from your favourite artists are waiting for you 🎵"}
+{"id": "de-test-02020", "gloss_title": "Payment failed", "gloss_text": "We could not charge your Deezer Premium subscription. Please update your payment method in the settings so your music is not interrupted."}
+{"id": "de-dev-02021", "gloss_title": "Audible", "gloss_text": "Your trial month ends tomorrow. After that your subscription continues for €9.95 per month."}
+{"id": "de-test-02022", "gloss_title": "Disney+", "gloss_text": "New episodes are here! Pick up where you left off."}
+{"id": "de-test-02023", "gloss_title": "Only today!", "gloss_text": "Secure the annual subscription now and save 20%. The offer ends today at midnight."}
+{"id": "de-test-02024", "gloss_title": "Google Wallet", "gloss_text": "You paid €12.50 at Bäckerei Sonnenschein."}
+{"id": "de-dev-02025", "gloss_title": "Money received", "gloss_text": "Felix Hartmann sent you €35. Subject: pizza from yesterday. The amount has already been credited to your main account."}
+{"id": "de-test-02026", "gloss_title": "Your account statement is here", "gloss_text": "The account statement for September is available in your app from now on. You can find it under Account > Documents. If you have questions, support is available to you at any time directly in the chat."}
+{"id": "de-test-02027", "gloss_title": "Your item is on its way", "gloss_text": "The seller has shipped 'Vintage desk lamp'. Expected delivery: Thursday to Friday. With tracking you can always see where your parcel is."}
+{"id": "de-test-02028", "gloss_title": "Parcel being delivered", "gloss_text": "Your order arrives today between 2:00 pm and 6:00 pm. You can track the delivery in the Zalando app. If nobody is at home, your parcel will be left at the next branch."}
+{"id": "de-dev-02029", "gloss_title": "Storm warning for your prices ⚡", "gloss_text": "Flash sale: up to 50% off autumn jackets, for only 3 hours! Grab them now before everything is gone."}
+{"id": "de-test-02030", "gloss_title": "Citymapper", "gloss_text": "How was your journey yesterday? Rate your trip and help others plan."}
+{"id": "de-test-02031", "gloss_title": "BlaBlaCar", "gloss_text": "Your driver Stefan is 8 minutes away from the meeting point: Hauptbahnhof north car park."}
+{"id": "de-test-02032", "gloss_title": "Platform change", "gloss_text": "Your ICE 574 train to Munich leaves today from a different platform than platform 9. Please follow the announcements and the displays at the station. The departure is expected to be delayed by about 15 minutes."}
+{"id": "de-dev-02033", "gloss_title": "Your trip to Hamburg", "gloss_text": "Check-in for your trip on Saturday is possible from tomorrow. You can find your digital ticket at any time in the app under My tickets."}
+{"id": "de-test-02034", "gloss_title": "Danger information: gas leak", "gloss_text": "A gas leak occurred in the Hafen district. Please keep windows and doors closed, switch off ventilation and avoid the area. Further information will follow via radio and NINA."}
+{"id": "de-test-02035", "gloss_title": "Test alarm", "gloss_text": "Today at 11:00 the nationwide warning day takes place. This is an exercise, there is no danger."}
+{"id": "de-test-02036", "gloss_title": "Official SEVERE WEATHER WARNING", "gloss_text": "Severe thunderstorms with heavy rain and gusts up to 100 km/h for your location until 9:00 pm."}
+{"id": "de-dev-02037", "gloss_title": "Notice: elevated forest fire risk", "gloss_text": "The forest fire danger level in your region is rated moderate for the coming week. There are no acute restrictions."}
+{"id": "de-test-02038", "gloss_title": "MyFitnessPal", "gloss_text": "Do not forget to log your lunch. Stay within your calorie goal!"}
+{"id": "de-test-02039", "gloss_title": "Price alarm", "gloss_text": "Bitcoin has exceeded your target price of €60,000."}
+{"id": "de-dev-02040", "gloss_title": "Hiking friends Rhein-Main - Organiser Peter", "gloss_text": "New meeting: Sunday, start at 9:30 am at the Feldberg car park. Please bring sturdy shoes and enough water. Registration by Friday in the app."}
+{"id": "de-test-02041", "gloss_title": "Neighbourhood Südstadt - Herr Yilmaz", "gloss_text": "WARNING: smoke from the basement of house no. 14. The fire brigade has been alerted. All neighbours please leave the building and gather in the courtyard!"}
+{"id": "de-test-02042", "gloss_title": "Board game evening Cologne - Nina", "gloss_text": "Who feels like playing Catan next Friday? 🎲 I will bring snacks!"}

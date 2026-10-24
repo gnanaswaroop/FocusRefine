@@ -1,0 +1,96 @@
+{"id": "fr-test-01000", "gloss_title": "Missed call", "gloss_text": "Unknown number: 06 XX XX XX XX"}
+{"id": "fr-test-01001", "gloss_title": "Missed call", "gloss_text": "Number hidden"}
+{"id": "fr-dev-01002", "gloss_title": "Incoming call", "gloss_text": "+33 7 XX XX XX XX · Unknown · Paris"}
+{"id": "fr-test-01003", "gloss_title": "Missed call (2)", "gloss_text": "01 XX XX XX XX is not in your contacts"}
+{"id": "fr-test-01004", "gloss_title": "Missed Meet call", "gloss_text": "Someone you do not know tried to call you."}
+{"id": "fr-dev-01005", "gloss_title": "Missed call", "gloss_text": "Unknown number, left a 4-second voicemail. No information about the caller."}
+{"id": "fr-test-01006", "gloss_title": "Missed call", "gloss_text": "04 XX XX XX XX · Lyon · 3 calls today, no message"}
+{"id": "fr-test-01007", "gloss_title": "Missed call", "gloss_text": "Unidentified number (+33 6 XX XX XX XX)"}
+{"id": "fr-dev-01008", "gloss_title": "Incoming call", "gloss_text": "Call from an unknown number - 05 XX XX XX XX"}
+{"id": "fr-test-01009", "gloss_title": "Missed video call", "gloss_text": "Unknown contact · 5 min ago"}
+{"id": "fr-test-01010", "gloss_title": "Missed call", "gloss_text": "02 XX XX XX XX · Nantes (region) · unknown"}
+{"id": "fr-dev-01011", "gloss_title": "Missed call", "gloss_text": "An unknown number called twice this afternoon. Nothing urgent reported."}
+{"id": "fr-test-01012", "gloss_title": "Unknown number", "gloss_text": "You missed a call from 07 XX XX XX XX"}
+{"id": "fr-test-01013", "gloss_title": "Missed call", "gloss_text": "+32 4XX XX XX XX · unknown foreign number"}
+{"id": "fr-test-01014", "gloss_title": "Probable spam", "gloss_text": "09 XX XX XX XX · Telemarketing reported by 312 users"}
+{"id": "fr-test-01015", "gloss_title": "Suspected spam call", "gloss_text": "Call blocked: probable telemarketing"}
+{"id": "fr-dev-01016", "gloss_title": "Missed call - Spam", "gloss_text": "Insulation for 1 euro · reported as a salesperson"}
+{"id": "fr-test-01017", "gloss_title": "Probable spam", "gloss_text": "This number has been reported for repeated commercial calls."}
+{"id": "fr-test-01018", "gloss_title": "Spam: satisfaction survey", "gloss_text": "Incoming call from 09 XX XX XX XX (call centre)"}
+{"id": "fr-dev-01019", "gloss_title": "Suspected spam call", "gloss_text": "Meet filtered a call from a telemarketing number."}
+{"id": "fr-test-01020", "gloss_title": "Missed WhatsApp call", "gloss_text": "+33 9 XX XX XX XX · number reported as spam"}
+{"id": "fr-test-01021", "gloss_title": "Missed call", "gloss_text": "Solar panels - Salesperson (automatically blocked)"}
+{"id": "fr-dev-01022", "gloss_title": "URGENT call?", "gloss_text": "Probable spam: a carrier's 'final reminder'. Number reported 87 times."}
+{"id": "fr-test-01023", "gloss_title": "Probable spam", "gloss_text": "06 XX XX XX XX · Automated call (robot) · 2 reports"}
+{"id": "fr-test-01024", "gloss_title": "Missed call", "gloss_text": "Number suspected of spam · health insurance"}
+{"id": "fr-dev-01025", "gloss_title": "Spam: energy offer", "gloss_text": "Energy supplier (telemarketing) · blocked"}
+{"id": "fr-test-01026", "gloss_title": "Missed call - Spam", "gloss_text": "Phone survey · 09 XX XX XX XX · blocked by Truecaller"}
+{"id": "fr-test-01027", "gloss_title": "Missed call", "gloss_text": "08 XX XX XX XX - Suspected premium-rate number, reported"}
+{"id": "fr-test-01028", "gloss_title": "Probable scam", "gloss_text": "Fake bank adviser: 'Your account has been hacked, do not hang up'. Reported 540 times."}
+{"id": "fr-dev-01029", "gloss_title": "Suspicious call", "gloss_text": "Number reported for fake technical support (infected computer)."}
+{"id": "fr-test-01030", "gloss_title": "Probable scam: fake courier", "gloss_text": "Call from a fake carrier: parcel blocked, fees to pay. Do not call back."}
+{"id": "fr-test-01031", "gloss_title": "WhatsApp call", "gloss_text": "+44 7XXX XXXXXX · Pretends to be the police, asks for an immediate bank transfer."}
+{"id": "fr-test-01032", "gloss_title": "Call blocked", "gloss_text": "Probable scam: fake tax agent demanding payment by gift card."}
+{"id": "fr-dev-01033", "gloss_title": "URGENT - Account blocked", "gloss_text": "Call reported as a scam: 'your card will be deactivated in 10 minutes'."}
+{"id": "fr-test-01034", "gloss_title": "Probable scam", "gloss_text": "Fake CPF adviser: 'free training, confirm your rights'. Number reported."}
+{"id": "fr-test-01035", "gloss_title": "Suspicious Meet call", "gloss_text": "This caller has been reported for identity theft (fake support)."}
+{"id": "fr-dev-01036", "gloss_title": "Probable scam", "gloss_text": "Ping call: a single call then hangs up. Do not call back this foreign number +225 XX XX XX XX."}
+{"id": "fr-test-01037", "gloss_title": "Scam: fake nephew", "gloss_text": "Call from a stranger saying they are a relative in trouble and asking for money. Reported."}
+{"id": "fr-test-01038", "gloss_title": "Probable scam", "gloss_text": "Fake Microsoft support: 'your PC is infected, install software'. Reported."}
+{"id": "fr-test-01039", "gloss_title": "Probable scam", "gloss_text": "Fake Ameli account manager: 'refund pending'. 210 reports."}
+{"id": "fr-dev-01040", "gloss_title": "Suspicious call", "gloss_text": "Fake cryptocurrency investment adviser, repeated calls from a hidden number X."}
+{"id": "fr-test-01041", "gloss_title": "Probable scam", "gloss_text": "Fake bank: 'A suspicious transaction took place, stay on the line' - do not call this number."}
+{"id": "fr-test-01042", "gloss_title": "Missed call", "gloss_text": "Mum (3 missed calls)"}
+{"id": "fr-test-01043", "gloss_title": "Missed WhatsApp call", "gloss_text": "Dad - 4 missed calls. Call me back as soon as you can."}
+{"id": "fr-dev-01044", "gloss_title": "Missed call", "gloss_text": "Sister Claire tried to reach you 2 times"}
+{"id": "fr-test-01045", "gloss_title": "Grandma", "gloss_text": "Call me back quickly, please, it's important."}
+{"id": "fr-test-01046", "gloss_title": "Missed calls", "gloss_text": "Brother Julien · 5 calls in 10 minutes"}
+{"id": "fr-dev-01047", "gloss_title": "Missed call", "gloss_text": "Grandpa · 2 missed calls"}
+{"id": "fr-test-01048", "gloss_title": "Missed video call", "gloss_text": "Mum called you · 3 attempts"}
+{"id": "fr-test-01049", "gloss_title": "Papa", "gloss_text": "Call me, I have tried several times!"}
+{"id": "fr-dev-01050", "gloss_title": "Missed call", "gloss_text": "Uncle Marc (family) · called back right after"}
+{"id": "fr-test-01051", "gloss_title": "Missed call", "gloss_text": "Darling ❤️ · 4 missed calls"}
+{"id": "fr-test-01052", "gloss_title": "Mum", "gloss_text": "Can you call me back? I am waiting for your call."}
+{"id": "fr-test-01053", "gloss_title": "Aunt Sophie", "gloss_text": "Missed call. Call me back as soon as possible."}
+{"id": "fr-dev-01054", "gloss_title": "Papa", "gloss_text": "📞 Missed voice call - he also left a message: 'call me back'"}
+{"id": "fr-test-02000", "gloss_title": "Your driving summary", "gloss_text": "This week you spent 4 h 20 at the wheel. Discover your trips."}
+{"id": "fr-test-02001", "gloss_title": "Give your opinion", "gloss_text": "How was Boulangerie des Halles? Rate your visit."}
+{"id": "fr-dev-02002", "gloss_title": "New on Waze", "gloss_text": "Choose a new voice for your routes: try Lucie's voice."}
+{"id": "fr-test-02003", "gloss_title": "Traffic alert?", "gloss_text": "Your friends are driving today too! Invite them to join your Waze convoy."}
+{"id": "fr-test-02004", "gloss_title": "Jira - Weekly summary", "gloss_text": "12 tickets resolved and 5 created this week in the PLATEFORME project."}
+{"id": "fr-dev-02005", "gloss_title": "nina-dev starred", "gloss_text": "nina-dev starred your repository \"outils-internes\"."}
+{"id": "fr-test-02006", "gloss_title": "Task added", "gloss_text": "Camille added 'Re-read the report' to the Équipe project."}
+{"id": "fr-test-02007", "gloss_title": "Recording available", "gloss_text": "The recording of the meeting 'Point hebdo équipe' is ready to view."}
+{"id": "fr-test-02008", "gloss_title": "Week in review", "gloss_text": "Your activity summary is available: 54,321 steps and 3 sessions."}
+{"id": "fr-dev-02009", "gloss_title": "Quartier Saint-Louis", "gloss_text": "Has anyone lost a tabby cat on rue des Lilas? It is a friendly one, anyway 😺"}
+{"id": "fr-test-02010", "gloss_title": "Neighbours at 12 rue Pasteur", "gloss_text": "Neighbours' party on Saturday at 7 pm in the courtyard. Everyone brings something to share!"}
+{"id": "fr-test-02011", "gloss_title": "Hugo Marchand", "gloss_text": "Not urgent at all, but if you have 5 minutes this week, we can set up a call about the budget."}
+{"id": "fr-test-02012", "gloss_title": "Snapchat", "gloss_text": "Léa replied to your story 🔥"}
+{"id": "fr-dev-02013", "gloss_title": "Mathis", "gloss_text": "lol did you see yesterday's photo 😂😂"}
+{"id": "fr-test-02014", "gloss_title": "High school friends - Inès", "gloss_text": "Who is up for a cinema trip on Friday evening? We could grab a meal before. 🍕"}
+{"id": "fr-test-02015", "gloss_title": "Flatmates 3B - Théo", "gloss_text": "I got bread and milk. Did anyone think about the cat food? Otherwise I'll go tomorrow."}
+{"id": "fr-dev-02016", "gloss_title": "Sunday football - Karim", "gloss_text": "URGENT!!! We need a goalkeeper for Sunday at 10 am. Otherwise we play with nine, no big deal 😅"}
+{"id": "fr-test-02017", "gloss_title": "Manon's birthday - Chloé", "gloss_text": "Shall we pool money for the present? I suggest 10 euros each. Tell me what you think 🎁"}
+{"id": "fr-test-02018", "gloss_title": "U17 basketball team - Coach Denis", "gloss_text": "Training moved to 6:30 pm on Tuesday. Remember to bring your white jerseys. Please confirm here, thanks."}
+{"id": "fr-test-02019", "gloss_title": "On Audible for you", "gloss_text": "If you liked 'La Maison au bord du lac', discover these three crime novels to listen to this autumn."}
+{"id": "fr-dev-02020", "gloss_title": "Your subscription renews", "gloss_text": "Your Audible subscription will renew on 3 November. You can manage or cancel your plan at any time in the account settings."}
+{"id": "fr-test-02021", "gloss_title": "New episode available", "gloss_text": "The new episode of your series 'Les Gardiens du Phare' is available now."}
+{"id": "fr-test-02022", "gloss_title": "Last hours ⏳", "gloss_text": "Exceptional offer: 3 months at half price for new subscribers. The offer ends tonight at midnight!"}
+{"id": "fr-test-02023", "gloss_title": "Payment problem", "gloss_text": "We could not charge your payment method for your Disney+ subscription. Update your billing details to keep enjoying your programmes without interruption."}
+{"id": "fr-dev-02024", "gloss_title": "Payment made", "gloss_text": "Bakery Dupuis · €4.80 paid with Google Wallet"}
+{"id": "fr-test-02025", "gloss_title": "Statement available", "gloss_text": "Your October account statement is available in your customer area. You can view it, download it or share it with your adviser from the app, at any time."}
+{"id": "fr-test-02026", "gloss_title": "Transfer received", "gloss_text": "You received a transfer of €250.00 from Marie Lefèvre. The amount is now credited to your current account and appears in your recent transactions list."}
+{"id": "fr-test-02027", "gloss_title": "Your parcel is on its way", "gloss_text": "The seller has shipped your purchase 'Children's bike 16 inch'. Track the delivery from your account."}
+{"id": "fr-dev-02028", "gloss_title": "You have favourites 👀", "gloss_text": "A listing from your 'three-seater sofa' search has just been updated. Do not miss it!"}
+{"id": "fr-test-02029", "gloss_title": "Your order is being prepared", "gloss_text": "The restaurant Chez Mamadou is preparing your order. Estimated delivery between 7:40 pm and 7:55 pm. You will get a notification as soon as the courier has picked up your food."}
+{"id": "fr-test-02030", "gloss_title": "Free delivery! 🍔", "gloss_text": "Last chance: free delivery until midnight on your next order."}
+{"id": "fr-dev-02031", "gloss_title": "Your delivery rider is arriving", "gloss_text": "Rayan is 3 minutes away from you with your order. Please keep your phone within reach."}
+{"id": "fr-test-02032", "gloss_title": "-€5 on your lunch", "gloss_text": "Use the code BONAPP at the checkout, valid at lunchtime only."}
+{"id": "fr-test-02033", "gloss_title": "Next stop: Gare du Nord", "gloss_text": "Get off in 2 minutes. Transfer to line 5, platform for the Bobigny direction."}
+{"id": "fr-test-02034", "gloss_title": "Disruption on your journey", "gloss_text": "The Pont de la Libération is closed to traffic in both directions after an accident. Line 42 buses are diverted via avenue Foch; allow at least twenty extra minutes."}
+{"id": "fr-dev-02035", "gloss_title": "Your driver is here", "gloss_text": "Julien is waiting for you at the meeting point: station car park, north exit side. Grey car."}
+{"id": "fr-test-02036", "gloss_title": "Trip cancelled", "gloss_text": "Your driver has cancelled tonight's Lille - Paris trip at 6 pm. We are helping you find another ride: check the offers available today right away, places go quickly."}
+{"id": "fr-test-02037", "gloss_title": "Rate your trip", "gloss_text": "How did your journey with Sophie go? Leave a review in a few seconds."}
+{"id": "fr-test-02038", "gloss_title": "Platform change", "gloss_text": "Your TGV at 5:12 pm to Bordeaux will leave from platform 7 instead of platform 3. Please go there quickly: boarding starts in a few minutes and the boarding window will be short."}
+{"id": "fr-dev-02039", "gloss_title": "Your trip next week", "gloss_text": "Your Paris - Marseille ticket for Tuesday 3 November is confirmed. Find your e-ticket in the app. Remember to present yourself at the station a few minutes before departure."}
+{"id": "fr-test-02040", "gloss_title": "Last call: low prices 🚄", "gloss_text": "Your low-price tickets for the Christmas holidays are going fast! Take advantage before the offer ends tonight."}

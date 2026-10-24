@@ -1,0 +1,100 @@
+{"id": "te-test-01000", "gloss_title": "Missed call", "gloss_text": "Missed call from +91 9XXXXXXXXX at 10:42 AM"}
+{"id": "te-test-01001", "gloss_title": "Unknown number", "gloss_text": "This number is not in your contacts. Called 2 times, you did not pick up."}
+{"id": "te-test-01002", "gloss_title": "Missed video call", "gloss_text": "Video call received from an unidentified person. Call back?"}
+{"id": "te-test-01003", "gloss_title": "Missed call", "gloss_text": "Three missed calls from +91 8XXXXXXXXX. No voicemail."}
+{"id": "te-test-01004", "gloss_title": "Truecaller", "gloss_text": "An unknown caller from Hyderabad is calling you"}
+{"id": "te-test-01005", "gloss_title": "Incoming call", "gloss_text": "Call coming from a landline number, unidentified caller (0866 XXXXXXX)"}
+{"id": "te-test-01006", "gloss_title": "Missed call", "gloss_text": "A new number +91 7XXXXXXXXX gave a missed call at 11 PM"}
+{"id": "te-test-01007", "gloss_title": "Google Meet", "gloss_text": "Missed call from unknown number, 5 minutes ago"}
+{"id": "te-test-01008", "gloss_title": "Missed call (1)", "gloss_text": "Call received from a private number"}
+{"id": "te-dev-01009", "gloss_title": "Missed call", "gloss_text": "+91 9XXXXXXXXX - Vijayawada - name unknown"}
+{"id": "te-dev-01010", "gloss_title": "Missed call", "gloss_text": "A call came along with an SMS marked URGENT from an unknown number. Number +91 6XXXXXXXXX"}
+{"id": "te-dev-01011", "gloss_title": "Call missed", "gloss_text": "Audio call from an unsaved number"}
+{"id": "te-dev-01012", "gloss_title": "Missed call", "gloss_text": "Call received this afternoon from +91 9XXXXXXXXX, name unknown"}
+{"id": "te-dev-01013", "gloss_title": "Missed call", "gloss_text": "4 calls from +91 9XXXXXXXXX - unidentified"}
+{"id": "te-test-01014", "gloss_title": "Spam suspected", "gloss_text": "1,200 people reported this caller as spam. +91 9XXXXXXXXX"}
+{"id": "te-test-01015", "gloss_title": "Possible spam", "gloss_text": "This call may be spam. Block it?"}
+{"id": "te-test-01016", "gloss_title": "Telemarketing call", "gloss_text": "Missed call from a credit card offer telemarketer (Telugu spam reports: 540)"}
+{"id": "te-test-01017", "gloss_title": "Suspicious spam caller", "gloss_text": "Identified as insurance sales - 140XXXXXXX"}
+{"id": "te-test-01018", "gloss_title": "+91 9XXXXXXXXX", "gloss_text": "This number is not your contact. Missed voice call. Suspected business promotion call."}
+{"id": "te-test-01019", "gloss_title": "Spam warning", "gloss_text": "Loan offers caller - +91 9XXXXXXXXX - automatically blocked"}
+{"id": "te-test-01020", "gloss_title": "Spam call", "gloss_text": "Identified as a recorded message call. Better not to answer."}
+{"id": "te-test-01021", "gloss_title": "Suspected spam", "gloss_text": "Missed call from a real estate promotion caller"}
+{"id": "te-test-01022", "gloss_title": "Truecaller", "gloss_text": "Telemarketing call again at 8 in the morning. Block it."}
+{"id": "te-dev-01023", "gloss_title": "Spam call blocked", "gloss_text": "Stopped 3 spam calls today"}
+{"id": "te-dev-01024", "gloss_title": "Call saying it is urgent", "gloss_text": "A telecaller saying 'your account information'. Spam label: 890 reports"}
+{"id": "te-dev-01025", "gloss_title": "Spam suspected", "gloss_text": "This looks like a sales call - +91 9XXXXXXXXX"}
+{"id": "te-dev-01026", "gloss_title": "Unknown number", "gloss_text": "Missed voice call. Many people have reported this number as spam"}
+{"id": "te-dev-01027", "gloss_title": "Possible spam", "gloss_text": "Gaming app promotion caller. This is the third time."}
+{"id": "te-test-01028", "gloss_title": "Fraud warning", "gloss_text": "Caller claiming to be a bank official. Identified as scam - +91 9XXXXXXXXX"}
+{"id": "te-test-01029", "gloss_title": "Scam caller", "gloss_text": "Suspected fraud call saying a courier parcel is stuck"}
+{"id": "te-test-01030", "gloss_title": "Truecaller", "gloss_text": "Scam call threatening in the name of a 'police inquiry' - 2,300 reports"}
+{"id": "te-test-01031", "gloss_title": "+91 9XXXXXXXXX", "gloss_text": "WhatsApp call missed. This number has been reported as a tech support scammer."}
+{"id": "te-test-01032", "gloss_title": "Suspected fraud", "gloss_text": "A call saying KYC is not updated and the SIM will stop. Possibly a scam."}
+{"id": "te-test-01033", "gloss_title": "Scam warning", "gloss_text": "Caller threatening to disconnect the connection because the electricity bill was not paid"}
+{"id": "te-test-01034", "gloss_title": "Dangerous call", "gloss_text": "The video call number that said you won a lottery is recorded as a scam"}
+{"id": "te-test-01035", "gloss_title": "Fraud call identified", "gloss_text": "Fake customs officer call - +91 9XXXXXXXXX - block it"}
+{"id": "te-test-01036", "gloss_title": "Scam call", "gloss_text": "An automated call saying your Aadhaar will be cancelled"}
+{"id": "te-dev-01037", "gloss_title": "Fraud call", "gloss_text": "Caller promising double profit on an investment - scam label"}
+{"id": "te-dev-01038", "gloss_title": "+44 7700 900123", "gloss_text": "Missed WhatsApp call from a foreign number. Reports say it is a job offer scam."}
+{"id": "te-dev-01039", "gloss_title": "Call saying it is from your bank", "gloss_text": "Caller asking for details and saying the card will be blocked. We identified it as a scam."}
+{"id": "te-dev-01040", "gloss_title": "Truecaller", "gloss_text": "Call from scammers threatening 'digital arrest'"}
+{"id": "te-dev-01041", "gloss_title": "Scam video call", "gloss_text": "Threatening video call from an unknown person, suspected scam"}
+{"id": "te-test-01042", "gloss_title": "Missed call - Amma", "gloss_text": "3 missed calls from Amma, just now"}
+{"id": "te-test-01043", "gloss_title": "Nanna", "gloss_text": "Are you picking up the phone? I tried many times and could not reach you. Call right away"}
+{"id": "te-test-01044", "gloss_title": "Missed call", "gloss_text": "4 consecutive calls from Annayya (mobile)"}
+{"id": "te-test-01045", "gloss_title": "Sumathi Akka", "gloss_text": "Missed video call, trying again"}
+{"id": "te-test-01046", "gloss_title": "Srivani (wife)", "gloss_text": "I called, you did not pick up. Call back once as soon as you see the phone"}
+{"id": "te-test-01047", "gloss_title": "Missed call", "gloss_text": "Chelli - called twice within 5 minutes"}
+{"id": "te-test-01048", "gloss_title": "Nanna", "gloss_text": "I called. I need to talk right away, call back"}
+{"id": "te-test-01049", "gloss_title": "Pinni", "gloss_text": "Pinni called. She said she will talk when you are free about the wedding arrangements"}
+{"id": "te-test-01050", "gloss_title": "Amma", "gloss_text": "Missed call at 1:20 AM - 6 times"}
+{"id": "te-dev-01051", "gloss_title": "Missed call", "gloss_text": "Thammudu called, and called again just now"}
+{"id": "te-dev-01052", "gloss_title": "Mamayya", "gloss_text": "Abbai, I called but did not reach you. Call when you have time, no hurry"}
+{"id": "te-dev-01053", "gloss_title": "Ammamma", "gloss_text": "Missed audio call from Ammamma"}
+{"id": "te-dev-01054", "gloss_title": "Husband", "gloss_text": "No matter how many times I call, you do not pick up. Call as soon as you see this message"}
+{"id": "te-dev-01055", "gloss_title": "Missed call", "gloss_text": "2 missed calls from Nanna (home number)"}
+{"id": "te-test-02000", "gloss_title": "Rate your place", "gloss_text": "How was Ram Tiffin Centre that you visited yesterday? Give a review in one minute."}
+{"id": "te-test-02001", "gloss_title": "Your weekly driving summary", "gloss_text": "This week you drove 142 km. Time spent in traffic is less than last week."}
+{"id": "te-dev-02002", "gloss_title": "Your timeline is ready", "gloss_text": "See the list of places you visited last month."}
+{"id": "te-test-02003", "gloss_title": "Traffic tip", "gloss_text": "To reach the office faster, save your home and office addresses in Waze. Once saved, route directions will come daily."}
+{"id": "te-test-02004", "gloss_title": "Task added", "gloss_text": "A new task 'Change login page text' was added to your board. Priority: low."}
+{"id": "te-test-02005", "gloss_title": "New star", "gloss_text": "Someone starred your repository notes-app"}
+{"id": "te-dev-02006", "gloss_title": "Weekly summary", "gloss_text": "This week you completed 18 tasks. Set next week's goal right now."}
+{"id": "te-test-02007", "gloss_title": "Recording ready", "gloss_text": "The recording of Thursday's team meeting is saved in the cloud."}
+{"id": "te-test-02008", "gloss_title": "Sleep score", "gloss_text": "Last night your sleep score was 82. Deep sleep 1 hr 40 min."}
+{"id": "te-dev-02009", "gloss_title": "Ticket booked", "gloss_text": "Journey from Vijayawada to Secunderabad next Saturday. Seat details will be known after the chart is prepared."}
+{"id": "te-test-02010", "gloss_title": "Manager Rajesh", "gloss_text": "Send your update this week when convenient, there is no rush."}
+{"id": "te-dev-02011", "gloss_title": "Team chat - Vamsi", "gloss_text": "Shall we order biryani for lunch? Everyone tell me"}
+{"id": "te-test-02012", "gloss_title": "Your order is confirmed", "gloss_text": "Hello! We have packed your order (Kaju Katli 1 kg, Mysore Pak half kg, ghee 1 litre). It will be delivered tomorrow between 10 and 12 noon. If there are changes, let us know in the app. Thank you."}
+{"id": "te-test-02013", "gloss_title": "Peddamma", "gloss_text": "Did you get home, Amma? Eat your food and send a photo"}
+{"id": "te-dev-02014", "gloss_title": "Likes on your post", "gloss_text": "250 people liked your Ugadi greetings post"}
+{"id": "te-test-02015", "gloss_title": "New songs for you", "gloss_text": "This week's top Telugu melodies are ready. Listen now."}
+{"id": "te-dev-02016", "gloss_title": "New album released", "gloss_text": "A new album by your favourite singer is now available."}
+{"id": "te-test-02017", "gloss_title": "Premiere tonight", "gloss_text": "The first episode of the new Telugu web series airs tonight at 8 pm"}
+{"id": "te-test-02018", "gloss_title": "Your plan will renew soon", "gloss_text": "Your annual subscription will renew automatically on the 12th of next month. To change or cancel the plan, go to the account section in the app. You do not need to take any action."}
+{"id": "te-dev-02019", "gloss_title": "Payment failed", "gloss_text": "Your subscription payment was not completed. Add another payment method."}
+{"id": "te-test-02020", "gloss_title": "Last chance!", "gloss_text": "Movie tickets for this weekend are selling fast. Book now."}
+{"id": "te-test-02021", "gloss_title": "Money received", "gloss_text": "Ravi Kumar sent you Rs. 1,500."}
+{"id": "te-test-02022", "gloss_title": "Electricity bill due soon", "gloss_text": "Your electricity bill of Rs. 1,240 is due this month on the 28th. Paying early avoids last-minute trouble. Open the app to pay now, or set a reminder for later."}
+{"id": "te-dev-02023", "gloss_title": "Reward points received", "gloss_text": "You earned 120 coins on your payment"}
+{"id": "te-test-02024", "gloss_title": "Statement ready", "gloss_text": "Your savings account monthly statement is now available. You can log in to the app and download it. This message is for information only; the bank will never ask you for any details."}
+{"id": "te-dev-02025", "gloss_title": "Only tonight! Up to 70% off", "gloss_text": "Sarees, kurtis and home items, all at big discounts. The offer is only until midnight!"}
+{"id": "te-test-02026", "gloss_title": "Your order is on the way", "gloss_text": "The restaurant has packed your food. The delivery partner is coming to you."}
+{"id": "te-test-02027", "gloss_title": "Order delivered", "gloss_text": "Your vegetables, milk and eggs order has reached home. Thank you for shopping. If any item is short or spoiled, tell us through 'Help' in the app and we will fix it immediately."}
+{"id": "te-dev-02028", "gloss_title": "Weekend super offers", "gloss_text": "Special discounts on rice, dal and oil until this Sunday. Add them to your cart now, free delivery too."}
+{"id": "te-test-02029", "gloss_title": "Driver has arrived at your pickup point", "gloss_text": "Ramesh garu (AP 09 XX 1234) is waiting for you. Come quickly."}
+{"id": "te-test-02030", "gloss_title": "Captain is 4 minutes away", "gloss_text": "Your captain is coming for your bike ride and will arrive in a few minutes."}
+{"id": "te-dev-02031", "gloss_title": "Packing your order", "gloss_text": "Your groceries are being packed. We will assign a delivery partner soon."}
+{"id": "te-test-02032", "gloss_title": "Bus departure time changed", "gloss_text": "Your Hyderabad to Vizag bus will depart at 9:00 tonight instead of 9:30. Reach the boarding point by 8:45. The bus will not wait if you are late; the driver's number is on the ticket."}
+{"id": "te-dev-02033", "gloss_title": "Your trip is confirmed", "gloss_text": "Tirupati package booking confirmed. Travel on the 5th of next month. Hotel check-in details and the travel guide have been sent to your email. Web check-in opens two days before the trip."}
+{"id": "te-test-02034", "gloss_title": "Your document is ready", "gloss_text": "The certificate you applied for is available for download. See it in the 'My Documents' section of your account. No further action is needed; this is for information only."}
+{"id": "te-test-02035", "gloss_title": "Data balance is low", "gloss_text": "85% of today's data has been used. Your recharge expires in 5 more days. See your plan details, remaining data and validity in the app."}
+{"id": "te-dev-02036", "gloss_title": "Appointment reminder", "gloss_text": "You have an appointment with Dr. Sudha Reddy tomorrow at 5 pm. Arrive at the clinic 10 minutes early. Do not forget to bring past reports."}
+{"id": "te-test-02037", "gloss_title": "Green Valley Apartments - Radha garu", "gloss_text": "Good morning everyone! Shall we hold a sports competition for the children in the park this evening? Can any parents help?"}
+{"id": "te-test-02038", "gloss_title": "Relatives group - Murali Babai", "gloss_text": "Good morning! If you send this message to 10 people, you will hear good news today. Do not stop, forward it"}
+{"id": "te-dev-02039", "gloss_title": "Vinayaka Chaviti committee - secretary", "gloss_text": "This Sunday at 6 pm, committee meeting at the temple. Discussion on donation collection and pandal arrangements. Please come without fail."}
+{"id": "te-test-02040", "gloss_title": "Colony welfare association - president", "gloss_text": "Everyone please note immediately! Smell of gas leak in Block C. Turn off the stoves, do not switch on light switches, come outside. We have informed the fire engine."}
+{"id": "te-test-02041", "gloss_title": "Colony friends - Prasad", "gloss_text": "Did anyone hear the thunder at night? My dog got scared and hid under the bed. Everyone at home is fine, do not worry."}
+{"id": "te-dev-02042", "gloss_title": "Anna", "gloss_text": "Father has chest pain, we are taking him to the hospital. Call right away"}
+{"id": "te-test-02043", "gloss_title": "Urgent: payment successful", "gloss_text": "Payment of Rs. 300 for mobile recharge completed. Receipt is in the app."}

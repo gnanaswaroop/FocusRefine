@@ -1,0 +1,119 @@
+{"id": "ru-test-01000", "gloss_title": "Emergency alert", "gloss_text": "Threat of flooding in coastal districts. The river water level is rising quickly. Go to upper floors or high ground immediately and stay away from the embankment."}
+{"id": "ru-test-01001", "gloss_title": "Emergency: forest fire", "gloss_text": "A forest fire is approaching the village of Berezovka. Evacuation has been announced. Take your documents and leave via the Western highway."}
+{"id": "ru-dev-01002", "gloss_title": "Tsunami warning", "gloss_text": "After an undersea earthquake, a tsunami threat has been announced. Move away from the shore by at least 2 km immediately and go higher."}
+{"id": "ru-test-01003", "gloss_title": "Dam breach threat", "gloss_text": "Water discharge at the Ozyornaya dam is above normal: within an hour the river level will rise by 3 m. Residents of low-lying areas must evacuate urgently."}
+{"id": "ru-test-01004", "gloss_title": "Urgent: flooding in your area", "gloss_text": "Water is overflowing its banks; streets by the river are already flooded. Do not try to cross the current; go to high ground."}
+{"id": "ru-dev-01005", "gloss_title": "Fire nearby", "gloss_text": "Dry grass is burning near the garden plots and the fire is moving toward houses. Evacuate along Severnaya Street; assembly point is school No. 7."}
+{"id": "ru-test-01006", "gloss_title": "Evacuation order", "gloss_text": "Authorities order you to leave the Zarechny district immediately because of flooding. Buses leave from the community centre every 15 minutes. Take documents, medicines and warm clothes; take pets with you."}
+{"id": "ru-test-01007", "gloss_title": "Sudden flash flood", "gloss_text": "Very heavy rain; water is flowing through the streets of your area. Do not go into underground crossings, basements or car parks."}
+{"id": "ru-dev-01008", "gloss_title": "Flood danger", "gloss_text": "The lower streets of Rechnoy village are flooded. Leave the houses by the water by 18:00."}
+{"id": "ru-test-01009", "gloss_title": "Forest fire near you", "gloss_text": "Smoke and strengthening wind: the fire is heading your way. Close the windows, pack your things and be ready for immediate evacuation."}
+{"id": "ru-test-01010", "gloss_title": "Attention! Tsunami", "gloss_text": "The tsunami will reach the coast in 20 minutes. Everyone to high ground, away from beaches and ports!"}
+{"id": "ru-dev-01011", "gloss_title": "Mudflow and flood", "gloss_text": "Because of heavy precipitation in the mountains, a mudflow down the Bystraya river valley is possible. Leave the riverbed and the lower yards immediately."}
+{"id": "ru-test-01012", "gloss_title": "Critical water level", "gloss_text": "The river level has exceeded the critical mark. Evacuation of residents of Lugovaya and Rechnaya streets has begun. Follow the instructions of the rescuers."}
+{"id": "ru-test-01013", "gloss_title": "Steppe fire", "gloss_text": "A steppe fire is crossing the road toward the Dalny farmstead. Residents must leave immediately; traffic on the highway is blocked."}
+{"id": "ru-test-01014", "gloss_title": "Tsunami of discounts!", "gloss_text": "Discounts up to 70% on everything for the home, only until midnight. Hurry and place your order before prices go back up!"}
+{"id": "ru-dev-01015", "gloss_title": "'Flood' event has started", "gloss_text": "Warriors, a flood has hit your village! Log in to collect the event rewards and get a resource bonus."}
+{"id": "ru-test-01016", "gloss_title": "Possible floods tomorrow on small rivers", "gloss_text": "Tomorrow's forecast: prolonged rain; water levels may rise on small rivers. There is no threat in your area for now; see the forecast for details."}
+{"id": "ru-test-01017", "gloss_title": "Alert system test", "gloss_text": "A test of the public flood alert system. This is a training message; no action is required."}
+{"id": "ru-dev-01018", "gloss_title": "Premiere tonight", "gloss_text": "The new series 'Burning Forest' is now available: watch the whole first season. Don't miss it!"}
+{"id": "ru-test-01019", "gloss_title": "Main news of the day", "gloss_text": "Rescuers have completely put out a forest fire in the nature reserve; specialists are assessing the damage. 5 more news items in your feed."}
+{"id": "ru-test-01020", "gloss_title": "Missed call", "gloss_text": "Unknown number\n+7 9XXXXXXXXX"}
+{"id": "ru-dev-01021", "gloss_title": "Incoming call", "gloss_text": "Unknown subscriber +7 495XXXXXXX is calling you"}
+{"id": "ru-test-01022", "gloss_title": "Missed call", "gloss_text": "Number not identified. Call at 14:32, duration 0 sec."}
+{"id": "ru-test-01023", "gloss_title": "Missed call", "gloss_text": "Hidden number"}
+{"id": "ru-test-01024", "gloss_title": "Missed video call", "gloss_text": "Someone from number +7 9XXXXXXXXX tried to reach you by video."}
+{"id": "ru-dev-01025", "gloss_title": "Missed call (2)", "gloss_text": "+7 9XXXXXXXXX - not in contacts. Two missed in the last 10 minutes."}
+{"id": "ru-test-01026", "gloss_title": "Missed call", "gloss_text": "+7 812XXXXXXX\nSaint Petersburg, number not saved"}
+{"id": "ru-test-01027", "gloss_title": "Who called?", "gloss_text": "Call from an unknown number at 19:05. Tap to see information about the number."}
+{"id": "ru-dev-01028", "gloss_title": "Call ended", "gloss_text": "Unknown number +7 9XXXXXXXXX, 3 sec. The call was dropped."}
+{"id": "ru-test-01029", "gloss_title": "Incoming call", "gloss_text": "An unknown user is calling you"}
+{"id": "ru-test-01030", "gloss_title": "Missed call", "gloss_text": "+7 3XXXXXXXXX\nLocation: another region"}
+{"id": "ru-dev-01031", "gloss_title": "Missed call", "gloss_text": "An unfamiliar number called you 3 times this evening. Contact not found."}
+{"id": "ru-test-01032", "gloss_title": "Missed call", "gloss_text": "+7 9XXXXXXXXX\nCalled at night; could not answer"}
+{"id": "ru-test-01033", "gloss_title": "Incoming call", "gloss_text": "+7 9XXXXXXXXX (not in contacts)"}
+{"id": "ru-test-01034", "gloss_title": "Probable spam", "gloss_text": "Call: 'Advertising - loans'. 2,410 users marked +7 495XXXXXXX as spam."}
+{"id": "ru-dev-01035", "gloss_title": "Possible spam", "gloss_text": "Possibly spam: +7 9XXXXXXXXX. Call blocked."}
+{"id": "ru-test-01036", "gloss_title": "Missed call: telemarketing", "gloss_text": "Call centre, selling windows. Truecaller label: spam (87%)."}
+{"id": "ru-test-01037", "gloss_title": "Spam?", "gloss_text": "Incoming: 'Survey on service quality'. The number is often marked as unwanted."}
+{"id": "ru-test-01038", "gloss_title": "Probable spam", "gloss_text": "+7 800XXXXXXX"}
+{"id": "ru-dev-01039", "gloss_title": "Unknown contact", "gloss_text": "Missed WhatsApp call from +7 9XXXXXXXXX. Many people complain about advertising calls from this number."}
+{"id": "ru-test-01040", "gloss_title": "Advertising call", "gloss_text": "Type: telemarketing, medical centre. Blocked automatically."}
+{"id": "ru-test-01041", "gloss_title": "Unwanted call", "gloss_text": "Caller ID: 'Possible spam - autodialler'. Call rejected."}
+{"id": "ru-dev-01042", "gloss_title": "Missed call", "gloss_text": "Insurance company (advertising) +7 495XXXXXXX\n312 complaints in one week"}
+{"id": "ru-test-01043", "gloss_title": "Possible spam", "gloss_text": "Video call from an unknown account with an advertising label"}
+{"id": "ru-test-01044", "gloss_title": "Spam call blocked", "gloss_text": "Number +7 9XXXXXXXXX: 'Credit card offer'. Truecaller rejected the call."}
+{"id": "ru-dev-01045", "gloss_title": "Probable spam", "gloss_text": "Advertising robocall: 'Press 1 to learn about a special offer'. The number is marked as spam."}
+{"id": "ru-test-01046", "gloss_title": "Missed call", "gloss_text": "Spam: water delivery +7 9XXXXXXXXX"}
+{"id": "ru-test-01047", "gloss_title": "Viber missed call", "gloss_text": "Unwanted number +7 9XXXXXXXXX. Tap to block and report."}
+{"id": "ru-test-01048", "gloss_title": "Fraud!", "gloss_text": "Number +7 9XXXXXXXXX is marked as 'fake bank security service'. Do not disclose card details."}
+{"id": "ru-dev-01049", "gloss_title": "Probable fraud", "gloss_text": "Call marked as fraudulent: 'police officer'. Call rejected."}
+{"id": "ru-test-01050", "gloss_title": "Missed call: 'Courier'", "gloss_text": "'Courier delivery service' asks you to name the code from an SMS. The number is already in the fraudsters' database."}
+{"id": "ru-test-01051", "gloss_title": "+7 9XXXXXXXXX", "gloss_text": "Missed call. The account impersonates 'Gosuslugi technical support'. Block the contact."}
+{"id": "ru-test-01052", "gloss_title": "Fraudulent call", "gloss_text": "A 'technical support specialist' called and asked you to install remote access software."}
+{"id": "ru-dev-01053", "gloss_title": "Dangerous number", "gloss_text": "+7 495XXXXXXX: 'Financial monitoring service'. 1,870 fraud complaints."}
+{"id": "ru-test-01054", "gloss_title": "Missed call", "gloss_text": "+7 9XXXXXXXXX - 'Central Bank'. Fraud scheme: they ask you to transfer money to a 'safe account'."}
+{"id": "ru-test-01055", "gloss_title": "Unknown account", "gloss_text": "Missed call in Telegram. Before that, the account wrote: 'Your relative was in a road accident, transfer money urgently.' This is a scam."}
+{"id": "ru-test-01056", "gloss_title": "Fraudsters on the line", "gloss_text": "Number marked: 'Fictitious investment broker, promises 300% return'."}
+{"id": "ru-dev-01057", "gloss_title": "Call blocked", "gloss_text": "Fake bank: 'Suspicious transaction on your account'. Automatically blocked as fraud."}
+{"id": "ru-test-01058", "gloss_title": "Missed Viber call", "gloss_text": "+7 9XXXXXXXXX\nAccount 'Security service'. Most likely a scammer."}
+{"id": "ru-test-01059", "gloss_title": "Beware of fraud", "gloss_text": "A call 'from the tax office' demanding an urgent fine payment. The number is on the blacklist."}
+{"id": "ru-dev-01060", "gloss_title": "Suspicious call", "gloss_text": "Answering machine: 'Your parcel is held at customs, stay on the line'. The number has been seen in fraud."}
+{"id": "ru-test-01061", "gloss_title": "Fraudsters!", "gloss_text": "Call 'from the telecom operator': the contract supposedly expires, passport details are needed."}
+{"id": "ru-test-01062", "gloss_title": "Missed call", "gloss_text": "Mum (3 missed)"}
+{"id": "ru-dev-01063", "gloss_title": "Missed call", "gloss_text": "Dad called 4 times in a row"}
+{"id": "ru-test-01064", "gloss_title": "Mom", "gloss_text": "Missed WhatsApp call. Call back as soon as you can; I need to talk to you"}
+{"id": "ru-test-01065", "gloss_title": "Brother Andrei", "gloss_text": "Call me quickly, urgently, please"}
+{"id": "ru-test-01066", "gloss_title": "Missed Viber call", "gloss_text": "Wife: 2 missed calls in the last 5 minutes"}
+{"id": "ru-dev-01067", "gloss_title": "Missed video call", "gloss_text": "Sister Lena tried to reach you by video"}
+{"id": "ru-test-01068", "gloss_title": "Missed call", "gloss_text": "Grandma\nCalled twice. Please call back."}
+{"id": "ru-test-01069", "gloss_title": "Missed call", "gloss_text": "Husband (mobile) - 5 missed calls"}
+{"id": "ru-dev-01070", "gloss_title": "Mom", "gloss_text": "Missed voice call. Call me as soon as you see this."}
+{"id": "ru-test-01071", "gloss_title": "Father", "gloss_text": "Call home urgently!"}
+{"id": "ru-test-01072", "gloss_title": "Son Maxim", "gloss_text": "Missed call in Messenger. Dad, please call back, this is important!"}
+{"id": "ru-test-01073", "gloss_title": "Younger sister", "gloss_text": "Missed call. Answer; Mum asked you to call."}
+{"id": "ru-dev-01074", "gloss_title": "Mum called", "gloss_text": "Mum 3 times in an hour. Last call at 23:40."}
+{"id": "ru-test-01075", "gloss_title": "Missed call", "gloss_text": "Aunt Olga: please call back urgently"}
+{"id": "ru-test-02000", "gloss_title": "Rate the visit", "gloss_text": "How do you like the coffee shop 'Zerno' on Sadovaya Street? Leave a review; it will help others."}
+{"id": "ru-dev-02001", "gloss_title": "Weekly driving results", "gloss_text": "This week you drove 142 km and saved 18 minutes thanks to detours. View details?"}
+{"id": "ru-test-02002", "gloss_title": "Traffic on your usual route?", "gloss_text": "Save 'Work' and 'Home' to see travel time in advance. Add now?"}
+{"id": "ru-test-02003", "gloss_title": "New in Waze", "gloss_text": "You can now change the navigator voice. Try the new voices in settings."}
+{"id": "ru-test-02004", "gloss_title": "Task added", "gloss_text": "Anna Sokolova assigned you task APP-482 'Update the release description'. Priority: low."}
+{"id": "ru-dev-02005", "gloss_title": "New star", "gloss_text": "User dev-sample starred your repository notes-demo."}
+{"id": "ru-test-02006", "gloss_title": "Weekly review", "gloss_text": "Last week you completed 23 tasks. Great job! See your progress."}
+{"id": "ru-test-02007", "gloss_title": "Conference recording ready", "gloss_text": "The recording of the meeting 'Department planning' has been processed and is available to view in the cloud."}
+{"id": "ru-test-02008", "gloss_title": "Weekly summary", "gloss_text": "Over 7 days: 62,340 steps, 4 workouts, average sleep 7 h 12 min."}
+{"id": "ru-dev-02009", "gloss_title": "Time to stretch", "gloss_text": "You have been sitting without moving for almost an hour. Walk a bit to close your activity goal."}
+{"id": "ru-test-02010", "gloss_title": "Igor Volkov", "gloss_text": "If you have time, look at the meeting notes later. No rush, sometime this week."}
+{"id": "ru-test-02011", "gloss_title": "Comment on APP-501", "gloss_text": "Maria Levina: I added screenshots; look when you have a minute. We can discuss it at the stand-up."}
+{"id": "ru-test-02012", "gloss_title": "SberBank Online", "gloss_text": "Credit of 12,500 rubles to your card. Sender: Olga Petrovna K. Balance updated. Monthly statement generated and available in the app. If you did not expect the transfer, check the operation details in your history."}
+{"id": "ru-dev-02013", "gloss_title": "Cashback credited", "gloss_text": "340 points credited to you for purchases this month. Spend them on a discount with partners."}
+{"id": "ru-test-02014", "gloss_title": "Order already at the pickup point", "gloss_text": "Your order No. 555-0142 arrived at the pickup point on Lesnaya Street, 14. Storage period: 5 days. Do not forget to take your passport and show the QR code from the app to the pickup point staff."}
+{"id": "ru-test-02015", "gloss_title": "Courier on the way", "gloss_text": "Delivery today between 14:00 and 18:00. The courier will call in advance."}
+{"id": "ru-test-02016", "gloss_title": "Your order is being prepared", "gloss_text": "The Pizza City restaurant accepted your order and started preparing it. Estimated delivery time: 45 minutes. We will let you know when the courier picks up your pizza and sets off. You can follow the order on the map."}
+{"id": "ru-test-02017", "gloss_title": "Driver is here", "gloss_text": "Grey Kia Rio, plate A123BV. The driver is waiting for you at the entrance."}
+{"id": "ru-test-02018", "gloss_title": "Car on the way", "gloss_text": "The driver will arrive in 12 minutes. Follow the trip in the app."}
+{"id": "ru-dev-02019", "gloss_title": "Bridge closed", "gloss_text": "The West bridge on your route is closed due to an accident. We suggest a detour via October Avenue, +25 minutes."}
+{"id": "ru-test-02020", "gloss_title": "In 300 m turn right", "gloss_text": "Then keep to the left. Arrival at 18:42."}
+{"id": "ru-dev-02021", "gloss_title": "New places nearby", "gloss_text": "3 new cafes and the Khlebnitsa bakery have opened near you. Look at the map!"}
+{"id": "ru-test-02022", "gloss_title": "Gosuslugi", "gloss_text": "Your document is ready. The notice of the result of your application is available in your personal account. Reminder: property tax must be paid by 1 December. Details and receipt are in the 'Payments' section."}
+{"id": "ru-test-02023", "gloss_title": "My MTS", "gloss_text": "Internet balance on your plan: 1.2 GB of 30 GB; package renewal on 3 November. We recommend adding an extra package or switching to an unlimited plan. Balance: 214 rubles. The subscription fee will be debited tomorrow."}
+{"id": "ru-dev-02024", "gloss_title": "Weekly newsletter 'Book club'", "gloss_text": "New releases this week: 5 novels worth reading this autumn, and a selection of books for children. Read them in this issue; you will also receive a 10% discount promo code for our online shop until the end of the month."}
+{"id": "ru-test-02025", "gloss_title": "Alexei Gromov (director)", "gloss_text": "Join the call right now; the client is waiting and you are needed."}
+{"id": "ru-test-02026", "gloss_title": "Mom", "gloss_text": "Son, Dad has taken ill and an ambulance was called. Call me quickly, we are driving to the hospital!"}
+{"id": "ru-test-02027", "gloss_title": "Yard 12 - Sergei K.", "gloss_text": "Sergei K.: who saw the ginger cat near the second entrance yesterday?\nLyudmila: that's ours, Murzik, don't worry\nSergei K.: well, thank God"}
+{"id": "ru-dev-02028", "gloss_title": "OK", "gloss_text": "Irina Belova liked your photo. 3 more people gave it a 'Class' rating."}
+{"id": "ru-test-02029", "gloss_title": "Class 9B - Dima", "gloss_text": "Dima: guys, when are we meeting this year?\nNatasha: let's do Saturday, 15:00\nDima: ok, everyone is welcome"}
+{"id": "ru-test-02030", "gloss_title": "You might like this listing", "gloss_text": "Selected for you: bicycles in your city. Look at the fresh offers!"}
+{"id": "ru-test-02031", "gloss_title": "Avito Delivery", "gloss_text": "The parcel has been sent by the seller. You can see the tracking number in your messages."}
+{"id": "ru-test-02032", "gloss_title": "Building 5 homeowners' association - Chairman", "gloss_text": "Chairman: dear residents, on Friday from 10:00 to 14:00 the pipes will be flushed and there will be no water.\nPlease fill up water in advance.\nResidents' meeting on Sunday at 12:00 in the courtyard."}
+{"id": "ru-dev-02033", "gloss_title": "Class teacher N. I.", "gloss_text": "Hello! Your daughter fell during PE and her arm hurts badly. An ambulance has already been called; please come to the school or the trauma centre urgently. We are staying with her until you arrive."}
+{"id": "ru-test-02034", "gloss_title": "Friends forever - Valentina", "gloss_text": "Valentina: SEND THIS TO 10 FRIENDS!!! Otherwise luck will leave you for a week\nValentina: Good morning, have a good day!"}
+{"id": "ru-test-02035", "gloss_title": "Your account is blocked", "gloss_text": "Confirm your details within 24 hours, otherwise access will be closed: http://mail-check.example.invalid/login"}
+{"id": "ru-test-02036", "gloss_title": "+7 9XXXXXXXXX", "gloss_text": "Congratulations! You have won a smartphone. To receive the prize, follow the link: http://prize-claim.example.invalid/x"}
+{"id": "ru-dev-02037", "gloss_title": "Meeting in 5 minutes", "gloss_text": "'Budget discussion' starts at 11:00. The host is already in the room; join now."}
+{"id": "ru-test-02038", "gloss_title": "School No. 12: timetable", "gloss_text": "Dear parents! Because of the autumn holiday on 28 October, lessons for grades 5 to 9 will end an hour early. The parents' meeting for 5B will take place next Tuesday at 18:00 in room 204. Please confirm attendance via the link in the electronic diary."}
+{"id": "ru-test-02039", "gloss_title": "Airport trip cancelled", "gloss_text": "Unfortunately, the driver cancelled the airport order and the nearest cars are busy. Please order another trip as soon as possible so you can catch your flight. A discount promo code for your next trip is available to you."}
+{"id": "ru-test-02040", "gloss_title": "Sales dept - Kirill", "gloss_text": "Kirill: who is going to lunch at 13:00?\nYulia: me; let's go to the canteen\nKirill: ok, wait for us downstairs"}
+{"id": "ru-dev-02041", "gloss_title": "Today only!", "gloss_text": "Discounts up to 60% on electronics; the sale ends at midnight. Hurry!"}
+{"id": "ru-test-02042", "gloss_title": "Clinic 'Zdorovye'", "gloss_text": "Test results are ready. You can view them in your personal account on the clinic's website. The appointment with the therapist is scheduled for 3 November at 09:30, room 117. Please bring your passport and insurance policy."}

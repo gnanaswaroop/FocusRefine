@@ -1,0 +1,105 @@
+{"id": "kn-test-01000", "gloss_title": "Missed call", "gloss_text": "Missed call from unknown number +91 9XXXXXXXXX at 10:42 am."}
+{"id": "kn-test-01001", "gloss_title": "Unknown caller", "gloss_text": "+91 8XXXXXXXXX: this number is not in your contacts. Bengaluru."}
+{"id": "kn-dev-01002", "gloss_title": "Incoming call", "gloss_text": "Unknown number +91 7XXXXXXXXX"}
+{"id": "kn-dev-01003", "gloss_title": "Missed video call", "gloss_text": "A video call came from an unknown account."}
+{"id": "kn-test-01004", "gloss_title": "Don't know who", "gloss_text": "2 missed calls from +91 9XXXXXXXXX. No name is available."}
+{"id": "kn-test-01005", "gloss_title": "Missed call", "gloss_text": "Call from +91 9XXXXXXXXX (Mysuru). The number is not saved."}
+{"id": "kn-test-01006", "gloss_title": "Call from new number", "gloss_text": "Nobody has identified this number yet: +91 6XXXXXXXXX"}
+{"id": "kn-dev-01007", "gloss_title": "Missed call", "gloss_text": "An unknown number called at 8:15 pm."}
+{"id": "kn-test-01008", "gloss_title": "Unknown call", "gloss_text": "An audio call from +91 9XXXXXXXXX was missed."}
+{"id": "kn-test-01009", "gloss_title": "Missed call 📞", "gloss_text": "Someone from Hubballi called: +91 9XXXXXXXXX. It is not known who this is."}
+{"id": "kn-test-01010", "gloss_title": "Private number", "gloss_text": "Incoming call from a hidden number."}
+{"id": "kn-dev-01011", "gloss_title": "Call details", "gloss_text": "Unknown: +91 9XXXXXXXXX, Mangaluru, called 1 time."}
+{"id": "kn-test-01012", "gloss_title": "3 missed calls", "gloss_text": "Calls came three times from an unsaved number +91 9XXXXXXXXX, but there is no message."}
+{"id": "kn-test-01013", "gloss_title": "Unknown person", "gloss_text": "Call invitation from a number that is not in your contacts."}
+{"id": "kn-test-01014", "gloss_title": "Suspected spam", "gloss_text": "+91 9XXXXXXXXX: 214 people have reported this as a telemarketing call."}
+{"id": "kn-dev-01015", "gloss_title": "Possible spam", "gloss_text": "This call may be spam: +91 1XXXXXXXXX"}
+{"id": "kn-test-01016", "gloss_title": "Telemarketer call", "gloss_text": "A credit card offer call; it is marked as spam."}
+{"id": "kn-test-01017", "gloss_title": "Suspicious call blocked", "gloss_text": "A call suspected of being spam was silenced automatically."}
+{"id": "kn-dev-01018", "gloss_title": "+91 9XXXXXXXXX", "gloss_text": "We called to talk about our new plot project. Missed WhatsApp call."}
+{"id": "kn-dev-01019", "gloss_title": "Sales call ⚠️", "gloss_text": "A number that says it is an insurance agent; spam score 9 out of 10."}
+{"id": "kn-test-01020", "gloss_title": "Spam call", "gloss_text": "This number has been reported as spam. The call was not answered."}
+{"id": "kn-test-01021", "gloss_title": "Loan offer call", "gloss_text": "Identified as a personal loan advertisement call: +91 1XXXXXXXXX"}
+{"id": "kn-dev-01022", "gloss_title": "Shubham Offers", "gloss_text": "Give a missed call and learn about our offer! Special discount for you."}
+{"id": "kn-dev-01023", "gloss_title": "Marked as spam", "gloss_text": "Suspected robocall: +91 1XXXXXXXXX, 4 times this week."}
+{"id": "kn-test-01024", "gloss_title": "Telemarketing call", "gloss_text": "A recorded voice call saying Opportunity! came in. Truecaller says it is spam."}
+{"id": "kn-test-01025", "gloss_title": "VM-OFFERS", "gloss_text": "Call and book your free health checkup. This is a marketing message."}
+{"id": "kn-test-01026", "gloss_title": "Spam suspicion", "gloss_text": "Flat sale call from +91 1XXXXXXXXX; blocking it is suggested."}
+{"id": "kn-dev-01027", "gloss_title": "Unwanted call", "gloss_text": "This number is listed as a telemarketer."}
+{"id": "kn-test-01028", "gloss_title": "Fraud alert", "gloss_text": "A call claiming to be a bank officer, reported as fraud: +91 9XXXXXXXXX"}
+{"id": "kn-test-01029", "gloss_title": "Suspicious call", "gloss_text": "This number was reported as linked to a fake courier fraud."}
+{"id": "kn-test-01030", "gloss_title": "+91 9XXXXXXXXX", "gloss_text": "Illegal goods were found in your parcel; you will be arrested if you do not come to the police station. Missed WhatsApp call."}
+{"id": "kn-dev-01031", "gloss_title": "Tech support fraud", "gloss_text": "A call saying there is a virus on your computer, marked as fraud."}
+{"id": "kn-test-01032", "gloss_title": "Fraud call alert", "gloss_text": "Reported as a call pretending to be a government official. Do not answer."}
+{"id": "kn-test-01033", "gloss_title": "Bank help", "gloss_text": "Your account will be blocked; call now: +91 9XXXXXXXXX"}
+{"id": "kn-test-01034", "gloss_title": "Fraud suspicion", "gloss_text": "Callers asking you to update KYC; 98 people have reported it as fraud."}
+{"id": "kn-dev-01035", "gloss_title": "Dangerous call", "gloss_text": "A call threatening that your electricity bill is due and the connection will be cut today. It is a fraud."}
+{"id": "kn-test-01036", "gloss_title": "Unknown caller", "gloss_text": "Your SIM will be deactivated; press 9 for a recorded message. Fraud call."}
+{"id": "kn-test-01037", "gloss_title": "Fraud call ⚠️", "gloss_text": "Call from foreign number +44 7700 900123; marked as job fraud."}
+{"id": "kn-dev-01038", "gloss_title": "Bank name call", "gloss_text": "A call from someone saying they are a bank representative and asking for card details. This is fraud."}
+{"id": "kn-dev-01039", "gloss_title": "Cyber police", "gloss_text": "Your Aadhaar has been misused; immediately call +91 9XXXXXXXXX"}
+{"id": "kn-test-01040", "gloss_title": "Fraud report", "gloss_text": "A number asking for money, saying it is an insurance bonus; marked as fraud."}
+{"id": "kn-test-01041", "gloss_title": "Fraudster calls", "gloss_text": "A call saying you have won a lottery; reported as fraud."}
+{"id": "kn-dev-01042", "gloss_title": "Missed call", "gloss_text": "Amma called 3 times, at 11:05 pm."}
+{"id": "kn-dev-01043", "gloss_title": "Appa", "gloss_text": "Pick up the phone, call quickly."}
+{"id": "kn-test-01044", "gloss_title": "Missed call", "gloss_text": "Younger sister Rashmi: missed call (5)."}
+{"id": "kn-test-01045", "gloss_title": "Brother called", "gloss_text": "Brother Sumanth called 4 times. Call back immediately."}
+{"id": "kn-test-01046", "gloss_title": "Amma", "gloss_text": "Call me, child, it is urgent."}
+{"id": "kn-dev-01047", "gloss_title": "Missed call", "gloss_text": "Grandmother called twice, at 5:30 in the early morning."}
+{"id": "kn-test-01048", "gloss_title": "Appa", "gloss_text": "Missed video call (3). He said to call quickly."}
+{"id": "kn-test-01049", "gloss_title": "Wife Priya", "gloss_text": "Missed video call; she keeps calling again and again."}
+{"id": "kn-test-01050", "gloss_title": "Younger brother Arun", "gloss_text": "Brother, please call right now, please."}
+{"id": "kn-dev-01051", "gloss_title": "Missed call", "gloss_text": "Aunt: one missed call, at 6:10 pm."}
+{"id": "kn-test-01052", "gloss_title": "Amma 🙏", "gloss_text": "Where are you? Take the phone; why don't you pick up when I call?"}
+{"id": "kn-test-01053", "gloss_title": "Missed call", "gloss_text": "Daughter Ananya: 6 missed calls in the last 10 minutes."}
+{"id": "kn-test-01054", "gloss_title": "Appa", "gloss_text": "Call once, it is an important matter."}
+{"id": "kn-dev-01055", "gloss_title": "Akka Meghana", "gloss_text": "Call me, I need to tell you something about Amma."}
+{"id": "kn-test-02000", "gloss_title": "Your weekly summary", "gloss_text": "You visited 6 new places this week. See your timeline."}
+{"id": "kn-test-02001", "gloss_title": "Share your experience", "gloss_text": "How was the coffee house in Jayanagar? Give your rating ⭐"}
+{"id": "kn-dev-02002", "gloss_title": "Weekly driving summary", "gloss_text": "You drove 142 km this week. See your driving scores."}
+{"id": "kn-test-02003", "gloss_title": "New places nearby", "gloss_text": "Explore new roadside restaurants near your home."}
+{"id": "kn-test-02004", "gloss_title": "New task added", "gloss_text": "Project Atlas: a new task has been added for you: Change the colour of the login page."}
+{"id": "kn-dev-02005", "gloss_title": "New star ⭐", "gloss_text": "Someone starred your repository example-notes."}
+{"id": "kn-test-02006", "gloss_title": "Weekly summary", "gloss_text": "This week you completed 18 tasks. Congratulations!"}
+{"id": "kn-test-02007", "gloss_title": "Recording ready", "gloss_text": "The recording of yesterday's team meeting is now available."}
+{"id": "kn-dev-02008", "gloss_title": "Ticket confirmed", "gloss_text": "Bengaluru to Mysuru Express, tomorrow's journey. Your ticket is confirmed."}
+{"id": "kn-test-02009", "gloss_title": "Daily summary", "gloss_text": "Today 8,420 steps, sleep score 78. Your weekly report is ready."}
+{"id": "kn-test-02010", "gloss_title": "Kiran", "gloss_text": "Who is coming for lunch? Let's meet at the canteen."}
+{"id": "kn-dev-02011", "gloss_title": "Travel tip", "gloss_text": "Book tickets in advance during the festival season. Check the Tatkal timing."}
+{"id": "kn-test-02012", "gloss_title": "Money received", "gloss_text": "Ravi Kumar sent you ₹500. Check your balance."}
+{"id": "kn-test-02013", "gloss_title": "Statement ready", "gloss_text": "Your October account statement is now available to download. You can open it in the YONO app or get a printed copy at the branch. No reply is needed and no action is required. The bank never asks for your confidential details."}
+{"id": "kn-dev-02014", "gloss_title": "Bill due ⏰", "gloss_text": "Your credit card bill is due in 5 days. Pay to earn CRED coins."}
+{"id": "kn-test-02015", "gloss_title": "Account activity", "gloss_text": "₹12,400 has been credited to your account. This is this month's salary credit. Check the available balance and recent transactions in Kotak Mobile Banking. No action is needed."}
+{"id": "kn-test-02016", "gloss_title": "Reward points", "gloss_text": "You earned 340 reward points for this month's spending."}
+{"id": "kn-dev-02017", "gloss_title": "Order on its way 🛵", "gloss_text": "Your masala dosa and filter coffee order is ready. Delivery partner Ajay has set out; estimated arrival in 25 minutes. Track the order status in the app and stay near the gate at delivery time."}
+{"id": "kn-test-02018", "gloss_title": "Your order has arrived", "gloss_text": "Your Blinkit order has been delivered: milk, curd and vegetables. Tell us about your experience."}
+{"id": "kn-test-02019", "gloss_title": "Arriving in 10 minutes", "gloss_text": "Your Zepto order is packed and a delivery partner has been assigned."}
+{"id": "kn-dev-02020", "gloss_title": "Storm sale ⚡", "gloss_text": "Urgent! Ends tonight: up to 70% off on sarees. Buy quickly!"}
+{"id": "kn-test-02021", "gloss_title": "Festival offer", "gloss_text": "Diwali special: ₹200 off on dry fruits and sweets with a minimum purchase of ₹999. Use code HABBA200. This offer lasts only until this weekend and is available in selected cities."}
+{"id": "kn-test-02022", "gloss_title": "New playlist for you 🎵", "gloss_text": "Your weekly mix of old Kannada film songs is now available."}
+{"id": "kn-dev-02023", "gloss_title": "New release", "gloss_text": "A new song by an artist you like was released today. Listen now, download it and share it with your friends. More popular songs by the same artist are also in your playlist."}
+{"id": "kn-test-02024", "gloss_title": "New episode", "gloss_text": "The new episode of the serial you are watching airs tonight at 8 o'clock. Watch it on ZEE5. You can also rewatch earlier episodes, and a trailer for the new season is available."}
+{"id": "kn-test-02025", "gloss_title": "This weekend's movies", "gloss_text": "A new Kannada movie is releasing at a cinema near you. Book tickets 🎬"}
+{"id": "kn-dev-02026", "gloss_title": "Payment failed", "gloss_text": "Payment for your Sony LIV subscription has failed. Update the payment method to continue the service."}
+{"id": "kn-test-02027", "gloss_title": "Driver is coming", "gloss_text": "Your auto driver Manjunath will reach you in 3 minutes. Stay where you are."}
+{"id": "kn-test-02028", "gloss_title": "Bike taxi has arrived", "gloss_text": "Your rider is at the pickup point. Check bike number KA 01."}
+{"id": "kn-dev-02029", "gloss_title": "Storm warning tomorrow", "gloss_text": "Thunderstorms with rain are expected tomorrow after noon. Today's weather is clear."}
+{"id": "kn-test-02030", "gloss_title": "Power cut notice", "gloss_text": "Tomorrow from 10 am to 2 pm there will be no electricity in your area for maintenance work."}
+{"id": "kn-test-02031", "gloss_title": "Low data balance", "gloss_text": "80% of today's data limit is used. Only 1.2 GB is left and it resets at midnight. Open the Airtel Thanks app to buy an extra data pack or see your plan details."}
+{"id": "kn-dev-02032", "gloss_title": "Document ready", "gloss_text": "Your vehicle registration certificate has been added to DigiLocker. You can see it in the Issued documents section and share it digitally with any department when needed."}
+{"id": "kn-test-02033", "gloss_title": "Appointment reminder", "gloss_text": "Tomorrow at 11 am you have a consultation with Dr. Shetty. Reach the clinic at 10:45 and bring old reports. To change the time, reschedule in the app."}
+{"id": "kn-test-02034", "gloss_title": "Flood event starts 🌊", "gloss_text": "The new Flood Zone event is live now! Come and get your daily rewards."}
+{"id": "kn-dev-02035", "gloss_title": "KR Nagar bakery group: Suma", "gloss_text": "Tell me how many cakes are needed for tomorrow. Everyone is to come early in the morning. Okay sister, I'll come 👍"}
+{"id": "kn-test-02036", "gloss_title": "Our town friends: Shivu", "gloss_text": "Is there a cricket match on Sunday? Yes, at 7 am on the ground. I'll bring the bat."}
+{"id": "kn-test-02037", "gloss_title": "Vidyanagar apartment association: Secretary", "gloss_text": "Notice to all residents: a general meeting will be held at the clubhouse on Sunday at 10 am. It will discuss the festival subscription and cleaning of the water tank. Everyone should attend."}
+{"id": "kn-dev-02038", "gloss_title": "Good morning group: Girish", "gloss_text": "🌹 Good morning 🌹 If you send this message to 10 people, luck will be yours. If you don't send it, misfortune!"}
+{"id": "kn-test-02039", "gloss_title": "New follower", "gloss_text": "Lakshmi started following you. Your post got 25 likes."}
+{"id": "kn-test-02040", "gloss_title": "Athe (mother-in-law)", "gloss_text": "Have you eaten? Come home tomorrow; I have made sweets."}
+{"id": "kn-dev-02041", "gloss_title": "Brother Mahesh", "gloss_text": "Father had chest pain and we have admitted him to hospital. Call immediately and come quickly."}
+{"id": "kn-test-02042", "gloss_title": "Clinic message", "gloss_text": "The doctor needs to talk urgently about your test reports. Please call the clinic today."}
+{"id": "kn-test-02043", "gloss_title": "Train delayed", "gloss_text": "Train number 12XXX will leave 2 hours 40 minutes late today. New departure time is 9:10 pm and the platform has changed to 3. Check your travel plan."}
+{"id": "kn-dev-02044", "gloss_title": "Road closed", "gloss_text": "Traffic is halted on the outer ring road because a tree has fallen. Your ride route may change; expect extra delay."}
+{"id": "kn-test-02045", "gloss_title": "Heavy rain warning", "gloss_text": "In your area in the next one hour: intense thunderstorm with heavy rain and possible flooding. Stay in a safe place."}
+{"id": "kn-test-02046", "gloss_title": "Lucky winner", "gloss_text": "Congratulations! You have won a prize of ₹25 lakh. To receive the money, open this link now and give your details: http://prize-claim.example.invalid/x Today is the last day."}
+{"id": "kn-dev-02047", "gloss_title": "School parents group: Teacher Rekha", "gloss_text": "Don't forget to bring the textbooks tomorrow. Okay madam. Thank you 🙏"}
+{"id": "kn-test-02048", "gloss_title": "Hassan boys: Prakash", "gloss_text": "Who is coming for tea this evening? I'll come, buddy. Let's meet near the bakery."}

@@ -1,0 +1,98 @@
+{"id": "ar-test-01000", "gloss_title": "Missed call", "gloss_text": "Unknown number +966 5XXXXXXXX called you twice today"}
+{"id": "ar-test-01001", "gloss_title": "Incoming call", "gloss_text": "Number not saved in your contacts: +971 5X XXX XXXX"}
+{"id": "ar-dev-01002", "gloss_title": "Missed call", "gloss_text": "+20 10XXXXXXXX - no information about this number"}
+{"id": "ar-test-01003", "gloss_title": "Missed call", "gloss_text": "Unknown number called at 3:15 am and left no voicemail."}
+{"id": "ar-test-01004", "gloss_title": "Missed video call", "gloss_text": "An unknown user tried to call you by video"}
+{"id": "ar-dev-01005", "gloss_title": "3 missed calls", "gloss_text": "From unknown number 02XXXXXXXX"}
+{"id": "ar-test-01006", "gloss_title": "Missed call", "gloss_text": "A new number has called you for the fifth time. Do you want to block it?"}
+{"id": "ar-test-01007", "gloss_title": "Missed call", "gloss_text": "Private number"}
+{"id": "ar-dev-01008", "gloss_title": "Unknown number", "gloss_text": "+20 11XXXXXXXX called you two minutes ago. Tap to answer or to add a contact."}
+{"id": "ar-test-01009", "gloss_title": "Incoming call", "gloss_text": "Call from an unknown number via Meet"}
+{"id": "ar-test-01010", "gloss_title": "Missed call", "gloss_text": "Missed call from +971 4X XXX XXXX - Dubai. No matching name."}
+{"id": "ar-dev-01011", "gloss_title": "Missed call", "gloss_text": "Called you from 920XXXXXX, not recognised"}
+{"id": "ar-test-01012", "gloss_title": "Missed call", "gloss_text": "Unsaved number called after midnight"}
+{"id": "ar-test-01013", "gloss_title": "Possible spam call", "gloss_text": "+966 5XXXXXXXX reported by 340 users as promotional calls"}
+{"id": "ar-test-01014", "gloss_title": "Possible spam", "gloss_text": "A call from +971 5X XXX XXXX was blocked automatically"}
+{"id": "ar-dev-01015", "gloss_title": "Warning: spam number", "gloss_text": "Real estate marketing company - called you twice today"}
+{"id": "ar-test-01016", "gloss_title": "Suspected spam call", "gloss_text": "Personal loan offer? This number was classified as spam by Google"}
+{"id": "ar-test-01017", "gloss_title": "Truecaller: urgent call?", "gloss_text": "Urgent alert! A sales rep who was classified as spam called you. Do not miss the latest offer."}
+{"id": "ar-dev-01018", "gloss_title": "Spam call", "gloss_text": "Telemarketing via phone +20 12XXXXXXXX"}
+{"id": "ar-test-01019", "gloss_title": "WhatsApp missed call", "gloss_text": "Foreign number +44 7XXX XXXXXX - suspected spam. Ringing silenced."}
+{"id": "ar-test-01020", "gloss_title": "Possible spam", "gloss_text": "Call from a call centre - rejected automatically"}
+{"id": "ar-dev-01021", "gloss_title": "Possible spam call", "gloss_text": "+20 15XXXXXXXX: customer satisfaction survey"}
+{"id": "ar-test-01022", "gloss_title": "Missed call", "gloss_text": "Number classified as spam on Truecaller, called you 4 times within an hour"}
+{"id": "ar-test-01023", "gloss_title": "Unwanted call", "gloss_text": "A suspicious sender is trying to call you via Meet"}
+{"id": "ar-dev-01024", "gloss_title": "Viber call", "gloss_text": "An unknown number offered you a training course; it was classified as an advertisement"}
+{"id": "ar-test-01025", "gloss_title": "Promotional call", "gloss_text": "Car insurance - possible spam call from +966 9XXXXXXXX"}
+{"id": "ar-test-01026", "gloss_title": "Fraud warning", "gloss_text": "+966 5XXXXXXXX claimed to be a bank employee and asked for your details. Classified as fraud."}
+{"id": "ar-test-01027", "gloss_title": "Possible scam call", "gloss_text": "Caller claims to be from a shipping company and says your parcel is held"}
+{"id": "ar-dev-01028", "gloss_title": "Confirmed fraud", "gloss_text": "+20 10XXXXXXXX - reported 812 times: impersonating technical support"}
+{"id": "ar-test-01029", "gloss_title": "WhatsApp call", "gloss_text": "Unknown number claims to be from a government agency and asks you to transfer a fee. Beware of fraud."}
+{"id": "ar-test-01030", "gloss_title": "Suspicious call", "gloss_text": "The caller said you won a prize and asked you to reply with a secret code. You did not answer."}
+{"id": "ar-dev-01031", "gloss_title": "Warning: fraud", "gloss_text": "This number is spoofing a telecom company's name. Do not give any data."}
+{"id": "ar-test-01032", "gloss_title": "Possible fraud call", "gloss_text": "+966 11 XXX XXXX - impersonating a bank"}
+{"id": "ar-test-01033", "gloss_title": "Fraud alert", "gloss_text": "A foreign number calls you and asks you to install an app that lets it control your phone remotely"}
+{"id": "ar-dev-01034", "gloss_title": "Missed call", "gloss_text": "Unknown number +20 11XXXXXXXX claims to be your nephew and asks for money urgently. Classified as fraud."}
+{"id": "ar-test-01035", "gloss_title": "Fraud - missed call", "gloss_text": "Fake agent from a delivery company: 'customs fee on your shipment'"}
+{"id": "ar-test-01036", "gloss_title": "Incoming call", "gloss_text": "The caller claims to be from the police and asks you to pay a fine immediately. The number has been reported."}
+{"id": "ar-dev-01037", "gloss_title": "Possible fraudster", "gloss_text": "+20 12XXXXXXXX is impersonating a bank employee"}
+{"id": "ar-test-01038", "gloss_title": "Suspicious Viber call", "gloss_text": "The caller offers a high-salary job in exchange for a registration fee. Known fraud."}
+{"id": "ar-test-01039", "gloss_title": "Warning", "gloss_text": "Call from +971 5X XXX XXXX: cryptocurrency investment fraud"}
+{"id": "ar-test-01040", "gloss_title": "Mom", "gloss_text": "3 missed WhatsApp calls"}
+{"id": "ar-test-01041", "gloss_title": "Missed call", "gloss_text": "Dad (mobile) - 4 missed calls"}
+{"id": "ar-dev-01042", "gloss_title": "Mama", "gloss_text": "Call me right away, my dear"}
+{"id": "ar-test-01043", "gloss_title": "Missed call", "gloss_text": "My brother Sultan has called you 5 times in 10 minutes"}
+{"id": "ar-test-01044", "gloss_title": "My wife", "gloss_text": "Answering the call is necessary."}
+{"id": "ar-dev-01045", "gloss_title": "Missed call", "gloss_text": "Dad - two missed calls"}
+{"id": "ar-test-01046", "gloss_title": "Khaled (my brother)", "gloss_text": "Call me quickly, please"}
+{"id": "ar-test-01047", "gloss_title": "Missed Viber call", "gloss_text": "My sister Noura - called twice and left no message"}
+{"id": "ar-dev-01048", "gloss_title": "Grandma", "gloss_text": "Missed video call. Call her when you see this message"}
+{"id": "ar-test-01049", "gloss_title": "Abu Mohammed", "gloss_text": "Reply to me urgently, your father"}
+{"id": "ar-test-01050", "gloss_title": "Missed call", "gloss_text": "Mom - one missed call an hour ago"}
+{"id": "ar-dev-01051", "gloss_title": "My brother Ahmed", "gloss_text": "Called you on Messenger more than once, call him now"}
+{"id": "ar-test-01052", "gloss_title": "Missed call", "gloss_text": "My son Faisal called you 6 times"}
+{"id": "ar-test-01053", "gloss_title": "My aunt Fatima", "gloss_text": "Call me right now, please. 3 missed calls."}
+{"id": "ar-dev-01054", "gloss_title": "Incoming call", "gloss_text": "+971 2X XXX XXXX - Abu Dhabi - not in contacts"}
+{"id": "ar-test-01055", "gloss_title": "Spam number", "gloss_text": "Internet subscription offers - number classified as a promotional call"}
+{"id": "ar-test-02000", "gloss_title": "Rate your visit", "gloss_text": "How was your experience at Al Nada cafe? Share your opinion to help others."}
+{"id": "ar-test-02001", "gloss_title": "Your weekly summary", "gloss_text": "You drove 212 km this week and spent 6 hours driving. See the details."}
+{"id": "ar-dev-02002", "gloss_title": "Waze: traffic alert!", "gloss_text": "Tip of the day: you can change the guide voice in settings. Try a new voice!"}
+{"id": "ar-test-02003", "gloss_title": "New places near you", "gloss_text": "Discover 5 restaurants that recently opened in your neighbourhood"}
+{"id": "ar-test-02004", "gloss_title": "Jira", "gloss_text": "You were added as a watcher on task PROJ-482"}
+{"id": "ar-dev-02005", "gloss_title": "GitHub", "gloss_text": "3 developers liked your docs-site repository this week"}
+{"id": "ar-test-02006", "gloss_title": "Todoist", "gloss_text": "A new task was added to the 'Home shopping' project"}
+{"id": "ar-test-02007", "gloss_title": "Zoom", "gloss_text": "The cloud recording of yesterday's meeting is now ready to watch"}
+{"id": "ar-dev-02008", "gloss_title": "Garmin Connect", "gloss_text": "Your sleep summary: 7 hours 20 minutes, sleep score 82"}
+{"id": "ar-test-02009", "gloss_title": "Move time", "gloss_text": "You have not moved for an hour. Take a short walk!"}
+{"id": "ar-test-02010", "gloss_title": "Layla - Zoom Chat", "gloss_text": "For your information only: I sent the meeting notes to your email. No rush to reply."}
+{"id": "ar-dev-02011", "gloss_title": "Jira - Mazen commented", "gloss_text": "@you, can you review this edit when you are free? No rush."}
+{"id": "ar-test-02012", "gloss_title": "Al Rajhi Bank", "gloss_text": "A transfer of 1,250.00 SAR was received in your account ending XXXX. The current balance is available in the app. Thank you for using our digital banking services."}
+{"id": "ar-test-02013", "gloss_title": "Statement ready", "gloss_text": "Your statement for October is ready to download in the app. You can view it and share it as a PDF from the accounts section. Have a nice day."}
+{"id": "ar-dev-02014", "gloss_title": "Bill payment reminder", "gloss_text": "Electricity bill of 340 SAR is due in 3 days. You can pay from the bills section."}
+{"id": "ar-test-02015", "gloss_title": "Your order is on the way", "gloss_text": "The restaurant has finished preparing your order and the delivery driver has left to deliver it. Estimated arrival: 15 minutes. You can track the order directly in the app."}
+{"id": "ar-test-02016", "gloss_title": "Urgent offer ends tonight!", "gloss_text": "50% off your first order from your favourite restaurants. Use the promo code before midnight and do not miss out, the offer is for a very limited time."}
+{"id": "ar-test-02017", "gloss_title": "Your order was delivered", "gloss_text": "We wish you a pleasant meal! Rate your experience with the Al Shawaya restaurant."}
+{"id": "ar-dev-02018", "gloss_title": "Last chance", "gloss_text": "Free delivery for 24 hours only on all orders over 40 SAR"}
+{"id": "ar-test-02019", "gloss_title": "Your captain has arrived", "gloss_text": "Driver Sami is waiting for you at the pickup point. White Toyota Camry."}
+{"id": "ar-test-02020", "gloss_title": "The captain is on the way", "gloss_text": "The captain is 12 minutes away from you"}
+{"id": "ar-dev-02021", "gloss_title": "Your trip receipt", "gloss_text": "Thank you for riding with Careem. Trip cost: 38 dirhams. The receipt has been sent to your email. Rate the captain to help us improve."}
+{"id": "ar-test-02022", "gloss_title": "Road closed on your route", "gloss_text": "The King Fahd bridge is partially closed due to an accident. Your arrival will be delayed by about 25 minutes; we will adjust the route automatically."}
+{"id": "ar-test-02023", "gloss_title": "Airport trip cancelled", "gloss_text": "Your captain cancelled your trip to Cairo airport, scheduled in 40 minutes. We are looking for another captain now. Please wait or choose another option so you can catch your flight."}
+{"id": "ar-dev-02024", "gloss_title": "Friday group - Majid", "gloss_text": "Who is coming to the corniche after Asr?\nRashid and I will arrive at 5\nLet's get some coffee"}
+{"id": "ar-test-02025", "gloss_title": "Reem", "gloss_text": "Hehe, did you see the video you sent? I couldn't stop laughing"}
+{"id": "ar-test-02026", "gloss_title": "My brother Mahmoud", "gloss_text": "Dad fell down at home and we called an ambulance. Call me right away."}
+{"id": "ar-test-02027", "gloss_title": "Mom", "gloss_text": "I have arrived home, thank God. Dinner is ready, come over."}
+{"id": "ar-dev-02028", "gloss_title": "Family of loved ones - Aunt Souad", "gloss_text": "VERY URGENT!! Send it to everyone you love before the invitation ends\n\nGood morning. May God make our day a good one."}
+{"id": "ar-test-02029", "gloss_title": "Colleague Omar", "gloss_text": "Missed video call. Please call me when you are free."}
+{"id": "ar-test-02030", "gloss_title": "Snapchat", "gloss_text": "We miss you! You have new moments from your friends waiting to be watched"}
+{"id": "ar-dev-02031", "gloss_title": "Snapchat", "gloss_text": "Fahad added you as a friend and viewed your story"}
+{"id": "ar-test-02032", "gloss_title": "Security team", "gloss_text": "Important notice: your account will be permanently closed within an hour if you do not confirm your identity now via the following link: http://snap.example.invalid/x"}
+{"id": "ar-test-02033", "gloss_title": "Neighbourhood association - supervisor Ahmed", "gloss_text": "Peace be upon you all. The association meeting is on Thursday after the evening prayer at the neighbourhood diwaniya, to discuss fundraising for the neighbourhood's Eid. Everyone's attendance is hoped for."}
+{"id": "ar-dev-02034", "gloss_title": "Palm Tower residents - guard Youssef", "gloss_text": "URGENT notice: strong gas smell on the third floor. Please evacuate the building immediately by the stairs and do not use the elevators. Civil defence is on the way."}
+{"id": "ar-test-02035", "gloss_title": "Al Noor School - administration", "gloss_text": "Dear guardian, your daughter Sara had a minor fall and complains of pain in her arm. Please come to the school immediately to take her to the clinic."}
+{"id": "ar-test-02036", "gloss_title": "Al-Amal Hospital", "gloss_text": "The attending doctor is trying to reach you about your father's condition after the operation. Please call the department right away on the number registered with you."}
+{"id": "ar-dev-02037", "gloss_title": "Congratulations!", "gloss_text": "You have been selected to win a prize of 50,000 EGP. Register your details now at http://prize-claim.example.invalid/x to receive your prize"}
+{"id": "ar-test-02038", "gloss_title": "Manager Sultan", "gloss_text": "Join the meeting now, the client is waiting and you must be there immediately"}
+{"id": "ar-test-02039", "gloss_title": "Reward points", "gloss_text": "You earned 120 reward points from your purchases this month. You can redeem them from the rewards section."}
+{"id": "ar-dev-02040", "gloss_title": "Your order is confirmed", "gloss_text": "The restaurant received your order and has started preparing it. Estimated time: 35 minutes."}
+{"id": "ar-test-02041", "gloss_title": "You have arrived at your destination", "gloss_text": "You will reach your destination in 2 minutes, the destination is on your right"}

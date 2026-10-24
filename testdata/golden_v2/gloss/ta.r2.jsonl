@@ -1,0 +1,97 @@
+{"id": "ta-test-01000", "gloss_title": "Missed call", "gloss_text": "Missed call from unknown number: +91 98XXXXXXXX"}
+{"id": "ta-test-01001", "gloss_title": "Unknown number", "gloss_text": "Missed call from +91 9XXXXXXXXX, 2 minutes ago"}
+{"id": "ta-dev-01002", "gloss_title": "Meet", "gloss_text": "A call is coming from an unknown number"}
+{"id": "ta-test-01003", "gloss_title": "Incoming call", "gloss_text": "Call from number +91 44XXXXXXXX, from Chennai"}
+{"id": "ta-test-01004", "gloss_title": "Urgent call?", "gloss_text": "Unregistered number: +91 9XXXXXXXXX. Has called 3 times"}
+{"id": "ta-dev-01005", "gloss_title": "Missed call (3)", "gloss_text": "3 calls from unknown number +91 7XXXXXXXXX"}
+{"id": "ta-test-01006", "gloss_title": "Unidentified caller", "gloss_text": "Coimbatore area number. Not answered. Call back?"}
+{"id": "ta-test-01007", "gloss_title": "Missed video call", "gloss_text": "Unknown number +91 8XXXXXXXXX"}
+{"id": "ta-dev-01008", "gloss_title": "Missed call", "gloss_text": "Missed call from +91 9XXXXXXXXX at 10:42 this morning"}
+{"id": "ta-test-01009", "gloss_title": "New number", "gloss_text": "+91 6XXXXXXXXX called you for the first time"}
+{"id": "ta-test-01010", "gloss_title": "Incoming call", "gloss_text": "Incoming call from a hidden number"}
+{"id": "ta-dev-01011", "gloss_title": "Missed call", "gloss_text": "+91 9XXXXXXXXX (Madurai) - call not picked up"}
+{"id": "ta-test-01012", "gloss_title": "Call", "gloss_text": "Voice call from an unknown number. Please respond"}
+{"id": "ta-test-01013", "gloss_title": "Missed call", "gloss_text": "Missed call from Trichy area number +91 4XXXXXXXXX"}
+{"id": "ta-dev-01014", "gloss_title": "Suspected spam", "gloss_text": "1,240 people have marked this number as spam"}
+{"id": "ta-test-01015", "gloss_title": "Possible spam", "gloss_text": "+91 140XXXXXXX - suspected to be a sales call"}
+{"id": "ta-test-01016", "gloss_title": "Telemarketer", "gloss_text": "Marked as a loan offer caller"}
+{"id": "ta-dev-01017", "gloss_title": "Spam call blocked", "gloss_text": "The call from +91 9XXXXXXXXX was blocked automatically"}
+{"id": "ta-test-01018", "gloss_title": "Missed call - spam", "gloss_text": "A number known for insurance sales calls"}
+{"id": "ta-test-01019", "gloss_title": "Spam risk", "gloss_text": "This number is used for advertising calls"}
+{"id": "ta-dev-01020", "gloss_title": "Unknown number", "gloss_text": "Want a credit card? Our customer service will call you."}
+{"id": "ta-test-01021", "gloss_title": "Looks like an urgent call", "gloss_text": "But 860 users have marked it as spam"}
+{"id": "ta-test-01022", "gloss_title": "Suspected spam", "gloss_text": "Real estate advertising call. Do not respond"}
+{"id": "ta-dev-01023", "gloss_title": "Caller alert", "gloss_text": "'Online job offer' - 2,100 spam complaints"}
+{"id": "ta-test-01024", "gloss_title": "Spam number", "gloss_text": "+91 80XXXXXXXX. Marked as a sales representative"}
+{"id": "ta-test-01025", "gloss_title": "New user call", "gloss_text": "An unknown account made an advertising voice call"}
+{"id": "ta-dev-01026", "gloss_title": "Spam protection", "gloss_text": "4 spam calls blocked so far today"}
+{"id": "ta-test-01027", "gloss_title": "Possible spam", "gloss_text": "Detected as an automated recorded voice call"}
+{"id": "ta-test-01028", "gloss_title": "Fraud warning", "gloss_text": "Number of someone claiming to be a bank official. 3,400 people have reported it as fraud"}
+{"id": "ta-dev-01029", "gloss_title": "Suspected fraud call", "gloss_text": "+91 9XXXXXXXXX - marked as a fake courier company call"}
+{"id": "ta-test-01030", "gloss_title": "Fraud", "gloss_text": "Fake police officer call - threatening that 'your Aadhaar will be blocked'"}
+{"id": "ta-test-01031", "gloss_title": "Unknown number - video call", "gloss_text": "+91 9XXXXXXXXX. Risk of fraud video call. Do not answer."}
+{"id": "ta-dev-01032", "gloss_title": "Tech support fraud", "gloss_text": "Fake call scaring you that your computer has a virus"}
+{"id": "ta-test-01033", "gloss_title": "Suspected fraud", "gloss_text": "Call claiming to be a customs officer and asking for a fine"}
+{"id": "ta-test-01034", "gloss_title": "Dangerous caller", "gloss_text": "Fake bank call saying your KYC is not updated"}
+{"id": "ta-dev-01035", "gloss_title": "Urgent call from your bank", "gloss_text": "This is not a bank call. 1,800 complaints mark this as a fraud caller"}
+{"id": "ta-test-01036", "gloss_title": "Unknown caller", "gloss_text": "Fraud voice call promising double money on an investment"}
+{"id": "ta-test-01037", "gloss_title": "Electricity office call?", "gloss_text": "Fake call threatening 'the power connection will be cut today'. Marked as fake"}
+{"id": "ta-dev-01038", "gloss_title": "Fraud risk", "gloss_text": "+91 9XXXXXXXXX - a number that pretends to be a relative and asks for money"}
+{"id": "ta-test-01039", "gloss_title": "New call", "gloss_text": "Unknown business account: fraud call saying 'your parcel is held'"}
+{"id": "ta-test-01040", "gloss_title": "Fraud number", "gloss_text": "Job fraud - identified as a number asking for an advance payment"}
+{"id": "ta-dev-01041", "gloss_title": "Suspected fraud call", "gloss_text": "Fake telecom call threatening that your SIM card will be blocked"}
+{"id": "ta-test-01042", "gloss_title": "Missed call", "gloss_text": "Amma (3 times)"}
+{"id": "ta-test-01043", "gloss_title": "Appa", "gloss_text": "Pick up the phone right away, it is very important"}
+{"id": "ta-dev-01044", "gloss_title": "Missed call - elder brother Karthik", "gloss_text": "Called 4 times in 5 minutes"}
+{"id": "ta-test-01045", "gloss_title": "Missed call", "gloss_text": "Younger sister Meena - 6 missed calls"}
+{"id": "ta-test-01046", "gloss_title": "Amma", "gloss_text": "Kannu, you did not pick up the phone? Call me back right away"}
+{"id": "ta-dev-01047", "gloss_title": "Appa", "gloss_text": "I need to talk urgently. Call back"}
+{"id": "ta-test-01048", "gloss_title": "Missed video call", "gloss_text": "Grandmother (Paati) called"}
+{"id": "ta-test-01049", "gloss_title": "Amma", "gloss_text": "Missed call. Amma keeps calling again and again"}
+{"id": "ta-dev-01050", "gloss_title": "Missed call", "gloss_text": "Maama (1)"}
+{"id": "ta-test-01051", "gloss_title": "Missed call", "gloss_text": "Akka Sudha - 2 times, marked as an urgent call"}
+{"id": "ta-test-01052", "gloss_title": "Husband - Ravi", "gloss_text": "Pick up the phone, how many times should I call!"}
+{"id": "ta-dev-01053", "gloss_title": "Thambi", "gloss_text": "Akka, Amma is unwell, call right away"}
+{"id": "ta-test-01054", "gloss_title": "Missed call", "gloss_text": "Wife (5)"}
+{"id": "ta-test-01055", "gloss_title": "Amma", "gloss_text": "I just called casually, did you eat? Tell me when you can talk on the phone"}
+{"id": "ta-test-02000", "gloss_title": "Rate your visit", "gloss_text": "How was 'Saravana Coffee House' you visited yesterday? Rate it in one minute."}
+{"id": "ta-test-02001", "gloss_title": "Your weekly driving summary", "gloss_text": "This week you drove 142 km. 12% less than last week."}
+{"id": "ta-dev-02002", "gloss_title": "Tips to avoid traffic jams", "gloss_text": "Try the new 'route suggestions' feature. Tap here to save your daily trip."}
+{"id": "ta-test-02003", "gloss_title": "Your places", "gloss_text": "Saving your home and office addresses makes navigation easier"}
+{"id": "ta-test-02004", "gloss_title": "New comment", "gloss_text": "Mani added a comment on your ticket PAY-482: 'Saw it, let's talk later'"}
+{"id": "ta-dev-02005", "gloss_title": "New star on your repository", "gloss_text": "Someone starred your demo-notes repository"}
+{"id": "ta-test-02006", "gloss_title": "New task added", "gloss_text": "The task 'Weekly report' was added to your 'Office' list"}
+{"id": "ta-test-02007", "gloss_title": "Recording ready", "gloss_text": "The recording of yesterday's group meeting is now available. Tap to watch."}
+{"id": "ta-dev-02008", "gloss_title": "Booking confirmed", "gloss_text": "Chennai Egmore - Madurai journey, 14 November. Ticket confirmed. Check the PNR status before the journey."}
+{"id": "ta-test-02009", "gloss_title": "Today's summary", "gloss_text": "Today you walked 8,420 steps, 5.9 km. You are nearing your goal!"}
+{"id": "ta-test-02010", "gloss_title": "Kavitha", "gloss_text": "No rush, look at the ticket details when you have time"}
+{"id": "ta-dev-02011", "gloss_title": "Lunch group - Ramesh", "gloss_text": "Shall we all go to the ground floor canteen today? At 1 o'clock"}
+{"id": "ta-test-02012", "gloss_title": "Malligai Apartment Welfare Association - Ranjani", "gloss_text": "Hello everyone! This week we could hold a Pongal rehearsal on the terrace. Who is coming? / Saravanan: I will come / Uma: I will bring the children"}
+{"id": "ta-test-02013", "gloss_title": "Chithi", "gloss_text": "I have reached home from the village. I am going out now, I will talk later"}
+{"id": "ta-dev-02014", "gloss_title": "ShareChat", "gloss_text": "248 people liked your post. Keep sharing!"}
+{"id": "ta-test-02015", "gloss_title": "A playlist for you", "gloss_text": "Ilaiyaraaja Hits - 40 songs ready for your mood. New songs are added every Friday. You can add favourites and listen offline."}
+{"id": "ta-test-02016", "gloss_title": "Wynk subscription", "gloss_text": "Your Wynk Premium subscription will renew on 3 November. Tap to change or cancel. The charge will be Rs. 99. If you do not want to renew, you can stop auto-renewal in the subscription section of the app."}
+{"id": "ta-dev-02017", "gloss_title": "New episode is here", "gloss_text": "The new episode of the series you are watching airs tonight at 9 pm on ZEE5. If you have not watched the earlier episodes, you can start from the beginning. Download to watch later is available."}
+{"id": "ta-test-02018", "gloss_title": "Payment failed", "gloss_text": "Your Sony LIV subscription payment could not be made. To keep the service, update your payment method within 3 days."}
+{"id": "ta-test-02019", "gloss_title": "Book today!", "gloss_text": "This weekend release: tickets are selling fast! Book now for the first day show."}
+{"id": "ta-dev-02020", "gloss_title": "Payment received", "gloss_text": "Rs. 1,500 credited to your account. Sender: Kumar S. Via UPI. The transaction number is in the history in the app. To transfer this money directly to your bank account, tap the 'Transfer to bank' button on the balance page. This is an automatic notification."}
+{"id": "ta-test-02021", "gloss_title": "Electricity bill to pay", "gloss_text": "Your electricity bill of Rs. 842 can be paid until this Friday. Pay now and earn rewards. Paying before the last date avoids late fees. If you have already paid, you can ignore this message."}
+{"id": "ta-test-02022", "gloss_title": "Transaction successful", "gloss_text": "Rs. 250 sent. Recipient: Murugan Tea Stall"}
+{"id": "ta-dev-02023", "gloss_title": "Reward points", "gloss_text": "120 CRED coins received for your last transaction. Check your rewards."}
+{"id": "ta-test-02024", "gloss_title": "Statement ready", "gloss_text": "Your monthly account statement is now available. You can view or download it in the app. This is an automatic message, do not reply. Your bank will never ask for a password through this message."}
+{"id": "ta-test-02025", "gloss_title": "Last chance!", "gloss_text": "Ends at 12 tonight: sarees up to 70% off! Buy now, do not regret later!"}
+{"id": "ta-dev-02026", "gloss_title": "Food being prepared", "gloss_text": "The restaurant is preparing your order. We will inform you once a delivery partner is assigned. Tap to track the order."}
+{"id": "ta-test-02027", "gloss_title": "Your order has arrived", "gloss_text": "Vegetables and milk have been placed at your door. Thank you!"}
+{"id": "ta-test-02028", "gloss_title": "Urgent offer", "gloss_text": "Today only! 50% off fruits. Delivery in 10 minutes. Coupon FRESH50, offer valid only until tonight. Minimum order Rs. 199. Cannot be combined with other offers. Terms apply."}
+{"id": "ta-dev-02029", "gloss_title": "Your driver has arrived", "gloss_text": "Driver Muthu is waiting at the pickup point. Auto number TN 09 ZZ 4821."}
+{"id": "ta-test-02030", "gloss_title": "Captain arrives in 4 minutes", "gloss_text": "Your bike taxi captain is arriving in 4 minutes. Be ready."}
+{"id": "ta-test-02031", "gloss_title": "Bus departure", "gloss_text": "Your bus leaves Koyambedu station in 15 minutes. Boarding point: platform 12. Come immediately."}
+{"id": "ta-dev-02032", "gloss_title": "Flight delayed", "gloss_text": "Your Chennai - Bengaluru flight is delayed by 2 hours. New departure time 6:40 PM. The gate may change, watch the airport announcements."}
+{"id": "ta-test-02033", "gloss_title": "Document ready", "gloss_text": "Your application has been verified. You can download the certificate in the UMANG app. Print it and keep it, as the certificate is valid for 30 days. For more help, see the help section of the app."}
+{"id": "ta-test-02034", "gloss_title": "New document added", "gloss_text": "Your vehicle registration certificate has been added to your DigiLocker."}
+{"id": "ta-dev-02035", "gloss_title": "Low data balance", "gloss_text": "90% of today's 1.5 GB data has been used. Tap here to buy an extra data pack. Daily data renews after midnight. Speed may drop until then."}
+{"id": "ta-test-02036", "gloss_title": "Doctor appointment reminder", "gloss_text": "Your appointment with Dr. Priya is tomorrow at 10:30 AM. Tap for the clinic address details."}
+{"id": "ta-test-02037", "gloss_title": "Heavy rain warning", "gloss_text": "Very heavy rain in Chennai and the suburbs within the next 2 hours. Risk of flooding in low-lying areas. Avoid going out."}
+{"id": "ta-dev-02038", "gloss_title": "Bharathi Nagar residents - Selvam", "gloss_text": "Everyone please note! Smell of gas leak in Block B. Do not switch on electrical switches; come down immediately. / Meena: I have already called the fire service"}
+{"id": "ta-test-02039", "gloss_title": "Family friends - Shankar", "gloss_text": "URGENT WARNING!! Send this to 10 people, or the government notice says your number will be blocked (not confirmed)"}
+{"id": "ta-test-02040", "gloss_title": "5th grade parents - teacher Manjula", "gloss_text": "Parent-teacher meeting this coming Saturday at 10 am in the school hall. / Divya: Thank you madam / Karthi: We will come"}
