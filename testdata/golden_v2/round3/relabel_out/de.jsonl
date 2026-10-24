@@ -1,0 +1,41 @@
+{"id": "de-test-03005", "usecase": "visitor_gate"}
+{"id": "de-test-03006", "usecase": "visitor_gate"}
+{"id": "de-dev-03007", "usecase": "visitor_gate"}
+{"id": "de-test-03008", "usecase": "visitor_gate"}
+{"id": "de-test-03009", "usecase": "visitor_gate", "note": "parcel left at concierge"}
+{"id": "de-dev-03010", "usecase": "visitor_gate"}
+{"id": "de-test-03011", "usecase": "voicemail_routine"}
+{"id": "de-dev-03012", "usecase": "voicemail_routine"}
+{"id": "de-test-03013", "usecase": "call_spam_likely"}
+{"id": "de-test-03014", "usecase": "voicemail_routine"}
+{"id": "de-test-03015", "usecase": "voicemail_routine"}
+{"id": "de-test-03016", "usecase": "voicemail_routine"}
+{"id": "de-dev-03017", "usecase": "caption_status"}
+{"id": "de-test-03018", "usecase": "caption_status"}
+{"id": "de-test-03019", "usecase": "caption_status"}
+{"id": "de-dev-03020", "usecase": "caption_status"}
+{"id": "de-test-03021", "usecase": "caption_status"}
+{"id": "de-test-03022", "usecase": "system_routine"}
+{"id": "de-dev-03023", "usecase": "system_routine"}
+{"id": "de-test-03024", "usecase": "system_routine"}
+{"id": "de-test-03025", "usecase": "system_routine"}
+{"id": "de-dev-03026", "usecase": "system_routine"}
+{"id": "de-test-03027", "usecase": "system_routine"}
+{"id": "de-test-03028", "usecase": "sub_renewal"}
+{"id": "de-dev-03029", "usecase": "chat_family_routine", "note": "family group plans"}
+{"id": "de-test-03030", "usecase": "group_chatter"}
+{"id": "de-test-03031", "usecase": "group_chatter"}
+{"id": "de-dev-03032", "usecase": "group_chatter"}
+{"id": "de-test-03033", "usecase": "group_forward"}
+{"id": "de-test-03034", "usecase": "group_forward", "note": "unverified rumour"}
+{"id": "de-dev-03035", "usecase": "group_forward"}
+{"id": "de-test-03036", "usecase": "group_event_info"}
+{"id": "de-test-03037", "usecase": "group_event_info"}
+{"id": "de-dev-03038", "usecase": "group_event_info"}
+{"id": "de-test-03039", "usecase": "community_safety_notice", "note": "smoke in building"}
+{"id": "de-test-03040", "usecase": "community_safety_notice", "note": "gas leak evacuation"}
+{"id": "de-dev-03041", "usecase": "tsunami_flood_wildfire", "note": "flood and road closure"}
+{"id": "de-test-03042", "usecase": "visitor_gate"}
+{"id": "de-test-03043", "usecase": "visitor_gate"}
+{"id": "de-dev-03044", "usecase": "visitor_gate"}
+{"id": "de-test-03045", "usecase": "visitor_gate"}

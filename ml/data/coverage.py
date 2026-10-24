@@ -158,10 +158,13 @@ def main(items_dir, out_path, contested_path):
         gaps.append((1, f"{len(shortcuts)} apps always carry the same label ({names}...), so a model could learn the app instead of the text",
                      "add counter-examples per app (a muted Maps or GitHub notification, a Spotify item that is not a recommendation) and hold some apps out", "shortcut"))
     long_share = sum(1 for x in lengths if x > 120) / len(lengths)
-    gaps.append((2, f"Texts are short: median {lengths[len(lengths) // 2]} characters, {long_share:.0%} over 120, none over 200",
-                 "add longer, group-chat and multi-sentence items (the plan's 300-item long and group challenge set)", "diversity"))
-    gaps.append((2, f"Only {used_apps} of {len(catalogue)} catalogue apps are used; about 95 regional apps were added after authoring started",
-                 "author round 2 around the regional apps for each language (Japan, Russia, Brazil, Indonesia, Germany, France, Gulf, China, India)", "diversity"))
+    if long_share < 0.25:
+        gaps.append((2, f"Texts are short: median {lengths[len(lengths) // 2]} characters, {long_share:.0%} over 120, "
+                        f"{sum(1 for x in lengths if x > 200)} over 200",
+                     "add longer, group-chat and multi-sentence items (the plan's 300-item long and group challenge set)", "diversity"))
+    if used_apps < len(catalogue):
+        gaps.append((2, f"Only {used_apps} of {len(catalogue)} catalogue apps are used",
+                     "author items for the unused apps, in each app's home-region languages", "diversity"))
     gaps.append((1, "No training set yet (about 72,000 items planned)", "author about 24,000 base items, then deterministic augmentation", "structural"))
     gaps.append((1, f"Test and dev are at {len(items)} items against about 8,100 planned", "author about 450 per language (300 test, 150 dev) in rounds with blind relabeling", "structural"))
     gaps.append((1, "No held-out apps (about 15% of apps never used in training) and no challenge sets yet", "split the catalogue now, then author the 2,100-item challenge sets", "structural"))

@@ -1,0 +1,47 @@
+{"id": "hi-Latn-test-03006", "usecase": "voicemail_routine"}
+{"id": "hi-Latn-test-03007", "usecase": "voicemail_routine", "note": "unknown caller, no rush"}
+{"id": "hi-Latn-dev-03008", "usecase": "chat_family_routine", "note": "mum errand voicemail"}
+{"id": "hi-Latn-test-03009", "usecase": "voicemail_routine", "note": "unknown caller, membership renewal"}
+{"id": "hi-Latn-test-03010", "usecase": "voicemail_routine", "note": "contact asks for call, no rush"}
+{"id": "hi-Latn-dev-03011", "usecase": "medical_routine", "note": "dentist appointment confirmation"}
+{"id": "hi-Latn-test-03012", "usecase": "investment_alert"}
+{"id": "hi-Latn-test-03013", "usecase": "investment_alert"}
+{"id": "hi-Latn-dev-03014", "usecase": "marketing_push", "note": "trade-now push, not a price alert"}
+{"id": "hi-Latn-test-03015", "usecase": "investment_alert"}
+{"id": "hi-Latn-test-03016", "usecase": "investment_alert"}
+{"id": "hi-Latn-dev-03017", "usecase": "investment_alert", "note": "weekly performance report"}
+{"id": "hi-Latn-test-03018", "usecase": "caption_status"}
+{"id": "hi-Latn-test-03019", "usecase": "caption_status"}
+{"id": "hi-Latn-dev-03020", "usecase": "caption_status", "note": "speech model update"}
+{"id": "hi-Latn-test-03021", "usecase": "caption_status"}
+{"id": "hi-Latn-test-03022", "usecase": "caption_status"}
+{"id": "hi-Latn-test-03023", "usecase": "system_routine", "note": "battery tips suggestion"}
+{"id": "hi-Latn-test-03024", "usecase": "system_routine"}
+{"id": "hi-Latn-test-03025", "usecase": "system_routine"}
+{"id": "hi-Latn-dev-03026", "usecase": "system_routine"}
+{"id": "hi-Latn-test-03027", "usecase": "system_routine"}
+{"id": "hi-Latn-dev-03028", "usecase": "system_routine"}
+{"id": "hi-Latn-test-03029", "usecase": "system_routine", "note": "battery tips suggestion"}
+{"id": "hi-Latn-test-03030", "usecase": "visitor_gate"}
+{"id": "hi-Latn-dev-03031", "usecase": "visitor_gate", "note": "parcel visitor, shouty word but routine"}
+{"id": "hi-Latn-test-03032", "usecase": "visitor_gate", "note": "delivery person reminder"}
+{"id": "hi-Latn-test-03033", "usecase": "visitor_gate"}
+{"id": "hi-Latn-dev-03034", "usecase": "visitor_gate", "note": "doorbell"}
+{"id": "hi-Latn-test-03035", "usecase": "visitor_gate"}
+{"id": "hi-Latn-test-03036", "usecase": "group_chatter"}
+{"id": "hi-Latn-dev-03037", "usecase": "group_chatter"}
+{"id": "hi-Latn-test-03038", "usecase": "work_chat_routine", "note": "team lunch, non-urgent"}
+{"id": "hi-Latn-test-03039", "usecase": "group_chatter"}
+{"id": "hi-Latn-dev-03040", "usecase": "group_chatter", "note": "family movie plan"}
+{"id": "hi-Latn-test-03041", "usecase": "group_forward"}
+{"id": "hi-Latn-dev-03042", "usecase": "group_forward", "note": "unverified rumour"}
+{"id": "hi-Latn-test-03043", "usecase": "scam_prize_loan", "note": "prize chain with form link"}
+{"id": "hi-Latn-test-03044", "usecase": "group_forward"}
+{"id": "hi-Latn-test-03045", "usecase": "group_event_info", "note": "festival collection notice"}
+{"id": "hi-Latn-dev-03046", "usecase": "group_event_info", "note": "cleanup drive"}
+{"id": "hi-Latn-test-03047", "usecase": "group_event_info", "note": "reading circle calendar update"}
+{"id": "hi-Latn-test-03048", "usecase": "community_safety_notice", "note": "smoke from building basement"}
+{"id": "hi-Latn-dev-03049", "usecase": "community_safety_notice", "note": "basement flooding"}
+{"id": "hi-Latn-test-03050", "usecase": "community_safety_notice", "note": "gas smell, evacuate"}
+{"id": "hi-Latn-test-03051", "usecase": "visitor_gate"}
+{"id": "hi-Latn-dev-03052", "usecase": "visitor_gate"}

@@ -65,6 +65,8 @@ Data tooling and training code for a custom, multilingual, app-aware notificatio
   - Second-labeler blind agreement: 98.3% overall (pilot kappa not re-checked here).
 - **Pilot contested adjudication:** All 7 initial contested items from `testdata/golden_v2/contested_pilot.jsonl` were adjudicated with owner decisions and merged into `pilot_agreed/` in commit `e6c2970`, with corresponding rules recorded in `rubric.json`.
 - **Round 2 dataset:** 1,949 items in `testdata/golden_v2/r2_assembled/` and `testdata/golden_v2/r2_agreed/` (0 validation errors, 0 contested). English glosses for the 1,796 non-English items are in `testdata/golden_v2/gloss/<lang>.r2.jsonl`.
+- **Round 3 (coverage gaps):** 712 items in `testdata/golden_v2/round3/agreed/` (798 planned; 86 rejected by the validator, kept in `round3/rejected/`). Blind agreement 99.3%, Cohen's kappa 0.974 to 1.000 per mode, the 5 contested items resolved (3 kept as `deadline`, urgent in Focus; 2 were a labeller id swap). Glosses in `gloss/<lang>.r3.jsonl`. Combined over pilot, round 2 and round 3: 3,740 items.
+- **Known gap (accepted):** 49 apps carry a single label, and for 48 of them no use case fits both the app category and the opposite label, so no counter-examples were added. Listed in `COVERAGE_REPORT.md` section 8.
 
 ## Resolved decisions
 
