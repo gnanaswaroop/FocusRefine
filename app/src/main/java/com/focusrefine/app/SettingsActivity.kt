@@ -580,6 +580,113 @@ fun SettingsStudioScreen(
             }
 
             Spacer(modifier = Modifier.height(14.dp))
+            // 5. Learning & Feedback Card (Collapsible)
+            StudioCard(modifier = Modifier.fillMaxWidth()) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = 48.dp)
+                            .clickable { isLearnExpanded = !isLearnExpanded },
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Learning & Feedback",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 15.sp,
+                            color = Color.White
+                        )
+                        StudioChevron(expanded = isLearnExpanded)
+                    }
+
+                    if (isLearnExpanded) {
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("Learn from my choices", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                                Text("Improve filtering using local feedback.", fontSize = 11.sp, color = StudioColors.TextMuted)
+                            }
+                            Switch(
+                                checked = learnFromChoices,
+                                onCheckedChange = {
+                                    learnFromChoices = it
+                                    prefs?.edit()?.putBoolean("learn_from_choices", it)?.apply()
+                                },
+                                colors = SwitchDefaults.colors(checkedTrackColor = StudioColors.ActiveViolet)
+                            )
+                        }
+
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), color = StudioColors.StudioBorder)
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { onNavigateToLearnedRules() },
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column {
+                                Text("View & Manage Learned Rules", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = StudioColors.ActiveVioletLight)
+                                Text("Review AI rules generated from your feedback", fontSize = 11.sp, color = StudioColors.TextMuted)
+                            }
+                            StudioNavChevron(tint = StudioColors.ActiveVioletLight)
+                        }
+
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), color = StudioColors.StudioBorder)
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable(enabled = !isReclassifying) { showReclassifyDialog = true },
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("Re-run classification on history", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = StudioColors.ActiveVioletLight)
+                                Text(
+                                    if (isReclassifying) "Re-classifying your history…" else "Re-check past notifications with your current mode, settings and rules",
+                                    fontSize = 11.sp,
+                                    color = StudioColors.TextMuted
+                                )
+                            }
+                            if (isReclassifying) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(18.dp),
+                                    strokeWidth = 2.dp,
+                                    color = StudioColors.ActiveViolet
+                                )
+                            } else {
+                                Text("↻", fontSize = 18.sp, color = StudioColors.ActiveVioletLight)
+                            }
+                        }
+
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), color = StudioColors.StudioBorder)
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    prefs?.edit()?.putInt("suppressed_count", 0)?.apply()
+                                    Toast.makeText(context, "Local learning data reset", Toast.LENGTH_SHORT).show()
+                                },
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text("Reset local learning data", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = StudioColors.RedText)
+                            Text("🔄", fontSize = 14.sp)
+                        }
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(14.dp))
+
             // 6. Advanced Settings Card (Collapsible)
             StudioCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
@@ -655,113 +762,6 @@ fun SettingsStudioScreen(
                                 },
                                 colors = SwitchDefaults.colors(checkedTrackColor = StudioColors.ActiveViolet)
                             )
-                        }
-
-                        Spacer(modifier = Modifier.height(12.dp))
-
-                        // Learning & Feedback (inside Advanced Settings)
-                        StudioCard(modifier = Modifier.fillMaxWidth()) {
-                            Column(modifier = Modifier.padding(16.dp)) {
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .heightIn(min = 48.dp)
-                                        .clickable { isLearnExpanded = !isLearnExpanded },
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.SpaceBetween
-                                ) {
-                                    Text(
-                                        text = "Learning & Feedback",
-                                        fontWeight = FontWeight.Bold,
-                                        fontSize = 15.sp,
-                                        color = Color.White
-                                    )
-                                    StudioChevron(expanded = isLearnExpanded)
-                                }
-
-                                if (isLearnExpanded) {
-                                    Spacer(modifier = Modifier.height(12.dp))
-
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.SpaceBetween
-                                    ) {
-                                        Column(modifier = Modifier.weight(1f)) {
-                                            Text("Learn from my choices", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                                            Text("Improve filtering using local feedback.", fontSize = 11.sp, color = StudioColors.TextMuted)
-                                        }
-                                        Switch(
-                                            checked = learnFromChoices,
-                                            onCheckedChange = {
-                                                learnFromChoices = it
-                                                prefs?.edit()?.putBoolean("learn_from_choices", it)?.apply()
-                                            },
-                                            colors = SwitchDefaults.colors(checkedTrackColor = StudioColors.ActiveViolet)
-                                        )
-                                    }
-
-                                    HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), color = StudioColors.StudioBorder)
-
-                                    Row(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .clickable { onNavigateToLearnedRules() },
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.SpaceBetween
-                                    ) {
-                                        Column {
-                                            Text("View & Manage Learned Rules", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = StudioColors.ActiveVioletLight)
-                                            Text("Review AI rules generated from your feedback", fontSize = 11.sp, color = StudioColors.TextMuted)
-                                        }
-                                        StudioNavChevron(tint = StudioColors.ActiveVioletLight)
-                                    }
-
-                                    HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), color = StudioColors.StudioBorder)
-
-                                    Row(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .clickable(enabled = !isReclassifying) { showReclassifyDialog = true },
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.SpaceBetween
-                                    ) {
-                                        Column(modifier = Modifier.weight(1f)) {
-                                            Text("Re-run classification on history", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = StudioColors.ActiveVioletLight)
-                                            Text(
-                                                if (isReclassifying) "Re-classifying your history…" else "Re-check past notifications with your current mode, settings and rules",
-                                                fontSize = 11.sp,
-                                                color = StudioColors.TextMuted
-                                            )
-                                        }
-                                        if (isReclassifying) {
-                                            CircularProgressIndicator(
-                                                modifier = Modifier.size(18.dp),
-                                                strokeWidth = 2.dp,
-                                                color = StudioColors.ActiveViolet
-                                            )
-                                        } else {
-                                            Text("↻", fontSize = 18.sp, color = StudioColors.ActiveVioletLight)
-                                        }
-                                    }
-
-                                    HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), color = StudioColors.StudioBorder)
-
-                                    Row(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .clickable {
-                                                prefs?.edit()?.putInt("suppressed_count", 0)?.apply()
-                                                Toast.makeText(context, "Local learning data reset", Toast.LENGTH_SHORT).show()
-                                            },
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.SpaceBetween
-                                    ) {
-                                        Text("Reset local learning data", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = StudioColors.RedText)
-                                        Text("🔄", fontSize = 14.sp)
-                                    }
-                                }
-                            }
                         }
                     }
                 }

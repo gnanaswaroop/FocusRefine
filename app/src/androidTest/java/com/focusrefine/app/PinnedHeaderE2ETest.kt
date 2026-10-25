@@ -31,7 +31,7 @@ class PinnedHeaderE2ETest {
     }
 
     @Test
-    fun settingsKeepsItsTitleBarWhileScrolling() = checkPinned(SettingsActivity::class.java, "Settings", "Classification Engine", expand = listOf("Advanced Settings", "Learning & Feedback"))
+    fun settingsKeepsItsTitleBarWhileScrolling() = checkPinned(SettingsActivity::class.java, "Settings", "Classification Engine", expand = listOf("Learning & Feedback"))
 
     @Test
     fun helpKeepsItsTitleBarWhileScrolling() = checkPinned(HelpActivity::class.java, "Help & how it works", "Keep the noise out")
