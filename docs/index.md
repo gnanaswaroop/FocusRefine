@@ -28,7 +28,7 @@ FocusRefine features a sleek **Dark Studio UI** (`#0F0E17` background, `#181625`
    - Tri-state filtering strength selector (`Gentle` | `Balanced` | `Strict` shifting the AI urgency thresholds).
    - JSON-driven urgent notification exception switches loaded from `exceptions.json`.
    - Direct navigation links to **Learned Rules** (`Learnings`).
-   - **Re-run classification on history** (under *Learning & Feedback*): re-checks every stored notification with the current mode, filtering strength, exceptions and learned rules (confirmation dialog first; learned rules are never changed, and the notification shade is untouched).
+   - **Re-run classification on history** (under *Learning*): re-checks every stored notification with the current mode, filtering strength, exceptions and learned rules (confirmation dialog first; learned rules are never changed, and the notification shade is untouched).
 3. **Notification Details (`NotificationDetailActivity.kt`)**:
    - Deep inspection card with native app icon, content body, and status tag.
    - AI explanation card (*"Why it was muted/shown"*) explicitly highlighting **`🤖 [AI Pipeline]`** vs **`🔍 [Semantic Search]`** evaluation reasons.

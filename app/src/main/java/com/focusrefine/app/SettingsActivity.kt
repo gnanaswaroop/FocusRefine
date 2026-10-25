@@ -580,8 +580,7 @@ fun SettingsStudioScreen(
             }
 
             Spacer(modifier = Modifier.height(14.dp))
-
-            // 5. Learn & Reset Card (Collapsible)
+            // 5. Learning Card (Collapsible)
             StudioCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
@@ -593,7 +592,7 @@ fun SettingsStudioScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = "Learning & Feedback",
+                            text = "Learning",
                             fontWeight = FontWeight.Bold,
                             fontSize = 15.sp,
                             color = Color.White
@@ -680,9 +679,49 @@ fun SettingsStudioScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text("Reset local learning data", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = StudioColors.RedText)
-                            Text("🔄", fontSize = 14.sp)
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_reset_learning),
+                                contentDescription = null,
+                                tint = StudioColors.RedText,
+                                modifier = Modifier.size(18.dp)
+                            )
                         }
                     }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(14.dp))
+            StudioCard(onClick = onNavigateToAppRules, modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column {
+                        Text("App Rules", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color.White)
+                        Text("Per-app exceptions and filtering rules", fontSize = 11.sp, color = StudioColors.TextMuted)
+                    }
+                    StudioNavChevron()
+                }
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            StudioCard(onClick = onNavigateToPrivacy, modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column {
+                        Text("Privacy & Insights", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color.White)
+                        Text("On-device processing & privacy stats", fontSize = 11.sp, color = StudioColors.TextMuted)
+                    }
+                    StudioNavChevron()
                 }
             }
 
@@ -765,61 +804,6 @@ fun SettingsStudioScreen(
                             )
                         }
                     }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(14.dp))
-
-            // 7. Navigation Hub Cards
-            StudioCard(onClick = onNavigateToLearnedRules, modifier = Modifier.fillMaxWidth()) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column {
-                        Text("Learned Rules", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color.White)
-                        Text("Manage AI rules learned from swipes & choices", fontSize = 11.sp, color = StudioColors.TextMuted)
-                    }
-                    StudioNavChevron()
-                }
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            StudioCard(onClick = onNavigateToAppRules, modifier = Modifier.fillMaxWidth()) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column {
-                        Text("App Rules", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color.White)
-                        Text("Per-app exceptions and filtering rules", fontSize = 11.sp, color = StudioColors.TextMuted)
-                    }
-                    StudioNavChevron()
-                }
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            StudioCard(onClick = onNavigateToPrivacy, modifier = Modifier.fillMaxWidth()) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column {
-                        Text("Privacy & Insights", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color.White)
-                        Text("On-device processing & privacy stats", fontSize = 11.sp, color = StudioColors.TextMuted)
-                    }
-                    StudioNavChevron()
                 }
             }
 
