@@ -615,7 +615,7 @@ fun MainStudioScreen(
                 Spacer(modifier = Modifier.width(6.dp))
                 IconButton(
                     onClick = { isFullScreenInbox = true },
-                    modifier = Modifier.size(28.dp)
+                    modifier = Modifier.size(28.dp).semantics { contentDescription = "Open full screen inbox" }
                 ) {
                     Text(text = "⛶", fontSize = 14.sp, color = StudioColors.TextSecondary)
                 }
@@ -824,7 +824,10 @@ fun MainStudioScreen(
                                 color = Color.White
                             )
 
-                            IconButton(onClick = { isFullScreenInbox = false }) {
+                            IconButton(
+                                onClick = { isFullScreenInbox = false },
+                                modifier = Modifier.semantics { contentDescription = "Close full screen inbox" }
+                            ) {
                                 Text(text = "✕", fontSize = 18.sp, color = Color.White)
                             }
                         }
