@@ -58,7 +58,8 @@ class ScreensE2ETest {
         dao.insert(row("Omron Heart", "Urgent low glucose alert: 48 mg/dL", urgent = false, ts = now))   // should be Shown while sleeping
         dao.insert(row("Myntra", "Lightning deal: 50% off sneakers", urgent = true, ts = now - 1000))     // should be Muted
         ActivityScenario.launch(SettingsActivity::class.java).use {
-            AccessibilityDriver.tapText("Learning & Feedback") // Settings opens with its sections collapsed
+            AccessibilityDriver.tapText("Advanced Settings") // Settings opens with its sections collapsed
+            AccessibilityDriver.tapText("Learning & Feedback") // learning options now live inside Advanced Settings
             AccessibilityDriver.tapText("Re-run classification on history")
             assertTrue("the confirmation dialog appears", AccessibilityDriver.waitForText("Re-run classification?"))
             AccessibilityDriver.tapText("Re-run")
