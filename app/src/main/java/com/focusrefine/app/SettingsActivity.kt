@@ -687,6 +687,43 @@ fun SettingsStudioScreen(
 
             Spacer(modifier = Modifier.height(14.dp))
 
+            Spacer(modifier = Modifier.height(14.dp))
+            StudioCard(onClick = onNavigateToAppRules, modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column {
+                        Text("App Rules", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color.White)
+                        Text("Per-app exceptions and filtering rules", fontSize = 11.sp, color = StudioColors.TextMuted)
+                    }
+                    StudioNavChevron()
+                }
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            StudioCard(onClick = onNavigateToPrivacy, modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column {
+                        Text("Privacy & Insights", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color.White)
+                        Text("On-device processing & privacy stats", fontSize = 11.sp, color = StudioColors.TextMuted)
+                    }
+                    StudioNavChevron()
+                }
+            }
+
+            Spacer(modifier = Modifier.height(14.dp))
+
             // 6. Advanced Settings Card (Collapsible)
             StudioCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
@@ -764,41 +801,6 @@ fun SettingsStudioScreen(
                             )
                         }
                     }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(14.dp))
-            StudioCard(onClick = onNavigateToAppRules, modifier = Modifier.fillMaxWidth()) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column {
-                        Text("App Rules", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color.White)
-                        Text("Per-app exceptions and filtering rules", fontSize = 11.sp, color = StudioColors.TextMuted)
-                    }
-                    StudioNavChevron()
-                }
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            StudioCard(onClick = onNavigateToPrivacy, modifier = Modifier.fillMaxWidth()) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column {
-                        Text("Privacy & Insights", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color.White)
-                        Text("On-device processing & privacy stats", fontSize = 11.sp, color = StudioColors.TextMuted)
-                    }
-                    StudioNavChevron()
                 }
             }
 
