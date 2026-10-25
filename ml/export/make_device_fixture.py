@@ -36,6 +36,8 @@ def main():
             "urgentIn": [m in item["urgentIn"] for m in t.MODES],
             "logits": ref["logits"][n].tolist(),
             "lang": item["lang"],
+            "title": item["title"],
+            "text": item["text"],
         })
     with open(os.path.join(args.out, "fixture.json"), "w", encoding="utf-8", newline="\n") as f:
         json.dump({"modes": t.MODES, "maxlen": t.MAXLEN, "items": items}, f, ensure_ascii=False)
