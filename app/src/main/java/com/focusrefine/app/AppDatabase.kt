@@ -12,7 +12,7 @@ import androidx.security.crypto.MasterKey
 import java.security.SecureRandom
 import android.util.Base64
 
-@Database(entities = [NotificationEntity::class], version = 7, exportSchema = false)
+@Database(entities = [NotificationEntity::class], version = 6, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun notificationDao(): NotificationDao
 
