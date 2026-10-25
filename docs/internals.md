@@ -48,12 +48,12 @@ graph TD
 - The model is MediaPipe's **Universal Sentence Encoder** (`assets/text_embedder.tflite`, 6.1 MB) run through `TextEmbedder` from `tasks-text:1.1.1`, whose natives are 16 KB aligned and include `x86_64`, so it loads on emulators and phones. If the model cannot load, `EmbeddingClassifier.create` catches the failure, records it, and **the keyword engine decides**.
 - `EmbeddingClassifier.create` writes the pref `embedding_engine_loaded` on every attempt. The Settings and Privacy screens read it, so "AI Engine Active" now means the model actually loaded (they show the keyword matcher when the model is off or failed). It is only refreshed when the filter service starts.
 - The old `text_classifier.tflite` / MediaPipe `TextClassifier` path was removed: MediaPipe's public classifiers are sentiment models (`positive` / `negative`) that never produce an `urgent` category, and no custom model exists.
-- Anchor phrases are embedded once per process (about 1.7 s on a Pixel 9 Pro XL) on a background thread started by the service; each notification then costs one embedding (about 40 ms). The model's source and license status are recorded in [`THIRD_PARTY_MODELS.md`](../THIRD_PARTY_MODELS.md).
+- Anchor phrases are embedded once per process (about 1.7 s on a Pixel Pro XL) on a background thread started by the service; each notification then costs one embedding (about 40 ms). The model's source and license status are recorded in [`THIRD_PARTY_MODELS.md`](../THIRD_PARTY_MODELS.md).
 
 **Known limitations of the keyword engine / exceptions (measured, see section K):** prompt tokens are matched as raw substrings (for example `or` and `and` match inside unrelated words), exceptions are matched against title *and* text so app names such as "Maps" or "Bank" trigger them, and the `Workout / Gym` mode has no dedicated branch so it falls back to a generic default prompt.
 
 ### C. History Re-classification (`HistoryReclassifier.kt`)
-Settings → **Learning & Feedback** → **Re-run classification on history** re-checks every stored notification with the current pipeline.
+Settings → **Learning** → **Re-run classification on history** re-checks every stored notification with the current pipeline.
 
 - Runs `NotificationClassifier.classify` over `NotificationDao.getHistory()` (all rows where `isLearned = 0`) using the **current** mode, filtering strength, exceptions, and learned rules. It creates and closes its own `TextClassifier` for the run.
 - Rows whose decision or explanation changed are written back with `NotificationDao.updateClassification(id, isUrgent, explanation)`. Learned-rule rows (`isLearned = 1`) are the user's own feedback and are **never modified**.
@@ -70,7 +70,7 @@ Settings → **Learning & Feedback** → **Re-run classification on history** re
 
 ### E. 6 Primary Screen Activities
 1. **`MainActivity.kt`**: Smart Inbox dashboard with stat card, home context mode bubbles (enabled modes only, long press opens `ContextModesActivity`), search field, horizontal swipe gesture with smooth Compose `AnimatedContent` slide transitions (configurable via Advanced Settings), and full-screen inbox dialog (`⛶`).
-2. **`SettingsActivity.kt`**: Collapsible studio cards (open/expanded by default), an engine status banner driven by whether the model really loaded, filtering strength selector (`Gentle` | `Balanced` | `Strict`), JSON-driven exception toggles, a **Learning & Feedback** card (learn-from-choices switch, Learned Rules link, **Re-run classification on history**, reset learning data), Advanced Settings with **Inbox Swipe Animations** switch, and direct navigation links to **Learned Rules** (`Learnings`).
+2. **`SettingsActivity.kt`**: Collapsible studio cards (open/expanded by default), an engine status banner driven by whether the model really loaded, filtering strength selector (`Gentle` | `Balanced` | `Strict`), JSON-driven exception toggles, a **Learning** card (learn-from-choices switch, Learned Rules link, **Re-run classification on history**, reset learning data), Advanced Settings with **Inbox Swipe Animations** switch, and direct navigation links to **Learned Rules** (`Learnings`).
 3. **`NotificationDetailActivity.kt`**: Notification inspection card, AI explanation card (*"Why it was muted/shown"*), updated preference action buttons (*"🔔 Show notifications like these in the future"* / *"🔕 Hide notifications like these in the future"*), and feedback controls.
 4. **`ConfigureModesActivity.kt`**: Per-app rules list with expandable rule tuner drawers (`Use AI` | `Allow all` | `Mute all`). Purely focused on App Rules.
 5. **`ContextModesActivity.kt`**: Context modes management hub. Allows adding custom context modes, editing natural language prompt rules, and setting *"Show on Home Page"* toggles for each mode.
@@ -128,7 +128,7 @@ python scripts/replay_golden.py --serial <device> --allow-device --min-f1 0.6
 | Embedding model (default, Balanced) | Golden (96) | 0.570 | 0.443 | 0.855 | 0.792 |
 | Embedding model (default, Balanced) | Holdout (76) | 0.527 | 0.439 | 0.708 | 0.761 |
 
-Per mode F1, holdout, embedding engine: Commute 0.74, Deep Work / Focus 0.47, DND 0.53, Sleeping / Rest 0.62, Workout / Gym 0.27. The end-to-end figures are lower than the isolated model's because exceptions (21 of 96 golden items, 15 of 76 holdout items) decide first and Show things like calls and navigation in every mode, which hurts Workout / Gym most. Keyword-only baseline (`--engine keyword`; identical on the emulator and a Pixel 9 Pro XL):
+Per mode F1, holdout, embedding engine: Commute 0.74, Deep Work / Focus 0.47, DND 0.53, Sleeping / Rest 0.62, Workout / Gym 0.27. The end-to-end figures are lower than the isolated model's because exceptions (21 of 96 golden items, 15 of 76 holdout items) decide first and Show things like calls and navigation in every mode, which hurts Workout / Gym most. Keyword-only baseline (`--engine keyword`; identical on the emulator and a Pixel Pro XL):
 
 | Set | F1 | Precision | Recall | Accuracy |
 | :--- | :--- | :--- | :--- | :--- |
@@ -147,4 +147,4 @@ Per mode F1 (golden): Commute 0.50, Deep Work / Focus 0.46, DND 0.42, Sleeping /
 
 The held-out figures are the honest ones; the golden figures are in-sample. The labels and anchor phrases were written by the same author, so both are optimistic relative to real traffic.
 
-Device measurements for the embedder (Universal Sentence Encoder, `tasks-text:1.1.1`): model load 82–125 ms on the Pixel; per-notification embedding p50 about 38–44 ms and p95 about 83–95 ms on the Pixel (5.8 ms on the emulator's host CPU); about 6 MB native heap; embedding the 47 anchor phrases takes 1.6–1.9 s on the Pixel, so anchors should be precomputed or cached. Four threads sharing one embedder produced no errors or wrong results but no speedup. Accuracy is identical across devices.
+Device measurements for the embedder (Universal Sentence Encoder, `tasks-text:1.1.1`): model load 82–125 ms on the phone; per-notification embedding p50 about 38–44 ms and p95 about 83–95 ms on the phone (5.8 ms on the emulator's host CPU); about 6 MB native heap; embedding the 47 anchor phrases takes 1.6–1.9 s on the phone, so anchors should be precomputed or cached. Four threads sharing one embedder produced no errors or wrong results but no speedup. Accuracy is identical across devices.

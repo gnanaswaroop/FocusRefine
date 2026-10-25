@@ -47,7 +47,7 @@
         {
           "heading": "Fixed",
           "items": [
-            "Guards against a crash that was seen on a Pixel 9 Pro XL when the AI model's data was read straight from the app package.",
+            "Guards against a crash that was seen on a Pixel Pro XL when the AI model's data was read straight from the app package.",
             "Button labels in the notification details are easier to read.",
             "The ongoing FocusRefine notification no longer makes a sound or vibrates each time it updates after muting something.",
             "Home now refreshes by itself when you come back from Settings, for example after adding sample notifications.",

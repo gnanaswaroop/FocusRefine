@@ -41,7 +41,7 @@ class EmbeddingClassifier private constructor(
     private val lock = Any()
     private var closed = false
 
-    /** Embedded once per process (~1.7 s on a Pixel 9 Pro XL); embedding calls are serialized by MediaPipe. */
+    /** Embedded once per process (~1.7 s on a Pixel Pro XL); embedding calls are serialized by MediaPipe. */
     private val embedded: Embedded by lazy {
         Embedded(
             examples = config.modes.associate { m -> m.match to m.examples.map(::embed) },
@@ -144,7 +144,7 @@ class EmbeddingClassifier private constructor(
         /**
          * The process-wide engine, created on first use and then shared by the filter service, the user's corrections
          * and history re-runs. **Nothing ever closes it** (it lives as long as the process). Creating and closing a MediaPipe model for every
-         * correction was fragile: on a Pixel 9 Pro XL the model's worker threads sometimes faulted (SIGBUS) while a
+         * correction was fragile: on a Pixel Pro XL the model's worker threads sometimes faulted (SIGBUS) while a
          * model was being closed right after an install. A single long-lived model also saves loading it and embedding
          * its anchors (about 2 s) on each correction. Returns null when disabled by the user or unavailable.
          */
@@ -166,7 +166,7 @@ class EmbeddingClassifier private constructor(
 
         /**
          * The model as a page-aligned direct buffer in ordinary memory. It is not read straight out of the APK
-         * (setModelAssetPath): on a Pixel 9 Pro XL MediaPipe's worker threads faulted (SIGBUS) reading the weights from
+         * (setModelAssetPath): on a Pixel Pro XL MediaPipe's worker threads faulted (SIGBUS) reading the weights from
          * the APK mapping in 6 of 6 runs, and from memory they did not in 6 of 6. The alignment matters too: TFLite and
          * XNNPACK read the weights in place, and an ordinary allocation made inference fail on x86_64.
          */

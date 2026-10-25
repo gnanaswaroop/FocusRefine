@@ -28,7 +28,7 @@ FocusRefine features a sleek **Dark Studio UI** (`#0F0E17` background, `#181625`
    - Tri-state filtering strength selector (`Gentle` | `Balanced` | `Strict` shifting the AI urgency thresholds).
    - JSON-driven urgent notification exception switches loaded from `exceptions.json`.
    - Direct navigation links to **Learned Rules** (`Learnings`).
-   - **Re-run classification on history** (under *Learning & Feedback*): re-checks every stored notification with the current mode, filtering strength, exceptions and learned rules (confirmation dialog first; learned rules are never changed, and the notification shade is untouched).
+   - **Re-run classification on history** (under *Learning*): re-checks every stored notification with the current mode, filtering strength, exceptions and learned rules (confirmation dialog first; learned rules are never changed, and the notification shade is untouched).
 3. **Notification Details (`NotificationDetailActivity.kt`)**:
    - Deep inspection card with native app icon, content body, and status tag.
    - AI explanation card (*"Why it was muted/shown"*) explicitly highlighting **`🤖 [AI Pipeline]`** vs **`🔍 [Semantic Search]`** evaluation reasons.
@@ -56,7 +56,7 @@ FocusRefine employs a **Dual-Engine On-Device Intelligence Architecture** to eva
 
 ### 1. Local AI Engine (Google AI Edge MediaPipe)
 - **Library**: `com.google.mediapipe:tasks-text` 1.1.1 (16 KB-aligned natives for all four ABIs, so it also runs on x86_64 emulators; see the [Technical Implementation Guide](internals.md#f-16-kb-page-size-alignment-android-15-compatibility)).
-- **Model**: `text_embedder.tflite` (Universal Sentence Encoder, 6.1 MB, bundled in `assets/`). Each built-in mode is scored by similarity to example phrases minus similarity to routine phrases, using `assets/embedding_anchors.json`. About 40 ms per notification on a Pixel 9 Pro XL. Source and license status: [`THIRD_PARTY_MODELS.md`](../THIRD_PARTY_MODELS.md).
+- **Model**: `text_embedder.tflite` (Universal Sentence Encoder, 6.1 MB, bundled in `assets/`). Each built-in mode is scored by similarity to example phrases minus similarity to routine phrases, using `assets/embedding_anchors.json`. About 40 ms per notification on a Pixel Pro XL. Source and license status: [`THIRD_PARTY_MODELS.md`](../THIRD_PARTY_MODELS.md).
 - **Score Thresholds**: per-mode, shifted by Filtering Strength (`Gentle` -0.02, `Balanced` 0, `Strict` +0.02).
 
 ### 2. Semantic Search & Heuristic Matcher
