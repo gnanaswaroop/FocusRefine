@@ -134,7 +134,7 @@ When a user reclassifies a notification (e.g., clicking *"Show notifications lik
 
 ## 6. Re-running Classification on History
 
-Settings → **Learning & Feedback** → **Re-run classification on history** re-evaluates every stored notification (`HistoryReclassifier`). It is useful after changing the mode, filtering strength, exceptions, or learned rules.
+Settings → **Learning** → **Re-run classification on history** re-evaluates every stored notification (`HistoryReclassifier`). It is useful after changing the mode, filtering strength, exceptions, or learned rules.
 
 - Uses the **current** mode for all history, not the mode that was active when each notification arrived.
 - Rows may move between *Shown* and *Muted* and get a fresh explanation. Learned-rule rows are never changed.

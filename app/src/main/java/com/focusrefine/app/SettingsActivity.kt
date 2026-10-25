@@ -580,7 +580,7 @@ fun SettingsStudioScreen(
             }
 
             Spacer(modifier = Modifier.height(14.dp))
-            // 5. Learning & Feedback Card (Collapsible)
+            // 5. Learning Card (Collapsible)
             StudioCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
@@ -592,7 +592,7 @@ fun SettingsStudioScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = "Learning & Feedback",
+                            text = "Learning",
                             fontWeight = FontWeight.Bold,
                             fontSize = 15.sp,
                             color = Color.White
