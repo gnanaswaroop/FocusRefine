@@ -84,11 +84,14 @@ fun AuthWrapper(
     }
 
     if (locked) {
+        // While the system sheet is up, show only the plain background: no title or button behind it.
+        // The message and the Unlock button appear after a failed or cancelled attempt, or when biometrics are unavailable.
+        val showMessage = !biometricAvailable || showAuthError.value
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = StudioColors.DarkBackground
         ) {
-            Column(
+            if (showMessage) Column(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
