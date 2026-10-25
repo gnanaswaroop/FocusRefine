@@ -5,7 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.ComponentActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.BorderStroke
@@ -31,10 +31,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class SettingsActivity : ComponentActivity() {
+class SettingsActivity : FragmentActivity() {
 
     private lateinit var prefs: SharedPreferences
     private var isReclassifying by mutableStateOf(false)
+    private var isUnlocked = mutableStateOf(false)
+    private var showAuthError = mutableStateOf(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +46,13 @@ class SettingsActivity : ComponentActivity() {
 
         setContent {
             FocusRefineTheme {
-                SettingsStudioScreen(
+                AuthWrapper(
+                    activity = this@SettingsActivity,
+                    prefs = prefs,
+                    isUnlocked = isUnlocked,
+                    showAuthError = showAuthError
+                ) {
+                    SettingsStudioScreen(
                     engineLoaded = engineLoaded,
                     prefs = prefs,
                     onBack = { finish() },
@@ -114,18 +122,19 @@ class SettingsActivity : ComponentActivity() {
                             }
                         }
                     },
-                    onClearAllNotifications = {
-                        lifecycleScope.launch(Dispatchers.IO) {
-                            AppDatabase.getDatabase(this@SettingsActivity).notificationDao().deleteAll()
-                            prefs.edit().putInt("suppressed_count", 0).apply()
-                            sendBroadcast(Intent(NotificationFilterService.ACTION_UPDATE_COUNT))
-                            sendBroadcast(Intent(NotificationFilterService.ACTION_NOTIFICATION_ARRIVED).setPackage(packageName))
-                            withContext(Dispatchers.Main) {
-                                Toast.makeText(this@SettingsActivity, "All inbox notifications cleared", Toast.LENGTH_SHORT).show()
+                        onClearAllNotifications = {
+                            lifecycleScope.launch(Dispatchers.IO) {
+                                AppDatabase.getDatabase(this@SettingsActivity).notificationDao().deleteAll()
+                                prefs.edit().putInt("suppressed_count", 0).apply()
+                                sendBroadcast(Intent(NotificationFilterService.ACTION_UPDATE_COUNT))
+                                sendBroadcast(Intent(NotificationFilterService.ACTION_NOTIFICATION_ARRIVED).setPackage(packageName))
+                                withContext(Dispatchers.Main) {
+                                    Toast.makeText(this@SettingsActivity, "All inbox notifications cleared", Toast.LENGTH_SHORT).show()
+                                }
                             }
                         }
-                    }
-                )
+                    )
+                }
             }
         }
     }
@@ -155,6 +164,7 @@ fun SettingsStudioScreen(
     var learnFromChoices by remember { mutableStateOf(prefs?.getBoolean("learn_from_choices", true) ?: true) }
     var useAiModel by remember { mutableStateOf(prefs?.getBoolean("use_ai_model", true) ?: true) }
     var enableSwipeAnimations by remember { mutableStateOf(prefs?.getBoolean("enable_swipe_animations", true) ?: true) }
+    var appLockEnabled by remember { mutableStateOf(prefs?.getBoolean("app_lock_enabled", BiometricHelper.isBiometricAvailable(context)) ?: false) }
 
     // Collapsible card states (all collapsed when the screen opens)
     var isEngineExpanded by remember { mutableStateOf(false) }
@@ -591,6 +601,41 @@ fun SettingsStudioScreen(
                     }
 
                     if (isAdvancedExpanded) {
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    val newVal = !appLockEnabled
+                                    if (newVal && !BiometricHelper.isBiometricAvailable(context)) {
+                                        Toast.makeText(context, "Biometric authentication is not available or not set up on this device.", Toast.LENGTH_LONG).show()
+                                    } else {
+                                        appLockEnabled = newVal
+                                        prefs?.edit()?.putBoolean("app_lock_enabled", newVal)?.apply()
+                                    }
+                                },
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("App Lock (Biometrics)", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                                Text("Require fingerprint or face unlock to view notifications.", fontSize = 11.sp, color = StudioColors.TextMuted)
+                            }
+                            Switch(
+                                checked = appLockEnabled,
+                                onCheckedChange = {
+                                    if (it && !BiometricHelper.isBiometricAvailable(context)) {
+                                        Toast.makeText(context, "Biometric authentication is not available or not set up on this device.", Toast.LENGTH_LONG).show()
+                                    } else {
+                                        appLockEnabled = it
+                                        prefs?.edit()?.putBoolean("app_lock_enabled", it)?.apply()
+                                    }
+                                },
+                                colors = SwitchDefaults.colors(checkedTrackColor = StudioColors.ActiveViolet)
+                            )
+                        }
+
                         Spacer(modifier = Modifier.height(12.dp))
 
                         Row(
