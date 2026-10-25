@@ -48,7 +48,7 @@ The app declares no `INTERNET` or network state permission. `PrivacyGuardsTest` 
 
 - [ ] Blockers in section 1 resolved
 - [ ] `./gradlew bundleRelease` succeeds, and the AAB is signed with the upload key (`keytool -printcert -jarfile …aab` shows `1A:3F:83:…`)
-- [ ] Release build tested on the Pixel and the emulator (filter on, session on, extend, end, permission revoke and re-grant)
+- [ ] Release build tested on the phone and the emulator (filter on, session on, extend, end, permission revoke and re-grant)
 - [ ] `ChangelogTest` passes (newest changelog entry equals `versionName`)
 - [ ] `PrivacyGuardsTest` passes (no INTERNET or network state in the merged manifest)
 - [ ] `docs/` and the in-app Privacy Policy and Terms text still match the behaviour
