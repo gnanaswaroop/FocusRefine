@@ -679,13 +679,16 @@ fun SettingsStudioScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text("Reset local learning data", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = StudioColors.RedText)
-                            Text("🔄", fontSize = 14.sp)
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_reset_learning),
+                                contentDescription = null,
+                                tint = StudioColors.RedText,
+                                modifier = Modifier.size(18.dp)
+                            )
                         }
                     }
                 }
             }
-
-            Spacer(modifier = Modifier.height(14.dp))
 
             Spacer(modifier = Modifier.height(14.dp))
             StudioCard(onClick = onNavigateToAppRules, modifier = Modifier.fillMaxWidth()) {
