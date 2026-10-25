@@ -2,7 +2,7 @@
 
 Measurements for the on-device embedding classifier (`EmbeddingClassifier`) and the keyword engine it complements. All figures come from this repository's own tests; how to reproduce each is listed at the end. Labels and anchor phrases are synthetic and written by the same author, so accuracy numbers are indicative, not a forecast of real traffic.
 
-**Devices:** an Android phone (arm64, real hardware) and the Android emulator `emulator-5554` (x86_64, API 37, running on a desktop CPU, so its speed is not representative of phones).
+**Devices:** a Pixel Pro XL (arm64, real hardware) and the Android emulator `emulator-5554` (x86_64, API 37, running on a desktop CPU, so its speed is not representative of phones).
 
 ---
 
@@ -21,7 +21,7 @@ Measurements for the on-device embedding classifier (`EmbeddingClassifier`) and 
 
 ---
 
-## 2. Latency (Android phone, `EmbedderBenchmarkTest`)
+## 2. Latency (Pixel Pro XL, `EmbedderBenchmarkTest`)
 
 | Measure | Value |
 | :--- | :--- |
@@ -36,10 +36,10 @@ What this means in the app:
 - **Per notification** the model adds one embedding, about 40 ms, on the `Dispatchers.IO` path of the listener service. This is small next to the time Android takes to deliver the notification and is not user-visible.
 - **First notification after process start:** the service starts a background warm-up thread (`EmbeddingClassifier.warmUp`) in `onCreate`, so the 1.7 s anchor cost normally finishes before the first notification arrives. If a notification arrives sooner, it waits for the warm-up (the lazy anchor initialisation is synchronised).
 - **Anchors are not cached on disk.** Every process start pays the 1.7 s again. Caching the vectors (keyed on model and `embedding_anchors.json` contents) would remove it.
-- **History re-run:** `HistoryReclassifier` loads its own embedder and pays model load plus anchors once, then about 40 ms per stored notification on a phone. For 500 rows expect roughly 20 s on an Android phone (estimated from the per-item figure, not measured).
+- **History re-run:** `HistoryReclassifier` loads its own embedder and pays model load plus anchors once, then about 40 ms per stored notification on a phone. For 500 rows expect roughly 20 s on a Pixel Pro XL (estimated from the per-item figure, not measured).
 
 ## 2b. A crash found only on a real phone (and its fix)
-Testing the new build on an Android phone (Android 17) found a native crash that never happens on the emulator: a
+Testing the new build on a Pixel Pro XL (Android 17) found a native crash that never happens on the emulator: a
 `SIGBUS` (memory fault) on one of MediaPipe's own worker threads (`drishti/...`), inside `libmediapipe_tasks_jni.so`,
 while reading the model's weights. It was intermittent at first (2 of 3 runs right after a fresh install, then
 reproducible), and it hit the model tests, the personal-learning tests and the benchmark.
