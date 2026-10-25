@@ -13,9 +13,10 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class PinnedHeaderE2ETest {
 
-    private fun <A : Activity> checkPinned(activity: Class<A>, title: String, firstContent: String) {
+    private fun <A : Activity> checkPinned(activity: Class<A>, title: String, firstContent: String, expand: List<String> = emptyList()) {
         ActivityScenario.launch(activity).use { scenario ->
             AccessibilityDriver.expectText(firstContent, why = "the content starts at the top")
+            expand.forEach { AccessibilityDriver.tapText(it) } // sections start collapsed; a longer page gives the scroll room
             AccessibilityDriver.scrollDown(4)
 
             assertFalse("the content scrolled away from the top ('$firstContent' should be gone)", AccessibilityDriver.hasText(firstContent))
@@ -30,7 +31,7 @@ class PinnedHeaderE2ETest {
     }
 
     @Test
-    fun settingsKeepsItsTitleBarWhileScrolling() = checkPinned(SettingsActivity::class.java, "Settings", "Classification Engine")
+    fun settingsKeepsItsTitleBarWhileScrolling() = checkPinned(SettingsActivity::class.java, "Settings", "Classification Engine", expand = listOf("Advanced Settings", "Learning & Feedback"))
 
     @Test
     fun helpKeepsItsTitleBarWhileScrolling() = checkPinned(HelpActivity::class.java, "Help & how it works", "Keep the noise out")
