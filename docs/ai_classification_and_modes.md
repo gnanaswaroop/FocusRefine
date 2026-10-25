@@ -134,7 +134,7 @@ When a user reclassifies a notification (e.g., clicking *"Show notifications lik
 
 ## 6. Re-running Classification on History
 
-Settings → **Learning & Feedback** → **Re-run classification on history** re-evaluates every stored notification (`HistoryReclassifier`). It is useful after changing the mode, filtering strength, exceptions, or learned rules.
+Settings → **Learning** → **Re-run classification on history** re-evaluates every stored notification (`HistoryReclassifier`). It is useful after changing the mode, filtering strength, exceptions, or learned rules.
 
 - Uses the **current** mode for all history, not the mode that was active when each notification arrived.
 - Rows may move between *Shown* and *Muted* and get a fresh explanation. Learned-rule rows are never changed.
@@ -168,4 +168,4 @@ The keyword engine's main weaknesses, all measured:
 | Embedding, similarity to mode prompt only | 0.61 | 0.44 |
 | Embedding, examples minus routine anchors (used) | 0.77 | 0.60 |
 
-Cost on a Pixel 9 Pro XL: about 40 ms per notification (p95 about 90 ms), about 6 MB of native heap, a one-time anchor embedding of about 1.7 s, and a 6.1 MB model. The weakest mode is Deep Work / Focus (short technical alerts), and real emergencies need shared anchors in every mode. The dataset and anchor phrases are synthetic and written by the same author, so treat these figures as indicative. Model source and license status: [`THIRD_PARTY_MODELS.md`](../THIRD_PARTY_MODELS.md).
+Cost on a Pixel Pro XL: about 40 ms per notification (p95 about 90 ms), about 6 MB of native heap, a one-time anchor embedding of about 1.7 s, and a 6.1 MB model. The weakest mode is Deep Work / Focus (short technical alerts), and real emergencies need shared anchors in every mode. The dataset and anchor phrases are synthetic and written by the same author, so treat these figures as indicative. Model source and license status: [`THIRD_PARTY_MODELS.md`](../THIRD_PARTY_MODELS.md).

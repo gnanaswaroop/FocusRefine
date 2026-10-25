@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.ComponentActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.BorderStroke
@@ -18,12 +18,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-class ContextModesActivity : ComponentActivity() {
+class ContextModesActivity : FragmentActivity() {
+
+    private var isUnlocked = mutableStateOf(false)
+    private var showAuthError = mutableStateOf(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -230,7 +235,7 @@ fun ContextModesScreen(
                                             refreshTrigger++
                                             Toast.makeText(context, "Custom mode '${modeInfo.name}' deleted", Toast.LENGTH_SHORT).show()
                                         },
-                                        modifier = Modifier.size(24.dp)
+                                        modifier = Modifier.size(24.dp).semantics { contentDescription = "Delete custom mode" }
                                     ) {
                                         Text("🗑", fontSize = 12.sp, color = StudioColors.RedText)
                                     }

@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.animation.*
@@ -59,11 +60,13 @@ import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MainActivity : ComponentActivity() {
+class MainActivity : FragmentActivity() {
 
     private lateinit var prefs: SharedPreferences
     private var lastThemeMode = -99
     private var isNotifAccessEnabledState = mutableStateOf(false)
+    private var isUnlocked = mutableStateOf(false)
+    private var showAuthError = mutableStateOf(false)
 
     private val notifReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -103,20 +106,27 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             FocusRefineTheme {
-                MainStudioScreen(
-                    isNotificationAccessEnabled = isNotifAccessEnabledState.value,
-                    isFilteringActive = prefs.getBoolean("service_running", true),
+                AuthWrapper(
+                    activity = this@MainActivity,
                     prefs = prefs,
-                    onEnableNotificationAccess = {
-                        try {
-                            startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
-                        } catch (_: Exception) {
-                            Toast.makeText(this, "Unable to open notification settings", Toast.LENGTH_SHORT).show()
-                        }
-                    },
-                    onOpenSettings = { startActivity(Intent(this, SettingsActivity::class.java)) },
-                    onOpenHelp = { startActivity(Intent(this, HelpActivity::class.java)) }
-                )
+                    isUnlocked = isUnlocked,
+                    showAuthError = showAuthError
+                ) {
+                    MainStudioScreen(
+                        isNotificationAccessEnabled = isNotifAccessEnabledState.value,
+                        isFilteringActive = prefs.getBoolean("service_running", true),
+                        prefs = prefs,
+                        onEnableNotificationAccess = {
+                            try {
+                                startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+                            } catch (_: Exception) {
+                                Toast.makeText(this, "Unable to open notification settings", Toast.LENGTH_SHORT).show()
+                            }
+                        },
+                        onOpenSettings = { startActivity(Intent(this, SettingsActivity::class.java)) },
+                        onOpenHelp = { startActivity(Intent(this, HelpActivity::class.java)) }
+                    )
+                }
             }
         }
     }
@@ -146,6 +156,10 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
+        // Note: BiometricPrompt can launch separate activities (like PIN fallback) that pause this activity.
+        // We do not blindly reset isUnlocked.value = false here, otherwise we create an infinite authentication loop
+        // when returning from a successful system auth screen. We rely on the user explicitly closing the app,
+        // or a more sophisticated foreground/background timeout logic if needed later.
         refreshAccess()
 
         val currentThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
@@ -615,7 +629,7 @@ fun MainStudioScreen(
                 Spacer(modifier = Modifier.width(6.dp))
                 IconButton(
                     onClick = { isFullScreenInbox = true },
-                    modifier = Modifier.size(28.dp)
+                    modifier = Modifier.size(28.dp).semantics { contentDescription = "Open full screen inbox" }
                 ) {
                     Text(text = "⛶", fontSize = 14.sp, color = StudioColors.TextSecondary)
                 }
@@ -824,7 +838,10 @@ fun MainStudioScreen(
                                 color = Color.White
                             )
 
-                            IconButton(onClick = { isFullScreenInbox = false }) {
+                            IconButton(
+                                onClick = { isFullScreenInbox = false },
+                                modifier = Modifier.semantics { contentDescription = "Close full screen inbox" }
+                            ) {
                                 Text(text = "✕", fontSize = 18.sp, color = Color.White)
                             }
                         }
