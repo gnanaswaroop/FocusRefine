@@ -6,13 +6,13 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import net.sqlcipher.database.SupportFactory
+import net.zetetic.database.sqlcipher.SupportOpenHelperFactory
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import java.security.SecureRandom
 import android.util.Base64
 
-@Database(entities = [NotificationEntity::class], version = 7, exportSchema = false)
+@Database(entities = [NotificationEntity::class], version = 6, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun notificationDao(): NotificationDao
 
@@ -29,12 +29,13 @@ abstract class AppDatabase : RoomDatabase() {
 
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
+                System.loadLibrary("sqlcipher")
                 val passphrase = getOrGenerateDbKey(context)
 
                 // Migrate from plaintext to SQLCipher if upgrading
                 DatabaseMigrator.migrateToEncryptedIfNecessary(context, "focusrefine_database", passphrase)
 
-                val factory = SupportFactory(passphrase)
+                val factory = SupportOpenHelperFactory(passphrase)
 
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
@@ -72,7 +73,8 @@ abstract class AppDatabase : RoomDatabase() {
                 sharedPrefs.edit().putString("db_key", keyBase64).apply()
             }
 
-            return Base64.decode(keyBase64, Base64.DEFAULT)
+            // The passphrase is the stored Base64 text itself, so the migrator's ATTACH KEY and Room derive the same key.
+            return keyBase64.toByteArray(Charsets.US_ASCII)
         }
     }
 }
