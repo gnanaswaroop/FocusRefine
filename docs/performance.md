@@ -2,7 +2,7 @@
 
 Measurements for the on-device embedding classifier (`EmbeddingClassifier`) and the keyword engine it complements. All figures come from this repository's own tests; how to reproduce each is listed at the end. Labels and anchor phrases are synthetic and written by the same author, so accuracy numbers are indicative, not a forecast of real traffic.
 
-**Devices:** a Pixel 9 Pro XL (arm64, real hardware) and the Android emulator `emulator-5554` (x86_64, API 37, running on a desktop CPU, so its speed is not representative of phones).
+**Devices:** an Android phone (arm64, real hardware) and the Android emulator `emulator-5554` (x86_64, API 37, running on a desktop CPU, so its speed is not representative of phones).
 
 ---
 
@@ -21,7 +21,7 @@ Measurements for the on-device embedding classifier (`EmbeddingClassifier`) and 
 
 ---
 
-## 2. Latency (Pixel 9 Pro XL, `EmbedderBenchmarkTest`)
+## 2. Latency (Android phone, `EmbedderBenchmarkTest`)
 
 | Measure | Value |
 | :--- | :--- |
@@ -36,15 +36,15 @@ What this means in the app:
 - **Per notification** the model adds one embedding, about 40 ms, on the `Dispatchers.IO` path of the listener service. This is small next to the time Android takes to deliver the notification and is not user-visible.
 - **First notification after process start:** the service starts a background warm-up thread (`EmbeddingClassifier.warmUp`) in `onCreate`, so the 1.7 s anchor cost normally finishes before the first notification arrives. If a notification arrives sooner, it waits for the warm-up (the lazy anchor initialisation is synchronised).
 - **Anchors are not cached on disk.** Every process start pays the 1.7 s again. Caching the vectors (keyed on model and `embedding_anchors.json` contents) would remove it.
-- **History re-run:** `HistoryReclassifier` loads its own embedder and pays model load plus anchors once, then about 40 ms per stored notification on a phone. For 500 rows expect roughly 20 s on a Pixel (estimated from the per-item figure, not measured).
+- **History re-run:** `HistoryReclassifier` loads its own embedder and pays model load plus anchors once, then about 40 ms per stored notification on a phone. For 500 rows expect roughly 20 s on an Android phone (estimated from the per-item figure, not measured).
 
 ## 2b. A crash found only on a real phone (and its fix)
-Testing the new build on a Pixel 9 Pro XL (Android 17) found a native crash that never happens on the emulator: a
+Testing the new build on an Android phone (Android 17) found a native crash that never happens on the emulator: a
 `SIGBUS` (memory fault) on one of MediaPipe's own worker threads (`drishti/...`), inside `libmediapipe_tasks_jni.so`,
 while reading the model's weights. It was intermittent at first (2 of 3 runs right after a fresh install, then
 reproducible), and it hit the model tests, the personal-learning tests and the benchmark.
 
-| Experiment on the Pixel | Result |
+| Experiment on the phone | Result |
 | :--- | :--- |
 | Load the model with `setModelAssetPath` (MediaPipe reads the weights straight out of the APK), 600 embeddings per run | crashed in **6 of 6** runs |
 | Load the same model into ordinary memory (`setModelAssetBuffer`), same 600 embeddings | **0 of 6** crashed |
@@ -61,10 +61,10 @@ A second, related change: the app used to create and close a MediaPipe model for
 re-run (about 2 s each, mostly embedding the anchors). It now uses **one process-wide model**
 (`EmbeddingClassifier.shared`) that the service, corrections and history re-runs share and **nothing ever closes**.
 Releasing it when the AI engine was switched off was tried and removed: the service holds the same instance, and every
-later decision failed with "closed". After both changes: 12 of 12 test-class runs on the Pixel passed with no native crash
+later decision failed with "closed". After both changes: 12 of 12 test-class runs on the phone passed with no native crash
 (model tests, personal-learning tests and the benchmark, three rounds), and all 66 device tests pass on the emulator.
 
-Also verified on the Pixel: embeddings from the phone and the emulator differ by at most 1.2e-6 and **none of the 6,905
+Also verified on the phone: embeddings from the phone and the emulator differ by at most 1.2e-6 and **none of the 6,905
 notification-and-mode decisions differ**, so model accuracy is identical across devices (model alone: macro F1 0.774 on
 the golden set, 0.599 on the holdout set, as on the emulator). Latency on the phone while it was also in use: embed p50
 46 to 48 ms, p95 80 to 98 ms, the 47 anchors 2.0 to 3.2 s (earlier idle-phone runs: 38 to 44 ms, 83 to 95 ms, 1.6 to 1.9 s).
@@ -130,7 +130,7 @@ Thresholds were chosen on the golden set. The holdout set (disjoint, never tuned
 ## 7. Emulator versus phone
 - **Speed:** the emulator uses the desktop CPU (about 6 ms per embedding), so it understates phone latency by roughly 7x. Do not use emulator timings for budgeting.
 - **Accuracy:** identical on both. The keyword baseline was also identical across the two devices.
-- **Loading:** with `tasks-text` 0.10.14 only the phone could load MediaPipe (no `x86_64` native). With 1.1.1 both can. The full end-to-end replay of the embedding engine was run on the emulator only. On the Pixel it was checked with the **release APK** (installed over the existing app, data kept): seven notifications posted in Sleeping / Rest mode at Balanced strength were Shown for Dexcom (low glucose), Apple Watch (high heart rate) and Hospital (exception), and removed from the shade for Greenwood School, Amazon, TikTok and Spotify, which is the same split the emulator produced (scores 0.047 and 0.095 against a 0.043 threshold for the first two). A release build is not debuggable, so the database and explanations could not be read there; the Shown/removed outcome was read from the system notification list.
+- **Loading:** with `tasks-text` 0.10.14 only the phone could load MediaPipe (no `x86_64` native). With 1.1.1 both can. The full end-to-end replay of the embedding engine was run on the emulator only. On the phone it was checked with the **release APK** (installed over the existing app, data kept): seven notifications posted in Sleeping / Rest mode at Balanced strength were Shown for Dexcom (low glucose), Apple Watch (high heart rate) and Hospital (exception), and removed from the shade for Greenwood School, Amazon, TikTok and Spotify, which is the same split the emulator produced (scores 0.047 and 0.095 against a 0.043 threshold for the first two). A release build is not debuggable, so the database and explanations could not be read there; the Shown/removed outcome was read from the system notification list.
 
 ## 8. Test harness findings that affect measurements
 - Android silently drops posts beyond **50 active notifications per package**, which looked like classification misses at first. The replay script reuses 24 tags and force-stops `com.android.shell` between modes to clear them.

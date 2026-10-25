@@ -138,8 +138,8 @@ class HomeHeaderE2ETest {
     }
 
     @Test
-    fun theBadgeSitsBesideTheNameOnAPixelSizedScreenWithItsDisplaySizeSetting() {
-        // The user's Pixel 9 Pro XL: 1008x2244 at 408dpi is 395dp wide, which the first version of this layout missed.
+    fun theBadgeSitsBesideTheNameOnAPhoneSizedScreenWithItsDisplaySizeSetting() {
+        // The user's Android phone: 1008x2244 at 408dpi is 395dp wide, which the first version of this layout missed.
         ServiceHarness.shell("wm size 1008x2244; wm density 408")
         Thread.sleep(2000)
         ActivityScenario.launch(MainActivity::class.java).use {
