@@ -48,18 +48,10 @@ class ConfigureModesActivity : FragmentActivity() {
 
         setContent {
             FocusRefineTheme {
-                AuthWrapper(
-                    activity = this@ConfigureModesActivity,
-                    prefs = getSharedPreferences("FocusRefinePrefs", MODE_PRIVATE),
-                    isUnlocked = isUnlocked,
-                    showAuthError = showAuthError
-                ) {
                 AppRulesScreen(
                     prefs = prefs,
                     onBack = { finish() }
                 )
-                }
-
             }
         }
     }

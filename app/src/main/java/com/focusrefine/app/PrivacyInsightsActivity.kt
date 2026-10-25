@@ -45,18 +45,10 @@ class PrivacyInsightsActivity : FragmentActivity() {
 
         setContent {
             FocusRefineTheme {
-                AuthWrapper(
-                    activity = this@PrivacyInsightsActivity,
-                    prefs = getSharedPreferences("FocusRefinePrefs", MODE_PRIVATE),
-                    isUnlocked = isUnlocked,
-                    showAuthError = showAuthError
-                ) {
                 PrivacyInsightsScreen(
                     engineLoaded = engineLoaded,
                     onBack = { finish() }
                 )
-                }
-
             }
         }
     }

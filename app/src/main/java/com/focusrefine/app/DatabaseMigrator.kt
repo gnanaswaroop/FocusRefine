@@ -4,76 +4,74 @@ import android.content.Context
 import android.util.Log
 import java.io.File
 import java.io.FileInputStream
-import net.zetetic.database.sqlcipher.SQLiteDatabase
 
-/**
- * Converts an existing plaintext Room database into a SQLCipher database in place.
- *
- * Uses the SQLCipher SQLiteDatabase (not the framework one): `sqlcipher_export` only exists in SQLCipher.
- * The key text must match what SupportOpenHelperFactory receives, so both derive the same key.
- */
 object DatabaseMigrator {
     private const val TAG = "DatabaseMigrator"
-    private const val SQLITE_HEADER = "SQLite format 3\u0000"
 
-    fun migrateToEncryptedIfNecessary(context: Context, dbName: String, passphrase: ByteArray) {
+    fun migrateToEncryptedIfNecessary(context: Context, dbName: String, passphrase: ByteArray): Boolean {
         val originalDbFile = context.getDatabasePath(dbName)
-        if (!originalDbFile.exists() || !isPlaintextSqlite(originalDbFile)) {
-            return
+        if (!originalDbFile.exists()) {
+            return true
         }
-        Log.d(TAG, "Plaintext database detected. Migrating to SQLCipher.")
 
-        val parent = originalDbFile.parentFile ?: return
-        val encryptedFile = File(context.cacheDir, "$dbName.encrypting.db")
-        val backupFile = File(parent, "$dbName.plaintext-backup")
-        encryptedFile.delete()
+        // Check the SQLite header to see if it's plaintext
+        var isPlaintext = false
+        try {
+            val fileInputStream = FileInputStream(originalDbFile)
+            val header = ByteArray(16)
+            val bytesRead = fileInputStream.read(header)
+            fileInputStream.close()
 
-        val keyText = String(passphrase, Charsets.US_ASCII).replace("'", "''")
-        val targetPath = encryptedFile.absolutePath.replace("'", "''")
+            // Standard SQLite3 header is "SQLite format 3\0"
+            if (bytesRead == 16) {
+                val headerStr = String(header, Charsets.US_ASCII)
+                if (headerStr == "SQLite format 3\u0000") {
+                    isPlaintext = true
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error checking database header", e)
+        }
+
+        if (!isPlaintext) {
+            Log.d(TAG, "Database is not plaintext (likely already encrypted).")
+            return true
+        }
+
+        Log.d(TAG, "Plaintext database detected. Attempting migration to encrypted SQLCipher database.")
 
         try {
-            System.loadLibrary("sqlcipher")
-            val plain = SQLiteDatabase.openDatabase(
-                originalDbFile.absolutePath, ByteArray(0), null,
-                SQLiteDatabase.OPEN_READWRITE or SQLiteDatabase.CREATE_IF_NECESSARY, null, null
+            val unencryptedDb = android.database.sqlite.SQLiteDatabase.openDatabase(
+                originalDbFile.absolutePath,
+                null,
+                android.database.sqlite.SQLiteDatabase.OPEN_READWRITE
             )
-            try {
-                val userVersion = plain.rawQuery("PRAGMA user_version", null).use { c ->
-                    if (c.moveToFirst()) c.getInt(0) else 0
-                }
-                plain.rawExecSQL("ATTACH DATABASE '$targetPath' AS encrypted KEY '$keyText'")
-                plain.rawQuery("SELECT sqlcipher_export('encrypted')", null).use { it.moveToFirst() }
-                plain.rawExecSQL("PRAGMA encrypted.user_version = $userVersion")
-                plain.rawExecSQL("DETACH DATABASE encrypted")
-            } finally {
-                plain.close()
-            }
 
-            // Swap the files; keep the plaintext copy until the encrypted one is in place.
-            backupFile.delete()
-            if (!originalDbFile.renameTo(backupFile)) throw IllegalStateException("cannot move plaintext db aside")
-            if (!encryptedFile.renameTo(originalDbFile)) {
-                backupFile.renameTo(originalDbFile)
-                throw IllegalStateException("cannot move encrypted db into place")
+            val tempDbFile = File(context.cacheDir, "temp_encrypted.db")
+            if (tempDbFile.exists()) tempDbFile.delete()
+
+            val hexKey = passphrase.joinToString("") { "%02x".format(it) }
+
+            unencryptedDb.rawQuery("ATTACH DATABASE '${tempDbFile.absolutePath}' AS encrypted KEY \"x'$hexKey'\"", null).close()
+            unencryptedDb.rawQuery("SELECT sqlcipher_export('encrypted')", null).close()
+            unencryptedDb.rawQuery("DETACH DATABASE encrypted", null).close()
+            unencryptedDb.close()
+
+            // Swap files
+            val success = tempDbFile.renameTo(originalDbFile)
+            if (!success) {
+                Log.e(TAG, "Failed to rename temp encrypted DB to original DB.")
+                return false
+            } else {
+                Log.d(TAG, "Successfully migrated plaintext database to encrypted.")
+                // Also clean up WAL and SHM files of the plaintext DB
+                File(originalDbFile.parent, "$dbName-wal").delete()
+                File(originalDbFile.parent, "$dbName-shm").delete()
+                return true
             }
-            backupFile.delete()
-            File(parent, "$dbName-wal").delete()
-            File(parent, "$dbName-shm").delete()
-            File(parent, "$dbName-journal").delete()
-            Log.d(TAG, "Migrated plaintext database to SQLCipher.")
         } catch (e: Exception) {
-            encryptedFile.delete()
-            Log.e(TAG, "Migration to encrypted database failed: ${e.javaClass.simpleName}", e)
+            Log.e(TAG, "Migration to encrypted database failed", e)
+            return false
         }
-    }
-
-    private fun isPlaintextSqlite(file: File): Boolean = try {
-        FileInputStream(file).use { input ->
-            val header = ByteArray(16)
-            input.read(header) == 16 && String(header, Charsets.US_ASCII) == SQLITE_HEADER
-        }
-    } catch (e: Exception) {
-        Log.e(TAG, "Error checking database header", e)
-        false
     }
 }

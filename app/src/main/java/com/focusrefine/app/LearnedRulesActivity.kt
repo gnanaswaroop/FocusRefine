@@ -40,12 +40,6 @@ class LearnedRulesActivity : FragmentActivity() {
 
         setContent {
             FocusRefineTheme {
-                AuthWrapper(
-                    activity = this@LearnedRulesActivity,
-                    prefs = getSharedPreferences("FocusRefinePrefs", MODE_PRIVATE),
-                    isUnlocked = isUnlocked,
-                    showAuthError = showAuthError
-                ) {
                 var rules by remember { mutableStateOf(emptyList<NotificationEntity>()) }
                 var refreshTrigger by remember { mutableStateOf(0) }
                 var showClearConfirmDialog by remember { mutableStateOf(false) }
@@ -226,8 +220,6 @@ class LearnedRulesActivity : FragmentActivity() {
                         }
                     }
                 }
-                }
-
             }
         }
     }

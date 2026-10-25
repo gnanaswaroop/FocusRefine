@@ -52,12 +52,6 @@ class NotificationDetailActivity : FragmentActivity() {
 
         setContent {
             FocusRefineTheme {
-                AuthWrapper(
-                    activity = this@NotificationDetailActivity,
-                    prefs = getSharedPreferences("FocusRefinePrefs", MODE_PRIVATE),
-                    isUnlocked = isUnlocked,
-                    showAuthError = showAuthError
-                ) {
                 NotificationDetailScreen(
                     notifId = notifId,
                     title = title,
@@ -69,8 +63,6 @@ class NotificationDetailActivity : FragmentActivity() {
                     confidence = confidence,
                     onBack = { finish() }
                 )
-                }
-
             }
         }
     }
