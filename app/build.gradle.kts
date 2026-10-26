@@ -67,8 +67,6 @@ android {
     packaging {
         jniLibs {
             useLegacyPackaging = false
-            // The text-generation (LLM) library that MediaPipe tasks-text bundles; the app only uses TextEmbedder.
-            excludes += "**/libmediapipe_tasks_textgenai_jni.so"
         }
     }
     lint {
@@ -100,7 +98,7 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    implementation("com.google.mediapipe:tasks-text:1.1.1")
+    implementation("com.google.ai.edge.litert:litert:2.2.0") // Track B on-device model (LiteRT keeps the TFLite Java API; 16 KB aligned)
     implementation("androidx.biometric:biometric:1.2.0-alpha05")
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
     implementation("net.zetetic:android-database-sqlcipher:4.5.4")

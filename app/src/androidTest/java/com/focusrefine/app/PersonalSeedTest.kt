@@ -30,7 +30,7 @@ class PersonalSeedTest {
             var stored = 0
             for (i in 0 until list.length()) {
                 val c = list.getJSONObject(i)
-                val n = engine.learn(c.getString("title"), c.getString("text"), c.getString("mode"), c.getBoolean("urgent"))
+                val n = engine.learn(c.getString("title"), c.getString("text"), null, c.getString("mode"), c.getBoolean("urgent"))
                 if (n != null) stored = n
             }
             android.util.Log.i("PERS_SEED", "stored $stored correction(s) from ${list.length()}")

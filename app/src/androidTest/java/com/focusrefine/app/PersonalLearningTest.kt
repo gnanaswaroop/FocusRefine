@@ -18,7 +18,6 @@ class PersonalLearningTest {
     private val mode = "Sleeping / Rest"
     private val title = "Greenwood School"
     private val text = "Early dismissal today due to a safety incident"
-    private val content = "$title $text".lowercase()
 
     @Before
     fun setUp() {
@@ -29,7 +28,7 @@ class PersonalLearningTest {
     @After
     fun tearDown() = PersonalLearning.clear(context)
 
-    private fun verdict(engine: EmbeddingClassifier, c: String = content) = engine.classify(c, mode, 1)!!
+    private fun verdict(engine: EmbeddingClassifier, t: String = title, x: String = text) = engine.classify(t, x, null, mode, 1)!!
 
     @Test
     fun aCorrectionChangesTheDecisionAndForgettingRestoresIt() {
@@ -45,7 +44,7 @@ class PersonalLearningTest {
             assertTrue("adjustment ${after.adjustment}", after.isUrgent && after.adjustment > 0)
             assertEquals("the built-in score is untouched", before.score, after.score, 1e-9)
 
-            val unrelated = verdict(engine, "amazon lightning deal: 60% off smart watches")
+            val unrelated = verdict(engine, "Lightning deal", "amazon lightning deal: 60% off smart watches")
             assertFalse("an unrelated promo must stay muted", unrelated.isUrgent)
 
             PersonalLearning.forget(context, title, text)
@@ -62,15 +61,14 @@ class PersonalLearningTest {
     fun aShownNotificationCanBeLearnedAsMutedAndBack() {
         val shownTitle = "Apple Watch"
         val shownText = "High heart rate notification: 140 BPM while inactive"
-        val shownContent = "$shownTitle $shownText".lowercase()
         val engine = EmbeddingClassifier.shared(context)!!
         try {
-            val before = verdict(engine, shownContent)
+            val before = verdict(engine, shownTitle, shownText)
             assertTrue("test premise: the built-in model shows this (score ${before.score} vs ${before.threshold})", before.isUrgent)
 
             assertEquals(1, PersonalLearning.record(context, shownTitle, shownText, mode, urgent = false))
 
-            val after = verdict(engine, shownContent)
+            val after = verdict(engine, shownTitle, shownText)
             assertFalse("adjustment ${after.adjustment}", after.isUrgent)
             assertTrue(after.adjustment < 0)
             val similar = verdict(engine, "apple watch high heart rate notification: 150 bpm while inactive")
@@ -79,7 +77,7 @@ class PersonalLearningTest {
             assertTrue("a different urgent message stays shown", unrelated.isUrgent)
 
             PersonalLearning.forget(context, shownTitle, shownText)
-            assertTrue(verdict(engine, shownContent).isUrgent)
+            assertTrue(verdict(engine, shownTitle, shownText).isUrgent)
         } finally {
             // the shared engine stays open
         }

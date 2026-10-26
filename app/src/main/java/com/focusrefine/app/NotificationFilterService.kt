@@ -225,7 +225,7 @@ class NotificationFilterService : NotificationListenerService() {
         CoroutineScope(Dispatchers.IO + onError).launch {
             val defaultMode = PromptManager.getDefaultModeName(this@NotificationFilterService)
             val currentMode = prefs.getString("current_mode", defaultMode) ?: defaultMode
-            val classification = classifier.classify(title, text, currentMode)
+            val classification = classifier.classify(title, text, currentMode, sbn.packageName)
 
             if (classification.isUrgent) {
                 Log.d(TAG, "Allowed (Shown) notification: ${sbn.key}")
