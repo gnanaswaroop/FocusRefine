@@ -112,6 +112,7 @@ class MainActivity : FragmentActivity() {
                     isUnlocked = isUnlocked,
                     showAuthError = showAuthError
                 ) {
+                    LegacyDataNotice(this@MainActivity)
                     MainStudioScreen(
                         isNotificationAccessEnabled = isNotifAccessEnabledState.value,
                         isFilteringActive = prefs.getBoolean("service_running", true),

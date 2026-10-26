@@ -26,6 +26,7 @@ class EmbeddingClassifier private constructor(
     private val tokenizer: TrackBTokenizer,
     private val apps: AppCatalogue,
     private val head: Head,
+    private val centre: FloatArray,
     private val store: PersonalModelStore,
     @Suppress("unused") private val modelBuffer: ByteBuffer // keeps the model's memory alive while native code reads it
 ) {
@@ -65,7 +66,7 @@ class EmbeddingClassifier private constructor(
         val score = output.logits[MODE_MATCHES.indexOf(canonical)]
         val threshold = STRENGTH_OFFSETS[filterStrength.coerceIn(0, 2)]
         val model = currentPersonalModel()
-        val adjustment = model?.adjustment(output.pooled, canonical) ?: 0.0
+        val adjustment = model?.adjustment(centred(output.pooled), canonical) ?: 0.0
         val decision = (model?.params?.baseScale ?: DEFAULT_BASE_SCALE) * (score - threshold) + adjustment
         return Verdict(decision >= 0.0, score, threshold, adjustment, decision)
     }
@@ -73,13 +74,16 @@ class EmbeddingClassifier private constructor(
     /** Canonical built-in mode name for [mode] ("Sleeping / Rest" -> "Sleep"), or null for custom modes. */
     fun canonicalMode(mode: String): String? = MODE_MATCHES.firstOrNull { mode.contains(it, ignoreCase = true) }
 
-    /** The linear output for [canonicalMode] on pooled features from an earlier [pooled] call. */
-    fun baseMargin(vector: FloatArray, canonicalMode: String): Double = head.margin(vector, MODE_MATCHES.indexOf(canonicalMode))
+    /** The built-in logit for [canonicalMode] from a stored, centred feature vector (see [centred]). */
+    fun baseMargin(vector: FloatArray, canonicalMode: String): Double {
+        val raw = FloatArray(vector.size) { vector[it] + centre[it] }
+        return head.margin(raw, MODE_MATCHES.indexOf(canonicalMode))
+    }
 
     /** Records one correction ("Shown"/"Muted") for a built-in mode and retrains. Returns the number of stored corrections. */
     fun learn(title: String?, text: String?, packageName: String?, mode: String, urgent: Boolean): Int? {
         val canonical = canonicalMode(mode) ?: return null
-        val vector = infer(title, text, packageName).pooled
+        val vector = centred(infer(title, text, packageName).pooled)
         val example = PersonalModel.Example(PersonalModelStore.keyFor(title, text), canonical, vector, urgent)
         return store.addAndTrain(example) { v, m -> baseMargin(v, m) }
     }
@@ -92,6 +96,9 @@ class EmbeddingClassifier private constructor(
         closed = true
         interpreter.close()
     }
+
+    /** The pooled features minus the training mean: what the personal model compares (see [centre]). */
+    private fun centred(pooled: FloatArray): FloatArray = FloatArray(pooled.size) { pooled[it] - centre[it] }
 
     private fun infer(title: String?, text: String?, packageName: String?): Output = synchronized(lock) {
         check(!closed) { "Embedding classifier is closed" }
@@ -128,6 +135,7 @@ class EmbeddingClassifier private constructor(
         private const val MODEL_ASSET = "track_b.tflite"
         private const val VOCAB_ASSET = "track_b_vocab.json"
         private const val HEAD_ASSET = "track_b_head.json"
+        private const val CENTRE_ASSET = "track_b_centre.json"
         private const val APPS_ASSET = "track_b_apps.json"
         private const val PAGE = 4096
         private const val PREFS_NAME = "FocusRefinePrefs"
@@ -203,6 +211,7 @@ class EmbeddingClassifier private constructor(
                     TrackBTokenizer.fromJson(readAsset(context, VOCAB_ASSET)),
                     AppCatalogue.fromJson(readAsset(context, APPS_ASSET)),
                     loadHead(context),
+                    loadCentre(context),
                     PersonalModelStore(context.applicationContext),
                     buffer
                 )
@@ -216,6 +225,13 @@ class EmbeddingClassifier private constructor(
 
         private fun readAsset(context: Context, name: String): String =
             context.assets.open(name).bufferedReader().use { it.readText() }
+
+        /** The mean pooled feature over the training items (`track_b_centre.json`); see ml/export/export_app_assets.py. */
+        private fun loadCentre(context: Context): FloatArray {
+            val values = JSONObject(readAsset(context, CENTRE_ASSET)).getJSONArray("centre")
+            check(values.length() == EMBED_DIM) { "centre does not match the model width" }
+            return FloatArray(EMBED_DIM) { values.getDouble(it).toFloat() }
+        }
 
         private fun loadHead(context: Context): Head {
             val json = JSONObject(readAsset(context, HEAD_ASSET))

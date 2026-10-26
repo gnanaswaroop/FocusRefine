@@ -55,7 +55,7 @@ class ScreensE2ETest {
     @Test
     fun reRunningClassificationFromSettingsMovesHistoryToTheCurrentDecision() {
         val now = System.currentTimeMillis()
-        dao.insert(row("Omron Heart", "Urgent low glucose alert: 48 mg/dL", urgent = false, ts = now))   // should be Shown while sleeping
+        dao.insert(row("Airline", "Your flight is boarding now, gate B4", urgent = false, ts = now))   // should be Shown while sleeping
         dao.insert(row("Myntra", "Lightning deal: 50% off sneakers", urgent = true, ts = now - 1000))     // should be Muted
         ActivityScenario.launch(SettingsActivity::class.java).use {
             AccessibilityDriver.tapText("Learning") // its own card, outside Advanced Settings
@@ -63,11 +63,11 @@ class ScreensE2ETest {
             assertTrue("the confirmation dialog appears", AccessibilityDriver.waitForText("Re-run classification?"))
             AccessibilityDriver.tapText("Re-run")
             assertTrue("history was re-checked", waitUntil {
-                dao.getAll().first { it.title == "Omron Heart" }.isUrgent && !dao.getAll().first { it.title == "Myntra" }.isUrgent
+                dao.getAll().first { it.title == "Airline" }.isUrgent && !dao.getAll().first { it.title == "Myntra" }.isUrgent
             })
-            val omron = dao.getAll().first { it.title == "Omron Heart" }
-            assertTrue(omron.explanation!!.contains("AI Pipeline"))
-            assertTrue("and the confidence now reflects the new decision: ${omron.confidence}", omron.confidence!! >= Confidence.VERY_SURE_FROM)
+            val shown = dao.getAll().first { it.title == "Airline" }
+            assertTrue("explained by the model: ${shown.explanation}", shown.explanation!!.contains("AI Pipeline"))
+            assertTrue("and the confidence now reflects the new decision: ${shown.confidence}", shown.confidence!! >= Confidence.VERY_SURE_FROM)
         }
     }
 

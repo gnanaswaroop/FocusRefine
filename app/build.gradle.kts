@@ -15,8 +15,8 @@ android {
         applicationId = "com.focusrefine.app"
         minSdk = 28
         targetSdk = 36
-        versionCode = 3
-        versionName = "1.1.1"
+        versionCode = 5
+        versionName = "1.1.3"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
@@ -98,10 +98,17 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    implementation("com.google.ai.edge.litert:litert:2.2.0") // Track B on-device model (LiteRT keeps the TFLite Java API; 16 KB aligned)
+    // Track B on-device model. LiteRT keeps the TFLite Java API and is 16 KB aligned. Its transitive libraries are not
+    // used by the interpreter, and they would move Compose and Lifecycle to newer versions than the app is built against.
+    implementation("com.google.ai.edge.litert:litert:2.2.0") {
+        exclude(group = "androidx.lifecycle")
+        exclude(group = "com.google.guava")
+        exclude(group = "org.jetbrains.kotlinx")
+        exclude(group = "com.google.android.play")
+    }
     implementation("androidx.biometric:biometric:1.2.0-alpha05")
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
-    implementation("net.zetetic:android-database-sqlcipher:4.5.4")
+    implementation("net.zetetic:sqlcipher-android:4.19.1") // 16 KB aligned; 4.5.4 was not
 
     val composeBom = platform("androidx.compose:compose-bom:2024.02.00")
     implementation(composeBom)

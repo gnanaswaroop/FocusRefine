@@ -59,8 +59,8 @@ class PersonalLearningTest {
 
     @Test
     fun aShownNotificationCanBeLearnedAsMutedAndBack() {
-        val shownTitle = "Apple Watch"
-        val shownText = "High heart rate notification: 140 BPM while inactive"
+        val shownTitle = "Doctor"
+        val shownText = "Please call me back, lab results are ready"
         val engine = EmbeddingClassifier.shared(context)!!
         try {
             val before = verdict(engine, shownTitle, shownText)
@@ -71,9 +71,9 @@ class PersonalLearningTest {
             val after = verdict(engine, shownTitle, shownText)
             assertFalse("adjustment ${after.adjustment}", after.isUrgent)
             assertTrue(after.adjustment < 0)
-            val similar = verdict(engine, "apple watch high heart rate notification: 150 bpm while inactive")
+            val similar = verdict(engine, "Doctor", "Please call me back, lab results are in")
             assertFalse("a near-identical notification follows the user's choice", similar.isUrgent)
-            val unrelated = verdict(engine, "doctor: urgent medical notification, please call")
+            val unrelated = verdict(engine, "Doctor", "urgent medical notification, please call")
             assertTrue("a different urgent message stays shown", unrelated.isUrgent)
 
             PersonalLearning.forget(context, shownTitle, shownText)

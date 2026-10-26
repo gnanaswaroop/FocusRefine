@@ -14,5 +14,5 @@
 
 # SQLCipher's native library looks up its Java classes by name over JNI. Nothing in Kotlin references them, so R8
 # removes them in release builds, and the app aborts when the database opens (JNI FindClass fails in JNI_OnLoad).
--keep class net.sqlcipher.** { *; }
--keep interface net.sqlcipher.** { *; }
+-keep class net.zetetic.** { *; }
+-keep interface net.zetetic.** { *; }
