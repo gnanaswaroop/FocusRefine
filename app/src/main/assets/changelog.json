@@ -1,6 +1,21 @@
 {
   "releases": [
     {
+      "version": "1.1.3",
+      "date": "2026-10-27",
+      "title": "A new on-device model",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The urgency check now uses FocusRefine's own multilingual model, trained on synthetic notifications in 18 languages. It runs on the phone and never leaves it.",
+            "The model uses the app a notification came from (for example WhatsApp or Calendar) when it knows it. Apps it does not know are judged on the text alone.",
+            "Earlier notification history cannot be read by this version yet. It is kept on the phone and not shown, and a notice explains this. Migration is planned."
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.1.1",
       "date": "2026-10-24",
       "title": "Maintenance update",

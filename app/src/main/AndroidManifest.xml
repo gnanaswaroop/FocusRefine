@@ -9,8 +9,8 @@
     <!-- Android 16 Live Updates: lets the focus-session countdown show as a status bar chip. Normal permission, no data access. -->
     <uses-permission android:name="android.permission.POST_PROMOTED_NOTIFICATIONS" />
 
-    <!-- Privacy guarantee: the app has no network access. MediaPipe's tasks-core pulls in Google's
-         datatransport library, which declares these; strip them so the OS blocks every socket. -->
+    <!-- Privacy guarantee: the app has no network access. Some libraries declare these (Google's datatransport,
+         for one); strip them so the OS blocks every socket. -->
     <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" tools:node="remove" />
 

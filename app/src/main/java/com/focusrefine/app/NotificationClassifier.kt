@@ -31,7 +31,7 @@ class NotificationClassifier(
      * 4. the on-device embedding model, when it is loaded and the mode is a built-in one
      * 5. keywords from the active mode's prompt (always produces a result)
      */
-    fun classify(title: String?, text: String?, mode: String): ClassificationResult {
+    fun classify(title: String?, text: String?, mode: String, packageName: String? = null): ClassificationResult {
         val content = "${title ?: ""} ${text ?: ""}".lowercase()
         val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         val synthesizedRules by lazy { database.notificationDao().getSynthesizedRules() }
@@ -39,7 +39,7 @@ class NotificationClassifier(
         return matchLearnedRule(title, text)
             ?: matchSynthesizedRule(synthesizedRules, title, text)
             ?: matchException(content, prefs)
-            ?: classifyWithModel(content, mode, prefs)
+            ?: classifyWithModel(title, text, packageName, mode, prefs)
             ?: classifyByModePrompt(content, mode, prefs, synthesizedRules)
     }
 
@@ -95,12 +95,12 @@ class NotificationClassifier(
     // ---- 4. On-device embedding model -------------------------------------------------------
 
     /** Returns null when the model is off, unavailable, failed, or the mode has no anchors (custom modes). */
-    private fun classifyWithModel(content: String, mode: String, prefs: SharedPreferences): ClassificationResult? {
+    private fun classifyWithModel(title: String?, text: String?, packageName: String?, mode: String, prefs: SharedPreferences): ClassificationResult? {
         val engine = embeddingClassifier ?: return null
         if (!prefs.getBoolean(PREF_USE_AI, true)) return null
 
         val verdict = try {
-            engine.classify(content, mode, prefs.getInt(PREF_FILTER_STRENGTH, 1))
+            engine.classify(title, text, packageName, mode, prefs.getInt(PREF_FILTER_STRENGTH, 1))
         } catch (e: Exception) {
             Log.e(TAG, "Embedding classification error: ${e.message}")
             null
