@@ -33,9 +33,9 @@ class PipelineE2ETest {
     private val workout = "Workout / Gym"
 
     // Shown in Commute (+2.21) and Muted in Workout (-6.28), the production engine with no app context
-    private val buildFailed = "Jenkins" to "Build #482 failed on main: deploy blocked"
+    private val standup = "Calendar" to "Standup in 5 minutes"
     // Commute, a hair above the threshold (+0.09): Shown at Balanced, Muted at Strict; a close call in Sleeping (+0.89)
-    private val borderline = "Calendar" to "Meeting with the CEO starts in 5 minutes"
+    private val borderline = "Office" to "Server down: production alert, respond now"
     // Sleeping, clearly urgent (+5.04) and clearly routine (-3.34)
     private val clearlyUrgent = "Doctor" to "Please call me back, lab results are ready"
     private val clearlyRoutine = "Myntra" to "Lightning deal: 50% off sneakers"
@@ -58,13 +58,13 @@ class PipelineE2ETest {
     @Test
     fun theSameNotificationIsDecidedByTheActiveMode() {
         h.start(commute)
-        val inCommute = postAndRead(buildFailed)
+        val inCommute = postAndRead(standup)
         assertTrue("shown while commuting (${inCommute.explanation})", inCommute.isUrgent)
         assertTrue(inCommute.explanation!!.contains("AI Pipeline") && inCommute.explanation!!.contains(commute))
 
         h.dao.deleteAll()
         setPref { putString("current_mode", workout) }
-        val inWorkout = postAndRead(buildFailed)
+        val inWorkout = postAndRead(standup)
         assertFalse("muted while working out (${inWorkout.explanation})", inWorkout.isUrgent)
         assertTrue(inWorkout.explanation!!.contains(workout))
     }
