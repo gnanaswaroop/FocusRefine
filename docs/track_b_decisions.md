@@ -81,6 +81,16 @@ Tests that are not about the model were not changed.
 
 116 of 116 instrumented tests passed on the emulator with the round-6 model (`am instrument`, about 6 minutes).
 
+## Round 7 (rejected)
+
+- **What:** 1,425 general training items in ar, ta, ru, gu, id and es, across every rubric use case, weighted towards
+  hard negatives and near misses. Training split only; both holdouts unchanged.
+- **Result:** golden holdout 0.743 (round 6: 0.748); safety holdout 0.931 (round 6: 0.939); 44 notices shown
+  Commute 18, Focus 14, DND 22, Sleep 22, Workout 12 (round 6: 30 / 16 / 27 / 27 / 15).
+- **Decision:** not shipped. Round 6 stays the model. The round-7 data is kept (see
+  `testdata/golden_v2/round7` on the Phase 2 branch) and is not in the trainer sources.
+  The trainer was re-run on the round-6 sources; it reproduces 0.748 / 0.939 exactly.
+
 ## How to check
 
 ```
