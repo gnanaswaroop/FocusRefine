@@ -25,13 +25,19 @@ from ml.data import schema
 MODES = ["Commute", "Deep Work / Focus", "Do Not Disturb (DND)", "Sleeping / Rest", "Workout / Gym"]
 SOURCES = ["testdata/golden_v2/pilot_agreed", "testdata/golden_v2/r2_agreed",
            "testdata/golden_v2/round3/agreed", "testdata/golden_v2/round4/agreed"]
+# Round 5: safety notices added to training. Their families are never held out, so the holdout below stays the same.
+EXTRA_SOURCES = ["testdata/golden_v2/round5/agreed", "testdata/golden_v2/round6/agreed"]
+# Fresh safety notices (round 5, `test` split), never trained on; scored separately.
+SAFETY_HOLDOUT = "testdata/golden_v2/round5/safety_holdout"
+# The 44 notices measured on the device (docs/safety_recall.md); scored separately, never trained on.
+SAFETY_ITEMS = "testdata/safety/safety_items.json"
 MAXLEN = 96
 SEED = 1
 
 
-def load_items():
+def load_items(dirs):
     items = []
-    for d in SOURCES:
+    for d in dirs:
         for path in sorted(glob.glob(os.path.join(d, "*.jsonl"))):
             items += schema.load_jsonl(path)
     return items
@@ -41,10 +47,20 @@ def text_of(item):
     return f"{item['app_category']} | {item['app_name']} | {item['title']} | {item['text']}"
 
 
-def split(items):
-    families = sorted({i["template_family"] for i in items})
+def load_split():
+    """(train, holdout) exactly as main() trains and scores them: the same held-out families, with the extra rounds."""
+    base = load_items(SOURCES)
+    return split(base + load_items(EXTRA_SOURCES), held_families(base))
+
+
+def held_families(base):
+    """The 20% of template families held out. Chosen from the original sources only, so adding data never moves them."""
+    families = sorted({i["template_family"] for i in base})
     random.Random(SEED).shuffle(families)
-    held = set(families[: int(0.2 * len(families))])
+    return set(families[: int(0.2 * len(families))])
+
+
+def split(items, held):
     train = [i for i in items if i["template_family"] not in held]
     evalset = [i for i in items if i["template_family"] in held]
     return train, evalset
@@ -99,12 +115,15 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--epochs", type=int, default=12)
     ap.add_argument("--out", default=os.path.join("ml", "artifacts", "track_b"))
+    ap.add_argument("--no-extra", action="store_true", help="train on the original sources only (the round-4 baseline)")
     args = ap.parse_args()
     torch.manual_seed(SEED)
     os.makedirs(args.out, exist_ok=True)
 
-    items = load_items()
-    train, evalset = split(items)
+    base = load_items(SOURCES)
+    extra = [] if args.no_extra else load_items(EXTRA_SOURCES)
+    items = base + extra
+    train, evalset = split(items, held_families(base))
     sp_text = os.path.join(args.out, "spm_train.txt")
     with open(sp_text, "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(text_of(i) for i in train) + "\n")
@@ -143,17 +162,58 @@ def main():
         rows = [n for n, i in enumerate(evalset) if i["lang"] == lang]
         per_lang[lang] = float(np.mean([f1_score(truth[rows, k], pred[rows, k], zero_division=0)
                                         for k in range(len(MODES))]))
+    safety_holdout = load_items([SAFETY_HOLDOUT])
+    safety_macro, safety_per_mode, safety_recall = safety_scores(model, sp, safety_holdout, device)
+    items_44 = json.load(open(SAFETY_ITEMS, encoding="utf-8"))
+    shown_44 = shown_counts(model, sp, [f" |  | {i['title']} | {i['text']}" for i in items_44], device)
+
     metrics = {"macro_f1_holdout": macro, "per_mode_f1_holdout": per_mode, "per_language_macro_f1_holdout": per_lang,
-               "train_items": len(train), "holdout_items": len(evalset), "train_loss": history}
+               "train_items": len(train), "holdout_items": len(evalset), "train_loss": history,
+               "safety_holdout": {"items": len(safety_holdout), "macro_f1": safety_macro,
+                                  "per_mode_f1": safety_per_mode, "per_mode_recall": safety_recall},
+               "safety_items_44_shown": dict(zip(MODES, shown_44)), "safety_items_44_total": len(items_44)}
     with open(os.path.join(args.out, "metrics.json"), "w", encoding="utf-8", newline="\n") as f:
         json.dump(metrics, f, ensure_ascii=False, indent=1)
     with open(os.path.join(args.out, "run.json"), "w", encoding="utf-8", newline="\n") as f:
         json.dump({"track": "B", "seed": SEED, "epochs": args.epochs, "device": device,
                    "data_hash_all": data_hash(items), "data_hash_train": data_hash(train),
-                   "data_hash_holdout": data_hash(evalset), "sources": SOURCES, "maxlen": MAXLEN,
-                   "torch": torch.__version__}, f, indent=1)
+                   "data_hash_holdout": data_hash(evalset), "sources": SOURCES + extra_sources(args),
+                   "maxlen": MAXLEN, "torch": torch.__version__}, f, indent=1)
     torch.save(model.state_dict(), os.path.join(args.out, "model_b.pt"))
     print(f"holdout macro F1 {macro:.3f} on {len(evalset)} items; per mode {per_mode}")
+    print(f"safety holdout macro F1 {safety_macro:.3f} on {len(safety_holdout)} items; recall {safety_recall}")
+    print(f"safety 44 shown per mode {metrics['safety_items_44_shown']}")
+
+
+def extra_sources(args):
+    return [] if args.no_extra else EXTRA_SOURCES
+
+
+def probabilities(model, sp, texts, device):
+    """Shown probability per mode for each text (no app context beyond what the text carries)."""
+    x = np.zeros((len(texts), MAXLEN), dtype=np.int64)
+    for n, text in enumerate(texts):
+        ids = sp.encode(text)[:MAXLEN]
+        x[n, : len(ids)] = ids
+    model.eval()
+    with torch.no_grad():
+        logits = torch.cat([model(torch.tensor(x[i:i + 256]).to(device)) for i in range(0, len(x), 256)]).cpu()
+    return torch.sigmoid(logits).numpy()
+
+
+def shown_counts(model, sp, texts, device):
+    """How many texts each mode shows (probability >= 0.5), the same rule the app applies at Balanced."""
+    return (probabilities(model, sp, texts, device) >= 0.5).sum(0).tolist()
+
+
+def safety_scores(model, sp, items, device):
+    """Macro F1 and per-mode recall on the safety holdout, using the rubric labels (urgentIn)."""
+    texts = [text_of(i) for i in items]
+    pred = probabilities(model, sp, texts, device) >= 0.5
+    truth = np.array([[m in i["urgentIn"] for m in MODES] for i in items])
+    per_mode_f1 = {m: float(f1_score(truth[:, k], pred[:, k], zero_division=0)) for k, m in enumerate(MODES)}
+    recall = {m: float(pred[truth[:, k], k].mean()) if truth[:, k].any() else 0.0 for k, m in enumerate(MODES)}
+    return float(np.mean(list(per_mode_f1.values()))), per_mode_f1, recall
 
 
 if __name__ == "__main__":

@@ -73,7 +73,8 @@ class TrackB(tf.Module):
             h = self._norm(h + ff, layer["g2"], layer["be2"])
         keep = tf.cast(tf.not_equal(ids, 0), tf.float32)[..., None]
         pooled = tf.reduce_sum(h * keep, axis=1) / tf.maximum(tf.reduce_sum(keep, axis=1), 1.0)
-        return tf.matmul(pooled, self.w_head, transpose_b=True) + self.b_head
+        logits = tf.matmul(pooled, self.w_head, transpose_b=True) + self.b_head
+        return logits, pooled
 
 
 def main():
@@ -88,7 +89,7 @@ def main():
 
     worst = 0.0
     for n in range(len(ref["ids"])):
-        out = module(tf.constant(ref["ids"][n:n + 1])).numpy()[0]
+        out = module(tf.constant(ref["ids"][n:n + 1]))[0].numpy()[0]
         worst = max(worst, float(np.max(np.abs(out - ref["logits"][n]))))
     print(f"keras vs pytorch: max abs logit difference {worst:.2e} over {len(ref['ids'])} items")
     assert worst < 1e-3, "rebuilt network does not match the PyTorch model"
@@ -103,7 +104,8 @@ def main():
     interp = tf.lite.Interpreter(model_content=tflite_model)
     interp.allocate_tensors()
     inp = interp.get_input_details()[0]
-    outp = interp.get_output_details()[0]
+    # two outputs: logits [1, 5] and pooled features [1, 192]; pick the logits by shape
+    outp = next(d for d in interp.get_output_details() if d["shape"][-1] == len(ref["logits"][0]))
     tflite_worst = 0.0
     agree = 0
     total = len(ref["ids"])

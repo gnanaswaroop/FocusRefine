@@ -24,7 +24,7 @@ def main():
     os.makedirs(args.out, exist_ok=True)
 
     sp = spm.SentencePieceProcessor(model_file=os.path.join(args.artifacts, "spm.model"))
-    _, evalset = t.split(t.load_items())
+    _, evalset = t.load_split()
     ref = np.load(os.path.join(args.artifacts, "export", "reference.npz"))
     x, _ = t.encode(sp, evalset)
     assert np.array_equal(x.numpy().astype(np.int32), ref["ids"]), "fixture order does not match the export reference"
@@ -36,6 +36,7 @@ def main():
             "urgentIn": [m in item["urgentIn"] for m in t.MODES],
             "logits": ref["logits"][n].tolist(),
             "lang": item["lang"],
+            "package": item["package"],
             "title": item["title"],
             "text": item["text"],
         })

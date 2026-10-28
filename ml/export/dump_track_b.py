@@ -32,7 +32,7 @@ def main():
     weights = {k: v.detach().cpu().numpy().astype(np.float32) for k, v in model.state_dict().items()}
     np.savez(os.path.join(args.out, "weights.npz"), **weights)
 
-    _, evalset = t.split(t.load_items())
+    _, evalset = t.load_split()
     x, _ = t.encode(sp, evalset)
     with torch.no_grad():
         logits = model(x).numpy()
