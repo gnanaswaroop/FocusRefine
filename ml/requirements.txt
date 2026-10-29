@@ -1,0 +1,7 @@
+# Versions are pinned in stage S0 after the toolchain spike confirms a working set
+# (PyTorch with a CUDA wheel, transformers, sentencepiece, a TFLite export path).
+numpy
+pyyaml
+scikit-learn
+tqdm
+pytest

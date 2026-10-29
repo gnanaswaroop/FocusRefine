@@ -1,0 +1,29 @@
+{"id": "mr-test-03003", "usecase": "ride_other", "note": "driver rating request"}
+{"id": "mr-dev-03005", "usecase": "voicemail_routine", "note": "contact, no urgency"}
+{"id": "mr-test-03006", "usecase": "voicemail_routine", "note": "unknown voicemail, no urgency"}
+{"id": "mr-test-03007", "usecase": "voicemail_routine", "note": "contact asks casually"}
+{"id": "mr-test-03008", "usecase": "chat_family_routine", "note": "grocery and reached-home check"}
+{"id": "mr-dev-03009", "usecase": "voicemail_routine", "note": "shop order ready, no urgency"}
+{"id": "mr-test-03010", "usecase": "chat_family_routine", "note": "Sunday lunch invitation"}
+{"id": "mr-test-03011", "usecase": "caption_status", "note": "language pack downloaded"}
+{"id": "mr-test-03012", "usecase": "caption_status", "note": "captions paused"}
+{"id": "mr-dev-03013", "usecase": "caption_status", "note": "transcription running"}
+{"id": "mr-test-03014", "usecase": "caption_status", "note": "live caption on"}
+{"id": "mr-test-03015", "usecase": "caption_status", "note": "language pack updated"}
+{"id": "mr-dev-03016", "usecase": "caption_status", "note": "caption settings changed"}
+{"id": "mr-test-03017", "usecase": "group_chatter", "note": "society group banter and meeting"}
+{"id": "mr-test-03018", "usecase": "group_chatter", "note": "college friends cricket plans"}
+{"id": "mr-test-03019", "usecase": "work_chat_routine", "note": "office tea money, not urgent"}
+{"id": "mr-dev-03020", "usecase": "group_chatter", "note": "breakfast group banter"}
+{"id": "mr-test-03021", "usecase": "group_forward", "note": "good-morning chain forward"}
+{"id": "mr-test-03022", "usecase": "group_forward", "note": "unverified rumour forward"}
+{"id": "mr-dev-03023", "usecase": "group_forward", "note": "photo forward to neighbours"}
+{"id": "mr-test-03024", "usecase": "group_event_info", "note": "society meeting notice"}
+{"id": "mr-test-03025", "usecase": "group_event_info", "note": "festival collection notice"}
+{"id": "mr-dev-03026", "usecase": "school_info", "note": "parent meeting, not urgent"}
+{"id": "mr-test-03027", "usecase": "community_safety_notice", "note": "smoke and fire alarm in building"}
+{"id": "mr-test-03028", "usecase": "community_safety_notice", "note": "gas smell in building"}
+{"id": "mr-dev-03029", "usecase": "tsunami_flood_wildfire", "note": "municipal flood evacuation"}
+{"id": "mr-test-03030", "usecase": "visitor_gate", "note": "delivery agent at gate"}
+{"id": "mr-test-03031", "usecase": "visitor_gate", "note": "domestic help at gate"}
+{"id": "mr-dev-03032", "usecase": "home_routine", "note": "person at door, no danger"}

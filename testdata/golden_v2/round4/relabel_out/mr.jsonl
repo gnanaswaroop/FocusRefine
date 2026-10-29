@@ -1,0 +1,262 @@
+{"id": "mr-test-10000", "usecase": "work_chat_routine", "note": "Colleague lunch invite no urgency"}
+{"id": "mr-test-10002", "usecase": "home_security", "note": "Nighttime motion detected by camera"}
+{"id": "mr-test-10003", "usecase": "scam_fake_delivery", "note": "Fake parcel customs fee scam"}
+{"id": "mr-test-10004", "usecase": "meeting_soon", "note": "Sprint review meeting starts soon"}
+{"id": "mr-test-10005", "usecase": "tsunami_flood_wildfire", "note": "Dam release flood evacuation alert"}
+{"id": "mr-test-10006", "usecase": "medical_routine", "note": "Blood test report ready"}
+{"id": "mr-test-10007", "usecase": "telecom_gov_routine", "note": "Daily data balance update"}
+{"id": "mr-test-10008", "usecase": "weather_routine", "note": "Tomorrow weather forecast"}
+{"id": "mr-test-10009", "usecase": "deadline", "note": "Test submission deadline tonight"}
+{"id": "mr-test-10010", "usecase": "voicemail_routine", "note": "Non-urgent voicemail transcript"}
+{"id": "mr-test-10011", "usecase": "marketing_push", "note": "Re-engagement push we miss you"}
+{"id": "mr-test-10012", "usecase": "call_missed_family", "note": "Repeated missed calls from mom"}
+{"id": "mr-test-10013", "usecase": "payment_routine", "note": "Routine money received notification"}
+{"id": "mr-test-10014", "usecase": "marketing_push", "note": "Incomplete profile nudge"}
+{"id": "mr-test-10015", "usecase": "group_forward", "note": "Society group chain message forward"}
+{"id": "mr-test-10016", "usecase": "travel_urgent", "note": "Cancelled airport ride disruption"}
+{"id": "mr-test-10017", "usecase": "home_alarm_critical", "note": "Home smoke sensor alarm detected"}
+{"id": "mr-test-10018", "usecase": "chat_casual", "note": "Casual friend chat and plans"}
+{"id": "mr-test-10019", "usecase": "tsunami_flood_wildfire", "note": "Tsunami evacuation alert"}
+{"id": "mr-test-10020", "usecase": "ride_other", "note": "Ride receipt and driver rating"}
+{"id": "mr-test-10021", "usecase": "visitor_gate", "note": "delivery person waiting at main gate"}
+{"id": "mr-test-10022", "usecase": "caption_status", "note": "live captions currently active on device"}
+{"id": "mr-test-10023", "usecase": "health_critical", "note": "abnormally high resting heart rate alert"}
+{"id": "mr-test-10024", "usecase": "home_routine", "note": "smart bulb firmware successfully updated"}
+{"id": "mr-test-10025", "usecase": "news_breaking_general", "note": "breaking news weather warning broadcast"}
+{"id": "mr-test-10026", "usecase": "sound_alert_critical", "note": "smoke alarm sound detected by phone"}
+{"id": "mr-test-10027", "usecase": "sound_alert_critical", "note": "glass breaking sound detected by phone"}
+{"id": "mr-test-10028", "usecase": "scam_prize_loan", "note": "fake lottery prize scam notification"}
+{"id": "mr-test-10029", "usecase": "medical_urgent", "note": "urgent clinic callback for abnormal test"}
+{"id": "mr-test-10030", "usecase": "workout_prompt", "note": "workout rest period completed start set"}
+{"id": "mr-test-10031", "usecase": "build_failure", "note": "pipeline build failure on main branch"}
+{"id": "mr-test-10032", "usecase": "ride_other", "note": "ride completed receipt and rating"}
+{"id": "mr-test-10033", "usecase": "travel_routine", "note": "hotel booking confirmed"}
+{"id": "mr-test-10034", "usecase": "call_missed_contact", "note": "missed calls from known contact"}
+{"id": "mr-test-10035", "usecase": "civic_advisory", "note": "scheduled power cut advisory"}
+{"id": "mr-test-10036", "usecase": "civic_advisory", "note": "air quality level advisory"}
+{"id": "mr-test-10037", "usecase": "news_breaking_general", "note": "daily news headlines digest"}
+{"id": "mr-test-10038", "usecase": "navigation_prompt", "note": "rerouting due to traffic"}
+{"id": "mr-test-10039", "usecase": "payment_routine", "note": "credit card bill generated"}
+{"id": "mr-test-10040", "usecase": "road_closure", "note": "bridge closed for traffic"}
+{"id": "mr-test-10041", "usecase": "health_critical", "note": "High resting heart rate alert"}
+{"id": "mr-test-10042", "usecase": "travel_urgent", "note": "Cancelled airport ride disruption"}
+{"id": "mr-test-10043", "usecase": "family_distress", "note": "Father vehicle accident and hospital"}
+{"id": "mr-test-10044", "usecase": "navigation_prompt", "note": "Arriving at destination prompt"}
+{"id": "mr-test-10045", "usecase": "sound_alert_critical", "note": "Fire smoke alarm sound detected"}
+{"id": "mr-test-10046", "usecase": "public_safety_alert", "note": "Toxic gas leak shelter indoors"}
+{"id": "mr-test-10047", "usecase": "chat_casual", "note": "Meme and casual tea meetup"}
+{"id": "mr-test-10048", "usecase": "home_alarm_critical", "note": "Home flood sensor water detected"}
+{"id": "mr-test-10049", "usecase": "school_urgent", "note": "Child fainted at school clinic"}
+{"id": "mr-test-10050", "usecase": "home_security", "note": "Door opened and motion at night"}
+{"id": "mr-test-10051", "usecase": "work_tool_routine", "note": "new task assigned in board"}
+{"id": "mr-test-10052", "usecase": "weather_severe", "note": "severe cyclone red alert"}
+{"id": "mr-test-10053", "usecase": "caption_status", "note": "live caption active status"}
+{"id": "mr-test-10054", "usecase": "voicemail_routine", "note": "routine voicemail from contact"}
+{"id": "mr-test-10055", "usecase": "group_chatter", "note": "apartment society group chat"}
+{"id": "mr-test-10056", "usecase": "civic_advisory", "note": "air quality advisory"}
+{"id": "mr-test-10057", "usecase": "scam_fake_delivery", "note": "fake parcel held scam"}
+{"id": "mr-test-10058", "usecase": "tsunami_flood_wildfire", "note": "flood and dam release evacuation"}
+{"id": "mr-test-10059", "usecase": "family_distress", "note": "call me immediately from family"}
+{"id": "mr-test-10060", "usecase": "call_spam_likely", "note": "suspected spam caller report"}
+{"id": "mr-test-10061", "usecase": "work_tool_routine", "note": "weekly work project progress report"}
+{"id": "mr-test-10063", "usecase": "home_alarm_critical", "note": "smoke alarm detected in home kitchen"}
+{"id": "mr-test-10064", "usecase": "game_notice", "note": "new game season and daily rewards"}
+{"id": "mr-test-10065", "usecase": "meeting_soon", "note": "meeting starting in five minutes"}
+{"id": "mr-test-10066", "usecase": "ride_other", "note": "weekly ride travel summary report"}
+{"id": "mr-test-10067", "usecase": "health_routine", "note": "routine blood pressure medicine reminder"}
+{"id": "mr-test-10068", "usecase": "game_notice", "note": "game clan invitation received"}
+{"id": "mr-test-10069", "usecase": "workout_prompt", "note": "daily step count goal reached"}
+{"id": "mr-test-10070", "usecase": "group_event_info", "note": "society annual general meeting notice"}
+{"id": "mr-test-10071", "usecase": "chat_casual", "note": "friend asking about casual evening plans"}
+{"id": "mr-test-10072", "usecase": "ride_arriving", "note": "cab arriving at pickup point"}
+{"id": "mr-test-10073", "usecase": "sound_alert_critical", "note": "glass breaking sound detected"}
+{"id": "mr-test-10074", "usecase": "travel_urgent", "note": "cancelled airport ride disruption"}
+{"id": "mr-test-10075", "usecase": "group_event_info", "note": "society meeting and festival collection"}
+{"id": "mr-test-10076", "usecase": "visitor_gate", "note": "delivery person gate entry approval"}
+{"id": "mr-test-10077", "usecase": "scam_phishing", "note": "fake bank kyc phishing message"}
+{"id": "mr-test-10078", "usecase": "ride_other", "note": "ride receipt and driver rating"}
+{"id": "mr-test-10079", "usecase": "scam_prize_loan", "note": "lottery prize scam message"}
+{"id": "mr-test-10080", "usecase": "chat_casual", "note": "casual friend plans for tea"}
+{"id": "mr-test-10081", "usecase": "payment_routine", "note": "electricity bill due date reminder"}
+{"id": "mr-test-10082", "usecase": "medical_urgent", "note": "Urgent clinic call for mother's report"}
+{"id": "mr-test-10083", "usecase": "sound_alert_routine", "note": "Baby crying sound detected nearby"}
+{"id": "mr-test-10084", "usecase": "tsunami_flood_wildfire", "note": "Dam release flood evacuation order"}
+{"id": "mr-test-10085", "usecase": "call_missed_family", "note": "Repeated missed calls from mother"}
+{"id": "mr-test-10086", "usecase": "call_scam", "note": "Scam call from fake bank official"}
+{"id": "mr-test-10087", "usecase": "group_forward", "note": "Good morning chain forward message"}
+{"id": "mr-test-10088", "usecase": "group_forward", "note": "Unverified cosmic rays rumor forward"}
+{"id": "mr-test-10089", "usecase": "sub_billing_issue", "note": "Subscription auto-debit payment declined"}
+{"id": "mr-test-10090", "usecase": "visitor_gate", "note": "Cab driver entry approval at gate"}
+{"id": "mr-test-10091", "usecase": "call_missed_contact", "note": "Routine missed call from contact"}
+{"id": "mr-test-10092", "usecase": "work_chat_routine", "note": "Colleague lunch plans and non-urgent slides"}
+{"id": "mr-test-10093", "usecase": "workout_prompt", "note": "Daily step goal completed"}
+{"id": "mr-test-10094", "usecase": "sound_alert_routine", "note": "Knocking sound detected at door"}
+{"id": "mr-test-10095", "usecase": "meeting_soon", "note": "Meeting starting in 5 minutes"}
+{"id": "mr-test-10097", "usecase": "delivery_update", "note": "Package out for delivery today"}
+{"id": "mr-test-10098", "usecase": "scam_prize_loan", "note": "Instant personal loan scam offer"}
+{"id": "mr-test-10099", "usecase": "sports_update", "note": "Live cricket match score update"}
+{"id": "mr-test-10100", "usecase": "weather_severe", "note": "Severe storm and heavy rain warning"}
+{"id": "mr-test-10101", "usecase": "caption_status", "note": "Live caption language pack downloaded"}
+{"id": "mr-test-10102", "usecase": "navigation_prompt", "note": "Rerouted due to heavy traffic ahead"}
+{"id": "mr-test-10103", "usecase": "earthquake_alert", "note": "earthquake alert drop cover hold"}
+{"id": "mr-test-10104", "usecase": "group_forward", "note": "good morning chain message forward"}
+{"id": "mr-test-10105", "usecase": "email_routine", "note": "monthly newsletter digest"}
+{"id": "mr-test-10106", "usecase": "call_missed_contact", "note": "missed call from contact"}
+{"id": "mr-test-10107", "usecase": "family_distress", "note": "family distress bike accident"}
+{"id": "mr-test-10108", "usecase": "investment_alert", "note": "stock price alert triggered"}
+{"id": "mr-test-10109", "usecase": "telecom_gov_routine", "note": "government vehicle registration document ready"}
+{"id": "mr-test-10110", "usecase": "medical_urgent", "note": "urgent medical consultation required today"}
+{"id": "mr-test-10111", "usecase": "delivery_update", "note": "grocery order out for delivery"}
+{"id": "mr-test-10112", "usecase": "promo_sale", "note": "cashback offer ends tonight"}
+{"id": "mr-test-10113", "usecase": "home_security", "note": "Intrusion detected by home camera"}
+{"id": "mr-test-10114", "usecase": "meeting_soon", "note": "Meeting starting in 5 minutes"}
+{"id": "mr-test-10115", "usecase": "ride_other", "note": "Driver rating request"}
+{"id": "mr-test-10116", "usecase": "family_distress", "note": "Urgent missed calls from sister"}
+{"id": "mr-test-10117", "usecase": "marketing_push", "note": "Profile completion re-engagement push"}
+{"id": "mr-test-10118", "usecase": "news_breaking_general", "note": "Breaking news about flyover inauguration"}
+{"id": "mr-test-10119", "usecase": "ride_arriving", "note": "Driver arrived at pickup point"}
+{"id": "mr-test-10120", "usecase": "vip_ping", "note": "Director asks to join urgent meeting"}
+{"id": "mr-test-10121", "usecase": "call_missed_family", "note": "Missed calls from brother"}
+{"id": "mr-test-10122", "usecase": "ride_other", "note": "Weekly ride report from Ola"}
+{"id": "mr-test-10123", "usecase": "school_info", "note": "Parent teacher meeting announcement"}
+{"id": "mr-test-10124", "usecase": "chat_family_routine", "note": "Errands and dinner plans"}
+{"id": "mr-test-10125", "usecase": "deadline", "note": "Draft review requested before deadline"}
+{"id": "mr-test-10126", "usecase": "medical_routine", "note": "Blood test reports ready"}
+{"id": "mr-test-10127", "usecase": "ride_other", "note": "Ride completed and rating prompt"}
+{"id": "mr-test-10128", "usecase": "group_forward", "note": "Chain message good morning forward"}
+{"id": "mr-test-10129", "usecase": "deadline", "note": "Test paper due tonight"}
+{"id": "mr-test-10130", "usecase": "navigation_prompt", "note": "Turn by turn navigation instruction"}
+{"id": "mr-test-10131", "usecase": "home_routine", "note": "Smart device firmware update"}
+{"id": "mr-test-10132", "usecase": "scam_fake_delivery", "note": "Fake parcel customs fee scam"}
+{"id": "mr-test-10133", "usecase": "deadline", "note": "Project review deadline today"}
+{"id": "mr-test-10134", "usecase": "community_safety_notice", "note": "Gas leak warning in building"}
+{"id": "mr-test-10135", "usecase": "workout_prompt", "note": "Workout rest period completed"}
+{"id": "mr-test-10136", "usecase": "telecom_gov_routine", "note": "Prepaid mobile recharge due"}
+{"id": "mr-test-10137", "usecase": "home_routine", "note": "Balcony smart camera offline"}
+{"id": "mr-test-10138", "usecase": "visitor_gate", "note": "Delivery person at main gate"}
+{"id": "mr-test-10139", "usecase": "home_security", "note": "Motion detected at night by camera"}
+{"id": "mr-test-10140", "usecase": "home_routine", "note": "Daily morning home automation ran"}
+{"id": "mr-test-10141", "usecase": "chat_casual", "note": "Casual lunch plans with friend"}
+{"id": "mr-test-10142", "usecase": "community_safety_notice", "note": "Basement parking flooding alert"}
+{"id": "mr-test-10143", "usecase": "rec_video", "note": "new web series episode release"}
+{"id": "mr-test-10144", "usecase": "health_routine", "note": "routine medicine reminder"}
+{"id": "mr-test-10145", "usecase": "payment_routine", "note": "electricity bill due notification"}
+{"id": "mr-test-10146", "usecase": "sound_alert_routine", "note": "doorbell sound detected"}
+{"id": "mr-test-10147", "usecase": "investment_alert", "note": "stock price target alert"}
+{"id": "mr-test-10148", "usecase": "weather_routine", "note": "tomorrow rain weather forecast"}
+{"id": "mr-test-10149", "usecase": "system_routine", "note": "system update download ready"}
+{"id": "mr-test-10150", "usecase": "work_incident", "note": "production server outage escalation"}
+{"id": "mr-test-10151", "usecase": "civic_advisory", "note": "air quality index advisory"}
+{"id": "mr-test-10152", "usecase": "delivery_update", "note": "grocery order out for delivery"}
+{"id": "mr-test-10153", "usecase": "navigation_prompt", "note": "turn-by-turn navigation instruction"}
+{"id": "mr-test-10154", "usecase": "medical_urgent", "note": "urgent doctor consultation for father"}
+{"id": "mr-test-10155", "usecase": "sub_billing_issue", "note": "subscription payment failed"}
+{"id": "mr-test-10156", "usecase": "work_tool_routine", "note": "weekly task digest"}
+{"id": "mr-test-10157", "usecase": "payment_routine", "note": "account credited notification"}
+{"id": "mr-test-10158", "usecase": "deadline", "note": "assignment due today"}
+{"id": "mr-test-10159", "usecase": "work_chat_routine", "note": "colleague lunch chatter"}
+{"id": "mr-test-10160", "usecase": "sound_alert_routine", "note": "routine dog barking sound detected"}
+{"id": "mr-test-10161", "usecase": "visitor_gate", "note": "doorbell visitor entry approval"}
+{"id": "mr-test-10162", "usecase": "sound_alert_critical", "note": "critical smoke alarm detected"}
+{"id": "mr-test-10163", "usecase": "sports_update", "note": "cricket toss and team update"}
+{"id": "mr-test-10164", "usecase": "rec_video", "note": "new web series episode release"}
+{"id": "mr-test-10165", "usecase": "vip_ping", "note": "client asks for immediate call"}
+{"id": "mr-test-10166", "usecase": "rec_music", "note": "new song release and playlist"}
+{"id": "mr-test-10167", "usecase": "medical_routine", "note": "dental checkup appointment reminder"}
+{"id": "mr-test-10168", "usecase": "sound_alert_routine", "note": "baby crying sound detected"}
+{"id": "mr-test-10169", "usecase": "group_event_info", "note": "society AGM meeting notice"}
+{"id": "mr-test-10170", "usecase": "social_activity", "note": "comment on user post"}
+{"id": "mr-test-10171", "usecase": "call_missed_family", "note": "missed calls from mother"}
+{"id": "mr-dev-10172", "usecase": "call_unknown", "note": "missed call from unknown number"}
+{"id": "mr-dev-10173", "usecase": "rec_music", "note": "new song release on wynk"}
+{"id": "mr-dev-10174", "usecase": "road_closure", "note": "flyover closed for repairs"}
+{"id": "mr-dev-10175", "usecase": "sub_renewal", "note": "streaming subscription renews tomorrow"}
+{"id": "mr-dev-10176", "usecase": "call_spam_likely", "note": "suspected spam caller warning"}
+{"id": "mr-dev-10177", "usecase": "medical_urgent", "note": "urgent clinic call about test results"}
+{"id": "mr-dev-10178", "usecase": "promo_sale", "note": "flash sale discount ends tonight"}
+{"id": "mr-dev-10179", "usecase": "ride_other", "note": "rate driver and trip receipt"}
+{"id": "mr-dev-10180", "usecase": "ride_other", "note": "auto ride receipt and rating"}
+{"id": "mr-dev-10181", "usecase": "caption_status", "note": "live caption language pack downloaded"}
+{"id": "mr-dev-10182", "usecase": "family_distress", "note": "mother hospitalized urgent call request"}
+{"id": "mr-dev-10183", "usecase": "home_alarm_critical", "note": "smoke detected by home sensor"}
+{"id": "mr-dev-10184", "usecase": "learning_notice", "note": "study streak reminder"}
+{"id": "mr-dev-10185", "usecase": "road_closure", "note": "road closure alert on route"}
+{"id": "mr-dev-10186", "usecase": "sound_alert_critical", "note": "siren sound alert detected"}
+{"id": "mr-dev-10187", "usecase": "voicemail_routine", "note": "routine non-urgent voicemail transcript"}
+{"id": "mr-dev-10188", "usecase": "news_breaking_general", "note": "space mission news update"}
+{"id": "mr-dev-10189", "usecase": "travel_urgent", "note": "train platform change notice"}
+{"id": "mr-dev-10190", "usecase": "news_breaking_general", "note": "financial news headline digest"}
+{"id": "mr-dev-10191", "usecase": "payment_routine", "note": "bank account credit update"}
+{"id": "mr-dev-10192", "usecase": "game_notice", "note": "game login reward notification"}
+{"id": "mr-dev-10193", "usecase": "visitor_gate", "note": "visitor at gate awaiting entry approval"}
+{"id": "mr-dev-10194", "usecase": "learning_notice", "note": "assignment posted on learning app"}
+{"id": "mr-dev-10196", "usecase": "earthquake_alert", "note": "earthquake alert with safety instructions"}
+{"id": "mr-dev-10197", "usecase": "build_failure", "note": "production build failed and rolled back"}
+{"id": "mr-dev-10198", "usecase": "news_breaking_general", "note": "breaking news about weather warning"}
+{"id": "mr-dev-10199", "usecase": "game_notice", "note": "new game season and daily reward"}
+{"id": "mr-dev-10200", "usecase": "group_forward", "note": "good morning chain forward message"}
+{"id": "mr-dev-10201", "usecase": "health_critical", "note": "high resting heart rate alert"}
+{"id": "mr-dev-10202", "usecase": "medical_routine", "note": "routine clinic appointment reminder"}
+{"id": "mr-dev-10203", "usecase": "delivery_update", "note": "order out for delivery update"}
+{"id": "mr-dev-10204", "usecase": "system_routine", "note": "battery low warning"}
+{"id": "mr-dev-10206", "usecase": "ride_arriving", "note": "captain arriving in 2 minutes"}
+{"id": "mr-dev-10207", "usecase": "home_security", "note": "door opened at night"}
+{"id": "mr-dev-10208", "usecase": "caption_status", "note": "live caption active"}
+{"id": "mr-dev-10209", "usecase": "deadline", "note": "assignment due today"}
+{"id": "mr-dev-10210", "usecase": "sports_update", "note": "live cricket match update"}
+{"id": "mr-dev-10211", "usecase": "sound_alert_critical", "note": "glass breaking sound detected"}
+{"id": "mr-dev-10212", "usecase": "travel_urgent", "note": "train platform changed"}
+{"id": "mr-dev-10213", "usecase": "sound_alert_critical", "note": "smoke fire alarm detected"}
+{"id": "mr-dev-10214", "usecase": "home_routine", "note": "ac firmware update complete"}
+{"id": "mr-dev-10215", "usecase": "school_info", "note": "parent teacher meeting next week"}
+{"id": "mr-dev-10216", "usecase": "school_urgent", "note": "child sick pick up immediately"}
+{"id": "mr-dev-10217", "usecase": "ride_arriving", "note": "cab arrived at pickup point"}
+{"id": "mr-dev-10218", "usecase": "civic_advisory", "note": "air quality advisory notice"}
+{"id": "mr-dev-10219", "usecase": "news_breaking_general", "note": "general currency market news update"}
+{"id": "mr-dev-10220", "usecase": "email_routine", "note": "weekly tech digest newsletter email"}
+{"id": "mr-dev-10221", "usecase": "work_tool_routine", "note": "new task added in project tool"}
+{"id": "mr-dev-10222", "usecase": "social_activity", "note": "comment on social media post"}
+{"id": "mr-dev-10223", "usecase": "sub_renewal", "note": "subscription renewal reminder"}
+{"id": "mr-dev-10224", "usecase": "travel_urgent", "note": "train platform change notice"}
+{"id": "mr-dev-10225", "usecase": "sub_renewal", "note": "subscription renewed successfully"}
+{"id": "mr-dev-10226", "usecase": "civic_advisory", "note": "air pollution civic advisory"}
+{"id": "mr-dev-10228", "usecase": "group_event_info", "note": "society annual meeting schedule"}
+{"id": "mr-dev-10229", "usecase": "sub_renewal", "note": "streaming pass expiring soon"}
+{"id": "mr-dev-10230", "usecase": "sports_update", "note": "live cricket match toss update"}
+{"id": "mr-dev-10231", "usecase": "call_missed_contact", "note": "missed call from contact"}
+{"id": "mr-dev-10232", "usecase": "system_routine", "note": "cloud storage running low"}
+{"id": "mr-dev-10233", "usecase": "community_safety_notice", "note": "building basement flooding safety notice"}
+{"id": "mr-dev-10234", "usecase": "work_incident", "note": "production outage war room call"}
+{"id": "mr-dev-10235", "usecase": "rec_music", "note": "new song release recommendation"}
+{"id": "mr-dev-10236", "usecase": "build_failure", "note": "CI build failed and rolled back"}
+{"id": "mr-dev-10237", "usecase": "social_activity", "note": "Trending posts on social media"}
+{"id": "mr-dev-10238", "usecase": "home_routine", "note": "Daytime motion detected at door"}
+{"id": "mr-dev-10239", "usecase": "medical_routine", "note": "Doctor appointment reminder"}
+{"id": "mr-dev-10240", "usecase": "ride_arriving", "note": "Ride cancelled searching new driver"}
+{"id": "mr-dev-10241", "usecase": "medical_routine", "note": "Blood test report ready"}
+{"id": "mr-dev-10242", "usecase": "caption_status", "note": "Live caption language pack downloaded"}
+{"id": "mr-dev-10243", "usecase": "call_unknown", "note": "Missed call from unknown number"}
+{"id": "mr-dev-10244", "usecase": "travel_urgent", "note": "Train delayed departure revised"}
+{"id": "mr-dev-10245", "usecase": "public_safety_alert", "note": "Toxic gas leak shelter in place"}
+{"id": "mr-dev-10246", "usecase": "group_event_info", "note": "Society cleanup drive schedule"}
+{"id": "mr-dev-10247", "usecase": "health_critical", "note": "High resting heart rate alert"}
+{"id": "mr-dev-10248", "usecase": "work_incident", "note": "Production server outage incident"}
+{"id": "mr-dev-10249", "usecase": "sports_update", "note": "Cricket match live score update"}
+{"id": "mr-dev-10250", "usecase": "sound_alert_routine", "note": "Door knocking sound detected"}
+{"id": "mr-dev-10251", "usecase": "promo_sale", "note": "Flash sale ending tonight"}
+{"id": "mr-dev-10252", "usecase": "home_alarm_critical", "note": "Kitchen smoke detector alarm"}
+{"id": "mr-dev-10253", "usecase": "weather_severe", "note": "Imminent cyclone and flood warning"}
+{"id": "mr-dev-10254", "usecase": "health_critical", "note": "Smartwatch fall detection alert"}
+{"id": "mr-dev-10255", "usecase": "navigation_prompt", "note": "Turn-by-turn navigation reroute prompt"}
+{"id": "mr-dev-10256", "usecase": "sports_update", "note": "Cricket match score update"}
+{"id": "mr-dev-10257", "usecase": "call_spam_likely", "note": "Suspected spam call warning"}
+{"id": "mr-dev-10258", "usecase": "social_activity", "note": "Comment and likes on post"}
+{"id": "mr-dev-10259", "usecase": "rec_video", "note": "New episode released"}
+{"id": "mr-dev-10260", "usecase": "civic_advisory", "note": "Scheduled water supply shutoff notice"}
+{"id": "mr-dev-10261", "usecase": "home_security", "note": "Nighttime motion detected by camera"}
+{"id": "mr-dev-10262", "usecase": "weather_routine", "note": "Tomorrow weather forecast"}
+{"id": "mr-dev-10263", "usecase": "deadline", "note": "Test due tonight"}
+{"id": "mr-dev-10264", "usecase": "sub_billing_issue", "note": "Subscription renewal payment failed"}
+{"id": "mr-dev-10265", "usecase": "news_breaking_general", "note": "Breaking news on new flyover"}
+{"id": "mr-dev-10266", "usecase": "family_distress", "note": "family accident and hospital emergency"}
+{"id": "mr-dev-10267", "usecase": "rec_video", "note": "new movie release on streaming"}

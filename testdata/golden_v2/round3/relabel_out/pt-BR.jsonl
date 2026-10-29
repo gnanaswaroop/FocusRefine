@@ -1,0 +1,41 @@
+{"id": "pt-BR-test-03005", "usecase": "visitor_gate"}
+{"id": "pt-BR-test-03006", "usecase": "visitor_gate"}
+{"id": "pt-BR-dev-03007", "usecase": "visitor_gate"}
+{"id": "pt-BR-test-03008", "usecase": "visitor_gate", "note": "parcel at concierge"}
+{"id": "pt-BR-test-03009", "usecase": "visitor_gate"}
+{"id": "pt-BR-dev-03010", "usecase": "visitor_gate"}
+{"id": "pt-BR-test-03011", "usecase": "voicemail_routine"}
+{"id": "pt-BR-dev-03012", "usecase": "voicemail_routine"}
+{"id": "pt-BR-test-03013", "usecase": "call_spam_likely"}
+{"id": "pt-BR-test-03014", "usecase": "voicemail_routine"}
+{"id": "pt-BR-test-03015", "usecase": "voicemail_routine"}
+{"id": "pt-BR-test-03016", "usecase": "voicemail_routine"}
+{"id": "pt-BR-dev-03017", "usecase": "investment_alert"}
+{"id": "pt-BR-test-03018", "usecase": "investment_alert"}
+{"id": "pt-BR-test-03019", "usecase": "investment_alert"}
+{"id": "pt-BR-test-03020", "usecase": "investment_alert"}
+{"id": "pt-BR-dev-03021", "usecase": "investment_alert"}
+{"id": "pt-BR-test-03022", "usecase": "investment_alert"}
+{"id": "pt-BR-test-03023", "usecase": "caption_status"}
+{"id": "pt-BR-dev-03024", "usecase": "caption_status"}
+{"id": "pt-BR-test-03025", "usecase": "caption_status"}
+{"id": "pt-BR-test-03026", "usecase": "caption_status"}
+{"id": "pt-BR-dev-03027", "usecase": "caption_status"}
+{"id": "pt-BR-test-03028", "usecase": "system_routine"}
+{"id": "pt-BR-dev-03029", "usecase": "chat_family_routine", "note": "family group plans"}
+{"id": "pt-BR-test-03030", "usecase": "group_chatter"}
+{"id": "pt-BR-test-03031", "usecase": "group_chatter"}
+{"id": "pt-BR-dev-03032", "usecase": "group_chatter"}
+{"id": "pt-BR-test-03033", "usecase": "group_forward"}
+{"id": "pt-BR-test-03034", "usecase": "group_forward", "note": "unverified rumour"}
+{"id": "pt-BR-dev-03035", "usecase": "group_forward"}
+{"id": "pt-BR-test-03036", "usecase": "group_event_info"}
+{"id": "pt-BR-test-03037", "usecase": "group_event_info"}
+{"id": "pt-BR-dev-03038", "usecase": "group_event_info"}
+{"id": "pt-BR-test-03039", "usecase": "community_safety_notice", "note": "smoke in building"}
+{"id": "pt-BR-test-03040", "usecase": "community_safety_notice", "note": "gas leak evacuation"}
+{"id": "pt-BR-dev-03041", "usecase": "tsunami_flood_wildfire", "note": "flood and road closure"}
+{"id": "pt-BR-test-03042", "usecase": "visitor_gate"}
+{"id": "pt-BR-test-03043", "usecase": "visitor_gate"}
+{"id": "pt-BR-dev-03044", "usecase": "visitor_gate"}
+{"id": "pt-BR-test-03045", "usecase": "visitor_gate"}

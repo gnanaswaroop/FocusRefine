@@ -1,0 +1,211 @@
+{"id": "es-test-10000", "usecase": "system_routine", "note": "Cloud backup completed"}
+{"id": "es-test-10001", "usecase": "work_tool_routine", "note": "Calendar invitation accepted"}
+{"id": "es-test-10002", "usecase": "game_notice", "note": "Game lives refilled"}
+{"id": "es-test-10003", "usecase": "sound_alert_routine", "note": "Doorbell sound detected"}
+{"id": "es-test-10004", "usecase": "sports_update", "note": "Live soccer score update"}
+{"id": "es-test-10005", "usecase": "vip_ping", "note": "Manager escalates urgent crisis call"}
+{"id": "es-test-10006", "usecase": "chat_casual", "note": "Friend movie plans chat"}
+{"id": "es-test-10007", "usecase": "visitor_gate", "note": "Gate entry approval request"}
+{"id": "es-test-10008", "usecase": "voicemail_routine", "note": "Routine non-urgent voicemail transcript"}
+{"id": "es-test-10009", "usecase": "rec_video", "note": "New video episode available"}
+{"id": "es-test-10010", "usecase": "work_chat_routine", "note": "Non-urgent coworker message about shared sketches"}
+{"id": "es-test-10011", "usecase": "call_unknown", "note": "Missed call from unknown number"}
+{"id": "es-test-10012", "usecase": "home_security", "note": "Motion detected while away mode active"}
+{"id": "es-test-10013", "usecase": "scam_phishing", "note": "Phishing message with fake suspension warning"}
+{"id": "es-test-10014", "usecase": "school_info", "note": "School homework submission reminder for parents"}
+{"id": "es-test-10015", "usecase": "vip_ping", "note": "Urgent request from manager before meeting"}
+{"id": "es-test-10016", "usecase": "news_breaking_general", "note": "Breaking news on international energy pact"}
+{"id": "es-test-10017", "usecase": "delivery_update", "note": "Food delivery order on the way"}
+{"id": "es-test-10018", "usecase": "sports_update", "note": "Soccer player transfer rumors report"}
+{"id": "es-test-10019", "usecase": "system_routine", "note": "Low cloud storage warning notification"}
+{"id": "es-test-10020", "usecase": "scam_prize_loan", "note": "Preapproved loan offer scam"}
+{"id": "es-test-10021", "usecase": "group_forward", "note": "Chain message forward in family group"}
+{"id": "es-test-10022", "usecase": "social_activity", "note": "Photo tag on social media"}
+{"id": "es-test-10023", "usecase": "navigation_prompt", "note": "Traffic reroute navigation instruction"}
+{"id": "es-test-10024", "usecase": "chat_casual", "note": "Casual voice note from contact"}
+{"id": "es-test-10025", "usecase": "work_chat_routine", "note": "Team chat lunch plans"}
+{"id": "es-test-10026", "usecase": "scam_fake_delivery", "note": "Fake customs fee delivery scam"}
+{"id": "es-test-10027", "usecase": "chat_casual", "note": "Casual chat and voice note announcement"}
+{"id": "es-test-10028", "usecase": "school_info", "note": "School parent meeting reminder"}
+{"id": "es-test-10029", "usecase": "health_critical", "note": "High resting heart rate alert"}
+{"id": "es-test-10030", "usecase": "school_info", "note": "homework reminder due today"}
+{"id": "es-test-10031", "usecase": "social_activity", "note": "trending community post"}
+{"id": "es-test-10032", "usecase": "weather_severe", "note": "severe torrential rain warning"}
+{"id": "es-test-10033", "usecase": "medical_routine", "note": "medical appointment reminder"}
+{"id": "es-test-10034", "usecase": "delivery_update", "note": "package out for delivery today"}
+{"id": "es-test-10035", "usecase": "tsunami_flood_wildfire", "note": "wildfire evacuation order"}
+{"id": "es-test-10036", "usecase": "learning_notice", "note": "exam grade released"}
+{"id": "es-test-10037", "usecase": "travel_routine", "note": "hotel check-in opens tomorrow"}
+{"id": "es-test-10038", "usecase": "investment_alert", "note": "cryptocurrency price alert"}
+{"id": "es-test-10039", "usecase": "chat_family_routine", "note": "reached home and errand request"}
+{"id": "es-test-10040", "usecase": "ride_other", "note": "rate driver prompt"}
+{"id": "es-test-10041", "usecase": "rec_video", "note": "new episode release"}
+{"id": "es-test-10042", "usecase": "sub_billing_issue", "note": "subscription renewal payment failure"}
+{"id": "es-test-10043", "usecase": "email_routine", "note": "weekly tech newsletter email"}
+{"id": "es-test-10044", "usecase": "email_routine", "note": "purchase receipt email"}
+{"id": "es-test-10045", "usecase": "travel_urgent", "note": "same-day ride cancelled by driver"}
+{"id": "es-test-10046", "usecase": "call_scam", "note": "fake tech support missed call"}
+{"id": "es-test-10047", "usecase": "payment_routine", "note": "money transfer received"}
+{"id": "es-test-10048", "usecase": "school_info", "note": "new school homework assigned"}
+{"id": "es-test-10049", "usecase": "caption_status", "note": "live caption language pack downloaded"}
+{"id": "es-test-10050", "usecase": "scam_phishing", "note": "fake bank security alert"}
+{"id": "es-test-10051", "usecase": "medical_routine", "note": "routine clinic appointment reminder"}
+{"id": "es-test-10052", "usecase": "civic_advisory", "note": "air quality health advisory"}
+{"id": "es-test-10053", "usecase": "chat_family_routine", "note": "reached home and bread errand"}
+{"id": "es-test-10054", "usecase": "scam_fake_delivery", "note": "fake customs fee package scam"}
+{"id": "es-test-10055", "usecase": "investment_alert", "note": "stock target price alert"}
+{"id": "es-test-10056", "usecase": "chat_family_routine", "note": "shared family photos and dinner"}
+{"id": "es-test-10057", "usecase": "promo_sale", "note": "flash sale discount offer"}
+{"id": "es-test-10058", "usecase": "ride_other", "note": "rate completed ride prompt"}
+{"id": "es-test-10059", "usecase": "group_event_info", "note": "building elevator maintenance notice"}
+{"id": "es-test-10060", "usecase": "vip_ping", "note": "manager escalation to join meeting now"}
+{"id": "es-test-10061", "usecase": "social_activity", "note": "video likes notification"}
+{"id": "es-test-10062", "usecase": "scam_prize_loan", "note": "instant loan spam offer"}
+{"id": "es-test-10063", "usecase": "school_info", "note": "school project homework deadline reminder"}
+{"id": "es-test-10064", "usecase": "rec_music", "note": "new single release recommendation"}
+{"id": "es-test-10065", "usecase": "sub_renewal", "note": "subscription renewal notice"}
+{"id": "es-test-10066", "usecase": "sub_billing_issue", "note": "subscription payment failed"}
+{"id": "es-test-10067", "usecase": "scam_prize_loan", "note": "fake remote job offer scam"}
+{"id": "es-test-10068", "usecase": "marketing_push", "note": "abandoned cart re-engagement push"}
+{"id": "es-test-10069", "usecase": "community_safety_notice", "note": "building gas leak evacuation alert"}
+{"id": "es-test-10070", "usecase": "call_missed_family", "note": "missed calls and call request from dad"}
+{"id": "es-test-10071", "usecase": "work_chat_routine", "note": "standup notes and lunch chat"}
+{"id": "es-test-10072", "usecase": "group_chatter", "note": "neighbor asking about lost cat"}
+{"id": "es-test-10073", "usecase": "build_failure", "note": "pipeline failed and deploy rolled back"}
+{"id": "es-test-10074", "usecase": "scam_prize_loan", "note": "fake lottery prize notification"}
+{"id": "es-test-10075", "usecase": "call_missed_contact", "note": "missed call from contact"}
+{"id": "es-test-10076", "usecase": "social_activity", "note": "trending post on reddit"}
+{"id": "es-test-10077", "usecase": "promo_sale", "note": "flash sale discount coupon"}
+{"id": "es-test-10078", "usecase": "chat_family_routine", "note": "routine family errand and dinner"}
+{"id": "es-test-10079", "usecase": "marketing_push", "note": "re-engagement search recommendation push"}
+{"id": "es-test-10080", "usecase": "scam_prize_loan", "note": "fake lottery prize scam"}
+{"id": "es-test-10081", "usecase": "game_notice", "note": "game troops finished training"}
+{"id": "es-test-10082", "usecase": "investment_alert", "note": "crypto price alert"}
+{"id": "es-test-10083", "usecase": "workout_prompt", "note": "daily step goal reached"}
+{"id": "es-test-10084", "usecase": "sub_billing_issue", "note": "subscription payment failed"}
+{"id": "es-test-10085", "usecase": "system_routine", "note": "apps updated successfully"}
+{"id": "es-test-10086", "usecase": "weather_severe", "note": "flash flood red warning"}
+{"id": "es-test-10087", "usecase": "sub_renewal", "note": "subscription renewing soon"}
+{"id": "es-test-10088", "usecase": "sub_billing_issue", "note": "subscription price change notice"}
+{"id": "es-test-10089", "usecase": "ride_other", "note": "rate completed ride"}
+{"id": "es-test-10090", "usecase": "civic_advisory", "note": "alert system test notice"}
+{"id": "es-test-10091", "usecase": "civic_advisory", "note": "air quality advisory notice"}
+{"id": "es-test-10092", "usecase": "call_missed_family", "note": "repeated missed calls from dad"}
+{"id": "es-test-10093", "usecase": "work_incident", "note": "critical production checkout outage"}
+{"id": "es-test-10094", "usecase": "weather_severe", "note": "extreme heatwave alert today"}
+{"id": "es-test-10095", "usecase": "medical_routine", "note": "dental appointment reminder"}
+{"id": "es-test-10096", "usecase": "ride_other", "note": "weekly ride summary"}
+{"id": "es-test-10097", "usecase": "meeting_soon", "note": "meeting starts in ten minutes"}
+{"id": "es-test-10098", "usecase": "road_closure", "note": "traffic disruption on usual route"}
+{"id": "es-test-10099", "usecase": "group_chatter", "note": "apartment community chat question"}
+{"id": "es-test-10100", "usecase": "travel_routine", "note": "Bus booking confirmed"}
+{"id": "es-test-10101", "usecase": "call_missed_contact", "note": "Missed call from contact"}
+{"id": "es-test-10102", "usecase": "community_safety_notice", "note": "Building gas leak evacuation notice"}
+{"id": "es-test-10103", "usecase": "game_notice", "note": "Game lives refilled"}
+{"id": "es-test-10104", "usecase": "ride_arriving", "note": "Ride arriving at destination soon"}
+{"id": "es-test-10105", "usecase": "medical_routine", "note": "Dental appointment reminder"}
+{"id": "es-test-10106", "usecase": "payment_routine", "note": "Payment received via Bizum"}
+{"id": "es-test-10107", "usecase": "call_missed_contact", "note": "Missed voice call from contact"}
+{"id": "es-test-10108", "usecase": "school_info", "note": "Homework assigned on ClassDojo"}
+{"id": "es-test-10109", "usecase": "vip_ping", "note": "Manager escalation to join call now"}
+{"id": "es-test-10110", "usecase": "ride_arriving", "note": "Driver arriving in two minutes"}
+{"id": "es-test-10111", "usecase": "travel_urgent", "note": "Cancelled airport ride disruption"}
+{"id": "es-test-10112", "usecase": "school_info", "note": "Parent meeting scheduled next week"}
+{"id": "es-test-10113", "usecase": "sound_alert_critical", "note": "Smoke or fire alarm sound detected"}
+{"id": "es-test-10114", "usecase": "sub_billing_issue", "note": "Subscription payment processing failure"}
+{"id": "es-test-10115", "usecase": "call_missed_contact", "note": "Missed video call from contact"}
+{"id": "es-test-10116", "usecase": "marketing_push", "note": "Abandoned cart re-engagement push"}
+{"id": "es-test-10117", "usecase": "call_spam_likely", "note": "Missed call identified as commercial spam"}
+{"id": "es-test-10118", "usecase": "road_closure", "note": "Highway closure disrupting intercity route"}
+{"id": "es-test-10119", "usecase": "weather_severe", "note": "Severe storm warning for area"}
+{"id": "es-test-10120", "usecase": "learning_notice", "note": "Math exam grades released"}
+{"id": "es-test-10121", "usecase": "navigation_prompt", "note": "Route recalculation due to traffic"}
+{"id": "es-test-10122", "usecase": "ride_arriving", "note": "Cab arrived at pickup point"}
+{"id": "es-test-10123", "usecase": "tsunami_flood_wildfire", "note": "Flood evacuation order"}
+{"id": "es-test-10124", "usecase": "chat_family_routine", "note": "Mother reached home and dinner plans"}
+{"id": "es-test-10125", "usecase": "investment_alert", "note": "Crypto price alert"}
+{"id": "es-test-10126", "usecase": "school_urgent", "note": "Sick child pick up immediately"}
+{"id": "es-test-10127", "usecase": "civic_advisory", "note": "Alert system periodic test"}
+{"id": "es-test-10128", "usecase": "payment_routine", "note": "Utility bill due reminder"}
+{"id": "es-test-10129", "usecase": "social_activity", "note": "Comment on user post"}
+{"id": "es-test-10130", "usecase": "promo_sale", "note": "food delivery discount coupon"}
+{"id": "es-test-10131", "usecase": "scam_phishing", "note": "phishing fake bank card notice"}
+{"id": "es-test-10132", "usecase": "workout_prompt", "note": "workout distance goal completed"}
+{"id": "es-test-10133", "usecase": "school_info", "note": "homework assignment from teacher"}
+{"id": "es-test-10134", "usecase": "school_info", "note": "field trip authorization reminder"}
+{"id": "es-test-10135", "usecase": "promo_sale", "note": "flash sale shipping promotion"}
+{"id": "es-test-10136", "usecase": "build_failure", "note": "CI deployment pipeline failure"}
+{"id": "es-test-10137", "usecase": "game_notice", "note": "daily game login reward"}
+{"id": "es-dev-10138", "usecase": "community_safety_notice", "note": "building gas leak evacuation notice"}
+{"id": "es-dev-10139", "usecase": "community_safety_notice", "note": "neighbourhood street flooding warning"}
+{"id": "es-dev-10140", "usecase": "delivery_update", "note": "food delivery on the way"}
+{"id": "es-dev-10141", "usecase": "rec_music", "note": "new audio release recommendation"}
+{"id": "es-dev-10142", "usecase": "meeting_soon", "note": "meeting starts in two minutes"}
+{"id": "es-dev-10143", "usecase": "system_routine", "note": "device low storage alert"}
+{"id": "es-dev-10144", "usecase": "scam_prize_loan", "note": "instant loan scam offer"}
+{"id": "es-dev-10145", "usecase": "medical_routine", "note": "doctor appointment reminder"}
+{"id": "es-dev-10146", "usecase": "weather_routine", "note": "weather forecast for tomorrow"}
+{"id": "es-dev-10147", "usecase": "sound_alert_critical", "note": "smoke alarm sound detected"}
+{"id": "es-dev-10148", "usecase": "group_forward", "note": "forwarded chain message in group"}
+{"id": "es-dev-10149", "usecase": "scam_phishing", "note": "fake bank account blocked notice"}
+{"id": "es-dev-10150", "usecase": "call_missed_contact", "note": "missed call from contact"}
+{"id": "es-dev-10151", "usecase": "work_tool_routine", "note": "task assigned in work tool"}
+{"id": "es-dev-10152", "usecase": "health_routine", "note": "hourly movement reminder"}
+{"id": "es-dev-10153", "usecase": "system_routine", "note": "transcript backup completed"}
+{"id": "es-dev-10154", "usecase": "scam_phishing", "note": "phishing account suspension notice"}
+{"id": "es-dev-10155", "usecase": "visitor_gate", "note": "visitor gate access approval"}
+{"id": "es-dev-10156", "usecase": "system_routine", "note": "low battery warning"}
+{"id": "es-dev-10157", "usecase": "scam_prize_loan", "note": "job offer scam message"}
+{"id": "es-dev-10158", "usecase": "road_closure", "note": "road closed traffic alert"}
+{"id": "es-dev-10159", "usecase": "work_tool_routine", "note": "weekly digest from work tool"}
+{"id": "es-dev-10160", "usecase": "chat_family_routine", "note": "mom errand request and arrived home"}
+{"id": "es-dev-10161", "usecase": "work_chat_routine", "note": "work group chat lunch plans"}
+{"id": "es-dev-10162", "usecase": "workout_prompt", "note": "workout interval complete take rest"}
+{"id": "es-dev-10163", "usecase": "call_spam_likely", "note": "suspected spam telemarketing call"}
+{"id": "es-dev-10164", "usecase": "social_activity", "note": "friend birthday reminder on social"}
+{"id": "es-dev-10165", "usecase": "visitor_gate", "note": "gate security visitor entry approval"}
+{"id": "es-dev-10166", "usecase": "family_distress", "note": "family emergency father injured"}
+{"id": "es-dev-10167", "usecase": "meeting_soon", "note": "meeting starting now host waiting"}
+{"id": "es-dev-10168", "usecase": "school_urgent", "note": "sick child pick up from school"}
+{"id": "es-dev-10169", "usecase": "ride_other", "note": "ride receipt and rate driver"}
+{"id": "es-dev-10170", "usecase": "workout_prompt", "note": "5k completed and rest interval started"}
+{"id": "es-dev-10171", "usecase": "scam_prize_loan", "note": "Preapproved loan offer scam"}
+{"id": "es-dev-10172", "usecase": "game_notice", "note": "Game lives fully refilled"}
+{"id": "es-dev-10173", "usecase": "game_notice", "note": "Game new season and daily reward"}
+{"id": "es-dev-10174", "usecase": "call_missed_family", "note": "Repeated missed calls from father"}
+{"id": "es-dev-10175", "usecase": "caption_status", "note": "Live caption language pack downloaded"}
+{"id": "es-dev-10176", "usecase": "sub_billing_issue", "note": "Subscription payment processing failed"}
+{"id": "es-dev-10177", "usecase": "road_closure", "note": "Avenue closed due to road work"}
+{"id": "es-dev-10178", "usecase": "voicemail_routine", "note": "Non-urgent routine voicemail message"}
+{"id": "es-dev-10179", "usecase": "sound_alert_routine", "note": "Doorbell sound detected"}
+{"id": "es-dev-10180", "usecase": "group_forward", "note": "Forwarded blessing message in family group"}
+{"id": "es-dev-10181", "usecase": "scam_phishing", "note": "Fake bank transfer alert scam"}
+{"id": "es-dev-10182", "usecase": "marketing_push", "note": "Abandoned cart re-engagement push"}
+{"id": "es-dev-10183", "usecase": "scam_prize_loan", "note": "Job offer scam message"}
+{"id": "es-dev-10184", "usecase": "email_routine", "note": "Weekly tech newsletter digest"}
+{"id": "es-dev-10185", "usecase": "caption_status", "note": "Live captions paused status"}
+{"id": "es-dev-10186", "usecase": "system_routine", "note": "Low storage space warning"}
+{"id": "es-dev-10187", "usecase": "chat_family_routine", "note": "Family dinner plans chat"}
+{"id": "es-dev-10188", "usecase": "ride_other", "note": "Ride app favorite places prompt"}
+{"id": "es-dev-10189", "usecase": "public_safety_alert", "note": "Toxic gas leak emergency alert"}
+{"id": "es-dev-10190", "usecase": "game_notice", "note": "lives refilled game notification"}
+{"id": "es-dev-10191", "usecase": "work_incident", "note": "production outage payment gateway incident"}
+{"id": "es-dev-10192", "usecase": "weather_severe", "note": "severe storm and flash flood warning"}
+{"id": "es-dev-10193", "usecase": "sub_billing_issue", "note": "subscription billing failed update card"}
+{"id": "es-dev-10194", "usecase": "public_safety_alert", "note": "amber alert missing child"}
+{"id": "es-dev-10195", "usecase": "work_tool_routine", "note": "calendar invite accepted notification"}
+{"id": "es-dev-10196", "usecase": "ride_arriving", "note": "driver arriving in two minutes"}
+{"id": "es-dev-10197", "usecase": "meeting_soon", "note": "meeting starts in five minutes"}
+{"id": "es-dev-10198", "usecase": "workout_prompt", "note": "daily step goal reached notification"}
+{"id": "es-dev-10199", "usecase": "medical_routine", "note": "lab test results ready"}
+{"id": "es-dev-10200", "usecase": "sports_update", "note": "Live football match score update"}
+{"id": "es-dev-10201", "usecase": "school_info", "note": "School project homework assignment notification"}
+{"id": "es-dev-10202", "usecase": "scam_phishing", "note": "Fake bank security alert phishing scam"}
+{"id": "es-dev-10203", "usecase": "home_alarm_critical", "note": "Home smoke detector alarm triggered"}
+{"id": "es-dev-10204", "usecase": "road_closure", "note": "Road closure on user route"}
+{"id": "es-dev-10205", "usecase": "school_info", "note": "School parent meeting announcement"}
+{"id": "es-dev-10206", "usecase": "voicemail_routine", "note": "Non-urgent voicemail transcript from friend"}
+{"id": "es-dev-10207", "usecase": "investment_alert", "note": "Stock price alert reached threshold"}
+{"id": "es-dev-10208", "usecase": "visitor_gate", "note": "Delivery person requesting gate entry approval"}
+{"id": "es-dev-10209", "usecase": "workout_prompt", "note": "Running workout paused automatically"}
+{"id": "es-dev-10210", "usecase": "news_breaking_general", "note": "breaking international news"}

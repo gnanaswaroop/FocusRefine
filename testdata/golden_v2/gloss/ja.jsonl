@@ -1,0 +1,60 @@
+{"id": "ja-test-00001", "gloss_title": "Mom", "gloss_text": "Dad fell down the stairs and was taken away in an ambulance. Call me right now!"}
+{"id": "ja-test-00002", "gloss_title": "Younger sister Yui", "gloss_text": "Sis, I got into an accident... I'm at the hospital now. Please come as soon as you can"}
+{"id": "ja-dev-00003", "gloss_title": "Missed call", "gloss_text": "3 missed calls from Mom"}
+{"id": "ja-test-00004", "gloss_title": "Dad", "gloss_text": "There was a missed call. Please call back"}
+{"id": "ja-test-00005", "gloss_title": "Missed call", "gloss_text": "Missed call from +81 90-XXXX-XXXX (unknown caller)"}
+{"id": "ja-dev-00006", "gloss_title": "Possible spam call", "gloss_text": "[URGENT] +81 50-XXXX-XXXX \"Final notice of unpaid charges\" reported as a spam call"}
+{"id": "ja-test-00007", "gloss_title": "Incoming call", "gloss_text": "Call from +81 3-XXXX-XXXX claiming to be \"XX Bank Fraud Prevention Office\" - suspected scam"}
+{"id": "ja-test-00008", "gloss_title": "Security notice", "gloss_text": "Your account has been temporarily suspended. Please complete identity verification on the page below today. If left unattended, you will no longer be able to use your account. http://a.example.invalid/x"}
+{"id": "ja-dev-00009", "gloss_title": "[Emergency]", "gloss_text": "[Earthquake Early Warning] Strong shaking is expected in your area. Please check here for details http://q.example.invalid/x"}
+{"id": "ja-test-00010", "gloss_title": "Prize notification", "gloss_text": "Congratulations! You have won 1 million yen. Please complete the prize claim procedure here today. http://p.example.invalid/x"}
+{"id": "ja-test-00011", "gloss_title": "Heavy rain warning", "gloss_text": "A heavy rain warning has been issued for your area. Be on strict alert for landslides and rising rivers."}
+{"id": "ja-dev-00012", "gloss_title": "Typhoon approaching", "gloss_text": "A typhoon will approach the Kanto region tonight. Beware of violent winds and storm surge, and refrain from unnecessary outings."}
+{"id": "ja-test-00013", "gloss_title": "Earthquake Early Warning", "gloss_text": "Beware of strong shaking. Take cover under a desk or similar to protect yourself."}
+{"id": "ja-test-00014", "gloss_title": "Earthquake information", "gloss_text": "Intensity upper 5 observed in the earthquake just now. Be careful of aftershocks of similar size for about the next week."}
+{"id": "ja-dev-00015", "gloss_title": "Condominium management association", "gloss_text": "[URGENT] A small fire has broken out on the 3rd floor. Evacuate immediately by the stairs. Do not use the elevator!"}
+{"id": "ja-test-00016", "gloss_title": "Neighborhood association mom friends - Yukari", "gloss_text": "Today's lunch was the best 🍜 It was crowded like crazy (like a fire) lol Let's go again"}
+{"id": "ja-test-00017", "gloss_title": "Information sharing group - Tanaka", "gloss_text": "[Please spread] I heard a huge earthquake is coming tomorrow! Please pass it on to everyone! (source unknown)"}
+{"id": "ja-dev-00018", "gloss_title": "Fire alarm sound", "gloss_text": "Fire alarm sound detected"}
+{"id": "ja-test-00019", "gloss_title": "Doorbell sound", "gloss_text": "Doorbell sound detected"}
+{"id": "ja-test-00020", "gloss_title": "Your driver has arrived", "gloss_text": "A white Prius has arrived at the pickup location. License plate Shinagawa 300 A XX-XX"}
+{"id": "ja-dev-00021", "gloss_title": "Turn left in 300 m", "gloss_text": "Entering National Route 246. 12 minutes to your destination."}
+{"id": "ja-test-00022", "gloss_title": "#incident-response", "gloss_text": "The production API is not responding. On-call staff, please respond urgently."}
+{"id": "ja-test-00023", "gloss_title": "Weekly sync", "gloss_text": "Starts in 5 minutes. Join now"}
+{"id": "ja-dev-00024", "gloss_title": "Lap complete", "gloss_text": "You reached 5 km! Pace 5:32/km. Nice run 🏃"}
+{"id": "ja-test-00025", "gloss_title": "Heart rate alert", "gloss_text": "Your heart rate has exceeded 150 bpm for over 10 minutes despite being at rest. Please check how you are feeling."}
+{"id": "ja-test-00026", "gloss_title": "Free trial ends tomorrow", "gloss_text": "[Notice] Your free trial ends tomorrow. If you do not wish to continue, please complete the procedure today."}
+{"id": "ja-dev-00027", "gloss_title": "Notice of price revision", "gloss_text": "Premium plan prices will be revised from next month. Please check your account page for details."}
+{"id": "ja-test-00028", "gloss_title": "Recommended this week", "gloss_text": "Your Daily Mix has been updated. Check out the new King Gnu song too 🎧"}
+{"id": "ja-test-00029", "gloss_title": "Emergency live stream!", "gloss_text": "Channel \"Game Streaming ch\" is live right now. Don't miss it!"}
+{"id": "ja-dev-00030", "gloss_title": "Typhoon Super Sale", "gloss_text": "[Up to 70% OFF] A stormy flash sale ends at midnight tonight! Hurry ⚡"}
+{"id": "ja-test-00031", "gloss_title": "Train delay", "gloss_text": "The JR Yamanote Line is suspended due to a person-hit-by-train accident. An alternate route will be about 25 minutes late."}
+{"id": "ja-test-00032", "gloss_title": "Front door", "gloss_text": "The front door opened at 2:15 a.m. Please check the camera."}
+{"id": "ja-dev-00033", "gloss_title": "XX General Hospital", "gloss_text": "We urgently need to contact you about your family member's surgery. Please call us."}
+{"id": "ja-test-00034", "gloss_title": "XX Elementary School", "gloss_text": "Your child fell and was injured during PE. Please pick them up urgently."}
+{"id": "ja-test-00035", "gloss_title": "Out for delivery", "gloss_text": "The item you ordered is scheduled for delivery today. Please wait a little longer for delivery 📦"}
+{"id": "ja-dev-00036", "gloss_title": "Payment due notice", "gloss_text": "Your invoice is due in 5 days. Please pay early."}
+{"id": "ja-test-00037", "gloss_title": "Kenta", "gloss_text": "lol did you see that thing yesterday? It was so crazy I cracked up"}
+{"id": "ja-test-00038", "gloss_title": "Mom", "gloss_text": "Can you talk on the phone now? It's not urgent, but it's about the rice"}
+{"id": "ja-dev-00039", "gloss_title": "Client - Manager Suzuki", "gloss_text": "Could you send the revised version of the quote from earlier by 3 p.m.? Urgent, please."}
+{"id": "ja-test-00040", "gloss_title": "Missed call", "gloss_text": "Missed call from university friend Masato. \"Call me later\""}
+{"id": "ja-test-00041", "gloss_title": "Items in your cart are running out", "gloss_text": "Stock of items in your cart is almost gone! Order now 👀"}
+{"id": "ja-dev-00042", "gloss_title": "Package delivery", "gloss_text": "We took your package back. Since you were out, we took the package back. To request redelivery, please use the link below. http://r.example.invalid/a"}
+{"id": "ja-test-00043", "gloss_title": "Tsunami warning", "gloss_text": "People in coastal areas, evacuate to high ground immediately. Tsunami waves will strike repeatedly."}
+{"id": "ja-test-00044", "gloss_title": "Emergency alert", "gloss_text": "An incident involving a suspicious person is occurring nearby. Take shelter indoors and lock your doors."}
+{"id": "ja-dev-00045", "gloss_title": "Scheduled power outage notice", "gloss_text": "Power will be cut in your area for work for 2 hours starting at 10 a.m. tomorrow."}
+{"id": "ja-test-00046", "gloss_title": "Road closure", "gloss_text": "The Bayshore Route of the Metropolitan Expressway is closed due to an accident. We will guide you to a detour."}
+{"id": "ja-test-00047", "gloss_title": "Thank you for riding", "gloss_text": "Please rate your driver. The fare this time was 1,850 yen."}
+{"id": "ja-dev-00048", "gloss_title": "Due today", "gloss_text": "The deadline for \"Submit monthly report\" is today at 18:00."}
+{"id": "ja-test-00049", "gloss_title": "Build failed", "gloss_text": "CI failed on the main branch. Commit 3f2a1b: 5 tests failed."}
+{"id": "ja-test-00050", "gloss_title": "Sato", "gloss_text": "Can you talk on the phone for a bit? Later is fine too."}
+{"id": "ja-dev-00051", "gloss_title": "[Important] This week's news", "gloss_text": "We have compiled this week's featured articles. You can change your newsletter delivery settings here."}
+{"id": "ja-test-00052", "gloss_title": "Carbon monoxide alarm", "gloss_text": "The smoke/carbon monoxide detector in the living room has gone off. Open the windows and evacuate immediately."}
+{"id": "ja-test-00053", "gloss_title": "Movement at front door", "gloss_text": "Movement was detected at the front door at 2 p.m."}
+{"id": "ja-dev-00054", "gloss_title": "Your reservation is confirmed", "gloss_text": "Your reservation for a hotel in Kyoto (Nov 3-5) is confirmed. Check-in is available from tomorrow."}
+{"id": "ja-test-00055", "gloss_title": "Breaking news", "gloss_text": "[Breaking] Popular actor announces marriage. Fans send congratulations"}
+{"id": "ja-test-00056", "gloss_title": "Tomorrow's weather", "gloss_text": "Tomorrow will be cloudy, then rain. The typhoon is moving north over the sea south of Japan, but it will have no effect."}
+{"id": "ja-dev-00057", "gloss_title": "Match update", "gloss_text": "Urawa Reds 2-1 Kashima Antlers (30th minute of the second half)"}
+{"id": "ja-test-00058", "gloss_title": "You were mentioned", "gloss_text": "@miho mentioned you in a comment: \"Look urgently! lol\""}
+{"id": "ja-test-00059", "gloss_title": "Today's summary", "gloss_text": "Your average heart rate today was 78 bpm. The highest was 165 bpm during exercise."}
+{"id": "ja-dev-00060", "gloss_title": "Urgent maintenance", "gloss_text": "⚠️Warning: 1 hour until the clan battle starts. Get your troops ready now!"}

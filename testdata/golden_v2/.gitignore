@@ -1,0 +1,5 @@
+# working copies; the reviewed data is pilot_agreed/ and contested_pilot.jsonl
+raw/
+pilot/
+pilot/*.rejected.jsonl
+relabel_in/

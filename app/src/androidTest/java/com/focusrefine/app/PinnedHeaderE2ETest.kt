@@ -17,7 +17,8 @@ class PinnedHeaderE2ETest {
         ActivityScenario.launch(activity).use { scenario ->
             AccessibilityDriver.expectText(firstContent, why = "the content starts at the top")
             expand.forEach { AccessibilityDriver.tapText(it) } // sections start collapsed; a longer page gives the scroll room
-            AccessibilityDriver.scrollDown(4)
+            // more steps than a phone needs: on a tall tablet the page must still scroll the first content away
+            AccessibilityDriver.scrollDown(12)
 
             assertFalse("the content scrolled away from the top ('$firstContent' should be gone)", AccessibilityDriver.hasText(firstContent))
             AccessibilityDriver.expectText("Back", why = "the Back button is still pinned after scrolling")
@@ -31,7 +32,7 @@ class PinnedHeaderE2ETest {
     }
 
     @Test
-    fun settingsKeepsItsTitleBarWhileScrolling() = checkPinned(SettingsActivity::class.java, "Settings", "Classification Engine", expand = listOf("Learning"))
+    fun settingsKeepsItsTitleBarWhileScrolling() = checkPinned(SettingsActivity::class.java, "Settings", "Classification Engine", expand = listOf("Learning", "Advanced Settings"))
 
     @Test
     fun helpKeepsItsTitleBarWhileScrolling() = checkPinned(HelpActivity::class.java, "Help & how it works", "Keep the noise out")

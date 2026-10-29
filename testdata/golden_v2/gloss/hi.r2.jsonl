@@ -1,0 +1,98 @@
+{"id": "hi-test-01000", "gloss_title": "Missed call", "gloss_text": "A missed call from +91 9XXXXXXXXX. This number is not in your contact list."}
+{"id": "hi-test-01001", "gloss_title": "Unknown number", "gloss_text": "You got a call from +91 8XXXXXXXXX and did not answer it."}
+{"id": "hi-dev-01002", "gloss_title": "Incoming call", "gloss_text": "Unknown number +91 7XXXXXXXXX is calling you."}
+{"id": "hi-test-01003", "gloss_title": "Missed video call on Meet", "gloss_text": "An unknown user made a video call to you."}
+{"id": "hi-test-01004", "gloss_title": "2 missed calls", "gloss_text": "2 missed calls from +91 9XXXXXXXXX (unknown), last call at 6:40 pm."}
+{"id": "hi-dev-01005", "gloss_title": "Who could this be?", "gloss_text": "This number is calling for the first time. Name not found, and no spam report either."}
+{"id": "hi-test-01006", "gloss_title": "Private number", "gloss_text": "A call came from a private number - missed."}
+{"id": "hi-test-01007", "gloss_title": "Missed call - Delhi", "gloss_text": "+91 8XXXXXXXXX - location: Delhi - today 11:15 am."}
+{"id": "hi-dev-01008", "gloss_title": "Unknown caller", "gloss_text": "You received a Meet call invitation from an unknown number. Tap to respond."}
+{"id": "hi-test-01009", "gloss_title": "Missed call", "gloss_text": "+91 7XXXXXXXXX rang three times and hung up."}
+{"id": "hi-test-01010", "gloss_title": "Truecaller", "gloss_text": "An unknown caller called you at 9 pm. Call back?"}
+{"id": "hi-dev-01011", "gloss_title": "Unfamiliar number", "gloss_text": "Call missed from +91 9XXXXXXXXX."}
+{"id": "hi-test-01012", "gloss_title": "Missed call", "gloss_text": "No name found - +91 8XXXXXXXXX - 7:05 am."}
+{"id": "hi-test-01013", "gloss_title": "Missed audio call", "gloss_text": "An audio call from an unsaved number was missed. No message was left."}
+{"id": "hi-test-01014", "gloss_title": "Likely spam", "gloss_text": "+91 9XXXXXXXXX - reported as spam by over 1,200 people. Call blocked."}
+{"id": "hi-test-01015", "gloss_title": "Likely spam call", "gloss_text": "Likely spam: the call from +91 8XXXXXXXXX was declined automatically."}
+{"id": "hi-dev-01016", "gloss_title": "Telemarketer", "gloss_text": "Telemarketing call - 'loan offer' - +91 7XXXXXXXXX."}
+{"id": "hi-test-01017", "gloss_title": "Sales call?", "gloss_text": "This number often calls to sell credit cards. Answer or block?"}
+{"id": "hi-test-01018", "gloss_title": "Possible spam", "gloss_text": "+91 9XXXXXXXXX may be spam. Caller ID: 'property offer'."}
+{"id": "hi-dev-01019", "gloss_title": "WhatsApp call", "gloss_text": "Missed call from an unknown number - WhatsApp flagged it as suspected spam."}
+{"id": "hi-test-01020", "gloss_title": "Blocked", "gloss_text": "4 spam calls were stopped since this morning."}
+{"id": "hi-test-01021", "gloss_title": "Spam call", "gloss_text": "The call from telemarketer 140XXXXXXX was not answered."}
+{"id": "hi-dev-01022", "gloss_title": "Suspicious caller", "gloss_text": "Caller ID 'insurance sales' - 98% of users consider it spam. 🚫"}
+{"id": "hi-test-01023", "gloss_title": "Spam warning", "gloss_text": "Incoming call: +91 8XXXXXXXXX - possible spam. Be careful before answering."}
+{"id": "hi-test-01024", "gloss_title": "Promotional call", "gloss_text": "A call promoting a mobile plan was identified. Please check the 'DND' list."}
+{"id": "hi-dev-01025", "gloss_title": "Suspicious Meet call", "gloss_text": "A call from an unknown account has been placed in the spam category."}
+{"id": "hi-test-01026", "gloss_title": "Spam report", "gloss_text": "+91 7XXXXXXXXX was reported as spam 340 times."}
+{"id": "hi-test-01027", "gloss_title": "Missed call (spam)", "gloss_text": "Repeated loan calls, sent to the spam folder."}
+{"id": "hi-test-01028", "gloss_title": "Fraud warning", "gloss_text": "+91 9XXXXXXXXX - a number used by someone posing as a fake bank officer to scam people in the name of KYC. Do not answer."}
+{"id": "hi-test-01029", "gloss_title": "Suspected fraud call", "gloss_text": "The caller says they are from a courier company and may ask for money, saying a parcel has been held."}
+{"id": "hi-dev-01030", "gloss_title": "Fraud caller ⚠️", "gloss_text": "Fake CBI officer - a call that scares you by saying a case is registered in your name."}
+{"id": "hi-test-01031", "gloss_title": "+91 8XXXXXXXXX", "gloss_text": "Missed video call. Scam reports have come in against this number for posing as 'police verification'."}
+{"id": "hi-test-01032", "gloss_title": "Fake tech support", "gloss_text": "A caller saying 'your computer has been hacked'. This is a well-known scam."}
+{"id": "hi-dev-01033", "gloss_title": "Fraud suspected", "gloss_text": "+91 7XXXXXXXXX - a caller who threatens to cut the electricity connection and asks for money."}
+{"id": "hi-test-01034", "gloss_title": "Call from a bank?", "gloss_text": "The caller ID shows a bank name, but the number is private. Do not give account or card details on such a call."}
+{"id": "hi-test-01035", "gloss_title": "Unknown caller", "gloss_text": "Voice call missed. This ID is asking for money in the name of 'earn from home' and investment."}
+{"id": "hi-dev-01036", "gloss_title": "Fake SIM-block call", "gloss_text": "'Your SIM will be blocked in 2 hours' - this is a fraud call. Do not press 1."}
+{"id": "hi-test-01037", "gloss_title": "Scam number", "gloss_text": "+91 9XXXXXXXXX - recorded as a caller offering prizes in the name of 'KBC lottery'."}
+{"id": "hi-test-01038", "gloss_title": "Unknown", "gloss_text": "Call missed - the caller first claimed to be a 'bank manager' and asked for card details."}
+{"id": "hi-dev-01039", "gloss_title": "Suspected scammer", "gloss_text": "Complaints of people being asked for money for Aadhaar updates are recorded against this number."}
+{"id": "hi-test-01040", "gloss_title": "Suspicious call", "gloss_text": "Caller asking for a 'registration fee' for a job offer: +91 8XXXXXXXXX."}
+{"id": "hi-test-01041", "gloss_title": "Scam report", "gloss_text": "Reports came in of calls saying 'your son is in trouble, send money immediately'. Block this number."}
+{"id": "hi-test-01042", "gloss_title": "Papa", "gloss_text": "5 missed calls, last call just 2 minutes ago."}
+{"id": "hi-test-01043", "gloss_title": "Mummy", "gloss_text": "3 missed calls - last call tonight at 11:20 pm."}
+{"id": "hi-dev-01044", "gloss_title": "Bhaiya", "gloss_text": "Call quickly, why aren't you picking up the phone? I have been calling for a long time!"}
+{"id": "hi-test-01045", "gloss_title": "Didi", "gloss_text": "Repeated missed calls: 4 times (last call 12:05 AM)."}
+{"id": "hi-test-01046", "gloss_title": "Wife ❤️", "gloss_text": "Missed video calls x3."}
+{"id": "hi-dev-01047", "gloss_title": "Mummy", "gloss_text": "Child, check your phone, it is important. Call immediately."}
+{"id": "hi-test-01048", "gloss_title": "Husband", "gloss_text": "2 missed calls. Please call back."}
+{"id": "hi-test-01049", "gloss_title": "Younger brother", "gloss_text": "Please pick up the phone, call now."}
+{"id": "hi-dev-01050", "gloss_title": "Dadaji", "gloss_text": "Missed calls x6 - within 10 minutes, continuously."}
+{"id": "hi-test-01051", "gloss_title": "Maa", "gloss_text": "Missed call."}
+{"id": "hi-test-01052", "gloss_title": "Papa", "gloss_text": "📞 Missed voice calls (4). Papa wrote: 'I need to talk, call me'."}
+{"id": "hi-dev-01053", "gloss_title": "Elder sister", "gloss_text": "You missed 3 calls from your elder sister."}
+{"id": "hi-test-01054", "gloss_title": "Chachaji", "gloss_text": "Please call immediately - Chachaji called 3 times."}
+{"id": "hi-test-01055", "gloss_title": "Sasur ji", "gloss_text": "Missed calls x2 - just now."}
+{"id": "hi-test-02000", "gloss_title": "How was your visit?", "gloss_text": "Rate the cafe you recently visited and add photos."}
+{"id": "hi-test-02001", "gloss_title": "Your weekly driving summary", "gloss_text": "You drove 142 km this week. 8% less than last week."}
+{"id": "hi-dev-02002", "gloss_title": "Your timeline is ready", "gloss_text": "See last month's trips: 6 cities, 3 new places and 1 long journey."}
+{"id": "hi-test-02003", "gloss_title": "Waze tip", "gloss_text": "You can change your car icon. Go to settings and choose a new look. 🚗"}
+{"id": "hi-test-02004", "gloss_title": "PROJ-482 assigned to you", "gloss_text": "Update documentation - priority: low - due date next week."}
+{"id": "hi-test-02005", "gloss_title": "New star on your repository", "gloss_text": "Someone starred your repository demo-notes."}
+{"id": "hi-dev-02006", "gloss_title": "Weekly report", "gloss_text": "You completed 23 tasks this week. Great work! ✅"}
+{"id": "hi-test-02007", "gloss_title": "Recording ready", "gloss_text": "The recording of yesterday's team meeting is now available to view."}
+{"id": "hi-test-02008", "gloss_title": "Neha Verma", "gloss_text": "Where should we have lunch today? Canteen or outside?"}
+{"id": "hi-dev-02009", "gloss_title": "Your sleep score", "gloss_text": "Last night's sleep score was 78. Deep sleep: 1 hour 35 minutes."}
+{"id": "hi-test-02010", "gloss_title": "Ticket booked", "gloss_text": "Your ticket is confirmed. Travel date: next Friday. Berth details will be available when the chart is prepared."}
+{"id": "hi-test-02011", "gloss_title": "Amit commented", "gloss_text": "@you FYI only: I uploaded the test report. Please look when you have time, no rush."}
+{"id": "hi-test-02012", "gloss_title": "YONO SBI", "gloss_text": "Rs 12,500 has been credited to your savings account. This amount was received as salary. Open the app to see the available balance. For any information, contact your bank branch."}
+{"id": "hi-test-02013", "gloss_title": "Your credit card statement is ready", "gloss_text": "January's statement has been issued. The total amount due is Rs 4,860 and the payment deadline is 5 days from now. Pay on time to avoid late fees and earn reward points."}
+{"id": "hi-dev-02014", "gloss_title": "Kotak Mobile Banking", "gloss_text": "You sent Rs 850 via UPI. The transaction was successful. If you did not do this, please contact the bank's official helpline. Thank you!"}
+{"id": "hi-test-02015", "gloss_title": "Electricity bill is pending", "gloss_text": "Your electricity bill is Rs 1,240, due in 4 days. Pay now and get cashback."}
+{"id": "hi-dev-02016", "gloss_title": "CRED coins earned 🎉", "gloss_text": "You got 120 coins for paying a bill. Convert them into rewards."}
+{"id": "hi-test-02017", "gloss_title": "Your order is being prepared", "gloss_text": "The restaurant is preparing your food. You will be notified as soon as a delivery partner is assigned. Estimated time: 35 minutes. You can see the live order status in the app."}
+{"id": "hi-test-02018", "gloss_title": "Blinkit", "gloss_text": "Your order will arrive in 9 minutes. 🛵"}
+{"id": "hi-test-02019", "gloss_title": "Your slot is confirmed", "gloss_text": "Your grocery delivery will arrive tomorrow between 8 and 10 am. There are 14 items in the list. If any item is unavailable, a similar alternative will be sent and you will be told first."}
+{"id": "hi-dev-02020", "gloss_title": "Zepto", "gloss_text": "Your order has been delivered. How was it? Please rate."}
+{"id": "hi-test-02021", "gloss_title": "⚠️ Last chance! Ends tonight", "gloss_text": "Hurry! Up to 70% off in the flash sale, only until 12 am tonight. Items in your cart may sell out at any time, so don't delay. Also an extra Rs 300 off and free delivery for new customers."}
+{"id": "hi-test-02022", "gloss_title": "Your driver has arrived", "gloss_text": "The driver is waiting for you at the pickup point. Vehicle: white auto."}
+{"id": "hi-dev-02023", "gloss_title": "Captain is 4 minutes away", "gloss_text": "Your captain will arrive in 4 minutes. Get ready. 🏍️"}
+{"id": "hi-test-02024", "gloss_title": "Bus boarding point changed", "gloss_text": "Your 9:30 pm bus today will now leave from a different boarding point instead of the old stop. Please reach the new location 30 minutes early. Use the number given in the app to contact the driver."}
+{"id": "hi-test-02025", "gloss_title": "Your data is almost over", "gloss_text": "90% of today's 1.5 GB data is used. Buy an extra data pack now for uninterrupted internet. Your plan is valid until next week, so recharge on time."}
+{"id": "hi-dev-02026", "gloss_title": "Document reminder", "gloss_text": "Your vehicle's insurance will expire in 20 days. Get it renewed on time."}
+{"id": "hi-test-02027", "gloss_title": "Appointment reminder", "gloss_text": "You have an appointment with Dr. Sharma tomorrow at 10:30 am."}
+{"id": "hi-test-02028", "gloss_title": "Urgent consultation needed on report", "gloss_text": "Some abnormal values were found in your test report. The doctor has asked you to contact them for a consultation today. Please call the clinic today or choose a time in the app."}
+{"id": "hi-test-02029", "gloss_title": "Price alert", "gloss_text": "A share on your watchlist has reached the target level of Rs 1,520."}
+{"id": "hi-dev-02030", "gloss_title": "Today's quiz is ready", "gloss_text": "Play the new maths quiz and keep your streak going. 🔥"}
+{"id": "hi-test-02031", "gloss_title": "Class is about to start", "gloss_text": "Live physics class tomorrow at 6 pm. Set a reminder."}
+{"id": "hi-test-02032", "gloss_title": "New songs for you", "gloss_text": "Your favourite playlist for today is ready. Start listening. 🎶"}
+{"id": "hi-dev-02033", "gloss_title": "Listen now! 🔥 New song", "gloss_text": "Just released - a new song from your favourite singer. Don't miss it!"}
+{"id": "hi-test-02034", "gloss_title": "New season on ZEE5", "gloss_text": "The new season of your favourite web series starts tonight at 8 pm. Watch the summary of the previous season and continue the story from where you left off. Set a reminder now and don't miss any episode."}
+{"id": "hi-test-02035", "gloss_title": "New movie in your city", "gloss_text": "Tickets for movies released this week are now available."}
+{"id": "hi-dev-02036", "gloss_title": "ShareChat", "gloss_text": "25 people liked your post. 👍"}
+{"id": "hi-test-02037", "gloss_title": "Society family - Rita Aunty", "gloss_text": "Who is coming for tea this evening?\nSuman: I will come!\nRita Aunty: OK, we'll meet at 5 in the park. 😄"}
+{"id": "hi-test-02038", "gloss_title": "Friends circle - Rajesh", "gloss_text": "🙏 Good morning 🙏\nForward this message to 10 people and your day will be auspicious. Whoever does not forward it will get bad news!"}
+{"id": "hi-dev-02039", "gloss_title": "Adarsh Apartment Society - Secretary", "gloss_text": "All residents are informed that the monthly meeting will be held in the clubhouse this Sunday at 9 am. Agenda: maintenance charges and festival preparations. Please attend on time. Thank you."}
+{"id": "hi-test-02040", "gloss_title": "College friend - Vikas", "gloss_text": "Hurry, call me right now 😂\nOh, it's just a joke, we were supposed to plan yesterday's party\nAll: haha, OK"}
+{"id": "hi-test-02041", "gloss_title": "Tower B residents - security guard", "gloss_text": "⚠️ Gas leak reported on the third floor. Everyone must come down immediately, do not use the lift, and do not press electric switches."}

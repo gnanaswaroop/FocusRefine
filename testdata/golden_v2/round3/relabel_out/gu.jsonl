@@ -1,0 +1,29 @@
+{"id": "gu-test-03001", "usecase": "weather_severe", "note": "heavy rain and wind warning today"}
+{"id": "gu-test-03005", "usecase": "caption_status", "note": "language pack downloaded"}
+{"id": "gu-test-03006", "usecase": "caption_status", "note": "captions paused"}
+{"id": "gu-dev-03007", "usecase": "caption_status", "note": "transcription running"}
+{"id": "gu-test-03008", "usecase": "caption_status", "note": "live caption on"}
+{"id": "gu-test-03009", "usecase": "caption_status", "note": "language pack updated"}
+{"id": "gu-dev-03010", "usecase": "caption_status", "note": "caption settings changed"}
+{"id": "gu-test-03011", "usecase": "system_routine", "note": "Android update downloaded"}
+{"id": "gu-test-03012", "usecase": "system_routine", "note": "storage low"}
+{"id": "gu-dev-03013", "usecase": "system_routine", "note": "apps updated overnight"}
+{"id": "gu-test-03014", "usecase": "system_routine", "note": "cloud storage 80 percent full"}
+{"id": "gu-test-03015", "usecase": "system_routine", "note": "battery low, power saving"}
+{"id": "gu-test-03016", "usecase": "system_routine", "note": "backup completed"}
+{"id": "gu-test-03017", "usecase": "group_chatter", "note": "society group banter and meeting"}
+{"id": "gu-test-03018", "usecase": "group_chatter", "note": "college friends cricket plans"}
+{"id": "gu-test-03019", "usecase": "work_chat_routine", "note": "office tea money, not urgent"}
+{"id": "gu-dev-03020", "usecase": "group_chatter", "note": "breakfast group banter"}
+{"id": "gu-test-03021", "usecase": "group_forward", "note": "good-morning chain forward"}
+{"id": "gu-test-03022", "usecase": "group_forward", "note": "unverified water-cut rumour"}
+{"id": "gu-dev-03023", "usecase": "group_forward", "note": "photo forward to neighbours"}
+{"id": "gu-test-03024", "usecase": "group_event_info", "note": "society meeting notice"}
+{"id": "gu-test-03025", "usecase": "group_event_info", "note": "festival collection notice"}
+{"id": "gu-dev-03026", "usecase": "school_info", "note": "parent meeting, not urgent"}
+{"id": "gu-test-03027", "usecase": "community_safety_notice", "note": "smoke and fire alarm in building"}
+{"id": "gu-test-03028", "usecase": "community_safety_notice", "note": "gas smell in building"}
+{"id": "gu-dev-03029", "usecase": "tsunami_flood_wildfire", "note": "flood evacuation warning"}
+{"id": "gu-test-03030", "usecase": "visitor_gate", "note": "delivery agent at gate"}
+{"id": "gu-test-03031", "usecase": "visitor_gate", "note": "domestic help at gate"}
+{"id": "gu-dev-03032", "usecase": "home_routine", "note": "person at door, no danger"}

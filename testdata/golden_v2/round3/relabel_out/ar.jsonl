@@ -1,0 +1,29 @@
+{"id": "ar-dev-03005", "usecase": "visitor_gate"}
+{"id": "ar-test-03006", "usecase": "visitor_gate"}
+{"id": "ar-test-03007", "usecase": "visitor_gate"}
+{"id": "ar-test-03008", "usecase": "visitor_gate", "note": "parcel at reception"}
+{"id": "ar-test-03009", "usecase": "visitor_gate"}
+{"id": "ar-dev-03010", "usecase": "visitor_gate"}
+{"id": "ar-test-03011", "usecase": "caption_status"}
+{"id": "ar-test-03012", "usecase": "caption_status"}
+{"id": "ar-test-03013", "usecase": "caption_status"}
+{"id": "ar-dev-03014", "usecase": "caption_status"}
+{"id": "ar-test-03015", "usecase": "caption_status"}
+{"id": "ar-test-03016", "usecase": "system_routine"}
+{"id": "ar-dev-03017", "usecase": "chat_family_routine", "note": "family trip group"}
+{"id": "ar-test-03018", "usecase": "group_chatter"}
+{"id": "ar-test-03019", "usecase": "group_chatter"}
+{"id": "ar-dev-03020", "usecase": "group_chatter"}
+{"id": "ar-test-03021", "usecase": "group_forward"}
+{"id": "ar-test-03022", "usecase": "group_forward", "note": "unverified rumour"}
+{"id": "ar-dev-03023", "usecase": "group_forward"}
+{"id": "ar-test-03024", "usecase": "group_event_info"}
+{"id": "ar-test-03025", "usecase": "group_event_info"}
+{"id": "ar-dev-03026", "usecase": "group_event_info"}
+{"id": "ar-test-03027", "usecase": "community_safety_notice", "note": "smoke in building"}
+{"id": "ar-test-03028", "usecase": "community_safety_notice", "note": "gas leak evacuation"}
+{"id": "ar-dev-03029", "usecase": "tsunami_flood_wildfire", "note": "flood and road closure"}
+{"id": "ar-test-03030", "usecase": "visitor_gate"}
+{"id": "ar-test-03031", "usecase": "visitor_gate"}
+{"id": "ar-dev-03032", "usecase": "visitor_gate"}
+{"id": "ar-test-03033", "usecase": "visitor_gate"}

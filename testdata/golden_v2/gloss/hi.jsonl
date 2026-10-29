@@ -1,0 +1,60 @@
+{"id": "hi-test-00001", "gloss_title": "Papa", "gloss_text": "Beta, pick up the phone quick, Mummy suddenly had chest pain, we are going to the hospital. Call right now!"}
+{"id": "hi-test-00002", "gloss_title": "Missed call", "gloss_text": "4 missed calls from Bhaiya (mobile), last call just 2 minutes ago"}
+{"id": "hi-dev-00003", "gloss_title": "Missed call", "gloss_text": "Missed call from unknown number (+91 9XXXXXXXXX), at 11:42 AM"}
+{"id": "hi-dev-00004", "gloss_title": "Possible spam", "gloss_text": "Credit card offer call, 214 people have reported this number as spam"}
+{"id": "hi-test-00005", "gloss_title": "Dangerous call warning", "gloss_text": "This number poses as a bank official and threatens to close your account. Do not answer the call."}
+{"id": "hi-test-00006", "gloss_title": "Urgent: Your account will be suspended", "gloss_text": "Your account will be closed within 24 hours. Update your information immediately or the account will be closed permanently: http://a.example.invalid/x"}
+{"id": "hi-test-00007", "gloss_title": "Unknown sender", "gloss_text": "Congratulations! You have won a lottery of twenty-five lakh rupees 🎉 To claim the prize, register your name today at the link below: http://p.example.invalid/x"}
+{"id": "hi-test-00008", "gloss_title": "Emergency alert", "gloss_text": "Cyclone threat. Strong winds and heavy rain likely in the next 3 hours. Please stay safe indoors."}
+{"id": "hi-test-00009", "gloss_title": "Earthquake alert", "gloss_text": "Strong tremors are about to hit your area. Drop down, cover your head and hold on to something sturdy."}
+{"id": "hi-test-00010", "gloss_title": "Society notice: Emergency", "gloss_text": "There is a fire in the Tower B parking. All residents come down by the stairs immediately and reach outside the gate, do not use the lift."}
+{"id": "hi-dev-00011", "gloss_title": "Sharma Colony folks", "gloss_text": "Anita: Shall everyone meet for tea in the park tomorrow evening? 😄"}
+{"id": "hi-dev-00012", "gloss_title": "Family group", "gloss_text": "Forwarded: Good morning 🌸 Have a blessed day! Send this to 10 people, only then your wish will be fulfilled 🙏"}
+{"id": "hi-test-00013", "gloss_title": "Smoke alarm sound heard", "gloss_text": "The sound of a smoke alarm was detected nearby. Check immediately."}
+{"id": "hi-test-00014", "gloss_title": "Sound detected", "gloss_text": "The doorbell rang. The sound was heard for about 5 seconds."}
+{"id": "hi-test-00015", "gloss_title": "Your cab has arrived", "gloss_text": "Driver Rajesh has reached your pickup point. Vehicle: white Swift. Please come quickly."}
+{"id": "hi-test-00016", "gloss_title": "Navigation", "gloss_text": "Turn right after 300 meters, then keep going straight under the flyover"}
+{"id": "hi-test-00017", "gloss_title": "#production-alert", "gloss_text": "Payment service is down, customers cannot place orders. On-call engineers join the channel immediately."}
+{"id": "hi-test-00018", "gloss_title": "Meeting starts in 5 minutes", "gloss_text": "The quarterly review meeting will start in 5 minutes. Join now."}
+{"id": "hi-test-00019", "gloss_title": "Interval complete", "gloss_text": "Well done! 30-second run completed. Now rest for 1 minute 💪"}
+{"id": "hi-test-00020", "gloss_title": "Heart rate very high", "gloss_text": "At rest, your heart rate has been above 140 per minute for 10 minutes. If you feel dizzy or have chest pain, contact a doctor."}
+{"id": "hi-dev-00021", "gloss_title": "Your plan will renew soon", "gloss_text": "Your subscription will renew automatically in 3 days."}
+{"id": "hi-test-00022", "gloss_title": "Payment failed", "gloss_text": "Your payment method was declined. Update payment details to keep your subscription active."}
+{"id": "hi-test-00023", "gloss_title": "Alert: New song is out! 🎵", "gloss_text": "Arijit Singh's new song has just been released, be the first to listen"}
+{"id": "hi-dev-00024", "gloss_title": "Tonight's premiere", "gloss_text": "Watch the new season of your favourite web series from 9 PM tonight"}
+{"id": "hi-test-00025", "gloss_title": "Stormy sale! ⚡", "gloss_text": "Last chance! Up to 60% off on mobiles until 12 midnight tonight. Order now"}
+{"id": "hi-test-00026", "gloss_title": "Platform change", "gloss_text": "Your train's platform has been changed to 6. The train will depart in 20 minutes."}
+{"id": "hi-test-00027", "gloss_title": "Main door opened", "gloss_text": "The main door opened at 2:14 AM and the camera recorded movement. Is this you?"}
+{"id": "hi-test-00028", "gloss_title": "City Hospital", "gloss_text": "Your father's operation is over. The doctor wants to talk to you, please call immediately."}
+{"id": "hi-test-00029", "gloss_title": "Class teacher - Meena Ma'am", "gloss_text": "Your son got hurt while playing. Please come to school immediately and take him home."}
+{"id": "hi-dev-00030", "gloss_title": "Your food is on the way", "gloss_text": "The delivery partner has left with your order, will arrive in about 12 minutes"}
+{"id": "hi-test-00031", "gloss_title": "Money received", "gloss_text": "You received ₹500 from Sunita Verma"}
+{"id": "hi-test-00032", "gloss_title": "Rohit", "gloss_text": "Dude, did you watch yesterday's match? What an amazing six in the last over 😂"}
+{"id": "hi-test-00033", "gloss_title": "Mummy", "gloss_text": "Bring milk and bread on your way back. Come home soon, food is ready."}
+{"id": "hi-test-00034", "gloss_title": "Vinod Sir (Client)", "gloss_text": "Need to talk to you right now, need the contract signed today itself. Please reply immediately."}
+{"id": "hi-dev-00035", "gloss_title": "Society committee", "gloss_text": "On Sunday at 10 AM there will be a cleanliness drive and Diwali donation meeting in the clubhouse. Everyone is invited."}
+{"id": "hi-test-00036", "gloss_title": "Visitor at gate", "gloss_text": "A delivery agent is at the gate waiting for your approval. Allow or deny."}
+{"id": "hi-test-00037", "gloss_title": "Missed call", "gloss_text": "Missed call from Sanjay (office). No hurry, talk whenever you are free."}
+{"id": "hi-dev-00038", "gloss_title": "Your cart is waiting! 🛒", "gloss_text": "Hurry! Stock of the saree in your cart is about to run out. Buy now"}
+{"id": "hi-test-00039", "gloss_title": "Unknown sender", "gloss_text": "Your parcel is held at the customs department. Pay a fee of forty-nine rupees immediately or the parcel will be sent back: http://c.example.invalid/p"}
+{"id": "hi-test-00040", "gloss_title": "Flood warning", "gloss_text": "The river water level has risen above the danger mark. People in low-lying areas should move to higher ground immediately."}
+{"id": "hi-test-00041", "gloss_title": "Public safety alert", "gloss_text": "A gas leak has been reported in your area. Keep windows and doors closed and do not use fire or electric switches."}
+{"id": "hi-test-00042", "gloss_title": "Power cut notice", "gloss_text": "Due to repair work, power will be off in your area tomorrow from 10 AM to 2 PM."}
+{"id": "hi-dev-00043", "gloss_title": "Road closed", "gloss_text": "Ring Road is closed due to bridge repair. Heavy traffic jam, take an alternate route."}
+{"id": "hi-test-00044", "gloss_title": "Rate your ride", "gloss_text": "How was yesterday's ride? Rate driver Amit and get 20% off your next ride."}
+{"id": "hi-dev-00045", "gloss_title": "Today's deadline", "gloss_text": "The sales report must be submitted by 5 PM today"}
+{"id": "hi-dev-00046", "gloss_title": "Build failed on main branch", "gloss_text": "Pipeline #482 failed: 3 errors in unit tests. Deploy halted."}
+{"id": "hi-test-00047", "gloss_title": "#team-gossip", "gloss_text": "Neha: Where shall we go for lunch today? Anyone craving something special? 🍛"}
+{"id": "hi-dev-00048", "gloss_title": "Important: Your weekly digest", "gloss_text": "Read this week's top 10 tech news in one place. Check the newsletter, no action needed."}
+{"id": "hi-test-00049", "gloss_title": "Smoke alarm went off", "gloss_text": "The smoke detector in the kitchen has detected smoke. Check immediately!"}
+{"id": "hi-test-00050", "gloss_title": "Device offline", "gloss_text": "Your living room smart plug has gone offline. Check Wi-Fi."}
+{"id": "hi-test-00051", "gloss_title": "Booking confirmed", "gloss_text": "Your Goa trip booking is confirmed. Web check-in will begin tomorrow morning."}
+{"id": "hi-dev-00052", "gloss_title": "Breaking news 🔴", "gloss_text": "Biggest news: film star's wedding date fixed, see pictures"}
+{"id": "hi-test-00053", "gloss_title": "Tomorrow's weather", "gloss_text": "Light rain likely during the day tomorrow, maximum temperature 29 degrees"}
+{"id": "hi-dev-00054", "gloss_title": "Alert: Match started!", "gloss_text": "India vs Australia: toss done, India will bat first 🏏"}
+{"id": "hi-dev-00055", "gloss_title": "New activity", "gloss_text": "Priya and 12 others liked your photo"}
+{"id": "hi-test-00056", "gloss_title": "Time to drink water", "gloss_text": "You have had only 3 glasses of water today. The goal is 8 glasses 💧"}
+{"id": "hi-dev-00057", "gloss_title": "Emergency alert! 🚨", "gloss_text": "A new event has started, log in now for free diamonds"}
+{"id": "hi-dev-00058", "gloss_title": "Your streak is in danger! 🔥", "gloss_text": "Complete today's lesson or your 25-day streak will break"}
+{"id": "hi-dev-00059", "gloss_title": "Battery very low", "gloss_text": "15% battery left. Tap to turn on Battery Saver."}
+{"id": "hi-dev-00060", "gloss_title": "Data almost finished", "gloss_text": "90% of your 1.5GB data for today has been used. Tap to recharge."}

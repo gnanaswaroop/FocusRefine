@@ -1,0 +1,1212 @@
+{
+ "shortcut_apps": 47,
+ "quotas": {
+  "en": {
+   "shortcut": [
+    {
+     "package": "bbc.mobile.news.ww",
+     "name": "BBC News",
+     "polarity": "urgent",
+     "usecase": "weather_severe"
+    },
+    {
+     "package": "com.digilocker.android",
+     "name": "DigiLocker",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.google.android.apps.nbu.paisa.user",
+     "name": "Google Pay",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.mobilefootie.wc2010",
+     "name": "FotMob",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.snapchat.android",
+     "name": "Snapchat",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "in.swiggy.android",
+     "name": "Swiggy",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    }
+   ],
+   "missing": [
+    {
+     "usecase": "visitor_gate",
+     "count": 6
+    },
+    {
+     "usecase": "voicemail_routine",
+     "count": 6
+    },
+    {
+     "usecase": "investment_alert",
+     "count": 6
+    },
+    {
+     "usecase": "caption_status",
+     "count": 6
+    },
+    {
+     "usecase": "system_routine",
+     "count": 6
+    }
+   ],
+   "long": 17,
+   "regional": [
+    {
+     "package": "com.cnn.mobile.android.phone",
+     "name": "CNN",
+     "category": "news",
+     "count": 2
+    },
+    {
+     "package": "com.dd.doordash",
+     "name": "DoorDash",
+     "category": "food_delivery",
+     "count": 2
+    },
+    {
+     "package": "com.dropbox.android",
+     "name": "Dropbox",
+     "category": "work",
+     "count": 2
+    },
+    {
+     "package": "com.facebook.katana",
+     "name": "Facebook",
+     "category": "social",
+     "count": 2
+    },
+    {
+     "package": "com.google.android.apps.docs",
+     "name": "Drive",
+     "category": "work",
+     "count": 2
+    },
+    {
+     "package": "com.google.android.apps.turbo",
+     "name": "Device Health Services",
+     "category": "system",
+     "count": 2
+    },
+    {
+     "package": "com.instructure.candroid",
+     "name": "Canvas Student",
+     "category": "education",
+     "count": 2
+    },
+    {
+     "package": "com.kakao.talk",
+     "name": "KakaoTalk",
+     "category": "messaging",
+     "count": 2
+    },
+    {
+     "package": "com.nike.plusgps",
+     "name": "Nike Run Club",
+     "category": "health_fitness",
+     "count": 2
+    },
+    {
+     "package": "com.nytimes.android",
+     "name": "The New York Times",
+     "category": "news",
+     "count": 2
+    },
+    {
+     "package": "com.pinterest",
+     "name": "Pinterest",
+     "category": "social",
+     "count": 2
+    },
+    {
+     "package": "com.robinhood.android",
+     "name": "Robinhood",
+     "category": "finance",
+     "count": 2
+    },
+    {
+     "package": "com.soundcloud.android",
+     "name": "SoundCloud",
+     "category": "media_music",
+     "count": 2
+    },
+    {
+     "package": "com.squareup.cash",
+     "name": "Cash App",
+     "category": "payments",
+     "count": 2
+    },
+    {
+     "package": "com.twitter.android",
+     "name": "X",
+     "category": "social",
+     "count": 2
+    },
+    {
+     "package": "com.walmart.android",
+     "name": "Walmart",
+     "category": "shopping",
+     "count": 2
+    },
+    {
+     "package": "com.wf.wellsfargomobile",
+     "name": "Wells Fargo",
+     "category": "banking",
+     "count": 2
+    },
+    {
+     "package": "flipboard.app",
+     "name": "Flipboard",
+     "category": "news",
+     "count": 2
+    },
+    {
+     "package": "me.lyft.android",
+     "name": "Lyft",
+     "category": "ride_maps",
+     "count": 2
+    },
+    {
+     "package": "org.coursera.android",
+     "name": "Coursera",
+     "category": "education",
+     "count": 2
+    },
+    {
+     "package": "org.khanacademy.android",
+     "name": "Khan Academy",
+     "category": "education",
+     "count": 2
+    },
+    {
+     "package": "tv.twitch.android.app",
+     "name": "Twitch",
+     "category": "media_video",
+     "count": 2
+    }
+   ],
+   "long_usecases": [
+    "group_chatter",
+    "group_forward",
+    "group_event_info",
+    "community_safety_notice",
+    "visitor_gate"
+   ]
+  },
+  "hi": {
+   "shortcut": [
+    {
+     "package": "bbc.mobile.news.ww",
+     "name": "BBC News",
+     "polarity": "urgent",
+     "usecase": "weather_severe"
+    },
+    {
+     "package": "com.digilocker.android",
+     "name": "DigiLocker",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.google.android.apps.nbu.paisa.user",
+     "name": "Google Pay",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.mobilefootie.wc2010",
+     "name": "FotMob",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.snapchat.android",
+     "name": "Snapchat",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "in.swiggy.android",
+     "name": "Swiggy",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    }
+   ],
+   "missing": [
+    {
+     "usecase": "voicemail_routine",
+     "count": 6
+    },
+    {
+     "usecase": "caption_status",
+     "count": 6
+    }
+   ],
+   "long": 17,
+   "regional": [],
+   "long_usecases": [
+    "group_chatter",
+    "group_forward",
+    "group_event_info",
+    "community_safety_notice",
+    "visitor_gate"
+   ]
+  },
+  "hi-Latn": {
+   "shortcut": [
+    {
+     "package": "com.amazon.mShop.android.shopping",
+     "name": "Amazon Shopping",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.disney.disneyplus",
+     "name": "Disney+",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.google.android.apps.walletnfcrel",
+     "name": "Google Wallet",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.msf.kbank.mobile",
+     "name": "Kotak Mobile Banking",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.sonyliv",
+     "name": "Sony LIV",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "net.one97.paytm",
+     "name": "Paytm",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    }
+   ],
+   "missing": [
+    {
+     "usecase": "visitor_gate",
+     "count": 6
+    },
+    {
+     "usecase": "voicemail_routine",
+     "count": 6
+    },
+    {
+     "usecase": "investment_alert",
+     "count": 6
+    },
+    {
+     "usecase": "caption_status",
+     "count": 6
+    },
+    {
+     "usecase": "system_routine",
+     "count": 6
+    }
+   ],
+   "long": 17,
+   "regional": [],
+   "long_usecases": [
+    "group_chatter",
+    "group_forward",
+    "group_event_info",
+    "community_safety_notice",
+    "visitor_gate"
+   ]
+  },
+  "es": {
+   "shortcut": [
+    {
+     "package": "com.amazon.mShop.android.shopping",
+     "name": "Amazon Shopping",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.disney.disneyplus",
+     "name": "Disney+",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.google.android.apps.walletnfcrel",
+     "name": "Google Wallet",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.msf.kbank.mobile",
+     "name": "Kotak Mobile Banking",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.sonyliv",
+     "name": "Sony LIV",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "net.one97.paytm",
+     "name": "Paytm",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    }
+   ],
+   "missing": [
+    {
+     "usecase": "visitor_gate",
+     "count": 6
+    },
+    {
+     "usecase": "voicemail_routine",
+     "count": 6
+    },
+    {
+     "usecase": "investment_alert",
+     "count": 6
+    },
+    {
+     "usecase": "caption_status",
+     "count": 6
+    },
+    {
+     "usecase": "system_routine",
+     "count": 6
+    }
+   ],
+   "long": 17,
+   "regional": [],
+   "long_usecases": [
+    "group_chatter",
+    "group_forward",
+    "group_event_info",
+    "community_safety_notice",
+    "visitor_gate"
+   ]
+  },
+  "fr": {
+   "shortcut": [
+    {
+     "package": "com.android.vending",
+     "name": "Google Play Store",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.dreamplug.androidapp",
+     "name": "CRED",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.google.android.youtube",
+     "name": "YouTube",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.myairtelapp",
+     "name": "Airtel Thanks",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.spotify.music",
+     "name": "Spotify",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    }
+   ],
+   "missing": [
+    {
+     "usecase": "visitor_gate",
+     "count": 6
+    },
+    {
+     "usecase": "voicemail_routine",
+     "count": 6
+    },
+    {
+     "usecase": "caption_status",
+     "count": 6
+    },
+    {
+     "usecase": "system_routine",
+     "count": 6
+    }
+   ],
+   "long": 17,
+   "regional": [],
+   "long_usecases": [
+    "group_chatter",
+    "group_forward",
+    "group_event_info",
+    "community_safety_notice",
+    "visitor_gate"
+   ]
+  },
+  "de": {
+   "shortcut": [
+    {
+     "package": "com.android.vending",
+     "name": "Google Play Store",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.dreamplug.androidapp",
+     "name": "CRED",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.google.android.youtube",
+     "name": "YouTube",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.myairtelapp",
+     "name": "Airtel Thanks",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.spotify.music",
+     "name": "Spotify",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    }
+   ],
+   "missing": [
+    {
+     "usecase": "visitor_gate",
+     "count": 6
+    },
+    {
+     "usecase": "voicemail_routine",
+     "count": 6
+    },
+    {
+     "usecase": "caption_status",
+     "count": 6
+    },
+    {
+     "usecase": "system_routine",
+     "count": 6
+    }
+   ],
+   "long": 17,
+   "regional": [],
+   "long_usecases": [
+    "group_chatter",
+    "group_forward",
+    "group_event_info",
+    "community_safety_notice",
+    "visitor_gate"
+   ]
+  },
+  "pt-BR": {
+   "shortcut": [
+    {
+     "package": "com.application.zomato",
+     "name": "Zomato",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.dts.freefireth",
+     "name": "Free Fire",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.graymatrix.did",
+     "name": "ZEE5",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.myntra.android",
+     "name": "Myntra",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.supercell.clashofclans",
+     "name": "Clash of Clans",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    }
+   ],
+   "missing": [
+    {
+     "usecase": "visitor_gate",
+     "count": 6
+    },
+    {
+     "usecase": "voicemail_routine",
+     "count": 6
+    },
+    {
+     "usecase": "investment_alert",
+     "count": 6
+    },
+    {
+     "usecase": "caption_status",
+     "count": 6
+    }
+   ],
+   "long": 17,
+   "regional": [],
+   "long_usecases": [
+    "group_chatter",
+    "group_forward",
+    "group_event_info",
+    "community_safety_notice",
+    "visitor_gate"
+   ]
+  },
+  "ar": {
+   "shortcut": [
+    {
+     "package": "com.application.zomato",
+     "name": "Zomato",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.dts.freefireth",
+     "name": "Free Fire",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.graymatrix.did",
+     "name": "ZEE5",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.myntra.android",
+     "name": "Myntra",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.supercell.clashofclans",
+     "name": "Clash of Clans",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    }
+   ],
+   "missing": [
+    {
+     "usecase": "visitor_gate",
+     "count": 6
+    },
+    {
+     "usecase": "caption_status",
+     "count": 6
+    }
+   ],
+   "long": 17,
+   "regional": [],
+   "long_usecases": [
+    "group_chatter",
+    "group_forward",
+    "group_event_info",
+    "community_safety_notice",
+    "visitor_gate"
+   ]
+  },
+  "zh-Hans": {
+   "shortcut": [
+    {
+     "package": "com.bigbasket.mobileapp",
+     "name": "BigBasket",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.duolingo",
+     "name": "Duolingo",
+     "polarity": "urgent",
+     "usecase": "deadline"
+    },
+    {
+     "package": "com.grofers.customerapp",
+     "name": "Blinkit",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.netflix.mediaclient",
+     "name": "Netflix",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.zeptoconsumerapp",
+     "name": "Zepto",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    }
+   ],
+   "missing": [
+    {
+     "usecase": "visitor_gate",
+     "count": 6
+    },
+    {
+     "usecase": "voicemail_routine",
+     "count": 6
+    },
+    {
+     "usecase": "investment_alert",
+     "count": 6
+    },
+    {
+     "usecase": "caption_status",
+     "count": 6
+    }
+   ],
+   "long": 17,
+   "regional": [],
+   "long_usecases": [
+    "group_chatter",
+    "group_forward",
+    "group_event_info",
+    "community_safety_notice",
+    "visitor_gate"
+   ]
+  },
+  "ja": {
+   "shortcut": [
+    {
+     "package": "com.bigbasket.mobileapp",
+     "name": "BigBasket",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.duolingo",
+     "name": "Duolingo",
+     "polarity": "urgent",
+     "usecase": "deadline"
+    },
+    {
+     "package": "com.grofers.customerapp",
+     "name": "Blinkit",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.netflix.mediaclient",
+     "name": "Netflix",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.zeptoconsumerapp",
+     "name": "Zepto",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    }
+   ],
+   "missing": [
+    {
+     "usecase": "visitor_gate",
+     "count": 6
+    },
+    {
+     "usecase": "voicemail_routine",
+     "count": 6
+    },
+    {
+     "usecase": "investment_alert",
+     "count": 6
+    },
+    {
+     "usecase": "caption_status",
+     "count": 6
+    },
+    {
+     "usecase": "system_routine",
+     "count": 6
+    }
+   ],
+   "long": 17,
+   "regional": [],
+   "long_usecases": [
+    "group_chatter",
+    "group_forward",
+    "group_event_info",
+    "community_safety_notice",
+    "visitor_gate"
+   ]
+  },
+  "ru": {
+   "shortcut": [
+    {
+     "package": "com.bsbportal.music",
+     "name": "Wynk Music",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.einnovation.temu",
+     "name": "Temu",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.instagram.android",
+     "name": "Instagram",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.paypal.android.p2pmobile",
+     "name": "PayPal",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "in.gov.umang.negd.g2c",
+     "name": "UMANG",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    }
+   ],
+   "missing": [
+    {
+     "usecase": "visitor_gate",
+     "count": 6
+    },
+    {
+     "usecase": "caption_status",
+     "count": 6
+    },
+    {
+     "usecase": "system_routine",
+     "count": 6
+    }
+   ],
+   "long": 17,
+   "regional": [],
+   "long_usecases": [
+    "group_chatter",
+    "group_forward",
+    "group_event_info",
+    "community_safety_notice",
+    "visitor_gate"
+   ]
+  },
+  "id": {
+   "shortcut": [
+    {
+     "package": "com.bsbportal.music",
+     "name": "Wynk Music",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.einnovation.temu",
+     "name": "Temu",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.instagram.android",
+     "name": "Instagram",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.paypal.android.p2pmobile",
+     "name": "PayPal",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "in.gov.umang.negd.g2c",
+     "name": "UMANG",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    }
+   ],
+   "missing": [
+    {
+     "usecase": "voicemail_routine",
+     "count": 6
+    },
+    {
+     "usecase": "investment_alert",
+     "count": 6
+    },
+    {
+     "usecase": "caption_status",
+     "count": 6
+    },
+    {
+     "usecase": "system_routine",
+     "count": 6
+    }
+   ],
+   "long": 17,
+   "regional": [],
+   "long_usecases": [
+    "group_chatter",
+    "group_forward",
+    "group_event_info",
+    "community_safety_notice",
+    "visitor_gate"
+   ]
+  },
+  "ta": {
+   "shortcut": [
+    {
+     "package": "com.bt.bms",
+     "name": "BookMyShow",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.flipkart.android",
+     "name": "Flipkart",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.jio.media.jiobeats",
+     "name": "JioSaavn",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.phonepe.app",
+     "name": "PhonePe",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "in.mohalla.sharechat",
+     "name": "ShareChat",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    }
+   ],
+   "missing": [
+    {
+     "usecase": "investment_alert",
+     "count": 6
+    },
+    {
+     "usecase": "caption_status",
+     "count": 6
+    }
+   ],
+   "long": 16,
+   "regional": [],
+   "long_usecases": [
+    "group_chatter",
+    "group_forward",
+    "group_event_info",
+    "community_safety_notice",
+    "visitor_gate"
+   ]
+  },
+  "te": {
+   "shortcut": [
+    {
+     "package": "com.bt.bms",
+     "name": "BookMyShow",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.flipkart.android",
+     "name": "Flipkart",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.jio.media.jiobeats",
+     "name": "JioSaavn",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.phonepe.app",
+     "name": "PhonePe",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "in.mohalla.sharechat",
+     "name": "ShareChat",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    }
+   ],
+   "missing": [
+    {
+     "usecase": "voicemail_routine",
+     "count": 6
+    },
+    {
+     "usecase": "investment_alert",
+     "count": 6
+    },
+    {
+     "usecase": "system_routine",
+     "count": 6
+    }
+   ],
+   "long": 16,
+   "regional": [],
+   "long_usecases": [
+    "group_chatter",
+    "group_forward",
+    "group_event_info",
+    "community_safety_notice",
+    "visitor_gate"
+   ]
+  },
+  "bn": {
+   "shortcut": [
+    {
+     "package": "com.cricbuzz.android",
+     "name": "Cricbuzz",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.gaana",
+     "name": "Gaana",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.jio.myjio",
+     "name": "MyJio",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.rapido.passenger",
+     "name": "Rapido",
+     "polarity": "muted",
+     "usecase": "ride_other"
+    },
+    {
+     "package": "in.org.npci.upiapp",
+     "name": "BHIM",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    }
+   ],
+   "missing": [
+    {
+     "usecase": "investment_alert",
+     "count": 6
+    },
+    {
+     "usecase": "caption_status",
+     "count": 6
+    }
+   ],
+   "long": 16,
+   "regional": [],
+   "long_usecases": [
+    "group_chatter",
+    "group_forward",
+    "group_event_info",
+    "community_safety_notice",
+    "visitor_gate"
+   ]
+  },
+  "mr": {
+   "shortcut": [
+    {
+     "package": "com.cricbuzz.android",
+     "name": "Cricbuzz",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.gaana",
+     "name": "Gaana",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.jio.myjio",
+     "name": "MyJio",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.rapido.passenger",
+     "name": "Rapido",
+     "polarity": "muted",
+     "usecase": "ride_other"
+    },
+    {
+     "package": "in.org.npci.upiapp",
+     "name": "BHIM",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    }
+   ],
+   "missing": [
+    {
+     "usecase": "voicemail_routine",
+     "count": 6
+    },
+    {
+     "usecase": "caption_status",
+     "count": 6
+    }
+   ],
+   "long": 16,
+   "regional": [],
+   "long_usecases": [
+    "group_chatter",
+    "group_forward",
+    "group_event_info",
+    "community_safety_notice",
+    "visitor_gate"
+   ]
+  },
+  "kn": {
+   "shortcut": [
+    {
+     "package": "com.csam.icici.bank.imobile",
+     "name": "iMobile Pay",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.google.android.apps.magazines",
+     "name": "Google News",
+     "polarity": "urgent",
+     "usecase": "weather_severe"
+    },
+    {
+     "package": "com.meesho.supply",
+     "name": "Meesho",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.sbi.lotusintouch",
+     "name": "YONO SBI",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "in.startv.hotstar",
+     "name": "Disney+ Hotstar",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    }
+   ],
+   "missing": [
+    {
+     "usecase": "caption_status",
+     "count": 6
+    },
+    {
+     "usecase": "system_routine",
+     "count": 6
+    }
+   ],
+   "long": 16,
+   "regional": [],
+   "long_usecases": [
+    "group_chatter",
+    "group_forward",
+    "group_event_info",
+    "community_safety_notice",
+    "visitor_gate"
+   ]
+  },
+  "gu": {
+   "shortcut": [
+    {
+     "package": "com.csam.icici.bank.imobile",
+     "name": "iMobile Pay",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.google.android.apps.magazines",
+     "name": "Google News",
+     "polarity": "urgent",
+     "usecase": "weather_severe"
+    },
+    {
+     "package": "com.meesho.supply",
+     "name": "Meesho",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "com.sbi.lotusintouch",
+     "name": "YONO SBI",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    },
+    {
+     "package": "in.startv.hotstar",
+     "name": "Disney+ Hotstar",
+     "polarity": "urgent",
+     "usecase": "family_distress"
+    }
+   ],
+   "missing": [
+    {
+     "usecase": "caption_status",
+     "count": 6
+    },
+    {
+     "usecase": "system_routine",
+     "count": 6
+    }
+   ],
+   "long": 16,
+   "regional": [],
+   "long_usecases": [
+    "group_chatter",
+    "group_forward",
+    "group_event_info",
+    "community_safety_notice",
+    "visitor_gate"
+   ]
+  }
+ }
+}

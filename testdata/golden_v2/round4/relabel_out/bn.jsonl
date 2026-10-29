@@ -1,0 +1,259 @@
+{"id": "bn-test-10000", "usecase": "home_routine", "note": "motion at front door during daytime"}
+{"id": "bn-test-10001", "usecase": "deadline", "note": "assignment due tonight review requested"}
+{"id": "bn-test-10002", "usecase": "scam_prize_loan", "note": "pre-approved instant loan scam offer"}
+{"id": "bn-test-10003", "usecase": "school_urgent", "note": "sick child pick up immediately"}
+{"id": "bn-test-10004", "usecase": "earthquake_alert", "note": "earthquake warning shaking expected take shelter"}
+{"id": "bn-test-10005", "usecase": "call_scam", "note": "fake customs parcel scam call"}
+{"id": "bn-test-10006", "usecase": "rec_video", "note": "new thriller series now streaming"}
+{"id": "bn-test-10007", "usecase": "promo_sale", "note": "flash sale ends tonight coupon discount"}
+{"id": "bn-test-10008", "usecase": "ride_other", "note": "weekly ride trip summary"}
+{"id": "bn-test-10009", "usecase": "sound_alert_routine", "note": "doorbell sound detected nearby"}
+{"id": "bn-test-10010", "usecase": "health_critical", "note": "abnormally high heart rate alert"}
+{"id": "bn-test-10011", "usecase": "community_safety_notice", "note": "building gas leak evacuation notice"}
+{"id": "bn-test-10012", "usecase": "rec_music", "note": "new song release recommendation"}
+{"id": "bn-test-10013", "usecase": "navigation_prompt", "note": "traffic reroute driving instruction"}
+{"id": "bn-test-10014", "usecase": "rec_video", "note": "continue watching series episode reminder"}
+{"id": "bn-test-10015", "usecase": "voicemail_routine", "note": "dry cleaners voicemail transcript"}
+{"id": "bn-test-10016", "usecase": "medical_routine", "note": "doctor appointment reminder"}
+{"id": "bn-test-10017", "usecase": "telecom_gov_routine", "note": "driving license document issued to locker"}
+{"id": "bn-test-10018", "usecase": "payment_routine", "note": "utility bill due in a few days"}
+{"id": "bn-test-10019", "usecase": "sub_billing_issue", "note": "subscription auto debit payment failed"}
+{"id": "bn-test-10020", "usecase": "promo_sale", "note": "Cashback promo on tour booking"}
+{"id": "bn-test-10021", "usecase": "work_chat_routine", "note": "Colleague request to review draft presentation"}
+{"id": "bn-test-10022", "usecase": "medical_routine", "note": "Lab test report ready notification"}
+{"id": "bn-test-10023", "usecase": "learning_notice", "note": "Daily study streak reminder"}
+{"id": "bn-test-10024", "usecase": "group_forward", "note": "Good morning chain message forward"}
+{"id": "bn-test-10025", "usecase": "community_safety_notice", "note": "Gas leak alert in building"}
+{"id": "bn-test-10026", "usecase": "marketing_push", "note": "Profile completion re-engagement push"}
+{"id": "bn-test-10027", "usecase": "health_critical", "note": "Abnormally high resting heart rate alert"}
+{"id": "bn-test-10028", "usecase": "scam_fake_delivery", "note": "Fake customs parcel fee scam"}
+{"id": "bn-test-10029", "usecase": "payment_routine", "note": "Money received confirmation"}
+{"id": "bn-test-10030", "usecase": "call_unknown", "note": "Missed call from unknown number"}
+{"id": "bn-test-10031", "usecase": "meeting_soon", "note": "Meeting starting in 10 minutes"}
+{"id": "bn-test-10032", "usecase": "health_routine", "note": "Routine medicine reminder"}
+{"id": "bn-test-10033", "usecase": "ride_other", "note": "Ride rating and receipt"}
+{"id": "bn-test-10034", "usecase": "marketing_push", "note": "Cart items re-engagement push"}
+{"id": "bn-test-10035", "usecase": "news_breaking_general", "note": "Breaking news about storm"}
+{"id": "bn-test-10036", "usecase": "sports_update", "note": "Live match cricket score update"}
+{"id": "bn-test-10037", "usecase": "school_info", "note": "School parent teacher meeting notice"}
+{"id": "bn-test-10038", "usecase": "call_missed_contact", "note": "Missed call from known contact"}
+{"id": "bn-test-10039", "usecase": "chat_casual", "note": "Casual friend chat hangout plans"}
+{"id": "bn-test-10040", "usecase": "workout_prompt", "note": "running goal reached notification"}
+{"id": "bn-test-10041", "usecase": "call_unknown", "note": "incoming call from unknown number"}
+{"id": "bn-test-10042", "usecase": "build_failure", "note": "ci deployment failed and rolled back"}
+{"id": "bn-test-10043", "usecase": "call_spam_likely", "note": "suspected spam telemarketing missed call"}
+{"id": "bn-test-10044", "usecase": "weather_severe", "note": "severe storm and flash flood warning"}
+{"id": "bn-test-10045", "usecase": "delivery_update", "note": "parcel is out for delivery"}
+{"id": "bn-test-10046", "usecase": "group_event_info", "note": "residence society monthly fee notice"}
+{"id": "bn-test-10047", "usecase": "delivery_update", "note": "food is being prepared"}
+{"id": "bn-test-10048", "usecase": "work_tool_routine", "note": "new task added in project tool"}
+{"id": "bn-test-10049", "usecase": "call_scam", "note": "fake bank scam caller warning"}
+{"id": "bn-test-10050", "usecase": "road_closure", "note": "road closed for repair alternate route"}
+{"id": "bn-test-10051", "usecase": "home_security", "note": "person detected at night by camera"}
+{"id": "bn-test-10052", "usecase": "work_incident", "note": "production server outage clients cannot login"}
+{"id": "bn-test-10053", "usecase": "medical_routine", "note": "lab test report ready"}
+{"id": "bn-test-10054", "usecase": "learning_notice", "note": "daily learning streak reminder"}
+{"id": "bn-test-10055", "usecase": "vip_ping", "note": "director urgently requesting immediate call pickup"}
+{"id": "bn-test-10056", "usecase": "email_routine", "note": "tech newsletter email"}
+{"id": "bn-test-10057", "usecase": "group_event_info", "note": "society maintenance water supply notice"}
+{"id": "bn-test-10058", "usecase": "travel_routine", "note": "bus booking confirmed"}
+{"id": "bn-test-10059", "usecase": "work_tool_routine", "note": "weekly work progress report available"}
+{"id": "bn-test-10060", "usecase": "game_notice", "note": "new season and login rewards"}
+{"id": "bn-test-10061", "usecase": "sub_billing_issue", "note": "monthly subscription payment failed"}
+{"id": "bn-test-10062", "usecase": "call_missed_contact", "note": "routine missed call from contact"}
+{"id": "bn-test-10063", "usecase": "marketing_push", "note": "re-engagement push missing you"}
+{"id": "bn-test-10064", "usecase": "promo_sale", "note": "flash discount ends tonight"}
+{"id": "bn-test-10065", "usecase": "marketing_push", "note": "items in cart wishlist reminder"}
+{"id": "bn-test-10066", "usecase": "sound_alert_critical", "note": "smoke alarm sound detected"}
+{"id": "bn-test-10067", "usecase": "voicemail_routine", "note": "routine non-urgent voicemail"}
+{"id": "bn-test-10068", "usecase": "weather_severe", "note": "imminent severe cyclone red alert"}
+{"id": "bn-test-10070", "usecase": "payment_routine", "note": "money received from contact"}
+{"id": "bn-test-10071", "usecase": "public_safety_alert", "note": "Chemical gas leak shelter in place"}
+{"id": "bn-test-10072", "usecase": "medical_routine", "note": "Routine prescription refill reminder"}
+{"id": "bn-test-10073", "usecase": "travel_urgent", "note": "Cancelled airport ride disruption"}
+{"id": "bn-test-10074", "usecase": "group_event_info", "note": "Apartment general meeting notice"}
+{"id": "bn-test-10075", "usecase": "sub_renewal", "note": "Trial subscription ends tomorrow"}
+{"id": "bn-test-10076", "usecase": "ride_other", "note": "Driver rating and ride receipt"}
+{"id": "bn-test-10077", "usecase": "news_breaking_general", "note": "Breaking national news update"}
+{"id": "bn-test-10078", "usecase": "news_breaking_general", "note": "Top headlines space station docking"}
+{"id": "bn-test-10079", "usecase": "weather_severe", "note": "Red alert heavy rain flash flood"}
+{"id": "bn-test-10080", "usecase": "promo_sale", "note": "Discount coupon ends tonight"}
+{"id": "bn-test-10081", "usecase": "ride_other", "note": "weekly ride summary report"}
+{"id": "bn-test-10082", "usecase": "caption_status", "note": "live caption language pack downloaded"}
+{"id": "bn-test-10083", "usecase": "sub_renewal", "note": "subscription plan upgraded"}
+{"id": "bn-test-10084", "usecase": "scam_fake_delivery", "note": "fake parcel held payment scam"}
+{"id": "bn-test-10085", "usecase": "rec_video", "note": "new episode now streaming"}
+{"id": "bn-test-10086", "usecase": "group_forward", "note": "chain message and unverified rumor"}
+{"id": "bn-test-10087", "usecase": "sports_update", "note": "tournament final match winner result"}
+{"id": "bn-test-10088", "usecase": "delivery_update", "note": "order out for delivery"}
+{"id": "bn-test-10089", "usecase": "promo_sale", "note": "cashback deal ends tonight"}
+{"id": "bn-test-10090", "usecase": "health_routine", "note": "hydration reminder to drink water"}
+{"id": "bn-test-10091", "usecase": "news_breaking_general", "note": "Business news headline digest"}
+{"id": "bn-test-10092", "usecase": "email_routine", "note": "Book newsletter digest email"}
+{"id": "bn-test-10093", "usecase": "meeting_soon", "note": "Meeting starting in five minutes"}
+{"id": "bn-test-10094", "usecase": "weather_severe", "note": "Severe cyclone warning"}
+{"id": "bn-test-10095", "usecase": "investment_alert", "note": "Daily portfolio closing update"}
+{"id": "bn-test-10096", "usecase": "medical_urgent", "note": "Urgent consultation for relative surgery"}
+{"id": "bn-test-10097", "usecase": "learning_notice", "note": "New course assignment posted"}
+{"id": "bn-test-10098", "usecase": "delivery_update", "note": "Package successfully delivered"}
+{"id": "bn-test-10099", "usecase": "scam_phishing", "note": "Fake account suspension phishing link"}
+{"id": "bn-test-10100", "usecase": "medical_urgent", "note": "Abnormal lab report urgent consultation"}
+{"id": "bn-test-10101", "usecase": "medical_routine", "note": "lab report ready"}
+{"id": "bn-test-10102", "usecase": "school_info", "note": "school holiday notice and homework"}
+{"id": "bn-test-10103", "usecase": "family_distress", "note": "father bike accident emergency"}
+{"id": "bn-test-10104", "usecase": "social_activity", "note": "social media comment"}
+{"id": "bn-test-10105", "usecase": "build_failure", "note": "ci pipeline build failed"}
+{"id": "bn-test-10106", "usecase": "promo_sale", "note": "flash sale subscription discount"}
+{"id": "bn-test-10107", "usecase": "sound_alert_routine", "note": "doorbell sound detected"}
+{"id": "bn-test-10108", "usecase": "investment_alert", "note": "stock price alert triggered"}
+{"id": "bn-test-10109", "usecase": "navigation_prompt", "note": "turn by turn navigation prompt"}
+{"id": "bn-test-10110", "usecase": "sub_renewal", "note": "subscription renewal reminder"}
+{"id": "bn-test-10111", "usecase": "travel_routine", "note": "Flight booking confirmed, check-in tomorrow"}
+{"id": "bn-test-10112", "usecase": "workout_prompt", "note": "Daily step goal completed"}
+{"id": "bn-test-10113", "usecase": "learning_notice", "note": "Course assignment deadline notice"}
+{"id": "bn-test-10114", "usecase": "school_info", "note": "Teacher reminder for homework submission"}
+{"id": "bn-test-10115", "usecase": "family_distress", "note": "Family emergency, father injured"}
+{"id": "bn-test-10116", "usecase": "sub_billing_issue", "note": "Subscription auto-pay failed"}
+{"id": "bn-test-10117", "usecase": "payment_routine", "note": "Electricity bill due in two days"}
+{"id": "bn-test-10118", "usecase": "deadline", "note": "Project submission deadline today"}
+{"id": "bn-test-10119", "usecase": "medical_urgent", "note": "Doctor urgent consultation for family report"}
+{"id": "bn-test-10120", "usecase": "group_event_info", "note": "Society meeting and festival collection notice"}
+{"id": "bn-test-10121", "usecase": "sub_renewal", "note": "subscription expiring tomorrow renew now"}
+{"id": "bn-test-10122", "usecase": "tsunami_flood_wildfire", "note": "dam release flood warning evacuation order"}
+{"id": "bn-test-10123", "usecase": "chat_casual", "note": "casual plans with friends for tea"}
+{"id": "bn-test-10124", "usecase": "promo_sale", "note": "limited time promotional discount offer"}
+{"id": "bn-test-10125", "usecase": "health_critical", "note": "critically low blood oxygen alert"}
+{"id": "bn-test-10126", "usecase": "rec_video", "note": "new tv show episode available"}
+{"id": "bn-test-10127", "usecase": "road_closure", "note": "flyover closed for emergency repairs"}
+{"id": "bn-test-10128", "usecase": "work_chat_routine", "note": "work team standup meeting request"}
+{"id": "bn-test-10129", "usecase": "call_unknown", "note": "missed call from unknown number"}
+{"id": "bn-test-10130", "usecase": "sound_alert_routine", "note": "doorbell or knocking sound detected"}
+{"id": "bn-test-10131", "usecase": "family_distress", "note": "Mother alerts father collapsed urgently"}
+{"id": "bn-test-10132", "usecase": "weather_routine", "note": "Tomorrow weather forecast with rain"}
+{"id": "bn-test-10133", "usecase": "rec_video", "note": "Continue watching movie prompt"}
+{"id": "bn-test-10134", "usecase": "scam_fake_delivery", "note": "Fake parcel customs fee scam"}
+{"id": "bn-test-10135", "usecase": "ride_arriving", "note": "Cab driver arrived at pickup point"}
+{"id": "bn-test-10136", "usecase": "call_unknown", "note": "Incoming call from unknown number"}
+{"id": "bn-test-10137", "usecase": "sound_alert_critical", "note": "Sound notification detects fire alarm"}
+{"id": "bn-test-10138", "usecase": "scam_phishing", "note": "Phishing fake account suspension notice"}
+{"id": "bn-test-10139", "usecase": "sports_update", "note": "Live cricket match score update"}
+{"id": "bn-test-10140", "usecase": "caption_status", "note": "Live caption language pack downloaded"}
+{"id": "bn-test-10141", "usecase": "weather_routine", "note": "UV index forecast update"}
+{"id": "bn-test-10142", "usecase": "home_alarm_critical", "note": "Smoke sensor detected smoke in kitchen"}
+{"id": "bn-test-10143", "usecase": "group_event_info", "note": "Apartment society water maintenance notice"}
+{"id": "bn-test-10144", "usecase": "group_forward", "note": "Good morning chain forward message"}
+{"id": "bn-test-10145", "usecase": "workout_prompt", "note": "Daily step goal completed notification"}
+{"id": "bn-test-10146", "usecase": "work_incident", "note": "Production outage and on-call escalation"}
+{"id": "bn-test-10147", "usecase": "group_chatter", "note": "School parent group chat question"}
+{"id": "bn-test-10148", "usecase": "home_routine", "note": "Smart home device went offline"}
+{"id": "bn-test-10149", "usecase": "ride_arriving", "note": "Ride driver arriving in three minutes"}
+{"id": "bn-test-10150", "usecase": "voicemail_routine", "note": "Routine non-urgent voicemail transcript"}
+{"id": "bn-test-10151", "usecase": "scam_prize_loan", "note": "fake lottery cash prize scam"}
+{"id": "bn-test-10152", "usecase": "email_routine", "note": "weekly tech digest newsletter"}
+{"id": "bn-test-10153", "usecase": "home_routine", "note": "robot vacuum cleaner finished task"}
+{"id": "bn-test-10154", "usecase": "public_safety_alert", "note": "toxic gas leak shelter indoors"}
+{"id": "bn-test-10155", "usecase": "tsunami_flood_wildfire", "note": "flood and dam breach evacuation"}
+{"id": "bn-test-10156", "usecase": "public_safety_alert", "note": "amber alert for missing child"}
+{"id": "bn-test-10157", "usecase": "marketing_push", "note": "abandoned cart items reminder"}
+{"id": "bn-test-10158", "usecase": "system_routine", "note": "system update downloaded restart device"}
+{"id": "bn-test-10159", "usecase": "health_critical", "note": "abnormally high resting heart rate"}
+{"id": "bn-test-10160", "usecase": "sports_update", "note": "live cricket match update"}
+{"id": "bn-test-10161", "usecase": "ride_other", "note": "rate driver after ride completed"}
+{"id": "bn-test-10162", "usecase": "travel_urgent", "note": "train platform changed departure soon"}
+{"id": "bn-test-10163", "usecase": "news_breaking_general", "note": "breaking news global climate agreement"}
+{"id": "bn-test-10164", "usecase": "workout_prompt", "note": "daily step goal achieved"}
+{"id": "bn-test-10165", "usecase": "workout_prompt", "note": "workout rest interval over"}
+{"id": "bn-test-10166", "usecase": "work_tool_routine", "note": "document shared with user"}
+{"id": "bn-test-10167", "usecase": "group_event_info", "note": "apartment society cleanup drive announcement"}
+{"id": "bn-test-10168", "usecase": "road_closure", "note": "road closed due to flyover repair"}
+{"id": "bn-test-10169", "usecase": "work_incident", "note": "production outage join war room"}
+{"id": "bn-dev-10170", "usecase": "chat_casual", "note": "casual plans with a friend"}
+{"id": "bn-dev-10171", "usecase": "community_safety_notice", "note": "gas leak evacuation in building"}
+{"id": "bn-dev-10172", "usecase": "sports_update", "note": "cricket toss and playing XI update"}
+{"id": "bn-dev-10173", "usecase": "ride_arriving", "note": "driver arriving in 2 minutes"}
+{"id": "bn-dev-10174", "usecase": "sports_update", "note": "live cricket match score"}
+{"id": "bn-dev-10175", "usecase": "system_routine", "note": "cloud storage space running low"}
+{"id": "bn-dev-10176", "usecase": "family_distress", "note": "family emergency father hospitalised"}
+{"id": "bn-dev-10177", "usecase": "sports_update", "note": "sports player injury and replacement"}
+{"id": "bn-dev-10178", "usecase": "news_breaking_general", "note": "breaking news on depression formation"}
+{"id": "bn-dev-10179", "usecase": "rec_video", "note": "new crime drama show premiere"}
+{"id": "bn-dev-10180", "usecase": "civic_advisory", "note": "air quality advisory for area"}
+{"id": "bn-dev-10181", "usecase": "weather_severe", "note": "Severe thunderstorm alert take shelter"}
+{"id": "bn-dev-10183", "usecase": "travel_urgent", "note": "Bus boarding and departing in 10 minutes"}
+{"id": "bn-dev-10184", "usecase": "school_urgent", "note": "Child injured at school pick up now"}
+{"id": "bn-dev-10185", "usecase": "road_closure", "note": "Airport road lane closure bridge work"}
+{"id": "bn-dev-10186", "usecase": "sub_billing_issue", "note": "Subscription payment failed update billing"}
+{"id": "bn-dev-10187", "usecase": "medical_routine", "note": "Blood test lab report ready"}
+{"id": "bn-dev-10188", "usecase": "call_missed_contact", "note": "Missed call from known contact"}
+{"id": "bn-dev-10189", "usecase": "sub_renewal", "note": "Subscription expiring in three days renewal"}
+{"id": "bn-dev-10190", "usecase": "call_unknown", "note": "Missed call from unknown number"}
+{"id": "bn-dev-10191", "usecase": "work_chat_routine", "note": "Work team lunch plan coordination"}
+{"id": "bn-dev-10192", "usecase": "work_chat_routine", "note": "Non-urgent work presentation review request"}
+{"id": "bn-dev-10193", "usecase": "call_missed_family", "note": "Repeated missed calls from mother"}
+{"id": "bn-dev-10194", "usecase": "news_breaking_general", "note": "Global oil price and market news"}
+{"id": "bn-dev-10195", "usecase": "health_routine", "note": "Prescription medicine reminder after dinner"}
+{"id": "bn-dev-10196", "usecase": "ride_arriving", "note": "Cab arriving at drop location soon"}
+{"id": "bn-dev-10197", "usecase": "medical_routine", "note": "Lab test report ready for download"}
+{"id": "bn-dev-10198", "usecase": "ride_other", "note": "Rating request after completed ride"}
+{"id": "bn-dev-10199", "usecase": "investment_alert", "note": "Market close update and portfolio summary"}
+{"id": "bn-dev-10200", "usecase": "investment_alert", "note": "Stock price alert triggered"}
+{"id": "bn-dev-10201", "usecase": "social_activity", "note": "Likes on recent social post"}
+{"id": "bn-dev-10202", "usecase": "ride_other", "note": "ride app referral reward offer"}
+{"id": "bn-dev-10203", "usecase": "school_urgent", "note": "sick child pick up from school"}
+{"id": "bn-dev-10204", "usecase": "call_spam_likely", "note": "telemarketing spam call warning"}
+{"id": "bn-dev-10205", "usecase": "sub_renewal", "note": "subscription renewing soon notice"}
+{"id": "bn-dev-10206", "usecase": "delivery_update", "note": "food order out for delivery"}
+{"id": "bn-dev-10207", "usecase": "group_event_info", "note": "society pipeline maintenance notice"}
+{"id": "bn-dev-10208", "usecase": "investment_alert", "note": "stock market trading session opened"}
+{"id": "bn-dev-10209", "usecase": "work_incident", "note": "production outage incident meeting"}
+{"id": "bn-dev-10210", "usecase": "school_urgent", "note": "school bus accident notice for parents"}
+{"id": "bn-dev-10211", "usecase": "rec_music", "note": "new music release recommendation"}
+{"id": "bn-dev-10212", "usecase": "call_missed_family", "note": "Repeated missed calls from mother"}
+{"id": "bn-dev-10213", "usecase": "road_closure", "note": "Road closed for flyover repairs"}
+{"id": "bn-dev-10214", "usecase": "family_distress", "note": "Father injured and hospitalized family emergency"}
+{"id": "bn-dev-10215", "usecase": "scam_fake_delivery", "note": "Fake parcel held phishing scam"}
+{"id": "bn-dev-10216", "usecase": "meeting_soon", "note": "Meeting starting in five minutes"}
+{"id": "bn-dev-10217", "usecase": "visitor_gate", "note": "Delivery person ringing front doorbell"}
+{"id": "bn-dev-10218", "usecase": "public_safety_alert", "note": "Gas leak alert shelter in place"}
+{"id": "bn-dev-10219", "usecase": "medical_routine", "note": "Dental appointment reminder for tomorrow"}
+{"id": "bn-dev-10220", "usecase": "weather_severe", "note": "Flash flood red alert imminent danger"}
+{"id": "bn-dev-10221", "usecase": "news_breaking_general", "note": "Breaking news on approaching cyclone"}
+{"id": "bn-dev-10222", "usecase": "medical_routine", "note": "Blood test report ready"}
+{"id": "bn-dev-10223", "usecase": "work_incident", "note": "P0 production outage meeting invite"}
+{"id": "bn-dev-10224", "usecase": "rec_music", "note": "New music album release recommendation"}
+{"id": "bn-dev-10225", "usecase": "work_chat_routine", "note": "Colleague asking about team lunch plans"}
+{"id": "bn-dev-10226", "usecase": "weather_routine", "note": "Tomorrow weather forecast with light rain"}
+{"id": "bn-dev-10227", "usecase": "earthquake_alert", "note": "Earthquake alert with drop-cover instructions"}
+{"id": "bn-dev-10228", "usecase": "public_safety_alert", "note": "Gas leak public safety shelter alert"}
+{"id": "bn-dev-10229", "usecase": "social_activity", "note": "Likes and comments on photo post"}
+{"id": "bn-dev-10230", "usecase": "group_event_info", "note": "Standup meeting schedule update in group"}
+{"id": "bn-dev-10231", "usecase": "group_forward", "note": "Forwarded good morning chain message"}
+{"id": "bn-dev-10232", "usecase": "visitor_gate", "note": "visitor approval at gate"}
+{"id": "bn-dev-10233", "usecase": "home_security", "note": "night motion detected by camera"}
+{"id": "bn-dev-10234", "usecase": "ride_other", "note": "ride receipt and driver rating"}
+{"id": "bn-dev-10235", "usecase": "marketing_push", "note": "profile completion prompt"}
+{"id": "bn-dev-10236", "usecase": "delivery_update", "note": "parcel out for delivery"}
+{"id": "bn-dev-10237", "usecase": "weather_routine", "note": "daily UV index forecast"}
+{"id": "bn-dev-10238", "usecase": "civic_advisory", "note": "scheduled power cut notice"}
+{"id": "bn-dev-10239", "usecase": "build_failure", "note": "CI build failed rollback"}
+{"id": "bn-dev-10240", "usecase": "weather_severe", "note": "imminent severe storm warning"}
+{"id": "bn-dev-10241", "usecase": "investment_alert", "note": "stock target price alert"}
+{"id": "bn-dev-10242", "usecase": "travel_routine", "note": "bus booking confirmation"}
+{"id": "bn-dev-10243", "usecase": "home_routine", "note": "smart plug device offline"}
+{"id": "bn-dev-10244", "usecase": "maps_routine", "note": "weekly travel summary and tips"}
+{"id": "bn-dev-10245", "usecase": "public_safety_alert", "note": "chemical gas leak emergency alert"}
+{"id": "bn-dev-10246", "usecase": "school_info", "note": "parent meeting notice"}
+{"id": "bn-dev-10247", "usecase": "news_breaking_general", "note": "breaking news cyclone warning"}
+{"id": "bn-dev-10248", "usecase": "rec_video", "note": "new drama series episode live"}
+{"id": "bn-dev-10249", "usecase": "school_urgent", "note": "injured child school emergency call"}
+{"id": "bn-dev-10250", "usecase": "rec_video", "note": "movie release available to stream"}
+{"id": "bn-dev-10251", "usecase": "home_alarm_critical", "note": "smoke detected by home sensor"}
+{"id": "bn-dev-10252", "usecase": "navigation_prompt", "note": "Reroute due to traffic"}
+{"id": "bn-dev-10253", "usecase": "system_routine", "note": "Low battery alert"}
+{"id": "bn-dev-10254", "usecase": "ride_other", "note": "Weekly ride summary and rating"}
+{"id": "bn-dev-10255", "usecase": "ride_arriving", "note": "Cab arrived at pickup point"}
+{"id": "bn-dev-10256", "usecase": "sound_alert_critical", "note": "Fire alarm or siren detected"}
+{"id": "bn-dev-10257", "usecase": "call_scam", "note": "Scam call from fake courier"}
+{"id": "bn-dev-10258", "usecase": "chat_family_routine", "note": "Errand request from family"}
+{"id": "bn-dev-10259", "usecase": "workout_prompt", "note": "Workout rest interval finished"}
+{"id": "bn-dev-10260", "usecase": "call_spam_likely", "note": "Suspected spam telemarketing call"}

@@ -1,0 +1,30 @@
+{"id": "hi-test-03000", "usecase": "tsunami_flood_wildfire", "note": "active flood warning"}
+{"id": "hi-test-03006", "usecase": "voicemail_routine"}
+{"id": "hi-test-03007", "usecase": "voicemail_routine", "note": "unknown caller, no rush"}
+{"id": "hi-dev-03008", "usecase": "chat_family_routine", "note": "mum errand voicemail"}
+{"id": "hi-test-03009", "usecase": "voicemail_routine", "note": "unknown caller, membership renewal"}
+{"id": "hi-test-03010", "usecase": "voicemail_routine", "note": "contact asks for call, no rush"}
+{"id": "hi-dev-03011", "usecase": "medical_routine", "note": "dentist appointment confirmation"}
+{"id": "hi-test-03012", "usecase": "caption_status"}
+{"id": "hi-test-03013", "usecase": "caption_status"}
+{"id": "hi-dev-03014", "usecase": "caption_status", "note": "speech model update"}
+{"id": "hi-test-03015", "usecase": "caption_status"}
+{"id": "hi-test-03016", "usecase": "caption_status"}
+{"id": "hi-test-03017", "usecase": "system_routine", "note": "battery tips suggestion"}
+{"id": "hi-test-03018", "usecase": "group_chatter"}
+{"id": "hi-dev-03019", "usecase": "group_chatter"}
+{"id": "hi-test-03020", "usecase": "work_chat_routine", "note": "team lunch, non-urgent"}
+{"id": "hi-test-03021", "usecase": "group_chatter"}
+{"id": "hi-dev-03022", "usecase": "group_chatter", "note": "family movie plan"}
+{"id": "hi-test-03023", "usecase": "group_forward"}
+{"id": "hi-dev-03024", "usecase": "group_forward", "note": "unverified rumour"}
+{"id": "hi-test-03025", "usecase": "scam_prize_loan", "note": "prize chain with form link"}
+{"id": "hi-test-03026", "usecase": "group_forward"}
+{"id": "hi-test-03027", "usecase": "group_event_info", "note": "festival collection notice"}
+{"id": "hi-dev-03028", "usecase": "group_event_info", "note": "cleanup drive"}
+{"id": "hi-test-03029", "usecase": "group_event_info", "note": "reading circle calendar update"}
+{"id": "hi-test-03030", "usecase": "community_safety_notice", "note": "smoke from building basement"}
+{"id": "hi-dev-03031", "usecase": "community_safety_notice", "note": "basement flooding"}
+{"id": "hi-test-03032", "usecase": "community_safety_notice", "note": "gas smell, evacuate"}
+{"id": "hi-test-03033", "usecase": "visitor_gate"}
+{"id": "hi-dev-03034", "usecase": "visitor_gate"}

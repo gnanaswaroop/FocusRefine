@@ -1,0 +1,254 @@
+{"id": "kn-test-10000", "usecase": "work_chat_routine", "note": "Dev team lunch plans in group"}
+{"id": "kn-test-10001", "usecase": "payment_routine", "note": "Money credited to bank account"}
+{"id": "kn-test-10002", "usecase": "work_tool_routine", "note": "Document shared by colleague"}
+{"id": "kn-test-10003", "usecase": "delivery_update", "note": "Order out for delivery"}
+{"id": "kn-test-10004", "usecase": "travel_routine", "note": "Bus booking confirmed for tomorrow"}
+{"id": "kn-test-10005", "usecase": "civic_advisory", "note": "Scheduled power cut maintenance notice"}
+{"id": "kn-test-10006", "usecase": "ride_other", "note": "Ride receipt and driver rating"}
+{"id": "kn-test-10007", "usecase": "vip_ping", "note": "Client urgently requests presentation file"}
+{"id": "kn-test-10008", "usecase": "school_urgent", "note": "Child ill at school pickup requested"}
+{"id": "kn-test-10009", "usecase": "call_spam_likely", "note": "Suspected spam telemarketing call"}
+{"id": "kn-test-10010", "usecase": "email_routine", "note": "Tech weekly newsletter digest"}
+{"id": "kn-test-10011", "usecase": "home_routine", "note": "Smart air purifier firmware update completed"}
+{"id": "kn-test-10012", "usecase": "call_missed_contact", "note": "Missed voice call from contact"}
+{"id": "kn-test-10013", "usecase": "health_routine", "note": "Multivitamin medicine reminder"}
+{"id": "kn-test-10014", "usecase": "system_routine", "note": "Phone cloud backup completed successfully"}
+{"id": "kn-test-10015", "usecase": "group_event_info", "note": "Apartment meeting schedule for festival"}
+{"id": "kn-test-10016", "usecase": "meeting_soon", "note": "Meeting starting in 10 minutes"}
+{"id": "kn-test-10017", "usecase": "medical_urgent", "note": "Clinic urgent consultation for mother"}
+{"id": "kn-test-10018", "usecase": "community_safety_notice", "note": "Building gas leak evacuation alert"}
+{"id": "kn-test-10019", "usecase": "deadline", "note": "Course assignment due today"}
+{"id": "kn-test-10020", "usecase": "scam_prize_loan", "note": "fake lottery win scam"}
+{"id": "kn-test-10022", "usecase": "work_incident", "note": "production server outage"}
+{"id": "kn-test-10023", "usecase": "home_security", "note": "door opened at night"}
+{"id": "kn-test-10024", "usecase": "health_routine", "note": "daily hydration reminder"}
+{"id": "kn-test-10025", "usecase": "sub_renewal", "note": "subscription renewal notice"}
+{"id": "kn-test-10026", "usecase": "navigation_prompt", "note": "turn-by-turn navigation reroute"}
+{"id": "kn-test-10027", "usecase": "sound_alert_routine", "note": "baby crying sound detected"}
+{"id": "kn-test-10028", "usecase": "vip_ping", "note": "manager escalation to join call"}
+{"id": "kn-test-10029", "usecase": "news_breaking_general", "note": "breaking parliamentary news"}
+{"id": "kn-test-10030", "usecase": "rec_music", "note": "music playlist recommendation"}
+{"id": "kn-test-10031", "usecase": "marketing_push", "note": "complete profile prompt"}
+{"id": "kn-test-10032", "usecase": "medical_urgent", "note": "urgent clinic consultation for test results"}
+{"id": "kn-test-10033", "usecase": "tsunami_flood_wildfire", "note": "dam release flood evacuation alert"}
+{"id": "kn-test-10034", "usecase": "weather_severe", "note": "severe storm warning next three hours"}
+{"id": "kn-test-10035", "usecase": "home_routine", "note": "routine home automation ran"}
+{"id": "kn-test-10036", "usecase": "build_failure", "note": "ci pipeline build failed"}
+{"id": "kn-test-10037", "usecase": "family_distress", "note": "family member accident and hospital emergency"}
+{"id": "kn-test-10038", "usecase": "work_incident", "note": "p0 production incident on-call page"}
+{"id": "kn-test-10039", "usecase": "earthquake_alert", "note": "earthquake detected drop cover hold on"}
+{"id": "kn-test-10040", "usecase": "home_security", "note": "door opened at night sensor triggered"}
+{"id": "kn-test-10041", "usecase": "promo_sale", "note": "vegetable discount sale ends midnight"}
+{"id": "kn-test-10042", "usecase": "sub_billing_issue", "note": "subscription renewal payment declined"}
+{"id": "kn-test-10043", "usecase": "meeting_soon", "note": "meeting starts in five minutes"}
+{"id": "kn-test-10044", "usecase": "call_spam_likely", "note": "suspected spam missed call"}
+{"id": "kn-test-10045", "usecase": "chat_casual", "note": "casual plans to play cricket"}
+{"id": "kn-test-10046", "usecase": "scam_fake_delivery", "note": "fake delivery parcel held fee"}
+{"id": "kn-test-10047", "usecase": "school_urgent", "note": "child sick pick up immediately"}
+{"id": "kn-test-10048", "usecase": "home_alarm_critical", "note": "smart home smoke detector alarm"}
+{"id": "kn-test-10049", "usecase": "call_missed_contact", "note": "non-urgent missed call from contact"}
+{"id": "kn-test-10050", "usecase": "sound_alert_critical", "note": "sound notification detected smoke alarm"}
+{"id": "kn-test-10051", "usecase": "chat_family_routine", "note": "reached home and milk errand request"}
+{"id": "kn-test-10052", "usecase": "visitor_gate", "note": "delivery visitor gate entry approval"}
+{"id": "kn-test-10053", "usecase": "medical_urgent", "note": "urgent lab result doctor callback request"}
+{"id": "kn-test-10054", "usecase": "health_critical", "note": "high resting heart rate alert"}
+{"id": "kn-test-10055", "usecase": "email_routine", "note": "weekly tech newsletter digest"}
+{"id": "kn-test-10056", "usecase": "call_spam_likely", "note": "suspected telemarketing spam call"}
+{"id": "kn-test-10057", "usecase": "marketing_push", "note": "abandoned cart re-engagement push"}
+{"id": "kn-test-10058", "usecase": "weather_severe", "note": "severe storm warning next 3 hours"}
+{"id": "kn-test-10059", "usecase": "earthquake_alert", "note": "earthquake alert drop cover hold on"}
+{"id": "kn-test-10060", "usecase": "promo_sale", "note": "cashback offer ends tonight promo"}
+{"id": "kn-test-10061", "usecase": "promo_sale", "note": "subscription discount ending soon"}
+{"id": "kn-test-10062", "usecase": "scam_prize_loan", "note": "fake lottery reward"}
+{"id": "kn-test-10063", "usecase": "chat_family_routine", "note": "family dinner plans"}
+{"id": "kn-test-10064", "usecase": "sports_update", "note": "cricket match score update"}
+{"id": "kn-test-10065", "usecase": "sub_billing_issue", "note": "subscription renewal failed"}
+{"id": "kn-test-10066", "usecase": "group_event_info", "note": "society festival meeting notice"}
+{"id": "kn-test-10067", "usecase": "road_closure", "note": "road closed for flyover repairs"}
+{"id": "kn-test-10068", "usecase": "email_routine", "note": "order receipt email"}
+{"id": "kn-test-10069", "usecase": "social_activity", "note": "likes and comment on post"}
+{"id": "kn-test-10070", "usecase": "build_failure", "note": "pipeline build failed on main"}
+{"id": "kn-test-10071", "usecase": "sound_alert_critical", "note": "Glass breaking sound detected"}
+{"id": "kn-test-10072", "usecase": "work_tool_routine", "note": "Document and task shared"}
+{"id": "kn-test-10073", "usecase": "meeting_soon", "note": "Meeting starts in 10 minutes"}
+{"id": "kn-test-10074", "usecase": "earthquake_alert", "note": "Earthquake warning detected"}
+{"id": "kn-test-10075", "usecase": "road_closure", "note": "Flyover closed traffic disruption"}
+{"id": "kn-test-10076", "usecase": "scam_phishing", "note": "Fake account suspension phishing notice"}
+{"id": "kn-test-10077", "usecase": "scam_fake_delivery", "note": "Fake parcel held customs fee scam"}
+{"id": "kn-test-10078", "usecase": "learning_notice", "note": "Study streak reminder"}
+{"id": "kn-test-10079", "usecase": "sound_alert_critical", "note": "Fire alarm sound detected"}
+{"id": "kn-test-10080", "usecase": "investment_alert", "note": "Stock price alert reached"}
+{"id": "kn-test-10081", "usecase": "school_urgent", "note": "child sick at school pick up immediately"}
+{"id": "kn-test-10082", "usecase": "ride_arriving", "note": "ride arriving at destination soon"}
+{"id": "kn-test-10083", "usecase": "chat_family_routine", "note": "routine family errand request from mom"}
+{"id": "kn-test-10084", "usecase": "family_distress", "note": "brother injured in hospital urgent call"}
+{"id": "kn-test-10085", "usecase": "call_missed_contact", "note": "missed call from contact praveen"}
+{"id": "kn-test-10086", "usecase": "email_routine", "note": "weekly technology newsletter digest in email"}
+{"id": "kn-test-10087", "usecase": "game_notice", "note": "game login reward and new season"}
+{"id": "kn-test-10088", "usecase": "call_missed_contact", "note": "missed call from contact manjunath"}
+{"id": "kn-test-10089", "usecase": "caption_status", "note": "live caption active and pack downloaded"}
+{"id": "kn-test-10090", "usecase": "ride_other", "note": "rate ride driver after trip"}
+{"id": "kn-test-10091", "usecase": "workout_prompt", "note": "step goal reached notification"}
+{"id": "kn-test-10092", "usecase": "sub_billing_issue", "note": "subscription payment failed"}
+{"id": "kn-test-10093", "usecase": "sub_billing_issue", "note": "subscription price change notice"}
+{"id": "kn-test-10094", "usecase": "investment_alert", "note": "market closing portfolio summary"}
+{"id": "kn-test-10095", "usecase": "sports_update", "note": "live cricket score update"}
+{"id": "kn-test-10096", "usecase": "vip_ping", "note": "manager asks to join meeting now"}
+{"id": "kn-test-10097", "usecase": "home_alarm_critical", "note": "home flood sensor water detected"}
+{"id": "kn-test-10098", "usecase": "rec_video", "note": "new episode available to watch"}
+{"id": "kn-test-10099", "usecase": "health_critical", "note": "abnormal high heart rate detected"}
+{"id": "kn-test-10100", "usecase": "build_failure", "note": "ci build failed deploy rolled back"}
+{"id": "kn-test-10101", "usecase": "group_forward", "note": "Good morning forward in apartment group"}
+{"id": "kn-test-10102", "usecase": "chat_family_routine", "note": "Mom asking to buy groceries"}
+{"id": "kn-test-10103", "usecase": "call_unknown", "note": "Missed call from unknown number"}
+{"id": "kn-test-10104", "usecase": "caption_status", "note": "Live Caption language pack downloaded"}
+{"id": "kn-test-10105", "usecase": "call_spam_likely", "note": "Suspected spam telemarketing call"}
+{"id": "kn-test-10106", "usecase": "sound_alert_critical", "note": "Smoke or fire siren detected"}
+{"id": "kn-test-10107", "usecase": "home_security", "note": "Front door opened at night"}
+{"id": "kn-test-10108", "usecase": "learning_notice", "note": "Daily study streak reminder"}
+{"id": "kn-test-10109", "usecase": "call_scam", "note": "Fake courier scam call"}
+{"id": "kn-test-10110", "usecase": "school_info", "note": "Class 10 math homework assignment"}
+{"id": "kn-test-10111", "usecase": "sound_alert_routine", "note": "Doorbell or knocking sound detected"}
+{"id": "kn-test-10112", "usecase": "family_distress", "note": "Family emergency father taken to hospital"}
+{"id": "kn-test-10113", "usecase": "sound_alert_critical", "note": "Glass breaking sound detected"}
+{"id": "kn-test-10114", "usecase": "navigation_prompt", "note": "Reroute prompt due to traffic"}
+{"id": "kn-test-10116", "usecase": "sound_alert_critical", "note": "Shout for help detected"}
+{"id": "kn-test-10117", "usecase": "telecom_gov_routine", "note": "Mobile recharge plan expiring tonight"}
+{"id": "kn-test-10118", "usecase": "chat_family_routine", "note": "Reaching home dinner request"}
+{"id": "kn-test-10119", "usecase": "delivery_update", "note": "Order out for delivery"}
+{"id": "kn-test-10120", "usecase": "weather_routine", "note": "Tomorrow weather forecast"}
+{"id": "kn-test-10121", "usecase": "visitor_gate", "note": "Delivery person at the gate"}
+{"id": "kn-test-10122", "usecase": "game_notice", "note": "new season daily rewards"}
+{"id": "kn-test-10123", "usecase": "call_unknown", "note": "incoming call unknown number"}
+{"id": "kn-test-10124", "usecase": "learning_notice", "note": "live class reminder"}
+{"id": "kn-test-10125", "usecase": "ride_other", "note": "weekly ride summary"}
+{"id": "kn-test-10126", "usecase": "rec_music", "note": "new playlist recommendation"}
+{"id": "kn-test-10127", "usecase": "home_routine", "note": "automation routine completed"}
+{"id": "kn-test-10128", "usecase": "medical_urgent", "note": "urgent blood test consultation"}
+{"id": "kn-test-10129", "usecase": "family_distress", "note": "urgent call request from mom"}
+{"id": "kn-test-10130", "usecase": "home_alarm_critical", "note": "kitchen smoke sensor alert"}
+{"id": "kn-test-10131", "usecase": "group_event_info", "note": "society annual general meeting"}
+{"id": "kn-test-10132", "usecase": "rec_video", "note": "Trending movie recommendation to book"}
+{"id": "kn-test-10133", "usecase": "ride_arriving", "note": "Driver arriving in two minutes"}
+{"id": "kn-test-10134", "usecase": "ride_other", "note": "Rate driver for completed ride"}
+{"id": "kn-test-10135", "usecase": "chat_casual", "note": "Friend asking to play cricket"}
+{"id": "kn-test-10136", "usecase": "promo_sale", "note": "Discount coupon expiring tonight"}
+{"id": "kn-test-10137", "usecase": "investment_alert", "note": "Stock market closing portfolio summary"}
+{"id": "kn-test-10138", "usecase": "home_security", "note": "Door opened late at night"}
+{"id": "kn-test-10139", "usecase": "sports_update", "note": "Live cricket match score update"}
+{"id": "kn-test-10140", "usecase": "medical_routine", "note": "Routine blood test reports ready"}
+{"id": "kn-test-10141", "usecase": "home_security", "note": "Unknown person detected on balcony camera"}
+{"id": "kn-test-10142", "usecase": "scam_prize_loan", "note": "fake instant loan offer"}
+{"id": "kn-test-10143", "usecase": "tsunami_flood_wildfire", "note": "severe flood warning and evacuation order"}
+{"id": "kn-test-10144", "usecase": "medical_urgent", "note": "doctor update on family surgery in ICU"}
+{"id": "kn-test-10145", "usecase": "delivery_update", "note": "package out for delivery"}
+{"id": "kn-test-10146", "usecase": "home_routine", "note": "robot vacuum cleaning routine completed"}
+{"id": "kn-test-10147", "usecase": "health_critical", "note": "abnormally high heart rate alert"}
+{"id": "kn-test-10148", "usecase": "public_safety_alert", "note": "toxic gas leak shelter in place"}
+{"id": "kn-test-10149", "usecase": "travel_routine", "note": "bus ticket confirmed for tomorrow"}
+{"id": "kn-test-10150", "usecase": "learning_notice", "note": "learning streak reminder"}
+{"id": "kn-test-10151", "usecase": "sound_alert_routine", "note": "knocking sound detected"}
+{"id": "kn-test-10152", "usecase": "group_chatter", "note": "apartment society chat casual question"}
+{"id": "kn-test-10153", "usecase": "investment_alert", "note": "stock price target reached"}
+{"id": "kn-test-10154", "usecase": "call_missed_family", "note": "missed calls from sister"}
+{"id": "kn-test-10155", "usecase": "travel_routine", "note": "hotel booking confirmed"}
+{"id": "kn-test-10156", "usecase": "promo_sale", "note": "cashback flash sale ends tonight"}
+{"id": "kn-test-10157", "usecase": "social_activity", "note": "new comment on post"}
+{"id": "kn-test-10158", "usecase": "home_alarm_critical", "note": "kitchen smoke detector alarm"}
+{"id": "kn-test-10159", "usecase": "scam_fake_delivery", "note": "fake delivery fee payment link"}
+{"id": "kn-test-10160", "usecase": "weather_routine", "note": "tomorrow weather forecast"}
+{"id": "kn-test-10161", "usecase": "school_urgent", "note": "sick child pick up immediately"}
+{"id": "kn-test-10162", "usecase": "scam_phishing", "note": "fake account suspension phishing link"}
+{"id": "kn-test-10163", "usecase": "home_routine", "note": "camera firmware update completed"}
+{"id": "kn-test-10164", "usecase": "caption_status", "note": "language pack downloaded for live caption"}
+{"id": "kn-test-10165", "usecase": "game_notice", "note": "daily gold reward game notice"}
+{"id": "kn-test-10166", "usecase": "group_event_info", "note": "society monthly meeting announcement"}
+{"id": "kn-test-10167", "usecase": "group_event_info", "note": "water tank cleaning maintenance notice"}
+{"id": "kn-dev-10168", "usecase": "work_chat_routine", "note": "colleague lunch plans and slide check"}
+{"id": "kn-dev-10169", "usecase": "sound_alert_critical", "note": "smoke or fire alarm detected"}
+{"id": "kn-dev-10170", "usecase": "school_urgent", "note": "sick child pick up from school"}
+{"id": "kn-dev-10171", "usecase": "investment_alert", "note": "stock price alert limit reached"}
+{"id": "kn-dev-10172", "usecase": "work_tool_routine", "note": "Task added to project list"}
+{"id": "kn-dev-10173", "usecase": "sub_renewal", "note": "Subscription expiring in three days"}
+{"id": "kn-dev-10174", "usecase": "voicemail_routine", "note": "Routine voicemail from contact"}
+{"id": "kn-dev-10175", "usecase": "work_tool_routine", "note": "Calendar invite accepted"}
+{"id": "kn-dev-10176", "usecase": "social_activity", "note": "Likes on user video"}
+{"id": "kn-dev-10177", "usecase": "ride_arriving", "note": "Captain arriving in 3 minutes"}
+{"id": "kn-dev-10178", "usecase": "call_spam_likely", "note": "Suspected spam telemarketing call"}
+{"id": "kn-dev-10179", "usecase": "investment_alert", "note": "Market close and portfolio summary"}
+{"id": "kn-dev-10180", "usecase": "build_failure", "note": "Pipeline failed on main branch"}
+{"id": "kn-dev-10181", "usecase": "caption_status", "note": "Live caption language pack downloaded"}
+{"id": "kn-dev-10182", "usecase": "sub_billing_issue", "note": "Subscription payment declined"}
+{"id": "kn-dev-10183", "usecase": "medical_urgent", "note": "Urgent clinic lab result consultation"}
+{"id": "kn-dev-10184", "usecase": "social_activity", "note": "Friend birthday reminder"}
+{"id": "kn-dev-10185", "usecase": "rec_video", "note": "New movie release recommendation"}
+{"id": "kn-dev-10186", "usecase": "work_tool_routine", "note": "Weekly work task summary"}
+{"id": "kn-dev-10187", "usecase": "call_spam_likely", "note": "Suspected spam incoming call"}
+{"id": "kn-dev-10188", "usecase": "delivery_update", "note": "Order out for delivery"}
+{"id": "kn-dev-10189", "usecase": "group_event_info", "note": "Society festival collection meeting"}
+{"id": "kn-dev-10190", "usecase": "ride_other", "note": "Ride receipt and driver rating"}
+{"id": "kn-dev-10191", "usecase": "family_distress", "note": "Urgent call request from mother"}
+{"id": "kn-dev-10192", "usecase": "delivery_update", "note": "grocery order delivered"}
+{"id": "kn-dev-10193", "usecase": "scam_fake_delivery", "note": "fake parcel customs fee scam"}
+{"id": "kn-dev-10194", "usecase": "payment_routine", "note": "electricity bill due reminder"}
+{"id": "kn-dev-10195", "usecase": "sound_alert_routine", "note": "knocking sound detected"}
+{"id": "kn-dev-10196", "usecase": "scam_phishing", "note": "phishing account cancellation notice"}
+{"id": "kn-dev-10197", "usecase": "voicemail_routine", "note": "non urgent voicemail transcript"}
+{"id": "kn-dev-10198", "usecase": "health_critical", "note": "high resting heart rate alert"}
+{"id": "kn-dev-10199", "usecase": "school_info", "note": "parent teacher meeting announcement"}
+{"id": "kn-dev-10200", "usecase": "home_security", "note": "door opened at night away mode"}
+{"id": "kn-dev-10201", "usecase": "ride_other", "note": "weekly ride summary"}
+{"id": "kn-dev-10202", "usecase": "delivery_update", "note": "Food order out for delivery"}
+{"id": "kn-dev-10203", "usecase": "travel_urgent", "note": "Cancelled airport cab ride"}
+{"id": "kn-dev-10204", "usecase": "civic_advisory", "note": "Air quality advisory"}
+{"id": "kn-dev-10205", "usecase": "chat_family_routine", "note": "Routine family errand request"}
+{"id": "kn-dev-10206", "usecase": "visitor_gate", "note": "Gate visitor entry approval"}
+{"id": "kn-dev-10207", "usecase": "sound_alert_critical", "note": "Fire smoke alarm detected"}
+{"id": "kn-dev-10208", "usecase": "home_routine", "note": "Smart home firmware update"}
+{"id": "kn-dev-10209", "usecase": "travel_routine", "note": "Hotel booking confirmed"}
+{"id": "kn-dev-10210", "usecase": "road_closure", "note": "Road closure traffic alert"}
+{"id": "kn-dev-10211", "usecase": "group_forward", "note": "Good morning chain forward"}
+{"id": "kn-dev-10212", "usecase": "system_routine", "note": "phone storage space nearly full"}
+{"id": "kn-dev-10213", "usecase": "travel_routine", "note": "flight web check-in opens tomorrow"}
+{"id": "kn-dev-10214", "usecase": "investment_alert", "note": "stock price target alert triggered"}
+{"id": "kn-dev-10215", "usecase": "sports_update", "note": "live cricket match score update"}
+{"id": "kn-dev-10216", "usecase": "group_event_info", "note": "society general meeting schedule reminder"}
+{"id": "kn-dev-10217", "usecase": "sub_billing_issue", "note": "subscription renewal payment declined"}
+{"id": "kn-dev-10218", "usecase": "road_closure", "note": "flyover road closure traffic alert"}
+{"id": "kn-dev-10219", "usecase": "work_incident", "note": "urgent production outage incident call"}
+{"id": "kn-dev-10220", "usecase": "email_routine", "note": "monthly newsletter email digest"}
+{"id": "kn-dev-10221", "usecase": "medical_routine", "note": "blood test lab report ready"}
+{"id": "kn-dev-10222", "usecase": "navigation_prompt", "note": "Turn instruction for navigation"}
+{"id": "kn-dev-10223", "usecase": "navigation_prompt", "note": "Arriving at destination prompt"}
+{"id": "kn-dev-10224", "usecase": "community_safety_notice", "note": "Gas leak evacuation notice"}
+{"id": "kn-dev-10225", "usecase": "payment_routine", "note": "Payment received notification"}
+{"id": "kn-dev-10226", "usecase": "scam_prize_loan", "note": "Lottery prize scam message"}
+{"id": "kn-dev-10227", "usecase": "group_event_info", "note": "Society yoga class schedule"}
+{"id": "kn-dev-10228", "usecase": "health_routine", "note": "Hydration reminder"}
+{"id": "kn-dev-10229", "usecase": "work_tool_routine", "note": "Document shared notification"}
+{"id": "kn-dev-10230", "usecase": "meeting_soon", "note": "Meeting starting in 5 minutes"}
+{"id": "kn-dev-10231", "usecase": "investment_alert", "note": "Stock price target alert"}
+{"id": "kn-dev-10232", "usecase": "telecom_gov_routine", "note": "Daily data limit 90 percent used"}
+{"id": "kn-dev-10233", "usecase": "work_incident", "note": "On-call page for database disconnection"}
+{"id": "kn-dev-10234", "usecase": "deadline", "note": "Assignment submission deadline tonight"}
+{"id": "kn-dev-10235", "usecase": "telecom_gov_routine", "note": "Government driving license document ready"}
+{"id": "kn-dev-10236", "usecase": "weather_severe", "note": "Red alert severe storm warning"}
+{"id": "kn-dev-10237", "usecase": "call_unknown", "note": "Missed call from unknown number"}
+{"id": "kn-dev-10238", "usecase": "tsunami_flood_wildfire", "note": "Flash flood warning to stay home"}
+{"id": "kn-dev-10239", "usecase": "health_critical", "note": "High resting heart rate detected"}
+{"id": "kn-dev-10240", "usecase": "health_critical", "note": "Hard fall detected emergency SOS"}
+{"id": "kn-dev-10241", "usecase": "game_notice", "note": "New game season and reward"}
+{"id": "kn-dev-10242", "usecase": "sound_alert_routine", "note": "door knocking sound detected"}
+{"id": "kn-dev-10243", "usecase": "payment_routine", "note": "electricity bill payment reminder"}
+{"id": "kn-dev-10244", "usecase": "road_closure", "note": "flyover repair road closure notice"}
+{"id": "kn-dev-10245", "usecase": "social_activity", "note": "social post likes and comments"}
+{"id": "kn-dev-10246", "usecase": "scam_fake_delivery", "note": "fake parcel held payment scam"}
+{"id": "kn-dev-10247", "usecase": "family_distress", "note": "urgent hospital emergency from dad"}
+{"id": "kn-dev-10248", "usecase": "road_closure", "note": "traffic disruption ring road closed"}
+{"id": "kn-dev-10249", "usecase": "community_safety_notice", "note": "apartment gas leak evacuation notice"}
+{"id": "kn-dev-10250", "usecase": "sports_update", "note": "cricket match result update"}
+{"id": "kn-dev-10251", "usecase": "sound_alert_routine", "note": "doorbell sound detected notification"}
+{"id": "kn-dev-10252", "usecase": "chat_family_routine", "note": "errand request from brother"}
+{"id": "kn-dev-10253", "usecase": "work_chat_routine", "note": "standup notes and lunch invite"}
+{"id": "kn-dev-10254", "usecase": "email_routine", "note": "weekly tech newsletter digest"}
+{"id": "kn-dev-10255", "usecase": "visitor_gate", "note": "delivery person entry approval request"}

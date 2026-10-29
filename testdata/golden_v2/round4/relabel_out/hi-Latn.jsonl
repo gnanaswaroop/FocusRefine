@@ -1,0 +1,197 @@
+{"id": "hi-Latn-test-10000", "usecase": "sub_renewal", "note": "Subscription renewal reminder"}
+{"id": "hi-Latn-test-10001", "usecase": "sound_alert_critical", "note": "Smoke alarm siren detected"}
+{"id": "hi-Latn-test-10002", "usecase": "weather_routine", "note": "Tomorrow weather forecast"}
+{"id": "hi-Latn-test-10003", "usecase": "ride_other", "note": "Rate driver and ride receipt"}
+{"id": "hi-Latn-test-10004", "usecase": "travel_urgent", "note": "Flight gate change boarding now"}
+{"id": "hi-Latn-test-10005", "usecase": "home_routine", "note": "Home air purifier offline"}
+{"id": "hi-Latn-test-10006", "usecase": "caption_status", "note": "Live Caption status active"}
+{"id": "hi-Latn-test-10007", "usecase": "sound_alert_critical", "note": "Glass breaking sound detected"}
+{"id": "hi-Latn-test-10008", "usecase": "navigation_prompt", "note": "Navigation reroute turn instruction"}
+{"id": "hi-Latn-test-10009", "usecase": "maps_routine", "note": "Weekly driving summary"}
+{"id": "hi-Latn-test-10010", "usecase": "home_routine", "note": "smart doorbell firmware update available"}
+{"id": "hi-Latn-test-10011", "usecase": "rec_music", "note": "new song release recommendation"}
+{"id": "hi-Latn-test-10012", "usecase": "family_distress", "note": "urgent family hospital emergency call"}
+{"id": "hi-Latn-test-10014", "usecase": "tsunami_flood_wildfire", "note": "emergency flood evacuation warning"}
+{"id": "hi-Latn-test-10015", "usecase": "group_chatter", "note": "apartment society group chat message"}
+{"id": "hi-Latn-test-10016", "usecase": "rec_video", "note": "trending movie recommendation"}
+{"id": "hi-Latn-test-10017", "usecase": "system_routine", "note": "background apps update completed"}
+{"id": "hi-Latn-test-10018", "usecase": "group_event_info", "note": "society cleanliness drive notice"}
+{"id": "hi-Latn-test-10019", "usecase": "marketing_push", "note": "prompt to save daily address"}
+{"id": "hi-Latn-test-10020", "usecase": "group_event_info", "note": "diwali mela donation collection notice"}
+{"id": "hi-Latn-test-10021", "usecase": "health_critical", "note": "abnormally high heart rate alert"}
+{"id": "hi-Latn-test-10022", "usecase": "call_unknown", "note": "missed call from unknown number"}
+{"id": "hi-Latn-test-10023", "usecase": "marketing_push", "note": "abandoned cart reminder"}
+{"id": "hi-Latn-test-10024", "usecase": "payment_routine", "note": "money received via UPI"}
+{"id": "hi-Latn-test-10025", "usecase": "learning_notice", "note": "pending practice test reminder"}
+{"id": "hi-Latn-test-10026", "usecase": "work_chat_routine", "note": "team lunch coordination chat"}
+{"id": "hi-Latn-test-10027", "usecase": "home_routine", "note": "air purifier automation completed"}
+{"id": "hi-Latn-test-10028", "usecase": "payment_routine", "note": "electricity bill payment reminder"}
+{"id": "hi-Latn-test-10029", "usecase": "sub_renewal", "note": "subscription auto renewal notice"}
+{"id": "hi-Latn-test-10030", "usecase": "payment_routine", "note": "money received into bank account"}
+{"id": "hi-Latn-test-10031", "usecase": "deadline", "note": "Quiz deadline today at 6 PM"}
+{"id": "hi-Latn-test-10032", "usecase": "visitor_gate", "note": "Delivery partner entry approval at gate"}
+{"id": "hi-Latn-test-10033", "usecase": "social_activity", "note": "Reactions and comments on video"}
+{"id": "hi-Latn-test-10034", "usecase": "weather_severe", "note": "Severe storm and flash flood warning"}
+{"id": "hi-Latn-test-10035", "usecase": "rec_music", "note": "New song release recommendation"}
+{"id": "hi-Latn-test-10036", "usecase": "ride_arriving", "note": "Auto arriving in 3 minutes"}
+{"id": "hi-Latn-test-10037", "usecase": "navigation_prompt", "note": "Reroute suggestion due to traffic congestion"}
+{"id": "hi-Latn-test-10038", "usecase": "home_security", "note": "Door opened at night while away"}
+{"id": "hi-Latn-test-10039", "usecase": "sub_billing_issue", "note": "Subscription auto-debit payment failed"}
+{"id": "hi-Latn-test-10040", "usecase": "earthquake_alert", "note": "Earthquake warning drop cover and hold"}
+{"id": "hi-Latn-test-10042", "usecase": "promo_sale", "note": "food coupon discount ends tonight"}
+{"id": "hi-Latn-test-10043", "usecase": "travel_urgent", "note": "flight boarding now at gate"}
+{"id": "hi-Latn-test-10044", "usecase": "home_routine", "note": "smart camera firmware update available"}
+{"id": "hi-Latn-test-10045", "usecase": "school_urgent", "note": "sick child pick up from school"}
+{"id": "hi-Latn-test-10046", "usecase": "workout_prompt", "note": "daily step goal completed"}
+{"id": "hi-Latn-test-10047", "usecase": "civic_advisory", "note": "poor air quality advisory"}
+{"id": "hi-Latn-test-10048", "usecase": "work_chat_routine", "note": "non urgent standup meeting notes"}
+{"id": "hi-Latn-test-10049", "usecase": "travel_urgent", "note": "bus departing soon from stand"}
+{"id": "hi-Latn-test-10050", "usecase": "rec_video", "note": "new show episode now streaming"}
+{"id": "hi-Latn-test-10051", "usecase": "sound_alert_critical", "note": "smoke alarm sound detected"}
+{"id": "hi-Latn-test-10052", "usecase": "chat_casual", "note": "friend meme and banter"}
+{"id": "hi-Latn-test-10053", "usecase": "group_event_info", "note": "society cleanup drive notice"}
+{"id": "hi-Latn-test-10054", "usecase": "scam_fake_delivery", "note": "fake courier parcel scam"}
+{"id": "hi-Latn-test-10055", "usecase": "game_notice", "note": "game energy refilled alert"}
+{"id": "hi-Latn-test-10056", "usecase": "deadline", "note": "task due today review requested"}
+{"id": "hi-Latn-test-10057", "usecase": "meeting_soon", "note": "meeting starting soon host waiting"}
+{"id": "hi-Latn-test-10058", "usecase": "rec_video", "note": "continue watching series recommendation"}
+{"id": "hi-Latn-test-10059", "usecase": "system_routine", "note": "apps updated successfully in background"}
+{"id": "hi-Latn-test-10060", "usecase": "weather_routine", "note": "rain forecast for tomorrow"}
+{"id": "hi-Latn-test-10061", "usecase": "chat_family_routine", "note": "family dinner plan discussion"}
+{"id": "hi-Latn-test-10062", "usecase": "sports_update", "note": "match starting and toss update"}
+{"id": "hi-Latn-test-10063", "usecase": "delivery_update", "note": "order out for delivery"}
+{"id": "hi-Latn-test-10064", "usecase": "family_distress", "note": "urgent callback request from mother"}
+{"id": "hi-Latn-test-10065", "usecase": "social_activity", "note": "comments and reactions on status"}
+{"id": "hi-Latn-test-10066", "usecase": "rec_music", "note": "new music track release recommendation"}
+{"id": "hi-Latn-test-10067", "usecase": "weather_severe", "note": "emergency flash flood warning"}
+{"id": "hi-Latn-test-10068", "usecase": "ride_arriving", "note": "cab arrived at pickup point"}
+{"id": "hi-Latn-test-10069", "usecase": "navigation_prompt", "note": "traffic reroute turn instruction"}
+{"id": "hi-Latn-test-10070", "usecase": "telecom_gov_routine", "note": "broadband bill generated reminder"}
+{"id": "hi-Latn-test-10071", "usecase": "sound_alert_routine", "note": "doorbell sound detected"}
+{"id": "hi-Latn-test-10072", "usecase": "sound_alert_critical", "note": "Siren sound detected by system"}
+{"id": "hi-Latn-test-10073", "usecase": "call_spam_likely", "note": "Suspected spam call for loan offers"}
+{"id": "hi-Latn-test-10074", "usecase": "call_missed_family", "note": "Repeated missed calls from father"}
+{"id": "hi-Latn-test-10075", "usecase": "ride_arriving", "note": "Ride arriving in two minutes"}
+{"id": "hi-Latn-test-10076", "usecase": "news_breaking_general", "note": "Breaking news on new metro route"}
+{"id": "hi-Latn-test-10077", "usecase": "call_missed_contact", "note": "Routine missed call from contact"}
+{"id": "hi-Latn-test-10078", "usecase": "meeting_soon", "note": "Meeting starting soon join now"}
+{"id": "hi-Latn-test-10079", "usecase": "medical_urgent", "note": "Urgent hospital call from doctor"}
+{"id": "hi-Latn-test-10080", "usecase": "earthquake_alert", "note": "Urgent earthquake alert warning"}
+{"id": "hi-Latn-test-10081", "usecase": "navigation_prompt", "note": "Turn instruction and traffic reroute"}
+{"id": "hi-Latn-test-10082", "usecase": "school_info", "note": "Next week parent teacher meeting notice"}
+{"id": "hi-Latn-test-10083", "usecase": "sound_alert_critical", "note": "Fire alarm sound detected"}
+{"id": "hi-Latn-test-10084", "usecase": "meeting_soon", "note": "Meeting starting in 10 minutes"}
+{"id": "hi-Latn-test-10085", "usecase": "chat_family_routine", "note": "Family routine errand request"}
+{"id": "hi-Latn-test-10086", "usecase": "call_missed_contact", "note": "Missed call from contact"}
+{"id": "hi-Latn-test-10087", "usecase": "group_event_info", "note": "Society festival event meeting notice"}
+{"id": "hi-Latn-test-10088", "usecase": "work_chat_routine", "note": "Work team lunch plans"}
+{"id": "hi-Latn-test-10089", "usecase": "chat_casual", "note": "Casual weekend movie plan"}
+{"id": "hi-Latn-test-10090", "usecase": "ride_arriving", "note": "Cab approaching drop location"}
+{"id": "hi-Latn-test-10091", "usecase": "school_urgent", "note": "Emergency coaching closure pick up students"}
+{"id": "hi-Latn-test-10092", "usecase": "investment_alert", "note": "stock price alert triggered"}
+{"id": "hi-Latn-test-10093", "usecase": "social_activity", "note": "post likes and comments update"}
+{"id": "hi-Latn-test-10094", "usecase": "work_tool_routine", "note": "new task assigned notification"}
+{"id": "hi-Latn-test-10095", "usecase": "civic_advisory", "note": "scheduled power outage advisory"}
+{"id": "hi-Latn-test-10096", "usecase": "caption_status", "note": "live transcribe active status"}
+{"id": "hi-Latn-test-10097", "usecase": "email_routine", "note": "weekly tech newsletter email"}
+{"id": "hi-Latn-test-10098", "usecase": "call_spam_likely", "note": "suspected spam telemarketer call"}
+{"id": "hi-Latn-test-10099", "usecase": "ride_other", "note": "rate completed ride feedback"}
+{"id": "hi-Latn-test-10100", "usecase": "call_unknown", "note": "missed call from unknown number"}
+{"id": "hi-Latn-test-10101", "usecase": "work_incident", "note": "critical production sync outage alert"}
+{"id": "hi-Latn-test-10102", "usecase": "caption_status", "note": "speech pack downloaded for transcription"}
+{"id": "hi-Latn-test-10103", "usecase": "deadline", "note": "science assignment deadline today"}
+{"id": "hi-Latn-test-10104", "usecase": "home_routine", "note": "air purifier routine automation ran"}
+{"id": "hi-Latn-test-10105", "usecase": "home_routine", "note": "smart plug offline alert"}
+{"id": "hi-Latn-test-10106", "usecase": "weather_severe", "note": "severe storm alert imminent"}
+{"id": "hi-Latn-test-10107", "usecase": "family_distress", "note": "father hospitalized urgent family call"}
+{"id": "hi-Latn-test-10108", "usecase": "public_safety_alert", "note": "chemical gas leak shelter in place"}
+{"id": "hi-Latn-test-10109", "usecase": "telecom_gov_routine", "note": "mobile plan validity recharge reminder"}
+{"id": "hi-Latn-test-10110", "usecase": "delivery_update", "note": "parcel out for delivery"}
+{"id": "hi-Latn-test-10111", "usecase": "medical_urgent", "note": "abnormal test results urgent consultation"}
+{"id": "hi-Latn-test-10112", "usecase": "work_incident", "note": "live cluster crash urgent bridge call"}
+{"id": "hi-Latn-test-10113", "usecase": "learning_notice", "note": "study streak reminder"}
+{"id": "hi-Latn-test-10114", "usecase": "tsunami_flood_wildfire", "note": "dam release flash flood evacuation order"}
+{"id": "hi-Latn-test-10115", "usecase": "sound_alert_routine", "note": "knocking sound detected at gate"}
+{"id": "hi-Latn-test-10116", "usecase": "health_routine", "note": "routine medicine reminder"}
+{"id": "hi-Latn-test-10117", "usecase": "chat_family_routine", "note": "family errand request"}
+{"id": "hi-Latn-test-10118", "usecase": "call_missed_contact", "note": "missed call from colleague without urgency"}
+{"id": "hi-Latn-test-10119", "usecase": "health_routine", "note": "routine hydration reminder"}
+{"id": "hi-Latn-test-10120", "usecase": "call_unknown", "note": "incoming call from unknown number"}
+{"id": "hi-Latn-test-10121", "usecase": "call_spam_likely", "note": "suspected spam telemarketer call"}
+{"id": "hi-Latn-test-10122", "usecase": "group_forward", "note": "Chain forward in family group"}
+{"id": "hi-Latn-test-10123", "usecase": "sound_alert_critical", "note": "Smoke alarm detected by sound notifications"}
+{"id": "hi-Latn-test-10124", "usecase": "home_security", "note": "Motion detected by camera at night"}
+{"id": "hi-Latn-test-10125", "usecase": "caption_status", "note": "Offline language pack downloaded for captions"}
+{"id": "hi-Latn-test-10126", "usecase": "scam_fake_delivery", "note": "Fake parcel fee phishing scam"}
+{"id": "hi-Latn-test-10127", "usecase": "learning_notice", "note": "Learning app streak reminder"}
+{"id": "hi-Latn-test-10128", "usecase": "delivery_update", "note": "Food order packed delivery update"}
+{"id": "hi-Latn-test-10129", "usecase": "scam_phishing", "note": "Fake account suspension phishing notice"}
+{"id": "hi-Latn-dev-10130", "usecase": "medical_routine", "note": "Routine dental appointment reminder"}
+{"id": "hi-Latn-dev-10131", "usecase": "home_security", "note": "Motion detected while in away mode"}
+{"id": "hi-Latn-dev-10132", "usecase": "game_notice", "note": "Daily game reward and season notice"}
+{"id": "hi-Latn-dev-10133", "usecase": "sub_billing_issue", "note": "Subscription payment declined"}
+{"id": "hi-Latn-dev-10134", "usecase": "work_tool_routine", "note": "Task assigned in Asana"}
+{"id": "hi-Latn-dev-10135", "usecase": "build_failure", "note": "CI pipeline deployment failed"}
+{"id": "hi-Latn-dev-10136", "usecase": "promo_sale", "note": "Cashback offer ending tonight"}
+{"id": "hi-Latn-dev-10137", "usecase": "health_routine", "note": "Evening medicine reminder"}
+{"id": "hi-Latn-dev-10138", "usecase": "navigation_prompt", "note": "Reroute prompt due to traffic"}
+{"id": "hi-Latn-dev-10139", "usecase": "work_chat_routine", "note": "Work team lunch and standup chat"}
+{"id": "hi-Latn-dev-10140", "usecase": "investment_alert", "note": "Stock target price alert"}
+{"id": "hi-Latn-dev-10141", "usecase": "weather_severe", "note": "Severe weather and flash flood warning"}
+{"id": "hi-Latn-dev-10143", "usecase": "community_safety_notice", "note": "gas leak alert in building"}
+{"id": "hi-Latn-dev-10144", "usecase": "sub_billing_issue", "note": "subscription auto-debit failed"}
+{"id": "hi-Latn-dev-10145", "usecase": "payment_routine", "note": "money received notification"}
+{"id": "hi-Latn-dev-10146", "usecase": "ride_arriving", "note": "cab arrived at pickup point"}
+{"id": "hi-Latn-dev-10147", "usecase": "navigation_prompt", "note": "turn by turn navigation prompt"}
+{"id": "hi-Latn-dev-10148", "usecase": "sub_billing_issue", "note": "auto-charge failed on subscription"}
+{"id": "hi-Latn-dev-10149", "usecase": "weather_severe", "note": "severe heatwave warning for today"}
+{"id": "hi-Latn-dev-10150", "usecase": "community_safety_notice", "note": "flooding in building basement"}
+{"id": "hi-Latn-dev-10151", "usecase": "telecom_gov_routine", "note": "data balance usage update"}
+{"id": "hi-Latn-dev-10152", "usecase": "school_urgent", "note": "child injured at school"}
+{"id": "hi-Latn-dev-10153", "usecase": "work_chat_routine", "note": "Non-urgent work chat message"}
+{"id": "hi-Latn-dev-10154", "usecase": "home_routine", "note": "Routine home appliance cycle completed"}
+{"id": "hi-Latn-dev-10155", "usecase": "sub_billing_issue", "note": "Subscription payment declined"}
+{"id": "hi-Latn-dev-10156", "usecase": "public_safety_alert", "note": "Toxic gas leak shelter indoors"}
+{"id": "hi-Latn-dev-10157", "usecase": "sound_alert_critical", "note": "Fire alarm sound detected"}
+{"id": "hi-Latn-dev-10158", "usecase": "medical_urgent", "note": "Urgent clinic consultation required today"}
+{"id": "hi-Latn-dev-10159", "usecase": "scam_phishing", "note": "Fake account suspension phishing link"}
+{"id": "hi-Latn-dev-10160", "usecase": "sound_alert_critical", "note": "Glass breaking sound detected"}
+{"id": "hi-Latn-dev-10161", "usecase": "deadline", "note": "Mock test submission due tonight"}
+{"id": "hi-Latn-dev-10162", "usecase": "scam_prize_loan", "note": "Fake cash prize lottery scam"}
+{"id": "hi-Latn-dev-10163", "usecase": "tsunami_flood_wildfire", "note": "Evacuation order for severe flash floods"}
+{"id": "hi-Latn-dev-10164", "usecase": "public_safety_alert", "note": "Chemical blast shelter in place advisory"}
+{"id": "hi-Latn-dev-10165", "usecase": "payment_routine", "note": "Payment received via UPI"}
+{"id": "hi-Latn-dev-10166", "usecase": "school_info", "note": "Class timetable change notice"}
+{"id": "hi-Latn-dev-10167", "usecase": "health_routine", "note": "Routine medicine reminder"}
+{"id": "hi-Latn-dev-10168", "usecase": "earthquake_alert", "note": "Earthquake alert drop cover hold on"}
+{"id": "hi-Latn-dev-10169", "usecase": "weather_severe", "note": "Super cyclone red warning"}
+{"id": "hi-Latn-dev-10170", "usecase": "deadline", "note": "Assignment deadline due in one hour"}
+{"id": "hi-Latn-dev-10171", "usecase": "chat_casual", "note": "Casual chat with meme and plans"}
+{"id": "hi-Latn-dev-10172", "usecase": "delivery_update", "note": "Grocery order delivered"}
+{"id": "hi-Latn-dev-10173", "usecase": "telecom_gov_routine", "note": "mobile recharge expiry reminder"}
+{"id": "hi-Latn-dev-10174", "usecase": "road_closure", "note": "highway blocked detour advisory"}
+{"id": "hi-Latn-dev-10175", "usecase": "workout_prompt", "note": "rest interval complete prompt"}
+{"id": "hi-Latn-dev-10176", "usecase": "health_routine", "note": "hydration reminder"}
+{"id": "hi-Latn-dev-10177", "usecase": "sound_alert_critical", "note": "smoke alarm sound detected"}
+{"id": "hi-Latn-dev-10179", "usecase": "chat_casual", "note": "voice message about weekend trip"}
+{"id": "hi-Latn-dev-10180", "usecase": "medical_routine", "note": "lab blood report ready"}
+{"id": "hi-Latn-dev-10181", "usecase": "health_critical", "note": "high resting heart rate alert"}
+{"id": "hi-Latn-dev-10182", "usecase": "deadline", "note": "mock test due tonight deadline"}
+{"id": "hi-Latn-dev-10183", "usecase": "tsunami_flood_wildfire", "note": "dam release flood evacuation alert"}
+{"id": "hi-Latn-dev-10184", "usecase": "meeting_soon", "note": "meeting starts in 5 minutes"}
+{"id": "hi-Latn-dev-10185", "usecase": "social_activity", "note": "tagged in a video comment"}
+{"id": "hi-Latn-dev-10186", "usecase": "home_security", "note": "camera detected person at night"}
+{"id": "hi-Latn-dev-10187", "usecase": "marketing_push", "note": "re-engagement message to play game"}
+{"id": "hi-Latn-dev-10188", "usecase": "sub_billing_issue", "note": "subscription payment renewal failed"}
+{"id": "hi-Latn-dev-10189", "usecase": "game_notice", "note": "new game season started"}
+{"id": "hi-Latn-dev-10190", "usecase": "work_tool_routine", "note": "calendar invite accepted"}
+{"id": "hi-Latn-dev-10191", "usecase": "build_failure", "note": "ci build failed on main"}
+{"id": "hi-Latn-dev-10192", "usecase": "promo_sale", "note": "flash sale ending tonight"}
+{"id": "hi-Latn-dev-10193", "usecase": "rec_video", "note": "video recommendation to watch highlights"}
+{"id": "hi-Latn-dev-10194", "usecase": "home_alarm_critical", "note": "kitchen smoke detector alert"}
+{"id": "hi-Latn-dev-10195", "usecase": "public_safety_alert", "note": "gas leak shelter in place"}
+{"id": "hi-Latn-dev-10196", "usecase": "travel_routine", "note": "flight confirmed check in tomorrow"}
+{"id": "hi-Latn-dev-10197", "usecase": "caption_status", "note": "live caption active status"}
+{"id": "hi-Latn-dev-10198", "usecase": "call_unknown", "note": "missed call from unknown number"}
+{"id": "hi-Latn-dev-10199", "usecase": "weather_routine", "note": "tomorrow weather forecast"}
+{"id": "hi-Latn-dev-10200", "usecase": "call_spam_likely", "note": "incoming call reported as spam"}

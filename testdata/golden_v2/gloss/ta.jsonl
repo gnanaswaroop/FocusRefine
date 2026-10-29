@@ -1,0 +1,60 @@
+{"id": "ta-test-00001", "gloss_title": "Mom", "gloss_text": "Call me quick, kid! Dad's had chest pain, we're taking him to the hospital"}
+{"id": "ta-test-00002", "gloss_title": "Missed call", "gloss_text": "Anna - 4 missed calls"}
+{"id": "ta-dev-00003", "gloss_title": "Missed call", "gloss_text": "+91 9XXXXXXXXX\nUnknown number"}
+{"id": "ta-test-00004", "gloss_title": "Suspected spam call", "gloss_text": "+91 9XXXXXXXXX - 1,200 people have reported it as a 'loan offer'. Do not answer the call"}
+{"id": "ta-test-00005", "gloss_title": "Scam call warning", "gloss_text": "A call from +91 9XXXXXXXXX, which claims to be a 'bank officer'. This could be a scam"}
+{"id": "ta-dev-00006", "gloss_title": "Urgent: Your account will be blocked today", "gloss_text": "KYC is not updated. If not verified today, the account will be permanently closed. http://kyc-verify.example.invalid/x"}
+{"id": "ta-test-00007", "gloss_title": "Prize notification", "gloss_text": "🎉 Congratulations! A prize of ₹25 lakh has been won for your number. Click this link to claim http://prize-claim.example.invalid/x"}
+{"id": "ta-test-00008", "gloss_title": "Severe weather warning", "gloss_text": "Very heavy rain and strong winds are expected in your area in the next 3 hours. Stay in a safe place; avoid low-lying areas."}
+{"id": "ta-dev-00009", "gloss_title": "Earthquake warning", "gloss_text": "Earthquake detected. Drop down to the ground at once, take cover under a table, and hold on."}
+{"id": "ta-test-00010", "gloss_title": "Emergency notice - Block B", "gloss_text": "There is a smell of gas leak on the 4th floor of Block B. Nobody use the lift; come down the stairs immediately."}
+{"id": "ta-test-00011", "gloss_title": "Apartment friends - Kumar", "gloss_text": "The water tanker didn't come today either? 😅"}
+{"id": "ta-dev-00012", "gloss_title": "Family group - Chithappa", "gloss_text": "⚠️URGENT⚠️ Apparently NASA has said an earthquake will come tomorrow night! Forward to everyone immediately"}
+{"id": "ta-test-00013", "gloss_title": "Sound notification", "gloss_text": "Smoke alarm sound detected 🔥"}
+{"id": "ta-test-00014", "gloss_title": "Sound notification", "gloss_text": "Doorbell sound detected"}
+{"id": "ta-dev-00015", "gloss_title": "Your driver has arrived", "gloss_text": "Murugan (TN 09 XX 1234) is waiting at the pickup spot. Come now."}
+{"id": "ta-test-00016", "gloss_title": "Turn left in 200 m", "gloss_text": "Via Anna Salai · 4.2 km to destination · 12 minutes"}
+{"id": "ta-test-00017", "gloss_title": "Rajesh (Team Lead)", "gloss_text": "The payment service in production is down, customers are escalating. Join immediately"}
+{"id": "ta-dev-00018", "gloss_title": "Sprint Review", "gloss_text": "Starts in 5 minutes. Join now"}
+{"id": "ta-test-00019", "gloss_title": "Break over", "gloss_text": "Rest time is over. Start the next interval run! 💪"}
+{"id": "ta-test-00020", "gloss_title": "Heart rate alert", "gloss_text": "Your heart rate while at rest has been above 150 per minute for 10 minutes. Seek medical help if needed."}
+{"id": "ta-dev-00021", "gloss_title": "Subscription renewal", "gloss_text": "Your subscription will renew tomorrow. If you want to change it, go to settings and check."}
+{"id": "ta-test-00022", "gloss_title": "Payment failed", "gloss_text": "Your premium fee was not paid. Fix your payment method immediately, otherwise the service will be stopped."}
+{"id": "ta-test-00023", "gloss_title": "New songs for you", "gloss_text": "This week's favourite Tamil melody playlist is ready 🎶"}
+{"id": "ta-dev-00024", "gloss_title": "🔴 Live now! Don't miss it", "gloss_text": "Tonight at 9 PM, a new web series premieres. Watch now!"}
+{"id": "ta-test-00025", "gloss_title": "⚡ Storm offer! Only until tonight", "gloss_text": "Up to 60% discount on mobiles. Hurry, stock will run out!"}
+{"id": "ta-test-00026", "gloss_title": "Platform change", "gloss_text": "Your train will now arrive at platform 7 instead of platform 4. Departure in 20 minutes."}
+{"id": "ta-dev-00027", "gloss_title": "Back door opened", "gloss_text": "The back door was opened at 2:10 AM. A person is visible on the camera."}
+{"id": "ta-test-00028", "gloss_title": "Hospital", "gloss_text": "Your mother's surgery is over. The doctor wants to speak with you immediately; please call."}
+{"id": "ta-test-00029", "gloss_title": "Class teacher - Meena Teacher", "gloss_text": "Your son hurt his leg while playing. Come to the school right away and take him home"}
+{"id": "ta-dev-00030", "gloss_title": "Order on the way", "gloss_text": "Suresh is coming with your order. It will arrive in 10 minutes."}
+{"id": "ta-test-00031", "gloss_title": "Money received", "gloss_text": "Priya has sent you ₹450."}
+{"id": "ta-test-00032", "gloss_title": "Boss", "gloss_text": "Client call is happening right now. Reply within 10 minutes, it's important"}
+{"id": "ta-dev-00033", "gloss_title": "Flood warning", "gloss_text": "Surplus water is being released from the dam. People along the riverbank, move to a safe place immediately."}
+{"id": "ta-test-00034", "gloss_title": "Emergency alert", "gloss_text": "A child has gone missing in your area. A 7-year-old boy, blue shirt. If you see him, call 112 immediately."}
+{"id": "ta-test-00035", "gloss_title": "Kitchen smoke sensor", "gloss_text": "Smoke detected in the kitchen! The alarm is sounding."}
+{"id": "ta-dev-00036", "gloss_title": "Deadline today", "gloss_text": "'Customer report submission' must be completed by 5 PM this evening."}
+{"id": "ta-test-00037", "gloss_title": "Build failed: main", "gloss_text": "The CI pipeline failed on the main branch of the payments API. 3 tests failed."}
+{"id": "ta-test-00038", "gloss_title": "Bridge closed", "gloss_text": "The flyover on your route is closed due to an accident. The detour adds 18 minutes of delay."}
+{"id": "ta-dev-00039", "gloss_title": "Machan Vijay", "gloss_text": "Dei, are you coming to watch the match today? 😎"}
+{"id": "ta-test-00040", "gloss_title": "Mom", "gloss_text": "Buy a packet of milk and tomatoes on your way. Come soon, food is ready"}
+{"id": "ta-test-00041", "gloss_title": "Missed call", "gloss_text": "Karthik (Office) - 1 missed call"}
+{"id": "ta-dev-00042", "gloss_title": "Voicemail", "gloss_text": "+91 9XXXXXXXXX: \"Hello, I'll call back tomorrow, nothing urgent.\""}
+{"id": "ta-test-00043", "gloss_title": "Your cart is waiting 🛒", "gloss_text": "The 3 items you added will sell out soon! Buy now."}
+{"id": "ta-test-00044", "gloss_title": "Parcel information", "gloss_text": "Your parcel has been held at customs. Pay a ₹49 fee to release it: http://parcel-fee.example.invalid/x"}
+{"id": "ta-dev-00045", "gloss_title": "Emergency alert - test", "gloss_text": "This is only a test message of the emergency alert system. You do not need to do anything."}
+{"id": "ta-test-00046", "gloss_title": "How was your trip?", "gloss_text": "Rate driver Arun ⭐"}
+{"id": "ta-test-00047", "gloss_title": "Tomorrow's weather", "gloss_text": "There is a chance of light rain tomorrow evening. Maximum 31°C."}
+{"id": "ta-dev-00048", "gloss_title": "🚨 ALERT: Wicket!", "gloss_text": "India 182/4 (31 overs). Kohli out! See the live score."}
+{"id": "ta-test-00049", "gloss_title": "Instagram", "gloss_text": "Deepa and 12 others liked your photo ❤️"}
+{"id": "ta-test-00050", "gloss_title": "⚠️ Your village is under attack!", "gloss_text": "The enemy army is attacking your village. Come into the game now!"}
+{"id": "ta-dev-00051", "gloss_title": "Today's practice", "gloss_text": "Do one lesson today to keep your 14-day streak going 🦉"}
+{"id": "ta-test-00052", "gloss_title": "Battery low", "gloss_text": "Battery is only 15%. You can turn on battery saver mode."}
+{"id": "ta-test-00053", "gloss_title": "Data finished", "gloss_text": "Today's 1.5 GB of data is used up. Tap here to buy an extra data pack."}
+{"id": "ta-dev-00054", "gloss_title": "Class 8-B notice", "gloss_text": "Parent-teacher meeting next Friday. Please confirm attendance."}
+{"id": "ta-test-00055", "gloss_title": "City Lab", "gloss_text": "Your blood test report is ready. You can download it on the website."}
+{"id": "ta-test-00056", "gloss_title": "Time to drink water", "gloss_text": "You have drunk only 3 glasses so far today. Shall we drink some water? 💧"}
+{"id": "ta-dev-00057", "gloss_title": "Visitor at the door", "gloss_text": "A Zomato delivery person is waiting at the door for your home. Allow?"}
+{"id": "ta-test-00058", "gloss_title": "Motion at front door", "gloss_text": "Motion was detected on the front door camera at 1:15 PM."}
+{"id": "ta-test-00059", "gloss_title": "Weekly newsletter", "gloss_text": "This week's top 5 tech articles for you"}
+{"id": "ta-dev-00060", "gloss_title": "#team-chennai - Prakash", "gloss_text": "@channel I've posted tomorrow's stand-up notes, take a look when you get time. Not urgent"}

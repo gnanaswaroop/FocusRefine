@@ -1,0 +1,253 @@
+{"id": "te-test-10000", "usecase": "home_alarm_critical", "note": "smoke detector alarm in kitchen"}
+{"id": "te-test-10001", "usecase": "system_routine", "note": "cloud backup completed"}
+{"id": "te-test-10002", "usecase": "health_routine", "note": "daily medicine reminder"}
+{"id": "te-test-10003", "usecase": "payment_routine", "note": "electricity bill due tomorrow"}
+{"id": "te-test-10004", "usecase": "ride_arriving", "note": "driver arrived at pickup"}
+{"id": "te-test-10005", "usecase": "promo_sale", "note": "limited time discount offer"}
+{"id": "te-test-10006", "usecase": "scam_fake_delivery", "note": "fake parcel delivery scam"}
+{"id": "te-test-10007", "usecase": "community_safety_notice", "note": "gas leak in building"}
+{"id": "te-test-10008", "usecase": "visitor_gate", "note": "visitor approval at gate"}
+{"id": "te-test-10009", "usecase": "school_info", "note": "parent teacher meeting next week"}
+{"id": "te-test-10010", "usecase": "voicemail_routine", "note": "non urgent voicemail about evening plans"}
+{"id": "te-test-10011", "usecase": "sound_alert_routine", "note": "doorbell sound detected"}
+{"id": "te-test-10012", "usecase": "social_activity", "note": "friend commented on photo"}
+{"id": "te-test-10013", "usecase": "ride_other", "note": "rate driver and trip summary"}
+{"id": "te-test-10014", "usecase": "medical_urgent", "note": "abnormal lab results urgent consultation"}
+{"id": "te-test-10015", "usecase": "weather_severe", "note": "severe heatwave warning over 45C"}
+{"id": "te-test-10016", "usecase": "weather_severe", "note": "flash flood warning low lying areas"}
+{"id": "te-test-10017", "usecase": "sound_alert_critical", "note": "fire alarm siren detected"}
+{"id": "te-test-10018", "usecase": "delivery_update", "note": "smartwatch out for delivery"}
+{"id": "te-test-10019", "usecase": "road_closure", "note": "road closed due to flyover repairs"}
+{"id": "te-test-10020", "usecase": "home_security", "note": "suspicious motion detected at night"}
+{"id": "te-test-10021", "usecase": "build_failure", "note": "CI pipeline failed on main"}
+{"id": "te-test-10022", "usecase": "public_safety_alert", "note": "chemical gas leak shelter in place"}
+{"id": "te-test-10023", "usecase": "rec_music", "note": "recommended music playlist"}
+{"id": "te-test-10024", "usecase": "build_failure", "note": "CI build failure with rollback"}
+{"id": "te-test-10025", "usecase": "rec_music", "note": "weekly mix playlist recommendation"}
+{"id": "te-test-10026", "usecase": "group_event_info", "note": "community cleanup drive event notice"}
+{"id": "te-test-10027", "usecase": "community_safety_notice", "note": "apartment gas leak evacuation notice"}
+{"id": "te-test-10028", "usecase": "chat_casual", "note": "casual hangout plan and voice note"}
+{"id": "te-test-10029", "usecase": "tsunami_flood_wildfire", "note": "dam release flood evacuation order"}
+{"id": "te-test-10030", "usecase": "scam_phishing", "note": "Suspicious login phishing alert"}
+{"id": "te-test-10031", "usecase": "sub_renewal", "note": "Free trial ending tomorrow"}
+{"id": "te-test-10032", "usecase": "home_alarm_critical", "note": "Kitchen smoke detector alarm triggered"}
+{"id": "te-test-10033", "usecase": "call_unknown", "note": "Missed call from unknown number"}
+{"id": "te-test-10034", "usecase": "call_scam", "note": "Fake bank courier scam message"}
+{"id": "te-test-10035", "usecase": "home_security", "note": "Person detected by camera at night"}
+{"id": "te-test-10036", "usecase": "health_routine", "note": "Daily medication reminder"}
+{"id": "te-test-10037", "usecase": "sub_billing_issue", "note": "Subscription payment failed"}
+{"id": "te-test-10038", "usecase": "voicemail_routine", "note": "Non-urgent casual voicemail"}
+{"id": "te-test-10039", "usecase": "home_security", "note": "Intrusion alarm triggered while away"}
+{"id": "te-test-10040", "usecase": "scam_prize_loan", "note": "fake instant loan offer"}
+{"id": "te-test-10041", "usecase": "medical_routine", "note": "blood test lab report ready"}
+{"id": "te-test-10042", "usecase": "ride_other", "note": "ride receipt and driver rating prompt"}
+{"id": "te-test-10043", "usecase": "chat_casual", "note": "greeting and funny video from contact"}
+{"id": "te-test-10044", "usecase": "navigation_prompt", "note": "traffic reroute turn instruction"}
+{"id": "te-test-10045", "usecase": "group_event_info", "note": "society meeting announcement"}
+{"id": "te-test-10046", "usecase": "chat_family_routine", "note": "reached home and errand request"}
+{"id": "te-test-10047", "usecase": "delivery_update", "note": "food out for delivery status"}
+{"id": "te-test-10048", "usecase": "visitor_gate", "note": "gate entry approval for delivery"}
+{"id": "te-test-10049", "usecase": "promo_sale", "note": "discount coupon ends midnight"}
+{"id": "te-test-10050", "usecase": "school_info", "note": "school holiday and exam notice"}
+{"id": "te-test-10051", "usecase": "email_routine", "note": "weekly tech digest newsletter"}
+{"id": "te-test-10052", "usecase": "home_routine", "note": "daytime motion detection at door"}
+{"id": "te-test-10053", "usecase": "investment_alert", "note": "market closing summary"}
+{"id": "te-test-10054", "usecase": "chat_family_routine", "note": "reached home and dinner plans"}
+{"id": "te-test-10055", "usecase": "earthquake_alert", "note": "severe earthquake warning take shelter"}
+{"id": "te-test-10056", "usecase": "visitor_gate", "note": "delivery person waiting at gate"}
+{"id": "te-test-10057", "usecase": "home_routine", "note": "air purifier firmware update"}
+{"id": "te-test-10058", "usecase": "travel_urgent", "note": "flight boarding gate closing soon"}
+{"id": "te-test-10059", "usecase": "visitor_gate", "note": "plumber entry approval at gate"}
+{"id": "te-test-10060", "usecase": "group_event_info", "note": "Apartment society meeting notice"}
+{"id": "te-test-10061", "usecase": "sound_alert_critical", "note": "Fire alarm sound detected"}
+{"id": "te-test-10062", "usecase": "payment_routine", "note": "Electricity bill payment reminder"}
+{"id": "te-test-10063", "usecase": "marketing_push", "note": "Cart abandonment re-engagement push"}
+{"id": "te-test-10064", "usecase": "marketing_push", "note": "Inactive user profile completion push"}
+{"id": "te-test-10065", "usecase": "work_incident", "note": "Production outage requiring immediate call"}
+{"id": "te-test-10066", "usecase": "work_tool_routine", "note": "Routine task assignment notification"}
+{"id": "te-test-10067", "usecase": "navigation_prompt", "note": "Turn-by-turn navigation approaching destination"}
+{"id": "te-test-10068", "usecase": "travel_urgent", "note": "Cancelled airport ride booking disruption"}
+{"id": "te-test-10069", "usecase": "workout_prompt", "note": "Step goal reached notification"}
+{"id": "te-test-10070", "usecase": "sound_alert_routine", "note": "doorbell sound detected"}
+{"id": "te-test-10071", "usecase": "system_routine", "note": "data backup completed"}
+{"id": "te-test-10072", "usecase": "weather_severe", "note": "severe storm and heavy rain warning"}
+{"id": "te-test-10073", "usecase": "medical_urgent", "note": "hospital emergency regarding family member"}
+{"id": "te-test-10074", "usecase": "chat_family_routine", "note": "family member reached home routine chat"}
+{"id": "te-test-10075", "usecase": "workout_prompt", "note": "daily step goal completed"}
+{"id": "te-test-10076", "usecase": "sound_alert_critical", "note": "smoke or fire alarm detected"}
+{"id": "te-test-10077", "usecase": "ride_other", "note": "weekly travel summary from ride app"}
+{"id": "te-test-10078", "usecase": "call_missed_contact", "note": "missed call from contact"}
+{"id": "te-test-10079", "usecase": "road_closure", "note": "bridge closed traffic detour alert"}
+{"id": "te-test-10080", "usecase": "sports_update", "note": "Live cricket score update"}
+{"id": "te-test-10081", "usecase": "travel_urgent", "note": "Cancelled airport cab ride"}
+{"id": "te-test-10082", "usecase": "meeting_soon", "note": "Meeting starts in 10 minutes"}
+{"id": "te-test-10083", "usecase": "travel_routine", "note": "Hotel booking confirmation"}
+{"id": "te-test-10084", "usecase": "group_forward", "note": "Morning chain message forward"}
+{"id": "te-test-10085", "usecase": "call_missed_family", "note": "Missed calls from mother"}
+{"id": "te-test-10086", "usecase": "home_alarm_critical", "note": "Kitchen flood sensor water leak"}
+{"id": "te-test-10087", "usecase": "group_event_info", "note": "Apartment maintenance meeting notice"}
+{"id": "te-test-10088", "usecase": "home_alarm_critical", "note": "Smoke detector alarm in home"}
+{"id": "te-test-10089", "usecase": "medical_routine", "note": "Doctor appointment reminder"}
+{"id": "te-test-10090", "usecase": "community_safety_notice", "note": "apartment gas leak evacuation notice"}
+{"id": "te-test-10091", "usecase": "chat_casual", "note": "friend planning weekend cricket game"}
+{"id": "te-test-10092", "usecase": "ride_other", "note": "rate driver after completed ride"}
+{"id": "te-test-10093", "usecase": "public_safety_alert", "note": "chemical gas leak shelter in place"}
+{"id": "te-test-10094", "usecase": "rec_video", "note": "new episode streaming announcement"}
+{"id": "te-test-10095", "usecase": "ride_arriving", "note": "driver arriving in 3 minutes"}
+{"id": "te-test-10096", "usecase": "sub_renewal", "note": "free trial ending tomorrow renewal reminder"}
+{"id": "te-test-10097", "usecase": "news_breaking_general", "note": "state budget session news"}
+{"id": "te-test-10098", "usecase": "game_notice", "note": "daily login reward and diamonds"}
+{"id": "te-test-10099", "usecase": "marketing_push", "note": "re-engagement push to save office location"}
+{"id": "te-test-10100", "usecase": "weather_severe", "note": "severe storm warning for area"}
+{"id": "te-test-10101", "usecase": "telecom_gov_routine", "note": "data quota usage alert"}
+{"id": "te-test-10102", "usecase": "health_routine", "note": "water intake reminder"}
+{"id": "te-test-10103", "usecase": "social_activity", "note": "comment on social post"}
+{"id": "te-test-10104", "usecase": "ride_other", "note": "rate completed cab ride"}
+{"id": "te-test-10105", "usecase": "system_routine", "note": "app microphone permission reminder"}
+{"id": "te-test-10106", "usecase": "voicemail_routine", "note": "non urgent voicemail transcript"}
+{"id": "te-test-10107", "usecase": "home_alarm_critical", "note": "smart home smoke alarm detected"}
+{"id": "te-test-10108", "usecase": "call_spam_likely", "note": "suspected telemarketing spam call"}
+{"id": "te-test-10109", "usecase": "tsunami_flood_wildfire", "note": "flood emergency evacuation alert"}
+{"id": "te-test-10110", "usecase": "workout_prompt", "note": "step goal completed today"}
+{"id": "te-test-10111", "usecase": "health_critical", "note": "high resting heart rate alert"}
+{"id": "te-test-10112", "usecase": "group_chatter", "note": "apartment group chat cricket discussion"}
+{"id": "te-test-10113", "usecase": "home_alarm_critical", "note": "washroom flood sensor detected water"}
+{"id": "te-test-10114", "usecase": "ride_other", "note": "weekly ride summary and bookmark tip"}
+{"id": "te-test-10115", "usecase": "deadline", "note": "math assignment due today by evening"}
+{"id": "te-test-10116", "usecase": "visitor_gate", "note": "delivery person entry approval request"}
+{"id": "te-test-10117", "usecase": "call_scam", "note": "blocked fake courier scam call"}
+{"id": "te-test-10118", "usecase": "earthquake_alert", "note": "earthquake alert take cover instructions"}
+{"id": "te-test-10119", "usecase": "community_safety_notice", "note": "building gas leak evacuation alert"}
+{"id": "te-test-10120", "usecase": "health_critical", "note": "fall detected emergency alert"}
+{"id": "te-test-10121", "usecase": "home_routine", "note": "routine automation completed successfully"}
+{"id": "te-test-10122", "usecase": "community_safety_notice", "note": "snapped electric wire hazard in colony"}
+{"id": "te-test-10123", "usecase": "promo_sale", "note": "flash coupon deal ends tonight"}
+{"id": "te-test-10124", "usecase": "travel_routine", "note": "hotel booking confirmed"}
+{"id": "te-test-10125", "usecase": "promo_sale", "note": "restaurant cashback offer tonight only"}
+{"id": "te-test-10126", "usecase": "caption_status", "note": "live caption status notification"}
+{"id": "te-test-10127", "usecase": "group_forward", "note": "good morning chain forward message"}
+{"id": "te-test-10128", "usecase": "game_notice", "note": "game reward and squad invitation"}
+{"id": "te-test-10129", "usecase": "promo_sale", "note": "bill payment cashback deal"}
+{"id": "te-test-10130", "usecase": "chat_family_routine", "note": "Mom errand request for groceries"}
+{"id": "te-test-10131", "usecase": "investment_alert", "note": "Market close and portfolio summary"}
+{"id": "te-test-10132", "usecase": "community_safety_notice", "note": "Community safety advisory for rain"}
+{"id": "te-test-10133", "usecase": "group_forward", "note": "Good morning quote forward in group"}
+{"id": "te-test-10134", "usecase": "family_distress", "note": "Father chest pain hospital emergency"}
+{"id": "te-test-10135", "usecase": "marketing_push", "note": "Cart abandonment push notification"}
+{"id": "te-test-10136", "usecase": "earthquake_alert", "note": "Severe earthquake alert and safety steps"}
+{"id": "te-test-10137", "usecase": "call_missed_family", "note": "Missed calls from sister to call"}
+{"id": "te-test-10138", "usecase": "marketing_push", "note": "Complete profile re-engagement push"}
+{"id": "te-test-10139", "usecase": "game_notice", "note": "New rank season and login reward"}
+{"id": "te-test-10140", "usecase": "investment_alert", "note": "Stock price trigger crossed alert"}
+{"id": "te-test-10141", "usecase": "group_event_info", "note": "Apartment society meeting notice"}
+{"id": "te-test-10142", "usecase": "call_spam_likely", "note": "Reported telemarketing spam call"}
+{"id": "te-test-10143", "usecase": "scam_phishing", "note": "Fake bank account suspension phishing"}
+{"id": "te-test-10144", "usecase": "voicemail_routine", "note": "Routine water purifier service voicemail"}
+{"id": "te-test-10145", "usecase": "family_distress", "note": "Mother injured in accident hospital emergency"}
+{"id": "te-test-10146", "usecase": "scam_fake_delivery", "note": "Fake courier illegal parcel scam"}
+{"id": "te-test-10147", "usecase": "caption_status", "note": "Live transcribe language pack ready"}
+{"id": "te-test-10148", "usecase": "telecom_gov_routine", "note": "Daily data limit warning"}
+{"id": "te-test-10149", "usecase": "system_routine", "note": "Low storage space notification"}
+{"id": "te-test-10150", "usecase": "travel_routine", "note": "bus ticket confirmed for tomorrow"}
+{"id": "te-test-10151", "usecase": "call_spam_likely", "note": "suspected telemarketing spam call"}
+{"id": "te-test-10152", "usecase": "rec_music", "note": "personalized weekly playlist recommendation"}
+{"id": "te-test-10153", "usecase": "weather_routine", "note": "tomorrow rain forecast"}
+{"id": "te-test-10154", "usecase": "learning_notice", "note": "learning app assignment deadline"}
+{"id": "te-test-10155", "usecase": "health_routine", "note": "routine medicine reminder"}
+{"id": "te-test-10156", "usecase": "sound_alert_critical", "note": "smoke alarm sound detected"}
+{"id": "te-test-10157", "usecase": "voicemail_routine", "note": "non-urgent voicemail transcript"}
+{"id": "te-test-10158", "usecase": "civic_advisory", "note": "air quality civic advisory"}
+{"id": "te-test-10159", "usecase": "game_notice", "note": "game daily reward notice"}
+{"id": "te-test-10160", "usecase": "work_tool_routine", "note": "Task assigned in project management tool"}
+{"id": "te-test-10161", "usecase": "earthquake_alert", "note": "Earthquake detected drop cover hold on"}
+{"id": "te-test-10162", "usecase": "caption_status", "note": "Live Transcribe active status"}
+{"id": "te-test-10163", "usecase": "build_failure", "note": "CI build and deploy pipeline failed"}
+{"id": "te-test-10164", "usecase": "caption_status", "note": "Language pack downloaded for captions"}
+{"id": "te-test-10165", "usecase": "health_routine", "note": "Daily step reminder and stand nudge"}
+{"id": "te-test-10166", "usecase": "chat_casual", "note": "Friend plans to meet tomorrow evening"}
+{"id": "te-test-10167", "usecase": "rec_music", "note": "New music release from favorite artist"}
+{"id": "te-test-10168", "usecase": "visitor_gate", "note": "Delivery executive at gate entry approval"}
+{"id": "te-test-10169", "usecase": "group_event_info", "note": "Apartment society annual meeting notice"}
+{"id": "te-dev-10170", "usecase": "weather_severe", "note": "Severe cyclone warning for area"}
+{"id": "te-dev-10171", "usecase": "scam_phishing", "note": "Phishing link for fake bank KYC"}
+{"id": "te-dev-10172", "usecase": "game_notice", "note": "Daily game login reward notice"}
+{"id": "te-dev-10174", "usecase": "sub_renewal", "note": "Subscription renewal reminder ending tomorrow"}
+{"id": "te-dev-10175", "usecase": "ride_other", "note": "Weekly trip summary from cab service"}
+{"id": "te-dev-10176", "usecase": "workout_prompt", "note": "Daily step count goal reached"}
+{"id": "te-dev-10177", "usecase": "system_routine", "note": "Low device storage warning"}
+{"id": "te-dev-10178", "usecase": "deadline", "note": "Assignment deadline due tonight"}
+{"id": "te-dev-10179", "usecase": "sound_alert_critical", "note": "Fire alarm sound detected alert"}
+{"id": "te-dev-10180", "usecase": "call_spam_likely", "note": "Suspected telemarketing spam call"}
+{"id": "te-dev-10181", "usecase": "group_event_info", "note": "apartment clubhouse event announcement"}
+{"id": "te-dev-10182", "usecase": "school_urgent", "note": "child sick at school pickup immediately"}
+{"id": "te-dev-10183", "usecase": "game_notice", "note": "new game season started"}
+{"id": "te-dev-10184", "usecase": "meeting_soon", "note": "meeting starting in five minutes"}
+{"id": "te-dev-10185", "usecase": "navigation_prompt", "note": "turn by turn navigation prompt"}
+{"id": "te-dev-10186", "usecase": "sub_renewal", "note": "free trial ends tomorrow"}
+{"id": "te-dev-10187", "usecase": "call_missed_contact", "note": "missed call from a contact"}
+{"id": "te-dev-10188", "usecase": "group_forward", "note": "good morning chain message forward"}
+{"id": "te-dev-10189", "usecase": "public_safety_alert", "note": "public safety gas leak alert"}
+{"id": "te-dev-10190", "usecase": "scam_phishing", "note": "phishing fake account security alert"}
+{"id": "te-dev-10192", "usecase": "email_routine", "note": "weekly tech newsletter"}
+{"id": "te-dev-10193", "usecase": "email_routine", "note": "order receipt and invoice"}
+{"id": "te-dev-10194", "usecase": "community_safety_notice", "note": "building water leak and power cut"}
+{"id": "te-dev-10195", "usecase": "scam_prize_loan", "note": "instant loan offer scam"}
+{"id": "te-dev-10196", "usecase": "sports_update", "note": "live cricket match score"}
+{"id": "te-dev-10197", "usecase": "sound_alert_critical", "note": "smoke alarm sound detected"}
+{"id": "te-dev-10198", "usecase": "voicemail_routine", "note": "non-urgent voicemail transcript"}
+{"id": "te-dev-10199", "usecase": "sound_alert_routine", "note": "doorbell sound detected"}
+{"id": "te-dev-10200", "usecase": "travel_routine", "note": "hotel booking confirmed"}
+{"id": "te-dev-10201", "usecase": "chat_family_routine", "note": "reached home and dinner plans"}
+{"id": "te-dev-10202", "usecase": "home_security", "note": "Motion detected at night by camera"}
+{"id": "te-dev-10203", "usecase": "ride_other", "note": "Ride completed and rating request"}
+{"id": "te-dev-10204", "usecase": "travel_urgent", "note": "Train platform change notification"}
+{"id": "te-dev-10205", "usecase": "vip_ping", "note": "Project lead urgent meeting request"}
+{"id": "te-dev-10206", "usecase": "scam_prize_loan", "note": "Fake part-time job offer scam"}
+{"id": "te-dev-10207", "usecase": "chat_casual", "note": "Friend making movie plans"}
+{"id": "te-dev-10208", "usecase": "ride_arriving", "note": "Cab arrived at pickup point"}
+{"id": "te-dev-10209", "usecase": "ride_other", "note": "Weekend discount promotional ride offer"}
+{"id": "te-dev-10210", "usecase": "scam_prize_loan", "note": "Fake daily trading investment scam"}
+{"id": "te-dev-10211", "usecase": "work_incident", "note": "Production database outage on-call page"}
+{"id": "te-dev-10212", "usecase": "rec_music", "note": "Weekly Telugu music playlist recommendation"}
+{"id": "te-dev-10213", "usecase": "ride_other", "note": "Ride referral reward bonus offer"}
+{"id": "te-dev-10214", "usecase": "call_spam_likely", "note": "Suspected spam telemarketer caller alert"}
+{"id": "te-dev-10215", "usecase": "school_info", "note": "Parent-teacher meeting announcement"}
+{"id": "te-dev-10216", "usecase": "scam_fake_delivery", "note": "Fake parcel delivery held scam"}
+{"id": "te-dev-10217", "usecase": "home_alarm_critical", "note": "Kitchen water leak sensor alert"}
+{"id": "te-dev-10218", "usecase": "call_missed_contact", "note": "Missed call from known contact"}
+{"id": "te-dev-10219", "usecase": "workout_prompt", "note": "Daily walking step goal reached"}
+{"id": "te-dev-10220", "usecase": "group_event_info", "note": "Apartment festival collection meeting"}
+{"id": "te-dev-10221", "usecase": "road_closure", "note": "Road closed due to construction work"}
+{"id": "te-dev-10222", "usecase": "family_distress", "note": "Family medical emergency ICU admission"}
+{"id": "te-dev-10223", "usecase": "medical_routine", "note": "Lab blood test report ready"}
+{"id": "te-dev-10224", "usecase": "investment_alert", "note": "Stock target price alert"}
+{"id": "te-dev-10225", "usecase": "sound_alert_routine", "note": "Baby crying sound detected"}
+{"id": "te-dev-10226", "usecase": "promo_sale", "note": "Subscription sale ending tonight"}
+{"id": "te-dev-10227", "usecase": "call_spam_likely", "note": "Caller ID spam report warning"}
+{"id": "te-dev-10228", "usecase": "group_event_info", "note": "Community park cleanup drive announcement"}
+{"id": "te-dev-10229", "usecase": "investment_alert", "note": "Market close portfolio value update"}
+{"id": "te-dev-10230", "usecase": "earthquake_alert", "note": "Earthquake shaking alert shelter instruction"}
+{"id": "te-dev-10231", "usecase": "travel_routine", "note": "Flight web check-in open"}
+{"id": "te-dev-10232", "usecase": "investment_alert", "note": "market opening update"}
+{"id": "te-dev-10233", "usecase": "group_chatter", "note": "apartment group tea discussion"}
+{"id": "te-dev-10234", "usecase": "tsunami_flood_wildfire", "note": "dam release flood evacuation alert"}
+{"id": "te-dev-10235", "usecase": "call_spam_likely", "note": "telemarketing spam call warning"}
+{"id": "te-dev-10236", "usecase": "navigation_prompt", "note": "turn by turn driving navigation"}
+{"id": "te-dev-10237", "usecase": "sub_renewal", "note": "subscription expiring tomorrow"}
+{"id": "te-dev-10238", "usecase": "public_safety_alert", "note": "chlorine gas leak shelter alert"}
+{"id": "te-dev-10239", "usecase": "road_closure", "note": "road closed due to repairs"}
+{"id": "te-dev-10240", "usecase": "work_incident", "note": "production database crash outage"}
+{"id": "te-dev-10241", "usecase": "system_routine", "note": "device storage low notice"}
+{"id": "te-dev-10242", "usecase": "work_tool_routine", "note": "Document shared on Dropbox"}
+{"id": "te-dev-10243", "usecase": "group_event_info", "note": "Apartment maintenance fee notice"}
+{"id": "te-dev-10244", "usecase": "home_security", "note": "Intrusion alarm balcony door opened"}
+{"id": "te-dev-10245", "usecase": "ride_other", "note": "Rate driver after ride completion"}
+{"id": "te-dev-10246", "usecase": "learning_notice", "note": "Learning streak reminder"}
+{"id": "te-dev-10247", "usecase": "home_alarm_critical", "note": "Kitchen smoke alarm triggered"}
+{"id": "te-dev-10248", "usecase": "road_closure", "note": "Road closure alert on route"}
+{"id": "te-dev-10249", "usecase": "deadline", "note": "Project submission deadline today"}
+{"id": "te-dev-10250", "usecase": "email_routine", "note": "Weekly newsletter email"}
+{"id": "te-dev-10251", "usecase": "system_routine", "note": "Battery optimization permission reminder"}
+{"id": "te-dev-10252", "usecase": "community_safety_notice", "note": "gas leak evacuation in building"}
+{"id": "te-dev-10253", "usecase": "civic_advisory", "note": "scheduled power cut notice"}
+{"id": "te-dev-10254", "usecase": "telecom_gov_routine", "note": "government income certificate ready"}
