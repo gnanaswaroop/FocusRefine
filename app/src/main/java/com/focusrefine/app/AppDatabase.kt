@@ -31,9 +31,6 @@ abstract class AppDatabase : RoomDatabase() {
             return INSTANCE ?: synchronized(this) {
                 val passphrase = getOrGenerateDbKey(context)
 
-                // Migrate from plaintext to SQLCipher if upgrading, with UI fallback on failure
-                DatabaseMigratorHelper.migrateWithFallback(context, "focusrefine_database", passphrase)
-
                 // SQLCipher 4.6+ leaves loading its native library to the app (UnsatisfiedLinkError otherwise).
                 System.loadLibrary("sqlcipher")
                 LegacyDatabase.keepIfUnreadable(context.applicationContext, "focusrefine_database", passphrase)
