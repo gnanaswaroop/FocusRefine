@@ -5,15 +5,11 @@ What to enter in the Play Console, checked against the code on 2026-10-31 (`vers
 ## Release notes for 1.1.3 ("What's new" in the Play Console)
 
 **New**
-- Your notification history and learned rules are encrypted on the phone. The key is kept in the Android keystore and never leaves the device. Existing history is encrypted in place on first launch and stays visible.
-
-Generated from `app/src/main/assets/changelog.json` (the same text the app shows). Keep the two in step: update the changelog first, then paste it here.
+- Notification history and learned rules are encrypted on the phone. Existing history is kept.
 
 **Changed**
-- The urgency check now uses FocusRefine's own multilingual model, trained on synthetic notifications in 18 languages. It runs on the phone and never leaves it.
-- The model uses the app a notification came from (for example WhatsApp or Calendar) when it knows it. Apps it does not know are judged on the text alone.
-- The "On Device AI" label is gone from the Home header, so the header is less cluttered.
- Items marked **BLOCKER** must be done before the first upload is published.
+- The urgency check uses FocusRefine's own on-device model, trained on synthetic notifications in 18 languages.
+- The "On Device AI" label is gone from the Home header.
 
 ## 1. Blockers before publishing
 
