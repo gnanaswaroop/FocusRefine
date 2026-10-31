@@ -4,6 +4,9 @@ What to enter in the Play Console, checked against the code on 2026-10-31 (`vers
 
 ## Release notes for 1.1.3 ("What's new" in the Play Console)
 
+**New**
+- Your notification history and learned rules are encrypted on the phone. The key is kept in the Android keystore and never leaves the device. Existing history is encrypted in place on first launch and stays visible.
+
 Generated from `app/src/main/assets/changelog.json` (the same text the app shows). Keep the two in step: update the changelog first, then paste it here.
 
 **Changed**
