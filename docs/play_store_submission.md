@@ -63,3 +63,5 @@ The app declares no `INTERNET` or network state permission. `PrivacyGuardsTest` 
 - [ ] `ChangelogTest` passes (newest changelog entry equals `versionName`)
 - [ ] `PrivacyGuardsTest` passes (no INTERNET or network state in the merged manifest)
 - [ ] `docs/` and the in-app Privacy Policy and Terms text still match the behaviour
+- [ ] Price is set to **Free**, and the store listing says the app is free of charge with no ads or in-app purchases (the in-app Terms say so too)
+- [ ] The store listing carries the warranty and liability disclaimer from the in-app Terms of Use, and the MIT licence for the source

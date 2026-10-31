@@ -43,3 +43,7 @@ FocusRefine consists of two primary screens designed with a **dark-mode first** 
 ## Testing & Evaluation
 
 Labeled golden and holdout notification datasets live in `testdata/golden/` (see `testdata/README.md`). `scripts/replay_golden.py` posts them from the adb shell through the real service and checks the Shown/Muted decisions in the app database, and the instrumented test `HistoryReclassifierTest` in `app/src/androidTest/` covers history re-classification. Details, results and caveats are in [`docs/internals.md`](docs/internals.md#3-testing--evaluation).
+
+## License
+
+FocusRefine is free software released under the [MIT License](LICENSE). It is free of charge, with no subscriptions, purchases or advertising. It is provided "as is", without warranty of any kind, and its authors are not liable for any claim or damage arising from its use. The in-app Terms of Use say the same.
