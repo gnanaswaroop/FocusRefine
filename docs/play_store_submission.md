@@ -1,6 +1,17 @@
 # FocusRefine: Google Play submission
 
-What to enter in the Play Console, checked against the code on 2026-10-21 (`versionName` 1.1, `versionCode` 2). Items marked **BLOCKER** must be done before the first upload is published.
+What to enter in the Play Console, checked against the code on 2026-10-31 (`versionName` 1.1.3, `versionCode` 5).
+
+## Release notes for 1.1.3 ("What's new" in the Play Console)
+
+Generated from `app/src/main/assets/changelog.json` (the same text the app shows). Keep the two in step: update the changelog first, then paste it here.
+
+**Changed**
+- The urgency check now uses FocusRefine's own multilingual model, trained on synthetic notifications in 18 languages. It runs on the phone and never leaves it.
+- The model uses the app a notification came from (for example WhatsApp or Calendar) when it knows it. Apps it does not know are judged on the text alone.
+- Earlier notification history cannot be read by this version yet. It is kept on the phone and not shown, and a notice explains this. Migration is planned.
+- The "On Device AI" label is gone from the Home header, so the header is less cluttered.
+ Items marked **BLOCKER** must be done before the first upload is published.
 
 ## 1. Blockers before publishing
 
