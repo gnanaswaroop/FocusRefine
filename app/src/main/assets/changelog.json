@@ -6,11 +6,16 @@
       "title": "A new on-device model",
       "sections": [
         {
+          "heading": "New",
+          "items": [
+            "Your notification history and learned rules are encrypted on the phone. The key is kept in the Android keystore and never leaves the device. Existing history is encrypted in place on first launch and stays visible."
+          ]
+        },
+        {
           "heading": "Changed",
           "items": [
             "The urgency check now uses FocusRefine's own multilingual model, trained on synthetic notifications in 18 languages. It runs on the phone and never leaves it.",
             "The model uses the app a notification came from (for example WhatsApp or Calendar) when it knows it. Apps it does not know are judged on the text alone.",
-            "Earlier notification history cannot be read by this version yet. It is kept on the phone and not shown, and a notice explains this. Migration is planned.",
             "The \"On Device AI\" label is gone from the Home header, so the header is less cluttered."
           ]
         }
