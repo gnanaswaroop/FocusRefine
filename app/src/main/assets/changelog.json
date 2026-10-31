@@ -14,8 +14,7 @@
         {
           "heading": "Changed",
           "items": [
-            "The urgency check uses FocusRefine's own on-device model, trained on synthetic notifications in 18 languages.",
-            "The \"On Device AI\" label is gone from the Home header."
+            "The urgency check uses FocusRefine's own on-device model, trained on synthetic notifications in 18 languages."
           ]
         }
       ]

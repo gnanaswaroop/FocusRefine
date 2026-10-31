@@ -9,7 +9,6 @@ What to enter in the Play Console, checked against the code on 2026-10-31 (`vers
 
 **Changed**
 - The urgency check uses FocusRefine's own on-device model, trained on synthetic notifications in 18 languages.
-- The "On Device AI" label is gone from the Home header.
 
 ## 1. Blockers before publishing
 
