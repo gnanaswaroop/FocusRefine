@@ -9,8 +9,14 @@
     <!-- Android 16 Live Updates: lets the focus-session countdown show as a status bar chip. Normal permission, no data access. -->
     <uses-permission android:name="android.permission.POST_PROMOTED_NOTIFICATIONS" />
 
-    <!-- Privacy guarantee: the app has no network access. MediaPipe's tasks-core pulls in Google's
-         datatransport library, which declares these; strip them so the OS blocks every socket. -->
+    <!--
+        No network access, by design. The two lines below do NOT grant INTERNET or ACCESS_NETWORK_STATE; they block them.
+        A library's manifest can declare these permissions, and the manifest merger would then add them to the app without
+        anyone choosing it. tools:node="remove" tells the merger to drop them from the final manifest, so the app never
+        requests them, whichever dependency adds them now or in the future. PrivacyGuardsTest fails the build if either
+        permission is requested, and checks that a socket cannot connect. Do not remove these lines to "fix" a build error:
+        find the library that adds the permission and replace or configure it instead.
+    -->
     <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" tools:node="remove" />
 

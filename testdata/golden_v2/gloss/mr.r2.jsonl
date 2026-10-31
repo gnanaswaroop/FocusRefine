@@ -1,0 +1,93 @@
+{"id": "mr-test-01000", "gloss_title": "Missed call", "gloss_text": "A call came from +91 9XXXXXXXXX or an unknown number."}
+{"id": "mr-test-01001", "gloss_title": "Unknown number", "gloss_text": "You got two calls from an unknown number, at 6:40 pm in the evening."}
+{"id": "mr-dev-01002", "gloss_title": "Missed video call on Meet", "gloss_text": "A video call came from an account that is not recognised."}
+{"id": "mr-test-01003", "gloss_title": "Incoming call", "gloss_text": "+91 8XXXXXXXXX | No name found. Pick up or not?"}
+{"id": "mr-test-01004", "gloss_title": "Missed call", "gloss_text": "A call came from an unknown landline number with the 020 code. +91 20XXXXXXXX"}
+{"id": "mr-dev-01005", "gloss_title": "Unknown caller - urgent?", "gloss_text": "+91 7XXXXXXXXX called three times at 10 pm, but there is no name or identity."}
+{"id": "mr-test-01006", "gloss_title": "Call from new number", "gloss_text": "A Meet call came from a number that is not in your contacts."}
+{"id": "mr-test-01007", "gloss_title": "Hidden number", "gloss_text": "A call from a hidden number was missed. Time: 1:15 pm."}
+{"id": "mr-dev-01008", "gloss_title": "Truecaller - unknown caller", "gloss_text": "A call came from an unknown number in Pune. You can call back. +91 9XXXXXXXXX"}
+{"id": "mr-test-01009", "gloss_title": "Missed call", "gloss_text": "A call came from an unknown number and was cut off immediately. 📞"}
+{"id": "mr-test-01010", "gloss_title": "Unrecognised caller", "gloss_text": "A call came once this morning from +91 9XXXXXXXXX."}
+{"id": "mr-dev-01011", "gloss_title": "Incoming video call", "gloss_text": "An unknown person is calling you on Meet."}
+{"id": "mr-test-01012", "gloss_title": "Missed call", "gloss_text": "A call came from +91 9XXXXXXXXX. This number is not saved in your contacts."}
+{"id": "mr-test-01013", "gloss_title": "Unknown caller", "gloss_text": "A call from an unknown number in Nashik was missed; it had a voice note saying 'I want to meet you'."}
+{"id": "mr-test-01014", "gloss_title": "Suspected spam call", "gloss_text": "+91 9XXXXXXXXX - 1,200 people have reported it as spam, as a 'credit card offer'."}
+{"id": "mr-test-01015", "gloss_title": "Suspected spam", "gloss_text": "This call is likely to be spam. +91 9XXXXXXXXX"}
+{"id": "mr-dev-01016", "gloss_title": "Telemarketer", "gloss_text": "Telemarketing call blocked. Caller: insurance sales."}
+{"id": "mr-test-01017", "gloss_title": "Chance of spam", "gloss_text": "The phone flagged this call as a possible spam: +91 9XXXXXXXXX"}
+{"id": "mr-test-01018", "gloss_title": "Missed call - spam?", "gloss_text": "A caller who keeps calling about plot sales. Reported as spam 8 times."}
+{"id": "mr-test-01020", "gloss_title": "Urgent call! Spam", "gloss_text": "'Your personal loan is approved' - this caller has been identified as spam."}
+{"id": "mr-test-01021", "gloss_title": "Spam call blocked", "gloss_text": "1 spam call was automatically blocked for you this morning."}
+{"id": "mr-dev-01022", "gloss_title": "Truecaller", "gloss_text": "⚠️ Suspected spam: an advertising caller, reported as spam by many people."}
+{"id": "mr-test-01023", "gloss_title": "Meet", "gloss_text": "A call is coming from a marketing account. Possibly spam."}
+{"id": "mr-test-01024", "gloss_title": "Suspected spam", "gloss_text": "A robocall advertising that 'your number is in a lucky draw'. +91 9XXXXXXXXX"}
+{"id": "mr-dev-01025", "gloss_title": "WhatsApp Business call", "gloss_text": "Advertising call from an unknown business account. Report as spam?"}
+{"id": "mr-test-01026", "gloss_title": "Telemarketing", "gloss_text": "+91 9XXXXXXXXX - a caller offering a home loan. Most users call this spam."}
+{"id": "mr-test-01027", "gloss_title": "Spam alert", "gloss_text": "This number is known for 'double your money' calls. Do not pick up."}
+{"id": "mr-test-01028", "gloss_title": "WhatsApp call", "gloss_text": "Be wary of a caller who says 'I am calling from the bank manager, your account will be closed'. This call may be a fraud."}
+{"id": "mr-test-01029", "gloss_title": "Fraud call", "gloss_text": "A caller claiming to speak from a courier company, saying your parcel is stuck. Recorded as fraud."}
+{"id": "mr-dev-01030", "gloss_title": "Possible fraud", "gloss_text": "This call may be a fraud. Do not give bank details to anyone."}
+{"id": "mr-test-01031", "gloss_title": "Truecaller - fraud", "gloss_text": "A caller pretending to be 'police / cyber crime'. +91 9XXXXXXXXX"}
+{"id": "mr-test-01032", "gloss_title": "WhatsApp video call", "gloss_text": "Video call from an unknown number. A fake call asking for money as 'your old friend'."}
+{"id": "mr-dev-01033", "gloss_title": "Telegram call", "gloss_text": "A caller says there is a virus in your phone, as 'tech support'. This is a hoax."}
+{"id": "mr-test-01034", "gloss_title": "Suspected fraud", "gloss_text": "+91 9XXXXXXXXX - known for calls saying 'update your KYC or your SIM will be blocked'."}
+{"id": "mr-test-01035", "gloss_title": "Urgent bank call - fraud", "gloss_text": "A number pretending to be an urgent call from a bank. 340 users marked it as fraud."}
+{"id": "mr-dev-01036", "gloss_title": "WhatsApp Business call", "gloss_text": "A threatening call saying 'the electricity bill is unpaid, the power will be cut tonight'. Fake account."}
+{"id": "mr-test-01037", "gloss_title": "Fraud warning", "gloss_text": "A fake officer saying 'illegal goods were found in a parcel in your name'. +91 9XXXXXXXXX"}
+{"id": "mr-test-01038", "gloss_title": "+91 9XXXXXXXXX", "gloss_text": "I called you earlier: there is a suspicious transaction on your card, call this number immediately. (Suspected fraud)"}
+{"id": "mr-dev-01039", "gloss_title": "Fraud call blocked", "gloss_text": "A call offering 'guaranteed double profit' on investment was identified as fraud."}
+{"id": "mr-test-01040", "gloss_title": "Truecaller warning", "gloss_text": "Be wary of a caller who offers a job and first asks for money. ⚠️"}
+{"id": "mr-test-01041", "gloss_title": "imo call", "gloss_text": "A video call from an unknown account saying 'you have won a prize'. Fraud."}
+{"id": "mr-test-01042", "gloss_title": "Missed call - Mother", "gloss_text": "4 missed calls from mother. 7:05 to 7:20 am."}
+{"id": "mr-test-01043", "gloss_title": "Dad", "gloss_text": "3 missed calls from Dad. Call back."}
+{"id": "mr-dev-01044", "gloss_title": "Tai", "gloss_text": "Call me right away, I have something important to say. 📞"}
+{"id": "mr-test-01045", "gloss_title": "Missed call: Mother", "gloss_text": "A call from Mother (mobile) came at 11:40 pm. Twice."}
+{"id": "mr-test-01046", "gloss_title": "Dada", "gloss_text": "Pick up the phone, I have been calling for a long time. Call me right away."}
+{"id": "mr-dev-01047", "gloss_title": "Baba", "gloss_text": "Call me, right away. There is work."}
+{"id": "mr-test-01048", "gloss_title": "Aaji", "gloss_text": "5 missed calls from grandmother. Could something have happened? Please call."}
+{"id": "mr-test-01049", "gloss_title": "Missed call - wife", "gloss_text": "Missed calls from wife (6). Last call 10 minutes ago."}
+{"id": "mr-dev-01050", "gloss_title": "Bhau", "gloss_text": "Where are you? You are not picking up the phone. Call back quickly."}
+{"id": "mr-test-01051", "gloss_title": "Mother ❤️", "gloss_text": "2 missed video calls from mother on WhatsApp. Message: 'Come, let's talk'."}
+{"id": "mr-test-01052", "gloss_title": "Missed call: Maternal uncle", "gloss_text": "One call from Mama (mother's brother). No message."}
+{"id": "mr-dev-01053", "gloss_title": "imo - Dad", "gloss_text": "Dad called you 3 times. Call back."}
+{"id": "mr-test-01054", "gloss_title": "Son", "gloss_text": "3 missed calls from son and a message 'Papa, call back quickly'."}
+{"id": "mr-test-02000", "gloss_title": "Rate your visit", "gloss_text": "Did you visit 'Sahyadri Bakery' yesterday? Tell us your experience."}
+{"id": "mr-dev-02001", "gloss_title": "Your weekly driving summary", "gloss_text": "This week you drove 112 km, 12 km less than last week."}
+{"id": "mr-test-02002", "gloss_title": "Traffic update and new places", "gloss_text": "New places found near you: 3 cafes in Kothrud. Visit sometime. ☕"}
+{"id": "mr-test-02003", "gloss_title": "Road closed! See now", "gloss_text": "Waze tip for your saved places: update the addresses for 'Home' and 'Office'."}
+{"id": "mr-test-02004", "gloss_title": "Jira - weekly summary", "gloss_text": "23 tasks were completed on your board this week."}
+{"id": "mr-dev-02005", "gloss_title": "GitHub", "gloss_text": "Kiran-demo starred your repository. ⭐"}
+{"id": "mr-test-02006", "gloss_title": "Todoist", "gloss_text": "New task added: 'Prepare grocery list' (tomorrow, 10 am)."}
+{"id": "mr-test-02007", "gloss_title": "Zoom", "gloss_text": "The recording of your last meeting is now available."}
+{"id": "mr-test-02008", "gloss_title": "Ticket confirmed", "gloss_text": "The ticket for the Pune to Nagpur journey is confirmed. Travel on 18 November, sleeper class. Check your PNR before travelling."}
+{"id": "mr-dev-02009", "gloss_title": "Garmin Connect", "gloss_text": "Your sleep score is 81. You slept well through the night."}
+{"id": "mr-test-02010", "gloss_title": "Monthly newsletter", "gloss_text": "This month's latest news and articles in one place. Open to read."}
+{"id": "mr-test-02011", "gloss_title": "Priya (team)", "gloss_text": "Who wants to come for lunch today? Let's meet in the canteen. 🍛"}
+{"id": "mr-test-02012", "gloss_title": "New playlist for you", "gloss_text": "'Morning Marathi devotional songs' is ready. Start listening."}
+{"id": "mr-dev-02013", "gloss_title": "Wynk Premium", "gloss_text": "Your subscription will renew automatically in the next 3 days."}
+{"id": "mr-test-02014", "gloss_title": "ZEE5", "gloss_text": "Keep watching your favourite serial: a new episode tonight at 9 pm. 📺"}
+{"id": "mr-test-02015", "gloss_title": "Last chance! Tickets running out", "gloss_text": "Tonight's show of the film 'Wed' near you. Book tickets. 🎬"}
+{"id": "mr-test-02016", "gloss_title": "Sony LIV", "gloss_text": "The live broadcast of the cricket series starts this evening at 7 pm."}
+{"id": "mr-dev-02017", "gloss_title": "Paytm", "gloss_text": "₹500 received. Sender: Shivani Joshi. Now check your balance."}
+{"id": "mr-test-02018", "gloss_title": "CRED", "gloss_text": "Your credit card bill is due in 5 days. Pay on time to get reward points. Open the app to pay the bill and check the outstanding amount."}
+{"id": "mr-test-02019", "gloss_title": "YONO SBI", "gloss_text": "Your account statement (November) is now ready to download. Do not share it with anyone for safety. The bank never asks for card details."}
+{"id": "mr-test-02020", "gloss_title": "Google Pay", "gloss_text": "You sent ₹250 to Ramesh. Transaction successful. Scratch the cashback card. 🎁"}
+{"id": "mr-dev-02021", "gloss_title": "Storm sale! Today only", "gloss_text": "Up to 70% off on sarees. The offer ends at midnight, buy right now. 🛍️"}
+{"id": "mr-test-02022", "gloss_title": "Your order is out for delivery", "gloss_text": "Delivery partner Amol is bringing your order. It will reach in about 15 minutes."}
+{"id": "mr-test-02023", "gloss_title": "Blinkit", "gloss_text": "Your order is being prepared. Milk, bread and vegetables will be at your door soon."}
+{"id": "mr-test-02024", "gloss_title": "Your driver is coming", "gloss_text": "Driver Sachin will arrive in 4 minutes. Vehicle: MH 12 XX 0000, white Swift."}
+{"id": "mr-dev-02025", "gloss_title": "Namma Yatri", "gloss_text": "The receipt for your ride is ready. Total fare ₹180. Rate your driver."}
+{"id": "mr-test-02026", "gloss_title": "Bus timing change", "gloss_text": "Your bus will leave at 8:45 tonight instead of 9:30. Please reach the boarding point early. Place: Swargate. The driver's contact number is on the ticket."}
+{"id": "mr-test-02027", "gloss_title": "Tomorrow's weather warning", "gloss_text": "Heavy rain is likely in the Konkan area tomorrow. Carry an umbrella. ☔"}
+{"id": "mr-dev-02028", "gloss_title": "UMANG", "gloss_text": "Your driving licence renewal application has been accepted. Open the app to check the status."}
+{"id": "mr-test-02029", "gloss_title": "MyJio", "gloss_text": "Your data for today, 1.5 GB, is nearly over. 80% of today's data has been used. Recharge: the ₹299 plan will end in 30 days."}
+{"id": "mr-test-02030", "gloss_title": "Ganesh Mandal - Secretary", "gloss_text": "A humble request to everyone: there is a mandal meeting tomorrow at 7 pm.\nSubject: subscriptions and decorations.\nPlease attend on time."}
+{"id": "mr-test-02031", "gloss_title": "Mitra Parivar - Rahul", "gloss_text": "Hey, who's coming to play cricket this evening?\nI'll come at 6.\nI'll bring the bat."}
+{"id": "mr-dev-02032", "gloss_title": "Good morning group - Anil", "gloss_text": "🌹 Good morning 🌹\nHave a joyful day!\nSend this message to 10 people and your luck will shine. 🙏"}
+{"id": "mr-test-02033", "gloss_title": "Anand Society - Security", "gloss_text": "There is a smell of a gas leak in the B-wing of the building.\nEveryone come down immediately. Do not use the lift."}
+{"id": "mr-test-02034", "gloss_title": "Aunt", "gloss_text": "Come home for dinner tonight. I have made puran poli. 😋"}
+{"id": "mr-test-02035", "gloss_title": "ShareChat", "gloss_text": "Your post got 120 likes and 5 new followers. Your post is trending right now!"}
+{"id": "mr-dev-02036", "gloss_title": "Zepto", "gloss_text": "Your order has arrived. Tap here to reorder the previous order and rate our service."}
+{"id": "mr-test-02037", "gloss_title": "Rapido captain", "gloss_text": "Turn right at the next junction; your destination is 300 metres away."}
+{"id": "mr-test-02038", "gloss_title": "Severe weather warning", "gloss_text": "A warning of heavy rain with lightning in the Pune area this afternoon. Stay in a safe place and do not leave the house."}

@@ -1,0 +1,60 @@
+{"id": "zh-Hans-test-00001", "gloss_title": "Mom", "gloss_text": "Your dad just fell downstairs, he is now in the emergency room at the City People's Hospital, call back quickly!"}
+{"id": "zh-Hans-test-00002", "gloss_title": "Missed call", "gloss_text": "Wife (3 missed calls)"}
+{"id": "zh-Hans-dev-00003", "gloss_title": "Missed call", "gloss_text": "Unknown number"}
+{"id": "zh-Hans-test-00004", "gloss_title": "Suspected spam call", "gloss_text": "Urgent call: this number has been flagged by 238 users as \"loan sales\""}
+{"id": "zh-Hans-test-00005", "gloss_title": "Call alert", "gloss_text": "Unknown call from someone claiming to be a \"Public Security Bureau police officer\", saying you are suspected of money laundering and demanding a transfer to a safe account. This number is suspected fraud"}
+{"id": "zh-Hans-test-00006", "gloss_title": "WeChat Pay Customer Service", "gloss_text": "[URGENT] Your account has an anomaly and will be frozen within 1 hour. Please click the link below immediately to log in and complete identity verification, otherwise the account will be permanently restricted: http://wxpay-verify.example.invalid/x"}
+{"id": "zh-Hans-test-00007", "gloss_title": "Wealth Group Assistant", "gloss_text": "Part-time click-farming job, earn 500+ a day, zero barrier, commission refunded first before you do the orders. Friends who want to make money, DM me quickly, limited spots, first come first served, withdraw the same day 👉 http://job-easy.example.invalid/a"}
+{"id": "zh-Hans-test-00008", "gloss_title": "Red alert", "gloss_text": "The National Meteorological Center has issued a red typhoon alert: a strong typhoon will make landfall on the coast tonight. Residents please stay indoors and stay away from the seaside and old or dilapidated buildings."}
+{"id": "zh-Hans-test-00009", "gloss_title": "Earthquake early warning", "gloss_text": "An earthquake has been detected nearby; strong shaking is expected in a few seconds. Drop, cover and hold on immediately!"}
+{"id": "zh-Hans-test-00010", "gloss_title": "Happiness Garden Building 3 owners group - Property manager Xiao Li", "gloss_text": "A household on the 12th floor has a gas leak. Everyone please do NOT switch any appliances on or off and do not use open flames, evacuate by the stairs first!"}
+{"id": "zh-Hans-dev-00011", "gloss_title": "Loving Family (5) - Aunt", "gloss_text": "Hahaha this meme is so funny, the weather is nice today, let's all go out and soak up some sun"}
+{"id": "zh-Hans-test-00012", "gloss_title": "Classmates group - Lao Zhou", "gloss_text": "[Urgent forward] Experts predict a major earthquake will hit our city tonight!! Please forward to all relatives and friends, forwarding is beneficial 🙏"}
+{"id": "zh-Hans-test-00013", "gloss_title": "Sound detected: smoke alarm", "gloss_text": "Heard the sound of a smoke alarm near you"}
+{"id": "zh-Hans-dev-00014", "gloss_title": "Sound detected: knocking", "gloss_text": "Heard someone knocking on the door"}
+{"id": "zh-Hans-test-00015", "gloss_title": "Driver has arrived", "gloss_text": "Your driver has arrived at the pickup point, please get in within 2 minutes, white sedan, last digits of the plate have been sent to the order page"}
+{"id": "zh-Hans-test-00016", "gloss_title": "800 meters ahead", "gloss_text": "In 800 meters, move into the left lane, continue along the expressway, then turn right onto the exit"}
+{"id": "zh-Hans-test-00017", "gloss_title": "#online-alerts", "gloss_text": "@you The order payment API 5xx error rate has spiked to 37%, customers are failing to place orders on a large scale, needs investigating right now"}
+{"id": "zh-Hans-test-00018", "gloss_title": "Meeting reminder", "gloss_text": "\"Q3 Product Review\" will start in 5 minutes, the host has joined, tap to join"}
+{"id": "zh-Hans-test-00019", "gloss_title": "Interval training", "gloss_text": "Set 4 done! Rest 60 seconds then start the next set, keep it up 💪"}
+{"id": "zh-Hans-test-00020", "gloss_title": "Abnormal heart rate", "gloss_text": "Your resting heart rate has stayed above 150 bpm for the past 10 minutes. If you feel unwell, stop activity immediately and seek help."}
+{"id": "zh-Hans-dev-00021", "gloss_title": "Membership renewing soon", "gloss_text": "Your membership will auto-renew tomorrow. To change your plan, go to account settings."}
+{"id": "zh-Hans-test-00022", "gloss_title": "Payment failed", "gloss_text": "Unable to charge: your payment method was declined. Please update it within 3 days, otherwise your subscription will be canceled."}
+{"id": "zh-Hans-dev-00023", "gloss_title": "Recommended for you", "gloss_text": "A singer you like has a new release, come listen to this week's \"Weekly Picks\" playlist 🎧"}
+{"id": "zh-Hans-test-00024", "gloss_title": "🚨 Urgent notice", "gloss_text": "Tonight at 8 pm, the latest episode of the mystery series \"Undercurrent\" you follow premieres worldwide, don't miss it!"}
+{"id": "zh-Hans-test-00025", "gloss_title": "Typhoon prices! Limited-time sale", "gloss_text": "Typhoon prices are here! Store-wide specials as low as 30% of the price, only until midnight tonight, be quick! 🌪️"}
+{"id": "zh-Hans-test-00026", "gloss_title": "Gate change", "gloss_text": "The gate for your booked flight has changed to B12, boarding has now started, please head there as soon as possible."}
+{"id": "zh-Hans-test-00027", "gloss_title": "Front door camera", "gloss_text": "02:14 Someone detected loitering at your front door, 30-second clip recorded, tap to view"}
+{"id": "zh-Hans-test-00028", "gloss_title": "City No. 1 People's Hospital", "gloss_text": "Emergency department calling: your family member Li Xiuying has just arrived, you need to come to the hospital as soon as possible to sign the surgery consent form."}
+{"id": "zh-Hans-test-00029", "gloss_title": "Teacher Wang (homeroom teacher)", "gloss_text": "Xiaoyu has a fever of 39.5 degrees at school and is a bit nauseous, please come to school as soon as possible to take him to the hospital."}
+{"id": "zh-Hans-dev-00030", "gloss_title": "Package shipped", "gloss_text": "Your \"insulated cup\" has been picked up by ZTO Express, expected to arrive the day after tomorrow."}
+{"id": "zh-Hans-dev-00031", "gloss_title": "Remittance received", "gloss_text": "You received a transfer of ¥1,280.00, it has been credited to your account."}
+{"id": "zh-Hans-test-00032", "gloss_title": "Mr. Chen", "gloss_text": "Xiaolin, the client is pushing on the contract, are you free now? Call me back within ten minutes, it is very urgent."}
+{"id": "zh-Hans-test-00033", "gloss_title": "Flash flood warning", "gloss_text": "The flash flood risk in your area is extremely high, move to higher ground immediately, do not wade through water or enter river channels!"}
+{"id": "zh-Hans-test-00034", "gloss_title": "Missing child emergency notice", "gloss_text": "A 6-year-old boy in the city went missing this afternoon, wearing a blue jacket. If you have any leads, call 110 immediately."}
+{"id": "zh-Hans-test-00035", "gloss_title": "Route blocked", "gloss_text": "The overpass ahead is fully closed due to an accident, expected 50-minute congestion, suggest taking the side road."}
+{"id": "zh-Hans-test-00036", "gloss_title": "Smoke alarm", "gloss_text": "The kitchen smoke sensor has triggered an alarm, concentration keeps rising, please check immediately or evacuate!"}
+{"id": "zh-Hans-test-00037", "gloss_title": "Task due today", "gloss_text": "\"Submit the quarterly budget sheet\" is due today at 18:00, you haven't finished it yet"}
+{"id": "zh-Hans-test-00038", "gloss_title": "Build failed: main", "gloss_text": "Pipeline deploy-prod failed on the main branch, automatically rolled back, please check the logs."}
+{"id": "zh-Hans-dev-00039", "gloss_title": "A-Jie", "gloss_text": "Want to go for hotpot this weekend? I know a newly opened place, heard the tripe is especially crisp"}
+{"id": "zh-Hans-dev-00040", "gloss_title": "Mom", "gloss_text": "Pick up two jin of greens on your way home from work, I will make the braised pork you love tonight"}
+{"id": "zh-Hans-dev-00041", "gloss_title": "Missed call", "gloss_text": "Colleague Xiao Zhao: call back when you have time, no rush"}
+{"id": "zh-Hans-test-00042", "gloss_title": "Weekly Product Digest", "gloss_text": "This week's picks: 10 tips to boost efficiency, tap to read"}
+{"id": "zh-Hans-test-00043", "gloss_title": "Urgent notice: planned power outage", "gloss_text": "Due to line maintenance, your residential compound will have a planned power outage tomorrow 9:00-15:00, please prepare in advance."}
+{"id": "zh-Hans-dev-00044", "gloss_title": "Tomorrow's weather", "gloss_text": "Light rain tomorrow, temperature 16 to 22 degrees, remember to bring an umbrella ☔"}
+{"id": "zh-Hans-dev-00045", "gloss_title": "Trip ended", "gloss_text": "Thanks for riding! Rate this driver now and get a 5-yuan ride coupon."}
+{"id": "zh-Hans-dev-00046", "gloss_title": "Check-in available tomorrow", "gloss_text": "Your booked Hangzhou West Lake homestay can be checked in after 3 pm tomorrow, the host has sent the check-in guide."}
+{"id": "zh-Hans-test-00047", "gloss_title": "Cart item almost sold out!", "gloss_text": "⚠️ The headphones you saved have only 2 left, order now and you can still grab the discounted price"}
+{"id": "zh-Hans-test-00048", "gloss_title": "Courier Customer Service", "gloss_text": "Your package has been held due to an unclear address. Please pay a 3-yuan shipping fee within 2 hours, otherwise the package will be returned to sender. Click the link to complete payment quickly: http://express-pay.example.invalid/p"}
+{"id": "zh-Hans-test-00049", "gloss_title": "⚠️ Emergency alert", "gloss_text": "Your base is under attack! Come back and defend, or you'll lose resources 🔥"}
+{"id": "zh-Hans-test-00050", "gloss_title": "Movement at the door", "gloss_text": "14:32 The front door camera detected someone moving (courier), 8-second clip recorded"}
+{"id": "zh-Hans-dev-00051", "gloss_title": "Time to move", "gloss_text": "You've been sitting for over an hour, get up and move for two minutes, today's steps: 3,200"}
+{"id": "zh-Hans-test-00052", "gloss_title": "Follow-up appointment reminder", "gloss_text": "Your follow-up appointment is this Friday at 9:30 am, please bring your test reports."}
+{"id": "zh-Hans-dev-00053", "gloss_title": "Grade 3 Class 2 parents group - Homeroom teacher", "gloss_text": "Parent-teacher meeting next Wednesday at 3 pm, all parents please attend on time, see the notice for details"}
+{"id": "zh-Hans-dev-00054", "gloss_title": "Product team (12) - Xiao Liu", "gloss_text": "What to eat for lunch? I want to order malatang, anyone joining?"}
+{"id": "zh-Hans-dev-00055", "gloss_title": "Order receipt", "gloss_text": "Thanks for your purchase, this month's e-bill has been generated, please check your email."}
+{"id": "zh-Hans-test-00056", "gloss_title": "Breaking", "gloss_text": "Breaking: a celebrity announces a new relationship, instantly #1 trending on Weibo, netizens go wild"}
+{"id": "zh-Hans-dev-00057", "gloss_title": "Match started", "gloss_text": "Guoan vs Shenhua has kicked off, current score 0-0 ⚽"}
+{"id": "zh-Hans-dev-00058", "gloss_title": "New follower", "gloss_text": "小鹿爱旅行 followed you, and 12 more people liked your video"}
+{"id": "zh-Hans-test-00059", "gloss_title": "🔥 Urgent! Streak about to break", "gloss_text": "Your 87-day streak will end tonight! Spend 5 minutes practicing now"}
+{"id": "zh-Hans-dev-00060", "gloss_title": "Low storage", "gloss_text": "Phone storage is almost full, suggest clearing the cache or uninstalling rarely used apps."}

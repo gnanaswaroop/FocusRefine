@@ -1,0 +1,101 @@
+{"id": "gu-test-01000", "gloss_title": "Unknown caller", "gloss_text": "Missed call from +91 9XXXXXXXXX."}
+{"id": "gu-test-01001", "gloss_title": "Missed call", "gloss_text": "Unknown number · +91 7XXXXXXXXX · at 6:42 pm in the evening."}
+{"id": "gu-dev-01002", "gloss_title": "Unknown call on Meet", "gloss_text": "A video call came from an unknown number, which you did not pick up."}
+{"id": "gu-test-01003", "gloss_title": "Incoming call", "gloss_text": "Unknown number +91 8XXXXXXXXX is calling you."}
+{"id": "gu-test-01004", "gloss_title": "Private number", "gloss_text": "2 missed calls from a private number."}
+{"id": "gu-test-01005", "gloss_title": "Missed call", "gloss_text": "Name not found · +91 6XXXXXXXXX\nAhmedabad, Gujarat"}
+{"id": "gu-test-01006", "gloss_title": "Missed call", "gloss_text": "+1 555-0142"}
+{"id": "gu-dev-01007", "gloss_title": "Someone is calling", "gloss_text": "Unknown person, +91 9XXXXXXXXX"}
+{"id": "gu-test-01008", "gloss_title": "Missed call", "gloss_text": "Unknown number +91 9XXXXXXXXX called at 11:15 am. Would you like to call back?"}
+{"id": "gu-test-01009", "gloss_title": "Missed calls (3)", "gloss_text": "Unknown number +91 8XXXXXXXXX has called three times."}
+{"id": "gu-dev-01010", "gloss_title": "New number", "gloss_text": "This number is not in your contacts. +91 8XXXXXXXXX just called."}
+{"id": "gu-test-01011", "gloss_title": "Unknown call", "gloss_text": "The unknown number +91 9XXXXXXXXX called from Rajkot."}
+{"id": "gu-test-01012", "gloss_title": "Google Meet", "gloss_text": "An unknown person tried to call you."}
+{"id": "gu-dev-01013", "gloss_title": "Missed call", "gloss_text": "Unknown number +91 7XXXXXXXXX · missed call 2 minutes ago."}
+{"id": "gu-test-01014", "gloss_title": "Possible spam", "gloss_text": "+91 9XXXXXXXXX · 1,200 people have marked this number as spam."}
+{"id": "gu-test-01015", "gloss_title": "Suspected spam call", "gloss_text": "There is a chance that this number is making a telemarketing call."}
+{"id": "gu-dev-01016", "gloss_title": "Spam call blocked", "gloss_text": "The caller +91 8XXXXXXXXX offering loans was automatically blocked."}
+{"id": "gu-test-01017", "gloss_title": "+91 9XXXXXXXXX", "gloss_text": "Voice call missed · This number is reported as spam. Do you want to block it?"}
+{"id": "gu-test-01018", "gloss_title": "Chance of spam", "gloss_text": "Promotional call for a credit card offer."}
+{"id": "gu-dev-01019", "gloss_title": "Spam warning", "gloss_text": "This caller calls many people to sell things. Advice: do not answer."}
+{"id": "gu-test-01020", "gloss_title": "Possible spam caller", "gloss_text": "+91 7XXXXXXXXX · possible spam call from an insurance-selling company."}
+{"id": "gu-test-01021", "gloss_title": "Unknown business number", "gloss_text": "Missed call. This number may be spam; tap to block it."}
+{"id": "gu-test-01022", "gloss_title": "Possible spam · bank-like caller", "gloss_text": "A promotional call using a bank's name, which does not ask for personal information."}
+{"id": "gu-dev-01023", "gloss_title": "Suspected spam", "gloss_text": "Insurance sales call · block or report."}
+{"id": "gu-test-01024", "gloss_title": "Telemarketer", "gloss_text": "Missed a real estate promotion call."}
+{"id": "gu-dev-01025", "gloss_title": "Unknown call", "gloss_text": "This call is marked as spam. Do not answer."}
+{"id": "gu-test-01026", "gloss_title": "Spam call", "gloss_text": "+1 555-0173 · a spammer who calls repeatedly."}
+{"id": "gu-test-01027", "gloss_title": "Auto-dialer call", "gloss_text": "A recorded message was playing. Truecaller users have marked it as spam."}
+{"id": "gu-test-01028", "gloss_title": "Fraud warning", "gloss_text": "This caller claims to be a bank officer and asks for account details."}
+{"id": "gu-test-01029", "gloss_title": "Missed call", "gloss_text": "Number reported as a fraud call in the name of a 'KYC update'."}
+{"id": "gu-dev-01030", "gloss_title": "WhatsApp voice call", "gloss_text": "+91 9XXXXXXXXX: I am speaking from a courier office; a suspicious parcel has been caught in your name, I will connect you to the police."}
+{"id": "gu-test-01031", "gloss_title": "Tech support call", "gloss_text": "A caller who asks for remote access, saying there is a virus in your phone."}
+{"id": "gu-test-01032", "gloss_title": "Dangerous caller", "gloss_text": "+91 7XXXXXXXXX · recorded as a tech support fraud."}
+{"id": "gu-test-01033", "gloss_title": "Beware: fraud call", "gloss_text": "A caller falsely claiming to be a government official. Do not answer."}
+{"id": "gu-dev-01034", "gloss_title": "Unknown call", "gloss_text": "A fraud call threatening account closure, claiming to be a bank manager."}
+{"id": "gu-test-01035", "gloss_title": "Digital arrest fraud", "gloss_text": "A caller claiming to be a CBI officer threatens arrest and asks for money."}
+{"id": "gu-test-01036", "gloss_title": "+91 8XXXXXXXXX", "gloss_text": "Voice call · a fraud call that asks for money, saying 'your electricity connection will be cut tonight'."}
+{"id": "gu-dev-01037", "gloss_title": "Unknown video call", "gloss_text": "An unknown person says you have won a prize and pressures you to pay a fee."}
+{"id": "gu-test-01038", "gloss_title": "Possible fraud", "gloss_text": "A caller threatening to block your card in the name of the bank."}
+{"id": "gu-test-01039", "gloss_title": "Unknown call", "gloss_text": "A caller posing as a customs officer asks for a fee. Please do not pick up."}
+{"id": "gu-dev-01040", "gloss_title": "Scam Alert", "gloss_text": "+1 555-0188 · fake courier and 'parcel is stuck' fraud."}
+{"id": "gu-test-01041", "gloss_title": "Messenger call", "gloss_text": "Unknown profile: I am your relative, send money urgently. This is a fraud pattern."}
+{"id": "gu-test-01042", "gloss_title": "Mummy", "gloss_text": "Missed voice call."}
+{"id": "gu-test-01043", "gloss_title": "Papa", "gloss_text": "Missed call · just now."}
+{"id": "gu-dev-01044", "gloss_title": "Big brother", "gloss_text": "3 missed calls."}
+{"id": "gu-test-01045", "gloss_title": "Wife ❤️", "gloss_text": "Where are you? Pick up the phone, I want to talk right away."}
+{"id": "gu-test-01046", "gloss_title": "Didi", "gloss_text": "I have been calling for a while, please call quickly."}
+{"id": "gu-dev-01047", "gloss_title": "Mummy", "gloss_text": "Missed video call."}
+{"id": "gu-test-01048", "gloss_title": "Papa", "gloss_text": "4 missed voice calls\nChild, call me."}
+{"id": "gu-test-01049", "gloss_title": "Younger brother", "gloss_text": "Missed call · repeatedly."}
+{"id": "gu-dev-01050", "gloss_title": "Mummy", "gloss_text": "Call me quickly, I want to talk."}
+{"id": "gu-test-01051", "gloss_title": "Dadi", "gloss_text": "Missed call (2)."}
+{"id": "gu-test-01052", "gloss_title": "Kaka", "gloss_text": "Papa is not picking up the phone, call me right away."}
+{"id": "gu-dev-01053", "gloss_title": "Sister", "gloss_text": "Missed Messenger call · 5 minutes ago."}
+{"id": "gu-test-01054", "gloss_title": "Mummy", "gloss_text": "Call me, ASAP. Why is the phone switched off?"}
+{"id": "gu-test-01055", "gloss_title": "Papa", "gloss_text": "Missed imo call."}
+{"id": "gu-test-01056", "gloss_title": "Hitesh (office)", "gloss_text": "Missed call."}
+{"id": "gu-dev-01057", "gloss_title": "Friend - Nirav", "gloss_text": "Missed voice call. Call me when you are free."}
+{"id": "gu-test-02000", "gloss_title": "How was your visit?", "gloss_text": "Rate the cafe you went to yesterday and add photos."}
+{"id": "gu-test-02001", "gloss_title": "Weekly driving summary", "gloss_text": "This week you drove 142 km and spent 3 hours in traffic."}
+{"id": "gu-dev-02002", "gloss_title": "Traffic alert on route", "gloss_text": "Normal traffic is expected tomorrow morning on your saved 'home to office' route."}
+{"id": "gu-test-02003", "gloss_title": "New feature", "gloss_text": "You can now hear directions in Waze in your favourite voice. 🎙️"}
+{"id": "gu-test-02004", "gloss_title": "Jira · PROJ-482", "gloss_text": "Asha Shah tagged you in a comment on a ticket: 'Please look at it when you have time.'"}
+{"id": "gu-test-02005", "gloss_title": "Weekly digest", "gloss_text": "Your repository got 5 new stars this week. ⭐"}
+{"id": "gu-dev-02006", "gloss_title": "New task added", "gloss_text": "The task 'Prepare weekly report' was added to your list, deadline next week."}
+{"id": "gu-test-02007", "gloss_title": "Zoom", "gloss_text": "The recording of your meeting from yesterday is ready. Tap to view."}
+{"id": "gu-test-02008", "gloss_title": "Ticket booked", "gloss_text": "Ahmedabad to Mumbai Central: your ticket is confirmed for next month's journey."}
+{"id": "gu-test-02009", "gloss_title": "Daily summary", "gloss_text": "Today you walked 8,420 steps and slept 6 hours 40 minutes. Great effort! 👏"}
+{"id": "gu-dev-02010", "gloss_title": "#team-general · Rajesh Patel", "gloss_text": "There is no rush; look at the presentation next week when you have time."}
+{"id": "gu-test-02011", "gloss_title": "Weekly newsletter", "gloss_text": "This week's top tech stories and articles suggested for you."}
+{"id": "gu-test-02012", "gloss_title": "Money received", "gloss_text": "₹850 received from Nita Ben. Transaction successful."}
+{"id": "gu-test-02013", "gloss_title": "Payment successful", "gloss_text": "You paid ₹320 to the grocery shop."}
+{"id": "gu-dev-02014", "gloss_title": "BHIM", "gloss_text": "Your bill payment is due in 3 days. Pay now and get cashback."}
+{"id": "gu-test-02015", "gloss_title": "CRED", "gloss_text": "Your credit card statement is ready. The outstanding amount is ₹12,400 and the last payment date is next Friday. Paying on time will earn you reward points and help you avoid penalties."}
+{"id": "gu-test-02016", "gloss_title": "YONO SBI", "gloss_text": "Your savings account monthly statement is ready. You can view it in the app or request it by email. This message is for information only; no action is needed."}
+{"id": "gu-dev-02017", "gloss_title": "iMobile Pay", "gloss_text": "Your bill payment is done. 25 points added as a reward."}
+{"id": "gu-test-02018", "gloss_title": "⚡ Only until tonight!", "gloss_text": "The last hours of the Big Billion Sale: up to 40% off on mobiles. Buy right now!"}
+{"id": "gu-test-02019", "gloss_title": "Your order is being prepared", "gloss_text": "The cooks are preparing your food. A delivery partner will be assigned shortly."}
+{"id": "gu-test-02020", "gloss_title": "Blinkit", "gloss_text": "Your order is on the way. Delivery partner Suresh is getting close to your address. Please keep someone at the gate so the order can be handed over easily, without delay."}
+{"id": "gu-dev-02021", "gloss_title": "Order confirmed", "gloss_text": "Your grocery delivery will happen tomorrow between 8 and 10 am."}
+{"id": "gu-test-02022", "gloss_title": "Delivered ✅", "gloss_text": "Your order has been delivered. Thank you for shopping!"}
+{"id": "gu-test-02023", "gloss_title": "Driver has arrived", "gloss_text": "Your driver has reached the pickup point. Please come outside."}
+{"id": "gu-test-02024", "gloss_title": "Rapido", "gloss_text": "Captain Mahesh will arrive in 4 minutes."}
+{"id": "gu-dev-02025", "gloss_title": "Change in bus timing", "gloss_text": "Your Surat to Rajkot bus will now leave 25 minutes earlier, at 9:35 pm. Reach the boarding point on time. The departure time has changed, so do not delay, otherwise you will miss the bus."}
+{"id": "gu-test-02026", "gloss_title": "Severe cyclone warning", "gloss_text": "Heavy wind and rain with lightning are likely in your area within the next hour. Go to a safe place, do not stand in open ground or under trees, and keep electrical appliances switched off."}
+{"id": "gu-test-02027", "gloss_title": "MyJio", "gloss_text": "Today's 2 GB data on your plan is nearly over. Remaining data: 150 MB. You can buy an add-on pack for more data. Your plan renews next Tuesday; no recharge is needed."}
+{"id": "gu-dev-02028", "gloss_title": "Airtel Thanks", "gloss_text": "Your prepaid plan expires in 5 days. Recharge on time."}
+{"id": "gu-test-02029", "gloss_title": "DigiLocker", "gloss_text": "Your new document has been added to your locker."}
+{"id": "gu-test-02030", "gloss_title": "Doctor appointment reminder", "gloss_text": "You have your regular check-up with Dr. Mehta tomorrow evening at 5:30. Arrive on time and bring old reports. To change the time, you can reschedule in the app."}
+{"id": "gu-dev-02031", "gloss_title": "BYJU'S", "gloss_text": "The new maths chapter quiz is available. Finish it today and keep your streak. 🔥"}
+{"id": "gu-test-02032", "gloss_title": "New playlist for you", "gloss_text": "Gujarati Garba Hits 2026: songs specially chosen for Navratri. 🎶"}
+{"id": "gu-test-02033", "gloss_title": "Wynk Music", "gloss_text": "Your favourite artist's new song has just been released."}
+{"id": "gu-dev-02034", "gloss_title": "ZEE5", "gloss_text": "A new Gujarati film premieres tonight at 8 pm. A new episode of the series is also available; do not miss it."}
+{"id": "gu-test-02035", "gloss_title": "Keep watching", "gloss_text": "Continue from the same point where you left the episode unfinished."}
+{"id": "gu-test-02036", "gloss_title": "BookMyShow", "gloss_text": "Book tickets for new films releasing in your city this Friday. 🎬"}
+{"id": "gu-test-02037", "gloss_title": "Friends group - Dhruv", "gloss_text": "Dhruv: Who is coming for tea this evening?\nDhruv: Let's meet by the cart. 😄\nPriya: I'll come, at 6."}
+{"id": "gu-test-02038", "gloss_title": "Suvichar group - Forwarded", "gloss_text": "Forwarded: Good morning! 🌞 Send this message to 10 people and your day will go well today. If you don't send it, luck will not be with you."}
+{"id": "gu-dev-02039", "gloss_title": "Society group - Kamlesh bhai", "gloss_text": "Kamlesh bhai: Should we have a DJ this time during Navratri?\nMeena ben: The children will like it, let's have it.\nKamlesh bhai: OK, vote for it."}
+{"id": "gu-test-02040", "gloss_title": "Society maintenance - Secretary", "gloss_text": "Secretary: There is a meeting at the clubhouse on Sunday at 10 am.\nSecretary: Maintenance fund and cleaning of the water tank will be discussed.\nSecretary: Everyone must attend."}
+{"id": "gu-test-02041", "gloss_title": "Std 7 parents group - Class teacher", "gloss_text": "Class teacher: The first term-end exam starts next week.\nClass teacher: The timetable has been put in the group; please prepare the children."}
+{"id": "gu-dev-02042", "gloss_title": "ShareChat", "gloss_text": "Your post got 120 likes! 🎉 See what people said."}

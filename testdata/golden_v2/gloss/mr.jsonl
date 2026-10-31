@@ -1,0 +1,60 @@
+{"id": "mr-test-00001", "gloss_title": "Mom", "gloss_text": "Hey, call quickly! Dad felt dizzy, we're taking him to the hospital."}
+{"id": "mr-test-00002", "gloss_title": "Missed call", "gloss_text": "3 missed calls from Mom (mobile) • just now"}
+{"id": "mr-test-00003", "gloss_title": "Missed call", "gloss_text": "You have a missed call from an unknown number. You haven't saved this number before."}
+{"id": "mr-test-00004", "gloss_title": "Suspected spam call", "gloss_text": "+91 9XXXXXXXXX: number reported by many as 'instant loan approved'. Call automatically rejected."}
+{"id": "mr-test-00005", "gloss_title": "Fraud call blocked", "gloss_text": "Blocked a call from +91 9XXXXXXXXX saying 'Update KYC or your account will be closed'."}
+{"id": "mr-test-00006", "gloss_title": "+91 9XXXXXXXXX", "gloss_text": "Your electricity connection will be cut off tonight! If you don't pay the dues immediately, the connection will be shut off. Pay right now at this link: http://a.example.invalid/m"}
+{"id": "mr-test-00007", "gloss_title": "Lucky draw", "gloss_text": "Congratulations! You have won a prize of ₹25,00,000. To claim the prize, send your details today and click here: http://a.example.invalid/x"}
+{"id": "mr-test-00008", "gloss_title": "Severe weather warning", "gloss_text": "Red alert for extremely heavy rain in the Konkan and Mumbai area over the next 3 hours. People in low-lying areas should move to a safe place."}
+{"id": "mr-test-00009", "gloss_title": "Earthquake warning", "gloss_text": "Earthquake tremors may be felt in your area. Sit on the ground, cover your head and take shelter under something sturdy."}
+{"id": "mr-test-00010", "gloss_title": "MyGate - Society notice", "gloss_text": "There is a smell of a gas leak in Building B. All residents should come down immediately, do not use the lift."}
+{"id": "mr-test-00011", "gloss_title": "College friends 😂 - Sunil", "gloss_text": "Haha, what a blast in the match yesterday! 🏏 Did you see that last six?"}
+{"id": "mr-test-00012", "gloss_title": "Family group - Uncle", "gloss_text": "🙏 Good morning 🙏 Send this message to 10 people, you will get good news today! If you don't send it, you will suffer a loss."}
+{"id": "mr-test-00013", "gloss_title": "Sound alert: smoke alarm", "gloss_text": "The sound of a smoke alarm was heard near you."}
+{"id": "mr-test-00014", "gloss_title": "Sound detected: doorbell", "gloss_text": "A sound like a doorbell ringing was heard."}
+{"id": "mr-test-00015", "gloss_title": "Your ride has arrived", "gloss_text": "Your driver has reached the pickup point. Please come within 2 minutes, white Swift."}
+{"id": "mr-test-00016", "gloss_title": "Turn ahead", "gloss_text": "After 200 meters, turn left onto Kothrud Road."}
+{"id": "mr-test-00017", "gloss_title": "#prod-alerts", "gloss_text": "🔴 The payment service is down. All customers are affected. Please join the incident call right away."}
+{"id": "mr-test-00018", "gloss_title": "Meeting in 5 minutes", "gloss_text": "Product review will start at 10:30 AM. Open the Meet link."}
+{"id": "mr-test-00019", "gloss_title": "Interval complete", "gloss_text": "Set 4/6 done! Now rest for 60 seconds, then run again 💪"}
+{"id": "mr-test-00020", "gloss_title": "Abnormal heart rate", "gloss_text": "Your heart rate has been above 140 for 40 minutes while at rest. If possible, contact a doctor immediately."}
+{"id": "mr-test-00021", "gloss_title": "Subscription renewal", "gloss_text": "Your subscription will renew automatically tomorrow. If you want to change your plan, open your account."}
+{"id": "mr-test-00022", "gloss_title": "Payment failed!", "gloss_text": "Your payment was not completed. If you don't update your card within 7 days, your premium will be shut off."}
+{"id": "mr-test-00023", "gloss_title": "New mix for you", "gloss_text": "Lavani Hits: listen today to a new playlist of your favorite songs 🎶"}
+{"id": "mr-test-00024", "gloss_title": "What will you watch today?", "gloss_text": "Picked for you: new Marathi family movie, stream it now."}
+{"id": "mr-test-00025", "gloss_title": "Storm sale! ⚡", "gloss_text": "Today only: up to 50% off on mobiles! Buy quickly, stock is running out."}
+{"id": "mr-test-00026", "gloss_title": "Platform change", "gloss_text": "Your train will now depart from platform 7. Departure time 18:40. Please arrive on time."}
+{"id": "mr-test-00027", "gloss_title": "Motion detected", "gloss_text": "At 2:15 AM, the back door camera saw movement of an unknown person."}
+{"id": "mr-test-00028", "gloss_title": "City Hospital", "gloss_text": "Your father has been moved to the ICU. Please contact reception immediately."}
+{"id": "mr-test-00029", "gloss_title": "School - Class teacher", "gloss_text": "Aryan got hurt while playing. We have given first aid, please come to school right away."}
+{"id": "mr-test-00030", "gloss_title": "Order on the way", "gloss_text": "Your order will arrive in 10 minutes. Delivery partner: Sagar."}
+{"id": "mr-test-00031", "gloss_title": "Payment successful", "gloss_text": "You sent ₹450 to the grocery store."}
+{"id": "mr-test-00033", "gloss_title": "Deadline today", "gloss_text": "SPRINT-42: The code review must be completed by 5 PM this evening."}
+{"id": "mr-test-00034", "gloss_title": "Build failed", "gloss_text": "CI pipeline on the main branch failed: 3 tests failing. Check immediately."}
+{"id": "mr-test-00035", "gloss_title": "Road closed", "gloss_text": "Traffic is jammed on Sinhagad Road due to an accident. Take an alternate route; about 25 minutes delay."}
+{"id": "mr-test-00036", "gloss_title": "Flood warning", "gloss_text": "The river level has reached the danger level. Settlements along the river should evacuate immediately."}
+{"id": "mr-test-00037", "gloss_title": "Public safety alert", "gloss_text": "Amber alert for the abduction of a small child. If you see a white van, report it on 100."}
+{"id": "mr-test-00038", "gloss_title": "Smoke alarm went off", "gloss_text": "Smoke has been detected in the kitchen. The alarm is sounding, please leave the house immediately."}
+{"id": "mr-test-00039", "gloss_title": "Dad", "gloss_text": "I've left the office, will reach home by 7. Shall I bring milk on the way?"}
+{"id": "mr-test-00040", "gloss_title": "Priya", "gloss_text": "Are you coming to the movies tomorrow? 🎬 I'll look at tickets."}
+{"id": "mr-dev-00041", "gloss_title": "Brother", "gloss_text": "Sis fell on the road, there's been an accident. Come to the Civil Hospital right away."}
+{"id": "mr-dev-00042", "gloss_title": "Missed call", "gloss_text": "A missed call from colleague Nitin."}
+{"id": "mr-dev-00043", "gloss_title": "Amit", "gloss_text": "Call me if you can, nothing urgent, just wanted to chat."}
+{"id": "mr-dev-00044", "gloss_title": "Emergency alert! 🔥", "gloss_text": "Sale is ending! Only 2 hours: 70% off on all clothes. Order right now!"}
+{"id": "mr-dev-00045", "gloss_title": "Today's weather", "gloss_text": "Partly cloudy in Pune today, high 32°C. Chance of light showers in the evening."}
+{"id": "mr-dev-00046", "gloss_title": "⚠️ Alert! Attack underway", "gloss_text": "Your village is under attack! Come back right away and defend it."}
+{"id": "mr-dev-00047", "gloss_title": "Camera offline", "gloss_text": "The hall camera went offline because the Wi-Fi connection was lost."}
+{"id": "mr-dev-00048", "gloss_title": "Weekly summary", "gloss_text": "Your average sleep this week was 6 hours 40 minutes."}
+{"id": "mr-dev-00049", "gloss_title": "Thrilling match", "gloss_text": "India 185 for 6, need 15 runs off 12 balls to win!"}
+{"id": "mr-dev-00050", "gloss_title": "Neha liked your photo", "gloss_text": "neha_k and 21 others liked your post."}
+{"id": "mr-dev-00051", "gloss_title": "Weekly newsletter", "gloss_text": "The 5 best articles of this week have been picked for you."}
+{"id": "mr-dev-00052", "gloss_title": "Update available", "gloss_text": "A system update is ready to download. It will install when you put the phone on charge at night."}
+{"id": "mr-dev-00053", "gloss_title": "Your booking is confirmed", "gloss_text": "Lonavala resort, 4 to 6 December. Check-in at 2 PM."}
+{"id": "mr-dev-00054", "gloss_title": "Visitor arrived", "gloss_text": "A courier person is at the gate. Allow entry?"}
+{"id": "mr-dev-00055", "gloss_title": "+91 9XXXXXXXXX", "gloss_text": "Your parcel is stuck at the warehouse. Pay a ₹29 fee or it will be sent back, you will get nothing: http://a.example.invalid/p"}
+{"id": "mr-dev-00056", "gloss_title": "Dr. Kulkarni Clinic", "gloss_text": "Reminder: your routine check-up is tomorrow at 4 PM."}
+{"id": "mr-dev-00057", "gloss_title": "Homework", "gloss_text": "Science: write the question-answers of chapter 5 in your notebook and bring them by Friday."}
+{"id": "mr-dev-00058", "gloss_title": "Civic notice", "gloss_text": "Water supply in your area will be shut off tomorrow between 9 AM and 12 noon."}
+{"id": "mr-dev-00059", "gloss_title": "Your streak is in danger! 🔥", "gloss_text": "If you don't practice today, your 12-day streak will end."}
+{"id": "mr-dev-00060", "gloss_title": "Price alert", "gloss_text": "NIFTY has crossed the level you set."}
+{"id": "mr-test-00032", "gloss_title": "Manager - Deshpande", "gloss_text": "The client's delivery is stuck, join the call within five minutes. Urgent."}

@@ -1,0 +1,60 @@
+{"id": "pt-BR-test-00001", "gloss_title": "Mom", "gloss_text": "Son, dad fell down the stairs and is on his way to the emergency room now. Call me as soon as you read this, please!"}
+{"id": "pt-BR-test-00002", "gloss_title": "Sister Camila", "gloss_text": "I crashed the car on the Marginal, I'm okay but I need you to come pick me up, urgent. Call me"}
+{"id": "pt-BR-dev-00003", "gloss_title": "Missed call", "gloss_text": "Missed call from Dad (4 attempts in the last 10 minutes)"}
+{"id": "pt-BR-test-00004", "gloss_title": "Grandma Lúcia", "gloss_text": "Called 3 times! Pick up the phone, sweetheart, it's important"}
+{"id": "pt-BR-test-00005", "gloss_title": "Extreme alert", "gloss_text": "Civil Defense: severe storm with hail and strong winds in the next 2 hours in your region. Seek shelter and avoid open areas."}
+{"id": "pt-BR-dev-00006", "gloss_title": "Severe storm alert", "gloss_text": "Storm warning for the East Zone: heavy rain, gusts of up to 90 km/h and risk of flooding in the next 30 minutes."}
+{"id": "pt-BR-test-00007", "gloss_title": "Earthquake alert", "gloss_text": "Tremor detected near you. Drop down, protect your head and hold on tight until the tremor passes."}
+{"id": "pt-BR-test-00008", "gloss_title": "Condomínio Jardim das Flores", "gloss_text": "Folks, strong smell of gas in block B, 2nd floor. Anyone in the building, go down the stairs and don't use the elevator. Firefighters have already been called."}
+{"id": "pt-BR-dev-00009", "gloss_title": "Fire alarm", "gloss_text": "Smoke alarm detected near you"}
+{"id": "pt-BR-test-00010", "gloss_title": "Your driver has arrived", "gloss_text": "Rafael is waiting for you in a silver Onix, plate FXY-4A21. He will wait for 3 minutes."}
+{"id": "pt-BR-test-00011", "gloss_title": "Turn right in 200 m", "gloss_text": "Av. Paulista. Heavy traffic ahead, alternate route saves 8 min."}
+{"id": "pt-BR-dev-00012", "gloss_title": "#incidentes - on-call", "gloss_text": "URGENT: payments API down since 2:02 pm. You're the on-call person, join the call now."}
+{"id": "pt-BR-test-00013", "gloss_title": "Meeting starts in 5 minutes", "gloss_text": "Quarter planning with the product team. Join now, the organizer is already in the room."}
+{"id": "pt-BR-test-00014", "gloss_title": "Interval completed 💪", "gloss_text": "You completed the 4th 400 m sprint. Rest for 90 seconds and get ready for the next one."}
+{"id": "pt-BR-dev-00015", "gloss_title": "High heart rate", "gloss_text": "Your heart rate has been above 150 bpm for 10 minutes without activity. If you are not feeling well, seek medical care."}
+{"id": "pt-BR-test-00016", "gloss_title": "Gate change", "gloss_text": "Your flight to Recife now boards at gate 14B. Boarding starts in 20 minutes."}
+{"id": "pt-BR-test-00017", "gloss_title": "Door open", "gloss_text": "The back door was opened at 03:12 and no one is registered as home."}
+{"id": "pt-BR-dev-00018", "gloss_title": "Hospital São Lucas", "gloss_text": "This is the hospital nurse. Your father is out of surgery and the doctor needs to talk to the family now. Can you call the reception?"}
+{"id": "pt-BR-test-00019", "gloss_title": "School notice", "gloss_text": "Your son Pedro has a high fever and is vomiting. Please pick him up at the office as soon as possible."}
+{"id": "pt-BR-test-00020", "gloss_title": "Director Marcelo Tavares", "gloss_text": "I need the revised proposal for the client in 15 minutes, reply here as soon as you can."}
+{"id": "pt-BR-dev-00021", "gloss_title": "Smoke sensor", "gloss_text": "The kitchen smoke detector went off. Check your home immediately."}
+{"id": "pt-BR-test-00022", "gloss_title": "Flood alert", "gloss_text": "Civil Defense: risk of flooding on the Tietê River. Residents of the riverside area must leave their homes immediately."}
+{"id": "pt-BR-test-00023", "gloss_title": "Public safety alert", "gloss_text": "Chemical leak in the industrial zone. Keep doors and windows closed and stay indoors."}
+{"id": "pt-BR-dev-00024", "gloss_title": "Build failed: main", "gloss_text": "The deploy pipeline of the loja-api repository failed at the tests step and the release was rolled back."}
+{"id": "pt-BR-test-00025", "gloss_title": "Road closed", "gloss_text": "Ponte Estaiada closed in both directions due to an accident. Travel time +35 min on your route."}
+{"id": "pt-BR-test-00026", "gloss_title": "Due today", "gloss_text": "The task \"Enviar relatório mensal\" is due today at 6 pm."}
+{"id": "pt-BR-dev-00027", "gloss_title": "Missed call", "gloss_text": "Unknown number +55 11 9XXXXXXXX called at 10:42"}
+{"id": "pt-BR-test-00028", "gloss_title": "Likely spam", "gloss_text": "Call from \"Oferta TIM Controle\" identified as telemarketing by 1,320 users"}
+{"id": "pt-BR-test-00029", "gloss_title": "Video call", "gloss_text": "Fake bank agent asks you to confirm your details by video, number +55 21 9XXXXXXXX flagged as a scam"}
+{"id": "pt-BR-dev-00030", "gloss_title": "SECURITY ALERT", "gloss_text": "Your account will be blocked in 2 hours. Update now: http://conta-seguranca.example.invalid/login"}
+{"id": "pt-BR-test-00031", "gloss_title": "Prize Promotion", "gloss_text": "Congratulations! You won a Pix of R$ 5.000 in the draw. Claim it through the link: http://premio-pix.example.invalid/x"}
+{"id": "pt-BR-test-00032", "gloss_title": "Company Barbecue", "gloss_text": "Beto: who's bringing the charcoal? I'm bringing the picanha lol"}
+{"id": "pt-BR-dev-00033", "gloss_title": "Silva Family 👨‍👩‍👧", "gloss_text": "Forwarded: URGENT!!! They say the whole neighborhood will run out of water tomorrow, share with all your contacts before it's too late"}
+{"id": "pt-BR-test-00034", "gloss_title": "Sound detected", "gloss_text": "Doorbell detected"}
+{"id": "pt-BR-test-00035", "gloss_title": "Your subscription renews tomorrow", "gloss_text": "Your Premium Individual plan will be renewed tomorrow for R$ 21,90."}
+{"id": "pt-BR-dev-00036", "gloss_title": "Payment problem", "gloss_text": "We couldn't process your subscription payment. Update your payment method to keep watching."}
+{"id": "pt-BR-test-00037", "gloss_title": "New release", "gloss_text": "Your Discover Weekly is ready, with 30 new songs for you 🎧"}
+{"id": "pt-BR-test-00038", "gloss_title": "New episode available", "gloss_text": "The new season of \"Cidade dos Segredos\" premiered today. Pick up where you left off."}
+{"id": "pt-BR-dev-00039", "gloss_title": "STORM OF DEALS ⚡", "gloss_text": "Urgent: up to 70% OFF today only! Deals end at midnight, hurry!"}
+{"id": "pt-BR-test-00040", "gloss_title": "Your order is out for delivery", "gloss_text": "The Bluetooth headphones package arrives today by 8 pm. Track the courier."}
+{"id": "pt-BR-test-00041", "gloss_title": "Pix received", "gloss_text": "You received a Pix from Ana Beatriz in the amount of R$ 85,00."}
+{"id": "pt-BR-dev-00042", "gloss_title": "Lucas", "gloss_text": "Bro, are you going to the game on Sunday? If so, let us know so we can sort out the ride"}
+{"id": "pt-BR-test-00043", "gloss_title": "Mom", "gloss_text": "Got home, son. On the way back stop by the market and bring bread and milk, okay?"}
+{"id": "pt-BR-test-00044", "gloss_title": "Missed call", "gloss_text": "Missed call from Rodrigo Colega at 15:20"}
+{"id": "pt-BR-dev-00045", "gloss_title": "Import fee pending", "gloss_text": "Your package is held at customs. Pay the fee of R$ 14,90 within 24h: http://correios-taxa.example.invalid/pagar"}
+{"id": "pt-BR-test-00046", "gloss_title": "ALERT! You ran out of lives", "gloss_text": "Get back to the game now! Free lives waiting for you 🍬"}
+{"id": "pt-BR-test-00047", "gloss_title": "Alert system test", "gloss_text": "This is a test message from the Civil Defense alert system. No action is required."}
+{"id": "pt-BR-dev-00048", "gloss_title": "Rate your trip", "gloss_text": "How was your ride with Fernanda? Leave your rating and a tip."}
+{"id": "pt-BR-test-00049", "gloss_title": "Forecast for tomorrow", "gloss_text": "High of 31°C and afternoon showers in São Paulo."}
+{"id": "pt-BR-test-00050", "gloss_title": "Goal! ⚽", "gloss_text": "Corinthians 1 x 0 Palmeiras, 34' of the 1st half."}
+{"id": "pt-BR-dev-00051", "gloss_title": "New likes", "gloss_text": "marina_sp and 12 other people liked your photo."}
+{"id": "pt-BR-test-00052", "gloss_title": "Movement reminder", "gloss_text": "You only took 120 steps this hour. How about a little walk? 🚶"}
+{"id": "pt-BR-test-00053", "gloss_title": "Your village is under attack!", "gloss_text": "Someone attacked your village, see what you lost and strike back."}
+{"id": "pt-BR-dev-00054", "gloss_title": "Time to practice", "gloss_text": "Your 12-day streak is in danger! Do a quick lesson today."}
+{"id": "pt-BR-test-00055", "gloss_title": "Updates available", "gloss_text": "12 apps have updates available."}
+{"id": "pt-BR-test-00056", "gloss_title": "Movement at the door", "gloss_text": "The front door camera detected movement at 14:05."}
+{"id": "pt-BR-dev-00057", "gloss_title": "Daniela Prado", "gloss_text": "When you have a little time call me, it's about Friday's lunch, nothing urgent 😄"}
+{"id": "pt-BR-test-00058", "gloss_title": "Weekly digest", "gloss_text": "Check out the news from your tech newsletter this week."}
+{"id": "pt-BR-test-00059", "gloss_title": "Appointment reminder", "gloss_text": "You have an appointment with Dr. Helena tomorrow at 9 am at the Vida clinic."}
+{"id": "pt-BR-dev-00060", "gloss_title": "LATEST NEWS", "gloss_text": "Latest news: Congress approves reform and deputies celebrate on the floor."}

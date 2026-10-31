@@ -1,0 +1,260 @@
+{"id": "ta-test-10000", "usecase": "promo_sale", "note": "grocery flash sale discount tonight"}
+{"id": "ta-test-10001", "usecase": "ride_other", "note": "weekly ride trip summary"}
+{"id": "ta-test-10002", "usecase": "travel_urgent", "note": "cancelled airport ride disruption"}
+{"id": "ta-test-10003", "usecase": "road_closure", "note": "bridge closed on user route"}
+{"id": "ta-test-10004", "usecase": "community_safety_notice", "note": "apartment gas leak evacuation"}
+{"id": "ta-test-10005", "usecase": "workout_prompt", "note": "step goal reached rest over"}
+{"id": "ta-test-10006", "usecase": "family_distress", "note": "urgent call me immediately mom"}
+{"id": "ta-test-10007", "usecase": "weather_routine", "note": "tomorrow weather forecast rain"}
+{"id": "ta-test-10008", "usecase": "game_notice", "note": "energy refilled daily rewards"}
+{"id": "ta-test-10009", "usecase": "sub_billing_issue", "note": "subscription payment declined"}
+{"id": "ta-test-10010", "usecase": "chat_family_routine", "note": "reached home and dinner plans"}
+{"id": "ta-test-10011", "usecase": "public_safety_alert", "note": "chemical leak shelter in place alert"}
+{"id": "ta-test-10012", "usecase": "health_routine", "note": "routine medicine reminder"}
+{"id": "ta-test-10013", "usecase": "ride_other", "note": "rate driver after ride"}
+{"id": "ta-test-10014", "usecase": "home_alarm_critical", "note": "smoke detector alarm in kitchen"}
+{"id": "ta-test-10015", "usecase": "medical_urgent", "note": "clinic urgent test results call today"}
+{"id": "ta-test-10016", "usecase": "scam_prize_loan", "note": "instant loan scam offer"}
+{"id": "ta-test-10017", "usecase": "meeting_soon", "note": "meeting starts in 5 minutes"}
+{"id": "ta-test-10018", "usecase": "group_event_info", "note": "monthly general meeting notice"}
+{"id": "ta-test-10019", "usecase": "delivery_update", "note": "food out for delivery"}
+{"id": "ta-test-10020", "usecase": "school_urgent", "note": "Child has high fever at school"}
+{"id": "ta-test-10021", "usecase": "family_distress", "note": "Father in hospital after road accident"}
+{"id": "ta-test-10022", "usecase": "call_spam_likely", "note": "Suspected spam credit card sales caller"}
+{"id": "ta-test-10023", "usecase": "group_event_info", "note": "Festival collection and street cleaning drive"}
+{"id": "ta-test-10024", "usecase": "earthquake_alert", "note": "Earthquake shaking alert drop and cover"}
+{"id": "ta-test-10026", "usecase": "call_unknown", "note": "Missed call from unknown number"}
+{"id": "ta-test-10027", "usecase": "promo_sale", "note": "Cart discount and cashback ends tonight"}
+{"id": "ta-test-10028", "usecase": "medical_routine", "note": "Doctor appointment reminder for tomorrow"}
+{"id": "ta-test-10029", "usecase": "home_security", "note": "Person detected by camera at night"}
+{"id": "ta-test-10030", "usecase": "call_missed_family", "note": "Repeated missed calls from mother"}
+{"id": "ta-test-10031", "usecase": "public_safety_alert", "note": "Chemical gas leak shelter in place"}
+{"id": "ta-test-10032", "usecase": "meeting_soon", "note": "Meeting starting in 5 minutes"}
+{"id": "ta-test-10033", "usecase": "weather_routine", "note": "Tomorrow weather forecast"}
+{"id": "ta-test-10034", "usecase": "health_critical", "note": "High heart rate alert"}
+{"id": "ta-test-10035", "usecase": "work_incident", "note": "Production server outage escalation"}
+{"id": "ta-test-10036", "usecase": "sound_alert_routine", "note": "Door knocking sound detected"}
+{"id": "ta-test-10037", "usecase": "call_missed_contact", "note": "Missed call from contact"}
+{"id": "ta-test-10038", "usecase": "school_info", "note": "Homework submission reminder"}
+{"id": "ta-test-10039", "usecase": "group_forward", "note": "Group good morning chain message"}
+{"id": "ta-test-10040", "usecase": "rec_music", "note": "Weekly music playlist recommendation"}
+{"id": "ta-test-10041", "usecase": "sub_renewal", "note": "subscription renews in 2 days"}
+{"id": "ta-test-10042", "usecase": "health_critical", "note": "fall detected emergency alert"}
+{"id": "ta-test-10043", "usecase": "scam_fake_delivery", "note": "fake parcel customs fee scam"}
+{"id": "ta-test-10044", "usecase": "health_critical", "note": "low blood oxygen critical alert"}
+{"id": "ta-test-10045", "usecase": "deadline", "note": "mock test due tonight deadline"}
+{"id": "ta-test-10046", "usecase": "group_event_info", "note": "apartment maintenance notice no water"}
+{"id": "ta-test-10047", "usecase": "sub_billing_issue", "note": "subscription payment billing failed"}
+{"id": "ta-test-10050", "usecase": "email_routine", "note": "weekly tech digest newsletter"}
+{"id": "ta-test-10051", "usecase": "rec_video", "note": "new episode streaming recommendation"}
+{"id": "ta-test-10052", "usecase": "learning_notice", "note": "learning streak reminder"}
+{"id": "ta-test-10053", "usecase": "sound_alert_critical", "note": "smoke alarm detected by sound notifications"}
+{"id": "ta-test-10054", "usecase": "voicemail_routine", "note": "casual non-urgent voicemail transcript"}
+{"id": "ta-test-10055", "usecase": "delivery_update", "note": "package out for delivery today"}
+{"id": "ta-test-10056", "usecase": "work_chat_routine", "note": "coworker lunch plans chat"}
+{"id": "ta-test-10057", "usecase": "scam_phishing", "note": "fake account suspension phishing link"}
+{"id": "ta-test-10058", "usecase": "school_info", "note": "parent-teacher meeting schedule announcement"}
+{"id": "ta-test-10059", "usecase": "ride_other", "note": "weekly ride summary from cab app"}
+{"id": "ta-test-10060", "usecase": "voicemail_routine", "note": "non-urgent voicemail about notebook"}
+{"id": "ta-test-10061", "usecase": "navigation_prompt", "note": "turn-by-turn navigation arriving at destination"}
+{"id": "ta-test-10062", "usecase": "call_scam", "note": "scam missed call from fake customs"}
+{"id": "ta-test-10063", "usecase": "travel_routine", "note": "Bus booking confirmed for tomorrow"}
+{"id": "ta-test-10064", "usecase": "telecom_gov_routine", "note": "Data pack recharge reminder"}
+{"id": "ta-test-10065", "usecase": "ride_other", "note": "Rate driver after ride"}
+{"id": "ta-test-10066", "usecase": "ride_arriving", "note": "Driver arriving in 3 minutes"}
+{"id": "ta-test-10067", "usecase": "marketing_push", "note": "Promotional tip to save addresses"}
+{"id": "ta-test-10068", "usecase": "social_activity", "note": "Post like and comment notification"}
+{"id": "ta-test-10069", "usecase": "deadline", "note": "Assignment deadline due tonight"}
+{"id": "ta-test-10070", "usecase": "sound_alert_critical", "note": "Glass breaking sound detected"}
+{"id": "ta-test-10071", "usecase": "vip_ping", "note": "Manager escalation to join call immediately"}
+{"id": "ta-test-10072", "usecase": "group_chatter", "note": "Apartment group chat casual banter"}
+{"id": "ta-test-10073", "usecase": "sound_alert_routine", "note": "Doorbell sound detected"}
+{"id": "ta-test-10074", "usecase": "work_incident", "note": "Production outage on-call alert"}
+{"id": "ta-test-10075", "usecase": "home_alarm_critical", "note": "Kitchen smoke detector emergency"}
+{"id": "ta-test-10076", "usecase": "promo_sale", "note": "Weekly grocery discount offer"}
+{"id": "ta-test-10077", "usecase": "scam_fake_delivery", "note": "Fake parcel customs fee scam"}
+{"id": "ta-test-10078", "usecase": "earthquake_alert", "note": "Earthquake warning and safety prompt"}
+{"id": "ta-test-10079", "usecase": "marketing_push", "note": "Abandoned cart reminder"}
+{"id": "ta-test-10080", "usecase": "chat_family_routine", "note": "Family reached home update"}
+{"id": "ta-test-10081", "usecase": "call_unknown", "note": "Missed call from unknown number"}
+{"id": "ta-test-10082", "usecase": "road_closure", "note": "Flyover closure traffic advisory"}
+{"id": "ta-test-10083", "usecase": "sound_alert_routine", "note": "doorbell sound detected"}
+{"id": "ta-test-10084", "usecase": "public_safety_alert", "note": "chemical gas leak shelter in place"}
+{"id": "ta-test-10085", "usecase": "chat_family_routine", "note": "family dinner plan discussion"}
+{"id": "ta-test-10086", "usecase": "promo_sale", "note": "discount coupon offer ending tonight"}
+{"id": "ta-test-10087", "usecase": "health_critical", "note": "high resting heart rate alert"}
+{"id": "ta-test-10088", "usecase": "medical_urgent", "note": "urgent lab results regarding family member"}
+{"id": "ta-test-10089", "usecase": "weather_severe", "note": "severe storm warning within three hours"}
+{"id": "ta-test-10090", "usecase": "scam_phishing", "note": "fake bank account suspension phishing message"}
+{"id": "ta-test-10091", "usecase": "call_spam_likely", "note": "suspected spam caller notification"}
+{"id": "ta-test-10092", "usecase": "sports_update", "note": "cricket match toss and team update"}
+{"id": "ta-test-10093", "usecase": "news_breaking_general", "note": "metro service launch breaking news"}
+{"id": "ta-test-10094", "usecase": "call_unknown", "note": "incoming call from unknown number"}
+{"id": "ta-test-10095", "usecase": "rec_music", "note": "curated playlist recommendation"}
+{"id": "ta-test-10096", "usecase": "visitor_gate", "note": "delivery entry approval at gate"}
+{"id": "ta-test-10097", "usecase": "maps_routine", "note": "weekly driving summary and saved places"}
+{"id": "ta-test-10098", "usecase": "home_security", "note": "front door opened at night"}
+{"id": "ta-test-10099", "usecase": "health_routine", "note": "routine vitamin pill reminder"}
+{"id": "ta-test-10100", "usecase": "work_tool_routine", "note": "github repository star notification"}
+{"id": "ta-test-10101", "usecase": "telecom_gov_routine", "note": "vehicle emission certificate renewal reminder"}
+{"id": "ta-test-10102", "usecase": "ride_other", "note": "rate ride driver feedback request"}
+{"id": "ta-test-10103", "usecase": "payment_routine", "note": "electricity bill payment due reminder"}
+{"id": "ta-test-10104", "usecase": "news_breaking_general", "note": "news headline about renewable energy policy"}
+{"id": "ta-test-10105", "usecase": "call_unknown", "note": "missed call from unknown number"}
+{"id": "ta-test-10106", "usecase": "delivery_update", "note": "food order out for delivery"}
+{"id": "ta-test-10107", "usecase": "school_urgent", "note": "child ill at school pick up immediately"}
+{"id": "ta-test-10108", "usecase": "scam_fake_delivery", "note": "fake customs parcel seizure scam"}
+{"id": "ta-test-10109", "usecase": "sports_update", "note": "cricket match toss update"}
+{"id": "ta-test-10110", "usecase": "marketing_push", "note": "abandoned cart re engagement notification"}
+{"id": "ta-test-10111", "usecase": "ride_other", "note": "completed ride fare receipt"}
+{"id": "ta-test-10112", "usecase": "payment_routine", "note": "upi money received notification"}
+{"id": "ta-test-10113", "usecase": "health_critical", "note": "abnormal heart rate alert"}
+{"id": "ta-test-10114", "usecase": "rec_music", "note": "recommended music playlist"}
+{"id": "ta-test-10115", "usecase": "telecom_gov_routine", "note": "prepaid mobile recharge reminder"}
+{"id": "ta-test-10116", "usecase": "deadline", "note": "mock test due today"}
+{"id": "ta-test-10117", "usecase": "navigation_prompt", "note": "arriving at destination alert"}
+{"id": "ta-test-10118", "usecase": "weather_severe", "note": "severe heavy rain red alert"}
+{"id": "ta-test-10119", "usecase": "deadline", "note": "project report due tonight"}
+{"id": "ta-test-10120", "usecase": "deadline", "note": "review deadline tonight"}
+{"id": "ta-test-10121", "usecase": "home_routine", "note": "daytime door motion sensor"}
+{"id": "ta-test-10122", "usecase": "navigation_prompt", "note": "traffic reroute prompt"}
+{"id": "ta-test-10123", "usecase": "payment_routine", "note": "Water bill due date reminder"}
+{"id": "ta-test-10124", "usecase": "voicemail_routine", "note": "Voicemail transcript about parcel delivery"}
+{"id": "ta-test-10125", "usecase": "game_notice", "note": "Daily game reward available"}
+{"id": "ta-test-10126", "usecase": "earthquake_alert", "note": "Earthquake emergency alert take cover"}
+{"id": "ta-test-10127", "usecase": "news_breaking_general", "note": "Breaking global news headline"}
+{"id": "ta-test-10128", "usecase": "family_distress", "note": "Immediate family medical emergency"}
+{"id": "ta-test-10129", "usecase": "scam_phishing", "note": "Fake account suspension phishing notice"}
+{"id": "ta-test-10130", "usecase": "sub_billing_issue", "note": "Subscription payment failed update card"}
+{"id": "ta-test-10131", "usecase": "rec_music", "note": "Music playlist recommendation"}
+{"id": "ta-test-10132", "usecase": "scam_prize_loan", "note": "Fake cash prize lottery scam"}
+{"id": "ta-test-10133", "usecase": "medical_routine", "note": "Dental checkup appointment reminder"}
+{"id": "ta-test-10134", "usecase": "civic_advisory", "note": "Air quality advisory notice"}
+{"id": "ta-test-10135", "usecase": "call_missed_family", "note": "Missed calls from family member"}
+{"id": "ta-test-10136", "usecase": "family_distress", "note": "Family emergency father hospitalized"}
+{"id": "ta-test-10137", "usecase": "health_routine", "note": "Routine medication reminder"}
+{"id": "ta-test-10138", "usecase": "community_safety_notice", "note": "Building gas leak evacuation notice"}
+{"id": "ta-test-10139", "usecase": "learning_notice", "note": "Study streak reminder"}
+{"id": "ta-test-10140", "usecase": "work_tool_routine", "note": "New task assigned in Todoist"}
+{"id": "ta-test-10141", "usecase": "group_event_info", "note": "Society event announcement drawing competition"}
+{"id": "ta-test-10142", "usecase": "tsunami_flood_wildfire", "note": "Severe flood dam release evacuation"}
+{"id": "ta-test-10143", "usecase": "home_security", "note": "person detected on camera at night"}
+{"id": "ta-test-10144", "usecase": "tsunami_flood_wildfire", "note": "tsunami warning alert"}
+{"id": "ta-test-10145", "usecase": "call_missed_contact", "note": "missed call from college friend"}
+{"id": "ta-test-10146", "usecase": "call_unknown", "note": "missed call from unknown number"}
+{"id": "ta-test-10147", "usecase": "ride_other", "note": "completed ride receipt and rating"}
+{"id": "ta-test-10148", "usecase": "scam_fake_delivery", "note": "fake customs parcel scam"}
+{"id": "ta-test-10149", "usecase": "ride_other", "note": "weekly ride summary from ride app"}
+{"id": "ta-test-10150", "usecase": "civic_advisory", "note": "scheduled power cut notice"}
+{"id": "ta-test-10151", "usecase": "group_forward", "note": "good morning forward message"}
+{"id": "ta-test-10152", "usecase": "community_safety_notice", "note": "contaminated drinking water notice in building"}
+{"id": "ta-test-10153", "usecase": "system_routine", "note": "battery low warning"}
+{"id": "ta-test-10154", "usecase": "call_missed_contact", "note": "missed audio call from contact"}
+{"id": "ta-test-10155", "usecase": "call_missed_contact", "note": "video call from contact"}
+{"id": "ta-test-10156", "usecase": "visitor_gate", "note": "delivery visitor gate approval"}
+{"id": "ta-test-10157", "usecase": "social_activity", "note": "likes on status post"}
+{"id": "ta-test-10158", "usecase": "health_routine", "note": "routine medicine reminder"}
+{"id": "ta-test-10159", "usecase": "home_routine", "note": "daytime motion detected on camera"}
+{"id": "ta-test-10160", "usecase": "sports_update", "note": "cricket match starting toss update"}
+{"id": "ta-test-10161", "usecase": "marketing_push", "note": "re-engagement inactive user push"}
+{"id": "ta-test-10162", "usecase": "public_safety_alert", "note": "chemical gas leak shelter alert"}
+{"id": "ta-test-10163", "usecase": "email_routine", "note": "Monthly newsletter email"}
+{"id": "ta-test-10164", "usecase": "ride_arriving", "note": "Driver arrived at pickup location"}
+{"id": "ta-test-10165", "usecase": "voicemail_routine", "note": "Non-urgent voicemail message"}
+{"id": "ta-test-10166", "usecase": "weather_routine", "note": "Rain forecast for next two days"}
+{"id": "ta-test-10167", "usecase": "learning_notice", "note": "Study streak reminder"}
+{"id": "ta-test-10168", "usecase": "family_distress", "note": "Urgent call me immediately from mother"}
+{"id": "ta-test-10169", "usecase": "news_breaking_general", "note": "General news summary"}
+{"id": "ta-test-10170", "usecase": "sub_renewal", "note": "Subscription pass ending tomorrow"}
+{"id": "ta-test-10171", "usecase": "rec_music", "note": "New music album recommendation"}
+{"id": "ta-test-10173", "usecase": "vip_ping", "note": "Manager escalation to join call immediately"}
+{"id": "ta-test-10174", "usecase": "workout_prompt", "note": "daily step goal reached"}
+{"id": "ta-dev-10175", "usecase": "scam_fake_delivery", "note": "fake courier fee scam"}
+{"id": "ta-dev-10176", "usecase": "scam_fake_delivery", "note": "fake toll fine scam"}
+{"id": "ta-dev-10177", "usecase": "home_security", "note": "night door opening detected"}
+{"id": "ta-dev-10178", "usecase": "call_unknown", "note": "missed call from unknown number"}
+{"id": "ta-dev-10179", "usecase": "health_critical", "note": "abnormally high heart rate"}
+{"id": "ta-dev-10180", "usecase": "scam_fake_delivery", "note": "fake parcel held notice"}
+{"id": "ta-dev-10181", "usecase": "family_distress", "note": "urgent call request from mother"}
+{"id": "ta-dev-10182", "usecase": "learning_notice", "note": "study streak reminder"}
+{"id": "ta-dev-10183", "usecase": "scam_phishing", "note": "fake bank account blocked notice"}
+{"id": "ta-dev-10184", "usecase": "group_event_info", "note": "residents meeting schedule announcement"}
+{"id": "ta-dev-10185", "usecase": "road_closure", "note": "traffic diversion on ring road"}
+{"id": "ta-dev-10186", "usecase": "rec_music", "note": "curated melody playlist recommendation"}
+{"id": "ta-dev-10187", "usecase": "telecom_gov_routine", "note": "mobile plan recharge reminder"}
+{"id": "ta-dev-10188", "usecase": "tsunami_flood_wildfire", "note": "dam release flood evacuation alert"}
+{"id": "ta-dev-10189", "usecase": "payment_routine", "note": "credit card bill due reminder"}
+{"id": "ta-dev-10190", "usecase": "social_activity", "note": "likes on shared photo"}
+{"id": "ta-dev-10191", "usecase": "group_event_info", "note": "water tank cleaning maintenance notice"}
+{"id": "ta-dev-10192", "usecase": "home_routine", "note": "robot vacuum cleaning routine completed"}
+{"id": "ta-dev-10193", "usecase": "civic_advisory", "note": "scheduled power cut notice"}
+{"id": "ta-dev-10194", "usecase": "ride_other", "note": "ride receipt and driver rating"}
+{"id": "ta-dev-10195", "usecase": "sub_renewal", "note": "subscription renewal reminder"}
+{"id": "ta-dev-10196", "usecase": "vip_ping", "note": "manager urgent meeting request"}
+{"id": "ta-dev-10197", "usecase": "scam_fake_delivery", "note": "fake parcel customs fee scam"}
+{"id": "ta-dev-10198", "usecase": "weather_routine", "note": "tomorrow weather forecast"}
+{"id": "ta-dev-10199", "usecase": "work_incident", "note": "payment server down production incident"}
+{"id": "ta-dev-10200", "usecase": "health_critical", "note": "high heart rate alert"}
+{"id": "ta-dev-10201", "usecase": "sound_alert_routine", "note": "doorbell and knocking sound alert"}
+{"id": "ta-dev-10202", "usecase": "travel_routine", "note": "bus booking confirmed"}
+{"id": "ta-dev-10203", "usecase": "group_event_info", "note": "apartment maintenance meeting notice"}
+{"id": "ta-dev-10204", "usecase": "build_failure", "note": "CI build failed on main branch"}
+{"id": "ta-dev-10205", "usecase": "meeting_soon", "note": "Sprint planning meeting starts in three minutes"}
+{"id": "ta-dev-10206", "usecase": "payment_routine", "note": "Money credited to bank account"}
+{"id": "ta-dev-10207", "usecase": "civic_advisory", "note": "Moderate air quality advisory notice"}
+{"id": "ta-dev-10208", "usecase": "voicemail_routine", "note": "Routine voicemail regarding delivery tomorrow"}
+{"id": "ta-dev-10209", "usecase": "community_safety_notice", "note": "Gas leak evacuation in apartment building"}
+{"id": "ta-dev-10210", "usecase": "social_activity", "note": "Video post trending with likes"}
+{"id": "ta-dev-10211", "usecase": "road_closure", "note": "Road closure causing traffic delay"}
+{"id": "ta-dev-10212", "usecase": "work_chat_routine", "note": "Colleague asking about lunch plans"}
+{"id": "ta-dev-10213", "usecase": "meeting_soon", "note": "Project review meeting starts in ten minutes"}
+{"id": "ta-dev-10214", "usecase": "home_routine", "note": "vacuum cleaning completed"}
+{"id": "ta-dev-10215", "usecase": "weather_routine", "note": "daily weather forecast for tomorrow"}
+{"id": "ta-dev-10216", "usecase": "public_safety_alert", "note": "toxic gas leak emergency alert"}
+{"id": "ta-dev-10217", "usecase": "group_chatter", "note": "apartment society group chat message"}
+{"id": "ta-dev-10218", "usecase": "road_closure", "note": "bridge closure traffic diversion notice"}
+{"id": "ta-dev-10219", "usecase": "social_activity", "note": "tagged in social media video"}
+{"id": "ta-dev-10220", "usecase": "vip_ping", "note": "director urgent escalation call request"}
+{"id": "ta-dev-10221", "usecase": "scam_prize_loan", "note": "lottery cash prize scam message"}
+{"id": "ta-dev-10222", "usecase": "medical_urgent", "note": "urgent doctor call regarding mother"}
+{"id": "ta-dev-10223", "usecase": "workout_prompt", "note": "workout rest interval completed"}
+{"id": "ta-dev-10224", "usecase": "rec_music", "note": "weekly music playlist recommendation"}
+{"id": "ta-dev-10225", "usecase": "call_missed_family", "note": "missed calls from mother"}
+{"id": "ta-dev-10226", "usecase": "school_info", "note": "parent teacher meeting next week"}
+{"id": "ta-dev-10227", "usecase": "call_missed_family", "note": "missed calls from brother"}
+{"id": "ta-dev-10228", "usecase": "travel_urgent", "note": "train platform change notice"}
+{"id": "ta-dev-10229", "usecase": "game_notice", "note": "new game season announcement"}
+{"id": "ta-dev-10230", "usecase": "health_critical", "note": "high resting heart rate alert"}
+{"id": "ta-dev-10231", "usecase": "group_event_info", "note": "apartment society maintenance notice"}
+{"id": "ta-dev-10232", "usecase": "call_spam_likely", "note": "suspected spam call report"}
+{"id": "ta-dev-10233", "usecase": "scam_phishing", "note": "fake bank account blocked notice"}
+{"id": "ta-dev-10234", "usecase": "school_urgent", "note": "Child sick pick up from school"}
+{"id": "ta-dev-10235", "usecase": "scam_fake_delivery", "note": "Fake parcel held payment scam"}
+{"id": "ta-dev-10236", "usecase": "payment_routine", "note": "Money received in bank account"}
+{"id": "ta-dev-10237", "usecase": "scam_phishing", "note": "Phishing fake account security alert"}
+{"id": "ta-dev-10238", "usecase": "game_notice", "note": "Gaming guild clan invite"}
+{"id": "ta-dev-10239", "usecase": "learning_notice", "note": "Learning app streak reminder"}
+{"id": "ta-dev-10240", "usecase": "family_distress", "note": "Family member accident hospital alert"}
+{"id": "ta-dev-10241", "usecase": "investment_alert", "note": "Stock price target alert"}
+{"id": "ta-dev-10242", "usecase": "public_safety_alert", "note": "Toxic gas leak shelter indoors"}
+{"id": "ta-dev-10243", "usecase": "weather_severe", "note": "Severe storm alert next six hours"}
+{"id": "ta-dev-10244", "usecase": "workout_prompt", "note": "step goal completed"}
+{"id": "ta-dev-10245", "usecase": "meeting_soon", "note": "meeting starts in 5 minutes"}
+{"id": "ta-dev-10246", "usecase": "ride_other", "note": "ride receipt and rating prompt"}
+{"id": "ta-dev-10247", "usecase": "caption_status", "note": "live caption language pack ready"}
+{"id": "ta-dev-10248", "usecase": "marketing_push", "note": "items in cart reminder"}
+{"id": "ta-dev-10249", "usecase": "scam_prize_loan", "note": "fake lottery prize win"}
+{"id": "ta-dev-10250", "usecase": "navigation_prompt", "note": "turn by turn navigation instruction"}
+{"id": "ta-dev-10251", "usecase": "ride_arriving", "note": "driver arrived at pickup point"}
+{"id": "ta-dev-10252", "usecase": "tsunami_flood_wildfire", "note": "flood warning and evacuation order"}
+{"id": "ta-dev-10253", "usecase": "sound_alert_routine", "note": "doorbell sound detected"}
+{"id": "ta-dev-10254", "usecase": "sub_renewal", "note": "VIP monthly subscription renews tomorrow"}
+{"id": "ta-dev-10255", "usecase": "deadline", "note": "practice test submission due tonight"}
+{"id": "ta-dev-10256", "usecase": "community_safety_notice", "note": "gas leak evacuation in apartment block"}
+{"id": "ta-dev-10257", "usecase": "community_safety_notice", "note": "flooding in apartment basement parking"}
+{"id": "ta-dev-10258", "usecase": "deadline", "note": "mock test due today at noon"}
+{"id": "ta-dev-10259", "usecase": "ride_other", "note": "ride completed rate driver prompt"}
+{"id": "ta-dev-10260", "usecase": "call_scam", "note": "scam call fake electricity board official"}
+{"id": "ta-dev-10261", "usecase": "caption_status", "note": "language pack downloaded for live transcription"}
+{"id": "ta-dev-10262", "usecase": "deadline", "note": "project essay due this evening"}
+{"id": "ta-dev-10263", "usecase": "home_alarm_critical", "note": "kitchen smoke alarm detected danger"}

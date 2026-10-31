@@ -36,7 +36,7 @@ object FeedbackRecorder {
         )
         AppDatabase.getDatabase(context).notificationDao().insert(updated)
         if (ReviewQueue.refresh(context)) context.sendBroadcast(Intent(NotificationFilterService.ACTION_UPDATE_COUNT))
-        if (learn) PersonalLearning.record(context, notif.title, notif.text, activeMode, makeUrgent)
+        if (learn) PersonalLearning.record(context, notif.title, notif.text, activeMode, makeUrgent, notif.packageName)
         return updated
     }
 }

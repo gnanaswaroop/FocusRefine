@@ -11,10 +11,10 @@ object PersonalLearning {
     private const val TAG = "PersonalLearning"
 
     /** Learns that the user wants this notification [urgent] (Shown) or not (Muted) in [mode]. Returns the corrections now stored. */
-    fun record(context: Context, title: String?, text: String?, mode: String, urgent: Boolean): Int? {
+    fun record(context: Context, title: String?, text: String?, mode: String, urgent: Boolean, packageName: String? = null): Int? {
         val engine = EmbeddingClassifier.shared(context) ?: return null
         return try {
-            engine.learn(title, text, mode, urgent)
+            engine.learn(title, text, packageName, mode, urgent)
         } catch (e: Exception) {
             Log.w(TAG, "Could not learn from a correction: ${e.message}")
             null

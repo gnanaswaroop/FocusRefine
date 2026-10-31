@@ -29,13 +29,15 @@ class PipelineE2ETest {
     private val h = ServiceHarness
     private val focus = "Deep Work / Focus"
     private val sleep = "Sleeping / Rest"
+    private val commute = "Commute"
+    private val workout = "Workout / Gym"
 
-    // Shown in Focus (score +0.135) and Muted in Sleeping (-0.125)
-    private val buildFailed = "Jenkins" to "Build #482 failed on main: deploy blocked"
-    // Sleeping, a hair above the threshold (+0.011): Shown at Balanced, Muted at Strict
-    private val borderline = "Dexcom" to "Urgent low glucose alert: 55 mg/dL"
-    // Sleeping, clearly urgent (+0.096) and clearly routine (-0.112 in every mode)
-    private val clearlyUrgent = "Omron Heart" to "Urgent low glucose alert: 48 mg/dL"
+    // Shown in Commute (+2.21) and Muted in Workout (-6.28), the production engine with no app context
+    private val standup = "Calendar" to "Standup in 5 minutes"
+    // Commute, a hair above the threshold (+0.09): Shown at Balanced, Muted at Strict; a close call in Sleeping (+0.89)
+    private val borderline = "Office" to "Server down: production alert, respond now"
+    // Sleeping, clearly urgent (+5.04) and clearly routine (-3.34)
+    private val clearlyUrgent = "Doctor" to "Please call me back, lab results are ready"
     private val clearlyRoutine = "Myntra" to "Lightning deal: 50% off sneakers"
 
     @After
@@ -55,21 +57,21 @@ class PipelineE2ETest {
 
     @Test
     fun theSameNotificationIsDecidedByTheActiveMode() {
-        h.start(focus)
-        val inFocus = postAndRead(buildFailed)
-        assertTrue("shown while focusing (${inFocus.explanation})", inFocus.isUrgent)
-        assertTrue(inFocus.explanation!!.contains("AI Pipeline") && inFocus.explanation!!.contains(focus))
+        h.start(commute)
+        val inCommute = postAndRead(standup)
+        assertTrue("shown while commuting (${inCommute.explanation})", inCommute.isUrgent)
+        assertTrue(inCommute.explanation!!.contains("AI Pipeline") && inCommute.explanation!!.contains(commute))
 
         h.dao.deleteAll()
-        setPref { putString("current_mode", sleep) }
-        val asleep = postAndRead(buildFailed)
-        assertFalse("muted while sleeping (${asleep.explanation})", asleep.isUrgent)
-        assertTrue(asleep.explanation!!.contains(sleep))
+        setPref { putString("current_mode", workout) }
+        val inWorkout = postAndRead(standup)
+        assertFalse("muted while working out (${inWorkout.explanation})", inWorkout.isUrgent)
+        assertTrue(inWorkout.explanation!!.contains(workout))
     }
 
     @Test
     fun filteringStrengthMovesABorderlineDecision() {
-        h.start(sleep)
+        h.start(commute)
         val balanced = postAndRead(borderline)
         assertTrue("shown at Balanced (${balanced.explanation})", balanced.isUrgent)
 

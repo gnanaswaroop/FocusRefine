@@ -1,0 +1,257 @@
+# package<TAB>display name<TAB>app_category<TAB>regions<TAB>optional flag: system (OS package, no store page) or external (shipped outside the global store)
+# Real Android application ids. Each id is checked against the public store listing by verify_apps.py;
+# ids that do not resolve are dropped. Categories: messaging calls email work social media_music media_video
+# payments banking shopping food_delivery ride_maps travel emergency weather news sports finance health_fitness
+# smart_home games education community subscriptions system government telecom
+com.whatsapp	WhatsApp	messaging	GLOBAL
+com.whatsapp.w4b	WhatsApp Business	messaging	IN,BR,ID,MX
+org.telegram.messenger	Telegram	messaging	GLOBAL
+com.facebook.orca	Messenger	messaging	GLOBAL
+jp.naver.line.android	LINE	messaging	JP,ID
+com.tencent.mm	WeChat	messaging	CN	external
+com.kakao.talk	KakaoTalk	messaging	KR
+com.viber.voip	Viber	messaging	RU,EG,DE
+org.thoughtcrime.securesms	Signal	messaging	GLOBAL
+com.google.android.apps.messaging	Messages	messaging	GLOBAL
+com.discord	Discord	messaging	GLOBAL
+com.imo.android.imoim	imo	messaging	BD,EG,SA,IN
+com.snapchat.android	Snapchat	social	US,GB,SA,FR
+com.instagram.android	Instagram	social	GLOBAL
+com.facebook.katana	Facebook	social	GLOBAL
+com.twitter.android	X	social	GLOBAL
+com.linkedin.android	LinkedIn	social	GLOBAL
+com.zhiliaoapp.musically	TikTok	social	GLOBAL
+com.reddit.frontpage	Reddit	social	US,GB,DE
+com.vkontakte.android	VK	social	RU
+ru.ok.android	OK	social	RU
+com.pinterest	Pinterest	social	GLOBAL
+in.mohalla.sharechat	ShareChat	social	IN
+com.truecaller	Truecaller	calls	IN,GLOBAL
+com.google.android.dialer	Phone	calls	GLOBAL
+com.google.android.apps.tachyon	Google Meet	calls	GLOBAL
+us.zoom.videomeetings	Zoom	work	GLOBAL
+com.microsoft.teams	Microsoft Teams	work	GLOBAL
+com.Slack	Slack	work	GLOBAL
+com.google.android.gm	Gmail	email	GLOBAL
+com.microsoft.office.outlook	Outlook	email	GLOBAL
+com.yahoo.mobile.client.android.mail	Yahoo Mail	email	US,JP
+com.google.android.calendar	Calendar	work	GLOBAL
+com.google.android.apps.docs	Drive	work	GLOBAL
+com.dropbox.android	Dropbox	work	GLOBAL
+com.todoist	Todoist	work	GLOBAL
+com.asana.app	Asana	work	US,GB,DE
+com.atlassian.android.jira.core	Jira	work	GLOBAL
+com.github.android	GitHub	work	GLOBAL
+com.spotify.music	Spotify	media_music	GLOBAL
+com.google.android.apps.youtube.music	YouTube Music	media_music	GLOBAL
+com.jio.media.jiobeats	JioSaavn	media_music	IN
+com.gaana	Gaana	media_music	IN
+com.bsbportal.music	Wynk Music	media_music	IN
+deezer.android.app	Deezer	media_music	FR,BR,DE
+com.soundcloud.android	SoundCloud	media_music	GLOBAL
+com.audible.application	Audible	media_music	US,GB,DE,FR
+com.netflix.mediaclient	Netflix	media_video	GLOBAL
+com.google.android.youtube	YouTube	media_video	GLOBAL
+com.amazon.avod.thirdpartyclient	Prime Video	media_video	GLOBAL
+in.startv.hotstar	Disney+ Hotstar	media_video	IN,ID
+com.disney.disneyplus	Disney+	media_video	US,GB,DE,FR,BR,MX,ES
+tv.twitch.android.app	Twitch	media_video	GLOBAL
+com.google.android.apps.nbu.paisa.user	Google Pay	payments	IN
+com.google.android.apps.walletnfcrel	Google Wallet	payments	US,GB,DE,FR,ES,BR
+net.one97.paytm	Paytm	payments	IN
+com.phonepe.app	PhonePe	payments	IN
+in.org.npci.upiapp	BHIM	payments	IN
+com.paypal.android.p2pmobile	PayPal	payments	GLOBAL
+com.venmo	Venmo	payments	US
+com.squareup.cash	Cash App	payments	US,GB
+com.mercadopago.wallet	Mercado Pago	payments	BR,MX
+com.nu.production	Nubank	banking	BR,MX
+com.revolut.revolut	Revolut	banking	GB,DE,FR,ES
+com.transferwise.android	Wise	banking	GLOBAL
+com.chase.sig.android	Chase	banking	US
+com.wf.wellsfargomobile	Wells Fargo	banking	US
+com.sbi.lotusintouch	YONO SBI	banking	IN
+com.csam.icici.bank.imobile	iMobile Pay	banking	IN
+com.amazon.mShop.android.shopping	Amazon Shopping	shopping	GLOBAL
+com.flipkart.android	Flipkart	shopping	IN
+com.myntra.android	Myntra	shopping	IN
+com.meesho.supply	Meesho	shopping	IN
+com.mercadolibre	Mercado Libre	shopping	BR,MX,ES
+com.shopee.id	Shopee	shopping	ID
+com.lazada.android	Lazada	shopping	ID
+com.alibaba.aliexpresshd	AliExpress	shopping	GLOBAL
+com.einnovation.temu	Temu	shopping	US,GB,DE,FR,ES,MX,BR
+com.ebay.mobile	eBay	shopping	US,GB,DE
+com.walmart.android	Walmart	shopping	US
+com.taobao.taobao	Taobao	shopping	CN	external
+in.swiggy.android	Swiggy	food_delivery	IN
+com.application.zomato	Zomato	food_delivery	IN
+com.ubercab.eats	Uber Eats	food_delivery	US,GB,FR,MX
+com.dd.doordash	DoorDash	food_delivery	US
+com.global.foodpanda.android	foodpanda	food_delivery	BD,SA
+com.grofers.customerapp	Blinkit	food_delivery	IN
+com.bigbasket.mobileapp	BigBasket	food_delivery	IN
+com.ubercab	Uber	ride_maps	GLOBAL
+com.olacabs.customer	Ola	ride_maps	IN
+com.grabtaxi.passenger	Grab	ride_maps	ID
+com.gojek.app	Gojek	ride_maps	ID
+ee.mtakso.client	Bolt	ride_maps	DE,FR,ES,GB
+me.lyft.android	Lyft	ride_maps	US
+com.google.android.apps.maps	Google Maps	ride_maps	GLOBAL
+com.waze	Waze	ride_maps	GLOBAL
+com.citymapper.app.release	Citymapper	ride_maps	GB,FR,DE
+in.redbus.android	redBus	travel	IN
+com.makemytrip	MakeMyTrip	travel	IN
+cris.org.in.prs.ima	IRCTC Rail Connect	travel	IN
+com.booking	Booking.com	travel	GLOBAL
+com.airbnb.android	Airbnb	travel	GLOBAL
+com.google.android.cellbroadcastreceiver	Wireless emergency alerts	emergency	GLOBAL	system
+com.google.android.gms	Google Play services	emergency	GLOBAL	system
+com.weather.Weather	The Weather Channel	weather	US,IN,GB
+com.accuweather.android	AccuWeather	weather	GLOBAL
+com.google.android.googlequicksearchbox	Google	weather	GLOBAL
+jp.co.yahoo.android.emg	Yahoo! Disaster Alert	emergency	JP
+com.google.audio.hearing.visualization.accessibility.scribe	Live Transcribe & Sound Notifications	system	GLOBAL
+com.google.android.as	Android System Intelligence	system	GLOBAL	system
+android	Android System	system	GLOBAL	system
+com.android.vending	Google Play Store	subscriptions	GLOBAL	system
+com.google.android.apps.subscriptions.red	Google One	subscriptions	GLOBAL
+com.google.android.apps.turbo	Device Health Services	system	GLOBAL	system
+in.gov.umang.negd.g2c	UMANG	government	IN
+com.jio.myjio	MyJio	telecom	IN
+com.myairtelapp	Airtel Thanks	telecom	IN
+com.fitbit.FitbitMobile	Fitbit	health_fitness	GLOBAL
+com.google.android.apps.fitness	Google Fit	health_fitness	GLOBAL
+com.sec.android.app.shealth	Samsung Health	health_fitness	GLOBAL
+com.strava	Strava	health_fitness	GLOBAL
+com.myfitnesspal.android	MyFitnessPal	health_fitness	US,GB,DE,BR
+com.garmin.android.apps.connectmobile	Garmin Connect	health_fitness	GLOBAL
+com.nike.plusgps	Nike Run Club	health_fitness	GLOBAL
+com.google.android.apps.chromecast.app	Google Home	smart_home	GLOBAL
+com.amazon.dee.app	Alexa	smart_home	GLOBAL
+com.ringapp	Ring	smart_home	US,GB,DE
+com.philips.lighting.hue2	Philips Hue	smart_home	GLOBAL
+com.xiaomi.smarthome	Mi Home	smart_home	CN,IN,ID,RU
+com.tplink.kasa_android	Kasa Smart	smart_home	US,GB
+com.google.android.apps.magazines	Google News	news	GLOBAL
+flipboard.app	Flipboard	news	GLOBAL
+bbc.mobile.news.ww	BBC News	news	GB,GLOBAL
+com.nytimes.android	The New York Times	news	US
+com.cnn.mobile.android.phone	CNN	news	US
+com.eterno	Dailyhunt	news	IN
+com.espn.score_center	ESPN	sports	US,MX
+com.cricbuzz.android	Cricbuzz	sports	IN
+com.mobilefootie.wc2010	FotMob	sports	GLOBAL
+com.robinhood.android	Robinhood	finance	US
+com.zerodha.kite3	Zerodha Kite	finance	IN
+com.coinbase.android	Coinbase	finance	US,GB,DE
+com.binance.dev	Binance	finance	GLOBAL
+com.supercell.clashofclans	Clash of Clans	games	GLOBAL
+com.king.candycrushsaga	Candy Crush Saga	games	GLOBAL
+com.mojang.minecraftpe	Minecraft	games	GLOBAL
+com.dts.freefireth	Free Fire	games	BR,ID,IN
+com.tencent.ig	PUBG MOBILE	games	GLOBAL
+com.activision.callofduty.shooter	Call of Duty Mobile	games	GLOBAL
+com.roblox.client	Roblox	games	GLOBAL
+com.duolingo	Duolingo	education	GLOBAL
+org.coursera.android	Coursera	education	GLOBAL
+org.khanacademy.android	Khan Academy	education	GLOBAL
+com.google.android.apps.classroom	Google Classroom	education	GLOBAL
+com.instructure.candroid	Canvas Student	education	US,GB
+com.nextdoor	Nextdoor	community	US,GB,DE,FR
+com.meetup	Meetup	community	US,GB,DE
+com.mygate.user	MyGate	community	IN
+com.nobroker.app	NoBroker	community	IN
+jp.ne.paypay.android.app	PayPay	payments	JP
+jp.co.rakuten.android	Rakuten Ichiba	shopping	JP
+com.kouzoh.mercari	Mercari	shopping	JP
+jp.co.yahoo.android.apps.transit	Yahoo! Transit	ride_maps	JP
+jp.gocro.smartnews.android	SmartNews	news	JP
+ru.yandex.taxi	Yandex Go	ride_maps	RU
+ru.yandex.yandexmaps	Yandex Maps	ride_maps	RU
+ru.yandex.yandexnavi	Yandex Navigator	ride_maps	RU
+ru.sberbankmobile	SberBank Online	banking	RU	external
+com.idamob.tinkoff.android	Tinkoff	banking	RU	external
+com.avito.android	Avito	shopping	RU	external
+com.wildberries.ru	Wildberries	shopping	RU
+ru.ozon.app.android	Ozon	shopping	RU
+ru.rostel	Gosuslugi	government	RU
+ru.mts.mymts	My MTS	telecom	RU
+ru.dublgis.dgismobile	2GIS	ride_maps	RU
+ru.deliveryclub	Delivery Club	food_delivery	RU	external
+ru.yandex.mail	Yandex Mail	email	RU
+br.com.brainweb.ifood	iFood	food_delivery	BR
+com.itau	Itaú	banking	BR
+com.bradesco	Bradesco	banking	BR
+br.com.bb.android	Banco do Brasil	banking	BR
+br.gov.caixa.tem	CAIXA Tem	payments	BR
+com.taxis99	99	ride_maps	BR
+com.picpay	PicPay	payments	BR
+br.com.intermedium	Inter	banking	BR
+com.luizalabs.mlapp	Magalu	shopping	BR
+br.gov.meugovbr	gov.br	government	BR
+com.tokopedia.tkpd	Tokopedia	shopping	ID
+com.bukalapak.android	Bukalapak	shopping	ID
+com.bca	BCA mobile	banking	ID
+id.dana	DANA	payments	ID
+ovo.id	OVO	payments	ID
+com.traveloka.android	Traveloka	travel	ID
+id.co.bri.brimo	BRImo	banking	ID
+com.telkomsel.telkomselcm	MyTelkomsel	telecom	ID
+de.hafas.android.db	DB Navigator	travel	DE
+de.zalando.mobile	Zalando	shopping	DE
+de.number26.android	N26	banking	DE
+de.dwd.warnapp	WarnWetter	emergency	DE
+de.materna.bbk.mobile.app	NINA	emergency	DE
+com.vsct.vsc.mobile.horaireetresa.android	SNCF Connect	travel	FR
+fr.leboncoin	leboncoin	shopping	FR
+com.boursorama.android.clients	Boursorama Banque	banking	FR
+com.deliveroo.orderapp	Deliveroo	food_delivery	FR,GB
+com.comuto	BlaBlaCar	ride_maps	FR,ES,DE
+com.wallapop	Wallapop	shopping	ES
+com.cabify.rider	Cabify	ride_maps	ES,MX
+com.glovo	Glovo	food_delivery	ES
+com.grability.rappi	Rappi	food_delivery	MX
+com.didiglobal.passenger	DiDi	ride_maps	MX,BR
+com.bancomer.mbanking	BBVA México	banking	MX
+es.bancosantander.apps	Santander	banking	ES
+es.lacaixa.mobile.android.newwapicon	CaixaBankNow	banking	ES
+com.careem.acma	Careem	ride_maps	SA,AE,EG
+com.talabat	Talabat	food_delivery	AE,EG
+com.hungerstation.android.web	HungerStation	food_delivery	SA
+com.alrajhiretailapp	Al Rajhi Bank	banking	SA
+com.eg.android.AlipayGphone	Alipay	payments	CN	external
+com.ss.android.ugc.aweme	Douyin	social	CN	external
+com.sdu.didi.psnger	DiDi	ride_maps	CN	external
+com.sankuai.meituan	Meituan	food_delivery	CN	external
+com.jingdong.app.mall	JD.com	shopping	CN	external
+com.baidu.BaiduMap	Baidu Maps	ride_maps	CN	external
+com.autonavi.minimap	Amap	ride_maps	CN	external
+com.xunmeng.pinduoduo	Pinduoduo	shopping	CN	external
+com.tencent.mobileqq	QQ	messaging	CN	external
+com.alibaba.android.rimet	DingTalk	work	CN	external
+com.xingin.xhs	Xiaohongshu	social	CN	external
+com.tencent.qqmusic	QQ Music	media_music	CN	external
+com.netease.cloudmusic	NetEase Cloud Music	media_music	CN	external
+com.ss.android.article.news	Toutiao	news	CN	external
+com.tencent.news	Tencent News	news	CN	external
+com.sina.weibo	Weibo	social	CN	external
+com.MobileTicket	China Railway 12306	travel	CN	external
+in.juspay.nammayatri	Namma Yatri	ride_maps	IN
+com.rapido.passenger	Rapido	ride_maps	IN
+com.practo.fabric	Practo	health_fitness	IN
+com.dreamplug.androidapp	CRED	payments	IN
+com.graymatrix.did	ZEE5	media_video	IN
+com.sonyliv	Sony LIV	media_video	IN
+com.msf.kbank.mobile	Kotak Mobile Banking	banking	IN
+com.digilocker.android	DigiLocker	government	IN
+com.nic.mparivahan	mParivahan	government	IN
+com.bt.bms	BookMyShow	media_video	IN
+com.zeptoconsumerapp	Zepto	food_delivery	IN
+com.bKash.customerapp	bKash	payments	BD
+com.konasl.nagad	Nagad	payments	BD
+com.pathao.user	Pathao	ride_maps	BD
+com.daraz.android	Daraz	shopping	BD
+com.classdojo.android	ClassDojo	education	US,GB,ES,MX
+com.byjus.thelearningapp	BYJU'S	education	IN
+com.unacademyapp	Unacademy	education	IN

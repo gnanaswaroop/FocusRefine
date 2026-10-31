@@ -1,0 +1,59 @@
+{"id": "te-test-00001", "gloss_title": "Mom", "gloss_text": "Dad has had an accident, dude, we're at the hospital now. Call right away!"}
+{"id": "te-test-00002", "gloss_title": "Missed call", "gloss_text": "4 missed calls from elder brother"}
+{"id": "te-dev-00003", "gloss_title": "Missed call", "gloss_text": "Call received from unknown number +91 9XXXXXXXXX"}
+{"id": "te-test-00004", "gloss_title": "Likely spam", "gloss_text": "Many people have reported the number +91 9XXXXXXXXX as a loan offer spam"}
+{"id": "te-test-00005", "gloss_title": "Incoming call", "gloss_text": "Likely fraud: a call saying \"Your son has been arrested, send money immediately\" +91 9XXXXXXXXX"}
+{"id": "te-dev-00006", "gloss_title": "Unknown number", "gloss_text": "Urgent! Your bank account KYC is incomplete, it will be blocked today. Click here immediately and give your details: http://kyc-update.example.invalid/x"}
+{"id": "te-test-00007", "gloss_title": "Quick Cash 💰", "gloss_text": "Loan of Rs. 5 lakh sanctioned right now with just Aadhaar! No other documents needed. Apply immediately: http://fast-loan.example.invalid/apply"}
+{"id": "te-test-00008", "gloss_title": "Severe weather warning", "gloss_text": "Heavy rains and thunderbolts likely in coastal Andhra in the next 3 hours. Don't stand under trees, stay in a safe place."}
+{"id": "te-dev-00009", "gloss_title": "Earthquake warning", "gloss_text": "An earthquake has occurred in your area. Drop down, cover your head, and hold on tight."}
+{"id": "te-test-00010", "gloss_title": "Shantinagar Apartment - Security", "gloss_text": "There is a smell of gas leak in Block B. Everyone come out immediately, don't use the lift."}
+{"id": "te-test-00011", "gloss_title": "Friends Gang 😂 - Ravi", "gloss_text": "Did you watch the IPL match today, dude? The last over was awesome, bro 🔥"}
+{"id": "te-dev-00012", "gloss_title": "Family Members - Peddamma", "gloss_text": "Forwarded: If you send this message to 10 people, you'll hear good news today 🙏 Don't stop it!"}
+{"id": "te-test-00013", "gloss_title": "Sound detected: Fire alarm", "gloss_text": "A fire alarm is ringing near you"}
+{"id": "te-test-00014", "gloss_title": "Sound detected: Doorbell", "gloss_text": "We detected the house doorbell ringing"}
+{"id": "te-dev-00015", "gloss_title": "Driver has arrived", "gloss_text": "Your Uber driver Ramesh has reached the pickup point. White Swift Dzire. You'll set off in 2 minutes."}
+{"id": "te-test-00016", "gloss_title": "Turn right", "gloss_text": "Turn right in 200 meters - Outer Ring Road"}
+{"id": "te-test-00017", "gloss_title": "#prod-alerts", "gloss_text": "Payment API error rate has crossed 40%. On-call engineer, look at it immediately."}
+{"id": "te-dev-00018", "gloss_title": "Meeting in 5 minutes", "gloss_text": "Client review - at 10:30 AM. Zoom link is ready."}
+{"id": "te-test-00019", "gloss_title": "Workout time", "gloss_text": "It's time for your daily running. Ready for the 5 km goal? 🏃"}
+{"id": "te-test-00020", "gloss_title": "Abnormal heart rate", "gloss_text": "Even at rest, your heart rate has exceeded 150 per minute. If you feel uncomfortable, seek medical help immediately."}
+{"id": "te-dev-00021", "gloss_title": "Last chance! ⏰", "gloss_text": "Your premium ends today. Renew now and get the first-month offer."}
+{"id": "te-test-00022", "gloss_title": "Immediate action required", "gloss_text": "Payment for your Netflix membership was not completed. Update the payment method."}
+{"id": "te-test-00023", "gloss_title": "Mix for you", "gloss_text": "This week's Telugu hits are ready 🎶 Listen now"}
+{"id": "te-dev-00024", "gloss_title": "🔴 Live now!", "gloss_text": "The cooking channel you watch has gone live: Hyderabadi Biryani Secrets"}
+{"id": "te-test-00025", "gloss_title": "Last day! 🔥", "gloss_text": "Up to ₹10,000 discount on phones, ends tonight. Hurry!"}
+{"id": "te-test-00026", "gloss_title": "Platform change", "gloss_text": "Your train's platform has been changed from 3 to 6. It departs in 20 minutes."}
+{"id": "te-dev-00027", "gloss_title": "Motion detected", "gloss_text": "Movement of an unknown person detected on the hall camera at 2:14 at night"}
+{"id": "te-test-00028", "gloss_title": "Dr. Sudha's Clinic", "gloss_text": "Your mother's reports are critical. Please come to the clinic immediately."}
+{"id": "te-test-00029", "gloss_title": "School Principal", "gloss_text": "Your son got injured while playing. Come to the school immediately, we are giving first aid."}
+{"id": "te-dev-00030", "gloss_title": "Order on the way", "gloss_text": "Your order will arrive in 10 minutes. The delivery partner may call you."}
+{"id": "te-test-00031", "gloss_title": "Money debited", "gloss_text": "₹250 sent to the grocery shop. Payment successful."}
+{"id": "te-test-00032", "gloss_title": "Missed call", "gloss_text": "Missed call from Satish, friend"}
+{"id": "te-dev-00033", "gloss_title": "Manager - Srinivas", "gloss_text": "The client is calling right now. Give me an update in 5 minutes."}
+{"id": "te-test-00034", "gloss_title": "Office Group - Lakshmi", "gloss_text": "Call me when you're free, nothing very urgent"}
+{"id": "te-test-00035", "gloss_title": "Urgent offer ⏰", "gloss_text": "Only 2 hours! Flash deal ending, 50% off on kurtas"}
+{"id": "te-dev-00036", "gloss_title": "⚠️ Alert!", "gloss_text": "Enemies are attacking your village! Log in now and defend it"}
+{"id": "te-test-00037", "gloss_title": "Lights turned off", "gloss_text": "As scheduled, the hall lights were turned off at 11 PM"}
+{"id": "te-test-00038", "gloss_title": "Water supply interruption", "gloss_text": "There will be no water supply in your area tomorrow from 6 to 10 AM. Store water in advance."}
+{"id": "te-dev-00039", "gloss_title": "Today's weather", "gloss_text": "Hyderabad: partly cloudy, 31°C. Light showers possible in the evening."}
+{"id": "te-test-00040", "gloss_title": "Storm Sale 🌪️", "gloss_text": "Thunderbolt-like offers! Deals at storm speed for you, this weekend only"}
+{"id": "te-test-00041", "gloss_title": "Today's goal", "gloss_text": "6,000 steps completed today. Only 4,000 more to reach the goal!"}
+{"id": "te-dev-00042", "gloss_title": "Medicine reminder", "gloss_text": "Don't forget to take your BP pill at 9 PM"}
+{"id": "te-test-00043", "gloss_title": "Deadline today", "gloss_text": "The submission task closes today at 5 PM. Review is still pending."}
+{"id": "te-dev-00044", "gloss_title": "Build failed", "gloss_text": "CI build failed on the main branch: three tests failed"}
+{"id": "te-test-00045", "gloss_title": "Emergency warning", "gloss_text": "Gas pipeline leakage: people in nearby areas, move away from the spot immediately."}
+{"id": "te-test-00046", "gloss_title": "Road closure", "gloss_text": "Outer Ring Road Exit 5 is closed due to flooding. Choose an alternative route."}
+{"id": "te-dev-00047", "gloss_title": "Ride scheduled", "gloss_text": "Your ride is scheduled for 6 AM tomorrow. Driver details will arrive the night before."}
+{"id": "te-test-00048", "gloss_title": "You have a message", "gloss_text": "Radha liked your photo ❤️ 12 others also liked it"}
+{"id": "te-test-00049", "gloss_title": "🚨 Alert: Wicket!", "gloss_text": "India 187/4 (32 overs). A new batter has come to the crease"}
+{"id": "te-dev-00050", "gloss_title": "Breaking news!", "gloss_text": "Inauguration of the new metro line in the city tomorrow, there will be traffic diversions"}
+{"id": "te-test-00051", "gloss_title": "New assignment", "gloss_text": "Tomorrow's maths homework: page 42, do questions 1 to 10"}
+{"id": "te-test-00052", "gloss_title": "Dad", "gloss_text": "Bring vegetables when you come home, dude"}
+{"id": "te-dev-00053", "gloss_title": "Smoke detected", "gloss_text": "The smoke detector alarm in the kitchen is ringing. Check immediately!"}
+{"id": "te-test-00054", "gloss_title": "Flood warning", "gloss_text": "The Godavari river has crossed the danger level. People in low-lying areas, move to higher ground immediately."}
+{"id": "te-test-00055", "gloss_title": "Ugadi Celebrations - Committee", "gloss_text": "On Sunday at 6 PM at the clubhouse there will be Ugadi pachadi and Panchangam recital. Everyone come 🌿"}
+{"id": "te-dev-00056", "gloss_title": "Visitor arrived", "gloss_text": "The food delivery executive is at the gate. Should he be allowed in?"}
+{"id": "te-test-00057", "gloss_title": "Live Caption", "gloss_text": "Live Caption is on"}
+{"id": "te-test-00058", "gloss_title": "Relatives - Uncle", "gloss_text": "⚠️ Emergency warning! After 12 tomorrow night phone radiation will increase, forward to everyone!"}
+{"id": "te-test-00059", "gloss_title": "Data usage", "gloss_text": "1.5 GB of data is left in your plan for today"}

@@ -43,7 +43,7 @@ object HistoryReclassifier {
         try {
             history.forEach { row ->
                 try {
-                    val result = classifier.classify(row.title, row.text, mode)
+                    val result = classifier.classify(row.title, row.text, mode, row.packageName)
                     if (result.isUrgent != row.isUrgent || result.explanation != row.explanation || result.confidence != row.confidence) {
                         dao.updateClassification(row.id, result.isUrgent, result.explanation, result.confidence)
                     }

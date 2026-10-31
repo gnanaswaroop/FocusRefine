@@ -1,0 +1,60 @@
+{"id": "de-test-00001", "gloss_title": "Mom", "gloss_text": "Dad fell, the ambulance is on its way. Please call me right now!"}
+{"id": "de-test-00002", "gloss_title": "Missed call", "gloss_text": "Mom – 3 calls in a row"}
+{"id": "de-test-00003", "gloss_title": "Unknown number", "gloss_text": "Missed call from +49 1XX XXXXXXXX"}
+{"id": "de-test-00004", "gloss_title": "Suspected spam ⚠️", "gloss_text": "Urgent callback? Probably telemarketing (energy provider). Call was silenced."}
+{"id": "de-test-00005", "gloss_title": "Suspected fraud", "gloss_text": "Alleged bank employee is calling from +49 3XX XXXXXXX – reported as fraud by others."}
+{"id": "de-test-00006", "gloss_title": "Final warning: account will be blocked", "gloss_text": "Dear customer, confirm your data within 24 hours: http://konto-pruefen.example.invalid/x"}
+{"id": "de-test-00007", "gloss_title": "Prize notification 🎉", "gloss_text": "Congratulations! You won €5,000. Claim your prize now: http://gewinn-abholen.example.invalid/a"}
+{"id": "de-test-00008", "gloss_title": "Extreme danger", "gloss_text": "Official warning: Severe storms with hurricane-force gusts and heavy rain in your region. Stay indoors and avoid trees."}
+{"id": "de-test-00009", "gloss_title": "Earthquake detected", "gloss_text": "Strong tremor near you. Take cover immediately and hold on."}
+{"id": "de-test-00010", "gloss_title": "Lindenweg 4 residents", "gloss_text": "Attention: smell of gas in the stairwell! Everyone please get out right now, the fire department has been informed."}
+{"id": "de-dev-00011", "gloss_title": "Parents' group 3b – Katrin", "gloss_text": "Haha, the cake yesterday was amazing 😂 Who's baking next time?"}
+{"id": "de-test-00012", "gloss_title": "Important warning!!!", "gloss_text": "FORWARD: Supposedly kidnappers are driving around in gray vans. Send this to all your contacts!!!"}
+{"id": "de-test-00013", "gloss_title": "Smoke detector detected", "gloss_text": "A smoke detector is sounding an alarm. Check your surroundings immediately."}
+{"id": "de-test-00014", "gloss_title": "Doorbell", "gloss_text": "Doorbell detected"}
+{"id": "de-test-00015", "gloss_title": "Your driver is here", "gloss_text": "Markus is waiting with a gray VW Passat at the pickup point. License plate B-XY 1234."}
+{"id": "de-test-00016", "gloss_title": "Turn right in 200 m", "gloss_text": "Onto Kaiserstraße, then continue toward the main station"}
+{"id": "de-test-00017", "gloss_title": "#incident-prod", "gloss_text": "Production outage: the payments API is only returning error 500. Please join the incident call right now."}
+{"id": "de-test-00018", "gloss_title": "Team meeting in 5 minutes", "gloss_text": "Weekly sync · Room 2.14 or video link"}
+{"id": "de-test-00019", "gloss_title": "Interval finished 💪", "gloss_text": "Interval 4 of 6 done. Rest: 90 seconds, then we continue."}
+{"id": "de-test-00020", "gloss_title": "High heart rate", "gloss_text": "Your resting pulse has been above 150 bpm for 10 minutes. Sit down and seek medical help if in doubt."}
+{"id": "de-dev-00021", "gloss_title": "Premium renews tomorrow", "gloss_text": "Your subscription will be renewed tomorrow for €10.99."}
+{"id": "de-test-00022", "gloss_title": "Payment failed", "gloss_text": "We couldn't charge your payment method. Please update it within the next few days so your subscription keeps running."}
+{"id": "de-dev-00023", "gloss_title": "New for you", "gloss_text": "Your Release Radar is here: 30 new songs from artists you like 🎧"}
+{"id": "de-dev-00024", "gloss_title": "New episode available", "gloss_text": "Season 2, episode 5 of your crime series is now available. Keep watching?"}
+{"id": "de-test-00025", "gloss_title": "Storm deals ⚡", "gloss_text": "Today only: up to 50% off electronics! Grab it urgently now while supplies last."}
+{"id": "de-test-00026", "gloss_title": "Platform change", "gloss_text": "Your regional express to Koblenz leaves from platform 12 instead of platform 7 today. Departure 08:42, 6 minutes delayed."}
+{"id": "de-test-00027", "gloss_title": "Front door opened", "gloss_text": "The front door was opened at 03:12 while \"Away\" mode was active."}
+{"id": "de-test-00028", "gloss_title": "Stadtklinikum Musterstadt", "gloss_text": "The hospital is trying to reach you: your father has been admitted. Please call back immediately."}
+{"id": "de-test-00029", "gloss_title": "Grundschule Am Park", "gloss_text": "Your child has a fever and severe stomach pain. Please pick them up right away."}
+{"id": "de-dev-00030", "gloss_title": "Package arriving today", "gloss_text": "Your package will be delivered today between 2 and 4 pm."}
+{"id": "de-dev-00031", "gloss_title": "Money received", "gloss_text": "Lisa M. sent you €25.00. Reference: cinema tickets."}
+{"id": "de-test-00032", "gloss_title": "Hazard alert", "gloss_text": "Gas leak in your area. Close windows and doors, turn off ventilation and turn on the radio."}
+{"id": "de-test-00033", "gloss_title": "Flood warning", "gloss_text": "Water level rising rapidly. Prepare for an evacuation of the riverside areas and follow the authorities' instructions."}
+{"id": "de-test-00034", "gloss_title": "Water sensor: water detected", "gloss_text": "Water detected in the basement. Please check right away!"}
+{"id": "de-test-00035", "gloss_title": "Full closure on your route", "gloss_text": "The Rhine bridge is completely closed after an accident. Detour via the B9 saves you 25 minutes."}
+{"id": "de-test-00036", "gloss_title": "Ms. Brandt (boss)", "gloss_text": "Can you please send the presentation to the client right now? They're already waiting in the call."}
+{"id": "de-test-00037", "gloss_title": "Deadline today", "gloss_text": "Ticket PAY-212 is due today. Your review is needed by 5 pm."}
+{"id": "de-test-00038", "gloss_title": "Build failed", "gloss_text": "main: Pipeline #482 failed (tests: 3 failures)."}
+{"id": "de-dev-00039", "gloss_title": "Jonas", "gloss_text": "Up for a barbecue on Saturday? I'll bring sausages 🍖"}
+{"id": "de-dev-00040", "gloss_title": "Grandma", "gloss_text": "Arrived safely. The cake is in the fridge."}
+{"id": "de-dev-00041", "gloss_title": "Sports club TSV Eintracht", "gloss_text": "Thursday's training is cancelled due to hall cleaning."}
+{"id": "de-test-00042", "gloss_title": "Package held", "gloss_text": "Your package is waiting at customs. Outstanding fee: €1.99. Pay now: http://paket-zoll.example.invalid/zahlen"}
+{"id": "de-dev-00043", "gloss_title": "Missed call", "gloss_text": "Colleague Tim Berger called you"}
+{"id": "de-dev-00044", "gloss_title": "Sven (office)", "gloss_text": "Call me when you have time. Nothing urgent, more about the vacation planning."}
+{"id": "de-dev-00045", "gloss_title": "Emergency! 🚨", "gloss_text": "Your 12-day streak is in danger. Do a lesson now before it ends."}
+{"id": "de-dev-00046", "gloss_title": "Urgent: Your cart is waiting", "gloss_text": "Only 2 left! Order now before it's gone 🔥"}
+{"id": "de-dev-00047", "gloss_title": "Warning day: test message", "gloss_text": "This is a test of the warning system. There is no danger, you don't need to do anything."}
+{"id": "de-test-00048", "gloss_title": "Alarm! Attack on your village 🔥", "gloss_text": "Your walls were hit. Check what happened!"}
+{"id": "de-test-00049", "gloss_title": "Weekly report", "gloss_text": "Your resting heart rate was slightly elevated this week (68 bpm on average). Here you can see your trends."}
+{"id": "de-dev-00050", "gloss_title": "Last chance! ⏰", "gloss_text": "Hotels in Berlin up to 30% cheaper – bookable only until midnight."}
+{"id": "de-test-00051", "gloss_title": "Check-in opens tomorrow", "gloss_text": "Your stay in Hamburg starts on Friday. Online check-in is possible from tomorrow."}
+{"id": "de-dev-00052", "gloss_title": "How was your ride?", "gloss_text": "Rate your driver Ayşe and help us improve."}
+{"id": "de-test-00053", "gloss_title": "Motion detected", "gloss_text": "Motion was detected at the front door at 14:20."}
+{"id": "de-dev-00054", "gloss_title": "Bill due soon", "gloss_text": "Your bill of €39.90 is due in 3 days. You can conveniently pay in the app."}
+{"id": "de-test-00055", "gloss_title": "Dr. Weber's practice", "gloss_text": "Appointment reminder: tomorrow at 9:30 am check-up. Please bring your insurance card."}
+{"id": "de-dev-00056", "gloss_title": "Parents' evening", "gloss_text": "The parents' evening for class 5a takes place next Wednesday at 7 pm."}
+{"id": "de-test-00057", "gloss_title": "Unknown", "gloss_text": "Your WhatsApp expires today! Renew now or your account will be deleted: http://wa-verlaengern.example.invalid/k"}
+{"id": "de-test-00058", "gloss_title": "Breaking news", "gloss_text": "New study: more and more employees are working from home permanently."}
+{"id": "de-dev-00059", "gloss_title": "Alarm at the stadium! ⚽", "gloss_text": "Goal for FC Beispielstadt: 1:0 in the 34th minute."}
+{"id": "de-dev-00060", "gloss_title": "New likes", "gloss_text": "Anna and 12 others liked your photo ❤️"}

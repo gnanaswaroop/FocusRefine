@@ -6,7 +6,8 @@ import kotlin.math.abs
  * How sure the app was about a Shown/Muted decision.
  *
  * For the embedding model the decision value `z` is positive for Shown and negative for Muted, and `|z|` is the
- * distance from the line between them (`z = 60 * (score - threshold) + personal adjustment`). The confidence is
+ * distance from the line between them (`z = baseScale * (score - threshold) + personal adjustment`, the
+ * built-in score being a logit). The confidence is
  * `sigmoid(|z|)`: 0.5 right on the line, 1.0 far from it. A user-made or exception decision is certain. It is a
  * distance, not a calibrated probability, so the UI shows words ("Not sure") and not percentages.
  */

@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import net.sqlcipher.database.SupportFactory
+import net.zetetic.database.sqlcipher.SupportOpenHelperFactory
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import java.security.SecureRandom
@@ -31,10 +31,12 @@ abstract class AppDatabase : RoomDatabase() {
             return INSTANCE ?: synchronized(this) {
                 val passphrase = getOrGenerateDbKey(context)
 
-                // Migrate from plaintext to SQLCipher if upgrading, with UI fallback on failure
-                DatabaseMigratorHelper.migrateWithFallback(context, "focusrefine_database", passphrase)
-
-                val factory = SupportFactory(passphrase)
+                // SQLCipher 4.6+ leaves loading its native library to the app (UnsatisfiedLinkError otherwise).
+                System.loadLibrary("sqlcipher")
+                // An existing plaintext database is encrypted in place first; the plaintext copy is kept as a backup.
+                EncryptionMigration.migrateIfPlaintext(context.applicationContext, "focusrefine_database", passphrase)
+                LegacyDatabase.keepIfUnreadable(context.applicationContext, "focusrefine_database", passphrase)
+                val factory = SupportOpenHelperFactory(passphrase)
 
                 val instance = Room.databaseBuilder(
                     context.applicationContext,

@@ -1,0 +1,60 @@
+{"id": "bn-test-00001", "gloss_title": "Dada (elder brother)", "gloss_text": "Come to the hospital right now, Dad fell in the bathroom, he's unconscious. Pick up the phone, quick!"}
+{"id": "bn-test-00002", "gloss_title": "Missed call", "gloss_text": "Ammu • 4 missed calls"}
+{"id": "bn-dev-00003", "gloss_title": "Missed call", "gloss_text": "A missed call from unknown number +91 9XXXXXXXXX"}
+{"id": "bn-test-00004", "gloss_title": "Possible spam call", "gloss_text": "Urgent loan offer! The number +880 1XXXXXXXXX has been reported as spam"}
+{"id": "bn-test-00005", "gloss_title": "Suspicious call", "gloss_text": "A call from +91 9XXXXXXXXX claiming to be a bank officer may be a scam"}
+{"id": "bn-dev-00006", "gloss_title": "Account alert", "gloss_text": "Your account will be closed tonight. Update your information now: http://kyc-update.example.invalid/x"}
+{"id": "bn-test-00007", "gloss_title": "Winner announcement", "gloss_text": "Congratulations! You won 5 lakh taka in the lucky draw. Click here to claim the prize http://prize-claim.example.invalid/x"}
+{"id": "bn-test-00008", "gloss_title": "Emergency alert", "gloss_text": "A cyclone is approaching. People in coastal areas, move immediately to the nearest shelter."}
+{"id": "bn-dev-00009", "gloss_title": "Earthquake alert", "gloss_text": "A nearby earthquake has been detected. Protect your head now, take cover under a sturdy table."}
+{"id": "bn-test-00010", "gloss_title": "Society notice", "gloss_text": "There is a gas leak in Block B. Everyone leave your flats and come downstairs right now, do not use the lift."}
+{"id": "bn-test-00011", "gloss_title": "Neighbourhood hangout - Tapas", "gloss_text": "You'll watch the East Bengal match tonight, right? 😄 We'll sit at the tea stall"}
+{"id": "bn-dev-00012", "gloss_title": "Good morning family", "gloss_text": "🌹 Good morning 🌹 May today be auspicious for you. Send this message to 10 people and good luck will come!"}
+{"id": "bn-test-00013", "gloss_title": "Sound detected", "gloss_text": "Smoke alarm sound was heard"}
+{"id": "bn-test-00014", "gloss_title": "Sound detected", "gloss_text": "Doorbell sound was heard"}
+{"id": "bn-dev-00015", "gloss_title": "Your cab has arrived", "gloss_text": "Driver Rajesh is waiting at your pickup point. Car WB 02 XXXX"}
+{"id": "bn-test-00016", "gloss_title": "After 300 metres", "gloss_text": "Turn right at the next junction, then take the flyover"}
+{"id": "bn-test-00017", "gloss_title": "#incidents", "gloss_text": "Production server down. Payment API is not responding, look at it right now."}
+{"id": "bn-dev-00018", "gloss_title": "Meeting starting", "gloss_text": "The client demo call will start in 5 minutes"}
+{"id": "bn-test-00020", "gloss_title": "Heart rate alert", "gloss_text": "Your heart rate at rest has exceeded 140 per minute. Seek a doctor's help if you feel uncomfortable."}
+{"id": "bn-dev-00021", "gloss_title": "Subscription renewal", "gloss_text": "Your plan will renew automatically in 3 days"}
+{"id": "bn-test-00022", "gloss_title": "Payment problem", "gloss_text": "Your payment method didn't work. Update your card to keep Premium active."}
+{"id": "bn-test-00023", "gloss_title": "For you", "gloss_text": "Rabindra Sangeet mix updated 🎶 Listen to the new songs"}
+{"id": "bn-dev-00024", "gloss_title": "New movie", "gloss_text": "Watch your favourite Bengali thriller from 8 PM tonight"}
+{"id": "bn-test-00025", "gloss_title": "⚡ Lightning sale!", "gloss_text": "Last 2 hours! Up to 40% off on all mobiles, buy now!"}
+{"id": "bn-test-00026", "gloss_title": "Platform change", "gloss_text": "Your train departing from Howrah will now leave from platform 9"}
+{"id": "bn-dev-00027", "gloss_title": "Door opened", "gloss_text": "The front door was opened at 2:15 AM. Are you at home?"}
+{"id": "bn-test-00028", "gloss_title": "Dr. Sengupta Chamber", "gloss_text": "Your father's report is not good, he has to be admitted today. Please contact us quickly."}
+{"id": "bn-test-00029", "gloss_title": "School - Class Teacher", "gloss_text": "Your daughter's fever has risen, please come and pick her up right now."}
+{"id": "bn-dev-00030", "gloss_title": "Order on the way", "gloss_text": "Your order will arrive by this afternoon"}
+{"id": "bn-test-00031", "gloss_title": "Payment successful", "gloss_text": "Payment of ₹60 completed at the milk shop"}
+{"id": "bn-test-00032", "gloss_title": "Riya", "gloss_text": "Want to go eat phuchka tomorrow evening? 😋"}
+{"id": "bn-dev-00033", "gloss_title": "Elder sister (Boro Apa)", "gloss_text": "When you come, bring two kg of potatoes and eggs"}
+{"id": "bn-test-00034", "gloss_title": "Sumit Basu (Director)", "gloss_text": "Send the final version of the contract right now, the client is waiting."}
+{"id": "bn-test-00035", "gloss_title": "Flat Owners' Association", "gloss_text": "General meeting on the roof Sunday afternoon, everyone is requested to come"}
+{"id": "bn-dev-00036", "gloss_title": "Guest at gate", "gloss_text": "The delivery person is at the gate waiting for your permission"}
+{"id": "bn-test-00037", "gloss_title": "Missed call", "gloss_text": "Friend Roni • 1 missed call"}
+{"id": "bn-test-00038", "gloss_title": "Voicemail", "gloss_text": "New voicemail, length 0:12"}
+{"id": "bn-dev-00039", "gloss_title": "Urgent offer ⏰", "gloss_text": "The saree in your cart will be gone! Buy today, only a few left"}
+{"id": "bn-test-00040", "gloss_title": "Courier alert", "gloss_text": "Your parcel is held up and will be returned if the address is incorrect. Update here http://parcel-hold.example.invalid/x"}
+{"id": "bn-test-00041", "gloss_title": "Flood warning", "gloss_text": "River water is above the danger level. Residents of low-lying areas, move to a safe place immediately."}
+{"id": "bn-dev-00042", "gloss_title": "Public safety alert", "gloss_text": "Curfew imposed in the city tonight. Do not go outside, follow the administration's orders."}
+{"id": "bn-test-00043", "gloss_title": "Road closed", "gloss_text": "Road ahead is closed due to an accident on Mirpur Road. Use an alternative route."}
+{"id": "bn-test-00044", "gloss_title": "Trip completed", "gloss_text": "Your trip has ended. Rate the driver ⭐"}
+{"id": "bn-dev-00045", "gloss_title": "Gas sensor", "gloss_text": "Gas leak detected in the kitchen! Open the windows and leave the house right now."}
+{"id": "bn-test-00046", "gloss_title": "Pre-travel information", "gloss_text": "Tomorrow morning's Kolkata-Digha bus ticket is confirmed"}
+{"id": "bn-test-00047", "gloss_title": "Breaking 🔴", "gloss_text": "Star couple's vacation photos go viral, see what they said"}
+{"id": "bn-dev-00048", "gloss_title": "Today's weather", "gloss_text": "Partly cloudy in Kolkata today, maximum temperature 32°"}
+{"id": "bn-test-00049", "gloss_title": "Live score", "gloss_text": "India 214/4 (38 overs) • Kohli 82*"}
+{"id": "bn-test-00050", "gloss_title": "New follower", "gloss_text": "Moumita followed you and liked your post"}
+{"id": "bn-dev-00051", "gloss_title": "Daily goal", "gloss_text": "You walked 6,200 steps today, 3,800 left to reach your goal"}
+{"id": "bn-test-00052", "gloss_title": "⚠️ Urgent alert", "gloss_text": "Your squad is calling you to battle! Free diamonds if you log in today"}
+{"id": "bn-test-00053", "gloss_title": "Practice time", "gloss_text": "Today's English lesson is still pending, don't lose your 10-day streak 🦉"}
+{"id": "bn-dev-00054", "gloss_title": "App update", "gloss_text": "12 apps are ready to update"}
+{"id": "bn-test-00055", "gloss_title": "Deadline today", "gloss_text": "The last time to submit the report is 5 PM today"}
+{"id": "bn-test-00056", "gloss_title": "Build failed", "gloss_text": "CI pipeline failed on the main branch, release is blocked"}
+{"id": "bn-dev-00057", "gloss_title": "Urgent: Newsletter", "gloss_text": "This week's top 10 tech news for you"}
+{"id": "bn-test-00058", "gloss_title": "Rakib", "gloss_text": "Bro, call me when you get time, nothing very urgent"}
+{"id": "bn-test-00059", "gloss_title": "New notice", "gloss_text": "Guidelines for next week's science project have been uploaded"}
+{"id": "bn-dev-00060", "gloss_title": "Health tip", "gloss_text": "For good sleep, go to bed by 10 tonight 😴"}
+{"id": "bn-test-00019", "gloss_title": "Time to run!", "gloss_text": "Today's 5 km run is still pending. Let's get started 🏃"}

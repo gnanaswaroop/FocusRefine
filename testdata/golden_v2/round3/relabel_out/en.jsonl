@@ -1,0 +1,92 @@
+{"id": "en-test-03000", "usecase": "tsunami_flood_wildfire", "note": "active flood warning, move to higher ground"}
+{"id": "en-test-03006", "usecase": "visitor_gate"}
+{"id": "en-dev-03007", "usecase": "visitor_gate", "note": "doorbell, shouty word but routine"}
+{"id": "en-test-03008", "usecase": "group_chatter", "note": "neighbour parcel, no urgency"}
+{"id": "en-test-03009", "usecase": "visitor_gate"}
+{"id": "en-test-03010", "usecase": "visitor_gate"}
+{"id": "en-dev-03011", "usecase": "visitor_gate"}
+{"id": "en-test-03012", "usecase": "voicemail_routine", "note": "no rush"}
+{"id": "en-test-03013", "usecase": "voicemail_routine", "note": "unknown caller, no rush"}
+{"id": "en-dev-03014", "usecase": "chat_family_routine", "note": "mum errand voicemail, nothing urgent"}
+{"id": "en-test-03015", "usecase": "voicemail_routine", "note": "unknown caller, membership renewal"}
+{"id": "en-test-03016", "usecase": "voicemail_routine"}
+{"id": "en-dev-03017", "usecase": "medical_routine", "note": "dentist appointment confirmation"}
+{"id": "en-test-03018", "usecase": "investment_alert"}
+{"id": "en-test-03019", "usecase": "investment_alert"}
+{"id": "en-dev-03020", "usecase": "marketing_push", "note": "trade-now push, not a price alert"}
+{"id": "en-test-03021", "usecase": "investment_alert"}
+{"id": "en-test-03022", "usecase": "investment_alert"}
+{"id": "en-dev-03023", "usecase": "investment_alert"}
+{"id": "en-test-03024", "usecase": "caption_status"}
+{"id": "en-test-03025", "usecase": "caption_status"}
+{"id": "en-dev-03026", "usecase": "caption_status", "note": "speech model update"}
+{"id": "en-test-03027", "usecase": "caption_status"}
+{"id": "en-test-03028", "usecase": "caption_status"}
+{"id": "en-test-03029", "usecase": "caption_status"}
+{"id": "en-test-03030", "usecase": "system_routine"}
+{"id": "en-test-03031", "usecase": "system_routine"}
+{"id": "en-dev-03032", "usecase": "system_routine"}
+{"id": "en-test-03033", "usecase": "system_routine"}
+{"id": "en-dev-03034", "usecase": "system_routine"}
+{"id": "en-test-03035", "usecase": "system_routine"}
+{"id": "en-test-03036", "usecase": "group_chatter"}
+{"id": "en-dev-03037", "usecase": "group_chatter"}
+{"id": "en-test-03038", "usecase": "group_chatter"}
+{"id": "en-test-03039", "usecase": "group_chatter"}
+{"id": "en-test-03040", "usecase": "work_chat_routine", "note": "team lunch, non-urgent"}
+{"id": "en-test-03041", "usecase": "group_forward"}
+{"id": "en-dev-03042", "usecase": "group_forward", "note": "unverified rumour"}
+{"id": "en-test-03043", "usecase": "scam_prize_loan", "note": "prize chain with link"}
+{"id": "en-test-03044", "usecase": "group_forward"}
+{"id": "en-test-03045", "usecase": "group_event_info"}
+{"id": "en-dev-03046", "usecase": "group_event_info"}
+{"id": "en-test-03047", "usecase": "group_event_info"}
+{"id": "en-test-03048", "usecase": "community_safety_notice", "note": "gas smell, evacuate now"}
+{"id": "en-dev-03049", "usecase": "community_safety_notice", "note": "smoke in building"}
+{"id": "en-test-03050", "usecase": "community_safety_notice", "note": "flooding in building"}
+{"id": "en-test-03051", "usecase": "visitor_gate"}
+{"id": "en-dev-03052", "usecase": "visitor_gate"}
+{"id": "en-test-03053", "usecase": "earthquake_alert", "note": "shaking expected, drop and cover"}
+{"id": "en-test-03054", "usecase": "news_breaking_general"}
+{"id": "en-dev-03055", "usecase": "weather_severe", "note": "tornado warning, take shelter now"}
+{"id": "en-test-03056", "usecase": "delivery_update"}
+{"id": "en-dev-03057", "usecase": "promo_sale"}
+{"id": "en-test-03058", "usecase": "work_tool_routine"}
+{"id": "en-dev-03059", "usecase": "deadline", "note": "work review due today"}
+{"id": "en-test-03060", "usecase": "social_activity"}
+{"id": "en-dev-03061", "usecase": "social_activity"}
+{"id": "en-test-03062", "usecase": "work_tool_routine"}
+{"id": "en-dev-03063", "usecase": "deadline", "note": "comment due today before 6 PM"}
+{"id": "en-dev-03064", "usecase": "system_routine"}
+{"id": "en-test-03065", "usecase": "learning_notice"}
+{"id": "en-dev-03066", "usecase": "learning_notice", "note": "education quiz, not workplace"}
+{"id": "en-test-03067", "usecase": "chat_casual"}
+{"id": "en-dev-03068", "usecase": "family_distress", "note": "grandpa collapsed, hospital"}
+{"id": "en-test-03069", "usecase": "workout_prompt"}
+{"id": "en-dev-03070", "usecase": "health_routine"}
+{"id": "en-test-03071", "usecase": "news_breaking_general"}
+{"id": "en-dev-03072", "usecase": "news_breaking_general", "note": "morning briefing digest"}
+{"id": "en-test-03073", "usecase": "social_activity"}
+{"id": "en-dev-03074", "usecase": "marketing_push"}
+{"id": "en-test-03075", "usecase": "investment_alert"}
+{"id": "en-dev-03076", "usecase": "investment_alert"}
+{"id": "en-test-03077", "usecase": "rec_music"}
+{"id": "en-dev-03078", "usecase": "sub_renewal"}
+{"id": "en-test-03079", "usecase": "payment_routine"}
+{"id": "en-dev-03080", "usecase": "promo_sale"}
+{"id": "en-test-03081", "usecase": "social_activity"}
+{"id": "en-dev-03082", "usecase": "scam_phishing", "note": "fake login alert, reserved link"}
+{"id": "en-test-03083", "usecase": "delivery_update"}
+{"id": "en-dev-03084", "usecase": "promo_sale"}
+{"id": "en-test-03085", "usecase": "payment_routine"}
+{"id": "en-dev-03086", "usecase": "payment_routine"}
+{"id": "en-test-03087", "usecase": "news_breaking_general", "note": "headlines digest"}
+{"id": "en-dev-03088", "usecase": "weather_severe", "note": "thunderstorm warning, stay indoors"}
+{"id": "en-test-03089", "usecase": "ride_arriving"}
+{"id": "en-dev-03090", "usecase": "ride_other"}
+{"id": "en-test-03091", "usecase": "learning_notice"}
+{"id": "en-dev-03092", "usecase": "learning_notice"}
+{"id": "en-test-03093", "usecase": "school_info"}
+{"id": "en-dev-03094", "usecase": "learning_notice"}
+{"id": "en-test-03095", "usecase": "rec_video"}
+{"id": "en-dev-03096", "usecase": "rec_video"}

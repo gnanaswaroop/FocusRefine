@@ -146,35 +146,37 @@ class PersonalLearningFlowE2ETest {
 
         openDetailAndTap(first, "Show notifications like these in the future")
 
-        post(title, "Early dismissal today due to a safety issue")
-        val second = awaitRow(title, "Early dismissal today due to a safety issue")
+        post(title, "Early dismissal today due to a safety incident now")
+        val second = awaitRow(title, "Early dismissal today due to a safety incident now")
         assertTrue("shown after learning (${second.explanation})", second.isUrgent)
         assertTrue(second.explanation!!, second.explanation!!.contains("pushed this toward shown"))
 
-        // An unrelated promo is untouched.
-        post("Amazon", "Lightning deal: 60% off smart watches")
-        assertFalse(awaitRow("Amazon", "Lightning deal: 60% off smart watches").isUrgent)
+        // An unrelated, clearly routine promo is untouched.
+        post("Myntra", "Lightning deal: 50% off sneakers")
+        assertFalse(awaitRow("Myntra", "Lightning deal: 50% off sneakers").isUrgent)
     }
 
     @Test
     fun shownNotificationBecomesMutedAfterTheUserOverridesIt_andResetRestoresIt() {
-        val title = "Apple Watch"
-        post(title, "High heart rate notification: 140 BPM while inactive")
-        val first = awaitRow(title, "High heart rate notification: 140 BPM while inactive")
+        // A moderately confident Shown (+0.43 in Sleeping): one correction is enough to overturn it. A very confident
+        // decision (+5) needs more than one correction, which is a known limit of the personal model.
+        val title = "Office"
+        post(title, "Server down: production alert, respond now")
+        val first = awaitRow(title, "Server down: production alert, respond now")
         assertTrue("premise: shown before learning (${first.explanation})", first.isUrgent)
         assertTrue(first.explanation!!.contains("AI Pipeline"))
 
         openDetailAndTap(first, "Hide notifications like these in the future")
 
-        post(title, "High heart rate notification: 150 BPM while inactive")
-        val second = awaitRow(title, "High heart rate notification: 150 BPM while inactive")
+        post(title, "Server down: production alert, please respond now")
+        val second = awaitRow(title, "Server down: production alert, please respond now")
         assertFalse("muted after learning (${second.explanation})", second.isUrgent)
         assertTrue(second.explanation!!, second.explanation!!.contains("pushed this toward muted"))
 
         // "Reset learning data" returns to the built-in decision.
         PersonalLearning.clear(context)
-        post(title, "High heart rate notification: 160 BPM while inactive")
-        val third = awaitRow(title, "High heart rate notification: 160 BPM while inactive")
+        post(title, "Server down: production alert, respond now")
+        val third = awaitRow(title, "Server down: production alert, respond now")
         assertTrue("shown again after reset (${third.explanation})", third.isUrgent)
         assertFalse(third.explanation!!.contains("past choices"))
         assertNotNull(third.explanation)

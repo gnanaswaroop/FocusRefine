@@ -1,6 +1,6 @@
 # FocusRefine
 
-**FocusRefine** is a modern, lightweight, privacy-first Android application designed to intelligently filter and triage incoming notifications based on your current activity mode (**Commute** or **Do Not Disturb (DND)**, plus customizable modes). By combining **MediaPipe Tasks Text Classification** with local semantic heuristics, FocusRefine ensures that urgent alerts (such as navigation, emergency calls, and VIP messages) get through while suppressing digital distractions entirely on-device.
+**FocusRefine** is a modern, lightweight, privacy-first Android application designed to intelligently filter and triage incoming notifications based on your current activity mode (**Commute** or **Do Not Disturb (DND)**, plus customizable modes). By combining an **on-device urgency model** (FocusRefine's own, trained on synthetic notifications in 18 languages) with local keyword rules, FocusRefine ensures that urgent alerts (such as navigation, emergency calls, and VIP messages) get through while suppressing digital distractions entirely on-device.
 
 ---
 
@@ -13,8 +13,8 @@ FocusRefine consists of two primary screens designed with a **dark-mode first** 
    - Houses a dual-tab inbox (**Shown** vs. **Muted**) powered by modern notification cards. Each card displays the corresponding **application icon**, timestamps, expandable/collapsible text views, package identifiers, and a compact **external link icon button** to launch target applications instantly (with robust fallback handling for Telegram variants like `org.telegram.messenger` and `org.telegram.plus`).
 
 2. **Settings & Configuration Screen (`SettingsActivity`)**:
-   - Displays a live **AI Support Status Banner** showing which on-device engine is really running: the embedding model or the keyword matcher.
-   - Features an **AI Engine Toggle Switch** to switch between the on-device embedding model and the keyword matcher.
+   - Displays a live **AI Support Status Banner** showing which on-device engine is really running: the on-device Track B model or the keyword matcher.
+   - Features an **AI Engine Toggle Switch** to switch between the on-device Track B model and the keyword matcher.
    - Provides an in-app **Theme Mode Switcher** (System Default, Light, Dark — **Dark-Mode First** by default).
    - Includes **Data Retention** configuration to automatically clear history older than X days.
    - Allows enabling/disabling OOTB modes (**Commute** and **DND**) with inline prompt editing, plus creation and management of **Custom Modes**.
@@ -43,3 +43,7 @@ FocusRefine consists of two primary screens designed with a **dark-mode first** 
 ## Testing & Evaluation
 
 Labeled golden and holdout notification datasets live in `testdata/golden/` (see `testdata/README.md`). `scripts/replay_golden.py` posts them from the adb shell through the real service and checks the Shown/Muted decisions in the app database, and the instrumented test `HistoryReclassifierTest` in `app/src/androidTest/` covers history re-classification. Details, results and caveats are in [`docs/internals.md`](docs/internals.md#3-testing--evaluation).
+
+## License
+
+FocusRefine is free software released under the [MIT License](LICENSE). It is free of charge, with no subscriptions, purchases or advertising. It is provided "as is", without warranty of any kind, and its authors are not liable for any claim or damage arising from its use. The in-app Terms of Use say the same.

@@ -1,12 +1,14 @@
 # Personal Model: learning one user's preferences on the device
 
+> **Note.** The simulation numbers below were measured with the earlier MediaPipe embedding model, which this release removes. A re-run on the Track B model is pending; until then, treat them as a record of the earlier model.
+
 FocusRefine ships a built-in embedding classifier ([AI Classification Architecture](ai_classification_and_modes.md)). The **personal model** is a very small model that sits on top of it and learns from one user's own Shown/Muted corrections. It exists so the app can adapt to a person without any message ever leaving the phone.
 
 ## 1. Privacy guarantees
 
 | Guarantee | How it is enforced |
 | :--- | :--- |
-| No network access | The manifest removes `INTERNET` and `ACCESS_NETWORK_STATE` (a MediaPipe dependency adds them); `PrivacyGuardsTest` fails if they return or if a socket can connect |
+| No network access | The manifest removes `INTERNET` and `ACCESS_NETWORK_STATE` (a dependency such as the former MediaPipe library could add them); `PrivacyGuardsTest` fails if they return or if a socket can connect |
 | No cloud backup | `allowBackup="false"`; checked by `PrivacyGuardsTest` |
 | Stored data is not message text | The file holds sentence-embedding vectors (arrays of 100 numbers), a label and a one-way key; `PersonalLearningTest` asserts that title and body words do not appear in the file |
 | Stays in app-private storage | `filesDir/personal_model.bin`, readable only by this app's UID |
@@ -38,8 +40,8 @@ Only explicit feedback: when the user flips a notification to Shown or Muted in 
 
 ### Scope
 - Built-in modes only. Custom modes have no anchors, so they keep using the keyword engine.
-- It affects step 4 of the pipeline (the embedding model). Learned and synthesized rules, and exceptions, still run first and are not changed by it.
-- If the embedding model is off or cannot load, the personal model is unused (and deleting one correction clears all of them, because it cannot retrain).
+- It affects step 4 of the pipeline (the Track B model). Learned and synthesized rules, and exceptions, still run first and are not changed by it.
+- If the Track B model is off or cannot load, the personal model is unused (and deleting one correction clears all of them, because it cannot retrain).
 
 ## 3. Measured benefit
 

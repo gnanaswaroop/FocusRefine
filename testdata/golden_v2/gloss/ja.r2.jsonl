@@ -1,0 +1,93 @@
+{"id": "ja-test-01000", "gloss_title": "Missed call", "gloss_text": "Called from +81 9XXXXXXXXX (1 call)"}
+{"id": "ja-test-01001", "gloss_title": "Missed call", "gloss_text": "Could not answer the call from unknown number 03-XXXX-XXXX."}
+{"id": "ja-dev-01002", "gloss_title": "Unknown number", "gloss_text": "Incoming call from a number not registered in your contacts: +81 8XXXXXXXXX"}
+{"id": "ja-test-01003", "gloss_title": "3 missed calls", "gloss_text": "Called 3 times from the same number +81 9XXXXXXXXX. There is no voicemail message."}
+{"id": "ja-test-01004", "gloss_title": "Missed video call", "gloss_text": "Incoming video call from an unknown user."}
+{"id": "ja-dev-01005", "gloss_title": "Unknown caller", "gloss_text": "Incoming call from a hidden number at 11:42 am"}
+{"id": "ja-test-01006", "gloss_title": "Incoming call", "gloss_text": "+81 7XXXXXXXXX\nIncoming call from a number not registered in your contacts"}
+{"id": "ja-test-01007", "gloss_title": "Missed call", "gloss_text": "Incoming call from 06-XXXX-XXXX (Osaka). Would you like to call back?"}
+{"id": "ja-dev-01008", "gloss_title": "Missed call", "gloss_text": "Did not notice the call from 090-XXXX-XXXX"}
+{"id": "ja-test-01009", "gloss_title": "Incoming call from unregistered number", "gloss_text": "+81 4XXXXXXXXX called once yesterday evening"}
+{"id": "ja-test-01010", "gloss_title": "Missed call", "gloss_text": "Incoming call from +1 555-0142. It appears to be an overseas number."}
+{"id": "ja-dev-01011", "gloss_title": "Voicemail", "gloss_text": "A message was left by unknown number +81 9XXXXXXXXX (0:04)"}
+{"id": "ja-test-01012", "gloss_title": "Missed call", "gloss_text": "Called twice this morning from an unfamiliar number that is not 0120."}
+{"id": "ja-test-01013", "gloss_title": "Missed call", "gloss_text": "Could not answer the call from 050-XXXX-XXXX"}
+{"id": "ja-test-01014", "gloss_title": "Possible spam call", "gloss_text": "This number has been reported as a 'sales call' by 1,284 people."}
+{"id": "ja-test-01015", "gloss_title": "Suspected spam call", "gloss_text": "Calls from +81 5XXXXXXXXX may be spam."}
+{"id": "ja-dev-01016", "gloss_title": "Call blocked", "gloss_text": "Automatically rejected a call from a number judged to be an investment solicitation."}
+{"id": "ja-test-01017", "gloss_title": "Spam warning", "gloss_text": "Incoming call from a number labelled 'solar panel sales'"}
+{"id": "ja-test-01018", "gloss_title": "Possible spam call", "gloss_text": "0120-XXX-XXX · insurance solicitation. It appears to be an automated voice posing as an important notice."}
+{"id": "ja-dev-01019", "gloss_title": "Missed call (spam call)", "gloss_text": "Condo investment telephone sales +81 3XXXXXXXXX"}
+{"id": "ja-test-01020", "gloss_title": "Possible spam", "gloss_text": "A number claiming to be a survey. We recommend not responding."}
+{"id": "ja-test-01021", "gloss_title": "Unknown contact", "gloss_text": "A voice call came in from an account that may be spam."}
+{"id": "ja-dev-01022", "gloss_title": "LINE call", "gloss_text": "A free call came in from a 'side job referral' account that is not in your friends list"}
+{"id": "ja-test-01023", "gloss_title": "Telemarketing", "gloss_text": "Fibre-line sales call · this is the 7th call this month"}
+{"id": "ja-test-01024", "gloss_title": "Blocked spam call", "gloss_text": "A call from +1 555-0177 was automatically blocked as spam."}
+{"id": "ja-dev-01025", "gloss_title": "Spam notice", "gloss_text": "[Warning] This number has been reported as a solicitation call"}
+{"id": "ja-test-01026", "gloss_title": "Incoming call", "gloss_text": "Call offering high-paying part-time work (98% likelihood of spam)"}
+{"id": "ja-test-01027", "gloss_title": "Automated voice call", "gloss_text": "Automated voice guidance: a recorded solicitation beginning 'This call is...' was identified"}
+{"id": "ja-test-01028", "gloss_title": "Suspected scam call", "gloss_text": "A number claiming to be the 'Bankers Association'. Scam calls have been reported saying your account will be frozen."}
+{"id": "ja-test-01029", "gloss_title": "Beware of scam call", "gloss_text": "+81 3XXXXXXXXX · reported as an 'ore-ore' style scam impersonating a police officer."}
+{"id": "ja-dev-01030", "gloss_title": "Possible fraud", "gloss_text": "Same number as a call impersonating a courier and demanding a redelivery fee for an absent-delivery notice."}
+{"id": "ja-test-01031", "gloss_title": "Suspected scam call", "gloss_text": "A number used in a support scam claiming a 'computer virus infection'"}
+{"id": "ja-test-01032", "gloss_title": "Fraud warning", "gloss_text": "A number used by someone claiming to be a government office worker, saying there is a 'medical expense refund' and leading you to an ATM"}
+{"id": "ja-dev-01033", "gloss_title": "Unknown number", "gloss_text": "Scam call in which the caller says 'It's your son, I changed my phone' (+1 555-0163)"}
+{"id": "ja-test-01034", "gloss_title": "Scam call", "gloss_text": "Pretends to be an electricity company and threatens that unpaid charges must be paid today or service will be stopped"}
+{"id": "ja-test-01035", "gloss_title": "Urgent call?", "gloss_text": "Automated voice claiming to be about 'unauthorised card use'. Several reports of it as a scam."}
+{"id": "ja-dev-01036", "gloss_title": "LINE call", "gloss_text": "Call from an account claiming to be an 'official institution'. Account with many reports; suspected scam."}
+{"id": "ja-test-01037", "gloss_title": "Suspected fraud", "gloss_text": "Overseas number +1 555-0119 · reported as a one-ring scam"}
+{"id": "ja-test-01038", "gloss_title": "Scam call detected", "gloss_text": "Number claiming to be the 'Pension Office' · refund fraud"}
+{"id": "ja-dev-01039", "gloss_title": "Unknown account", "gloss_text": "Voice call from an account claiming to be 'the person in charge at an overseas exchange'. Many reports of investment fraud."}
+{"id": "ja-test-01040", "gloss_title": "Scam warning", "gloss_text": "Phone number claiming to be a carrier, pretending to be a handset upgrade procedure and trying to get your PIN. Do not respond."}
+{"id": "ja-test-01041", "gloss_title": "Very likely fraud", "gloss_text": "A phone number demanding an 'unpaid fee' on behalf of a dating site"}
+{"id": "ja-test-01042", "gloss_title": "Missed call", "gloss_text": "Mother (Sato Midori) called you 3 times"}
+{"id": "ja-test-01043", "gloss_title": "Missed call from father", "gloss_text": "Father (Tajima Kenichi) · now · 2nd call"}
+{"id": "ja-dev-01044", "gloss_title": "Younger sister", "gloss_text": "Incoming call (LINE free call)\nPlease call me right away"}
+{"id": "ja-test-01045", "gloss_title": "Older sister (Yamamoto Aya)", "gloss_text": "Pick up the phone! I'm worried because you don't answer no matter how many times I call"}
+{"id": "ja-test-01046", "gloss_title": "Mom", "gloss_text": "Missed calls ×4\nPlease call back"}
+{"id": "ja-dev-01047", "gloss_title": "Missed call (husband)", "gloss_text": "3 calls from husband (Nakamura Hiroshi) within 5 minutes"}
+{"id": "ja-test-01048", "gloss_title": "Missed call", "gloss_text": "Repeated calls from grandmother's house (landline +81 3XXXXXXXX)"}
+{"id": "ja-test-01049", "gloss_title": "Brother", "gloss_text": "I've been calling for a while. Call me right away when you see this."}
+{"id": "ja-dev-01050", "gloss_title": "Missed video call", "gloss_text": "There are 2 missed video calls from Dad"}
+{"id": "ja-test-01051", "gloss_title": "Missed call", "gloss_text": "Call from Mom at 22:48. This time is unusual, so it is probably best to call back."}
+{"id": "ja-test-01052", "gloss_title": "Younger brother (Suzuki Kota)", "gloss_text": "Missed call · 'Sorry, please call me back soon'"}
+{"id": "ja-dev-01053", "gloss_title": "Missed call", "gloss_text": "Mom (2 times) · older sister (1 time)"}
+{"id": "ja-test-01054", "gloss_title": "Dad", "gloss_text": "You missed a call. Please call me."}
+{"id": "ja-test-02000", "gloss_title": "Please rate your visit", "gloss_text": "How was 'Minato Diner', which you visited the other day? You can post photos and a short review."}
+{"id": "ja-test-02001", "gloss_title": "Your driving summary this week", "gloss_text": "You drove 182 km in total this week. Avoiding traffic saved about 35 minutes."}
+{"id": "ja-dev-02002", "gloss_title": "New spots nearby", "gloss_text": "A new cafe opened near your home. Would you like to save it and go later?"}
+{"id": "ja-test-02003", "gloss_title": "Waze tip", "gloss_text": "You can now share accident information on your route with one tap. See how to use it."}
+{"id": "ja-test-02004", "gloss_title": "Jira", "gloss_text": "A comment was added to issue DEMO-214, which you are watching (no change in priority)."}
+{"id": "ja-dev-02005", "gloss_title": "GitHub", "gloss_text": "Your repository received a new star. A total of 25 users have now starred it"}
+{"id": "ja-test-02006", "gloss_title": "Todoist", "gloss_text": "You have 4 tasks for today. This includes tasks due by the end of this weekend."}
+{"id": "ja-test-02007", "gloss_title": "Zoom", "gloss_text": "The recording of 'last week's regular meeting' is now available. You can check it in cloud recording."}
+{"id": "ja-dev-02008", "gloss_title": "Garmin Connect", "gloss_text": "Your weekly activity report has arrived. Your average sleep score is 78."}
+{"id": "ja-test-02009", "gloss_title": "mika-dev commented", "gloss_text": "I fixed the inconsistent notation in the README. It is not urgent, so please check it when you have time."}
+{"id": "ja-test-02010", "gloss_title": "Zoom team chat - Sales dept", "gloss_text": "Kobayashi: Shall we have ramen at the station for lunch today?\nInoue: Sounds good, at 12:30!"}
+{"id": "ja-dev-02011", "gloss_title": "Todoist comment", "gloss_text": "Ms Takahashi commented: 'The minutes template can wait until next week, that's fine.'"}
+{"id": "ja-test-02012", "gloss_title": "Newsletter from Midori Bookshop", "gloss_text": "We introduce this month's new releases and five books recommended by readers."}
+{"id": "ja-test-02013", "gloss_title": "Director (Otsuka Makoto)", "gloss_text": "Subject: URGENT: client matter\nClient A says they need a reply right now. Please call here within 10 minutes."}
+{"id": "ja-test-02014", "gloss_title": "Manager (Morita Kaori)", "gloss_text": "Subject: Materials\nThere is no rush; it's fine if you check them by tomorrow."}
+{"id": "ja-dev-02015", "gloss_title": "[Important] Notice of account restriction", "gloss_text": "Suspicious login detected on your account. Please complete identity verification within 24 hours on the following page: http://account-verify.example.invalid/login If there is no confirmation, the account will be suspended."}
+{"id": "ja-test-02016", "gloss_title": "Congratulations! Notice of winning", "gloss_text": "Following a strict lottery, you have won 1,000,000 yen in cash. Claim procedure here: http://claim-prize.example.invalid/jp"}
+{"id": "ja-test-02017", "gloss_title": "PayPay", "gloss_text": "You received 2,000 yen from your friend Yamaguchi Yuto."}
+{"id": "ja-test-02018", "gloss_title": "[Today only] Up to 20% back!", "gloss_text": "Up to 20% PayPay points back on payments at participating shops. The campaign ends at 23:59 tonight! Sign up early."}
+{"id": "ja-dev-02019", "gloss_title": "PayPay invoice", "gloss_text": "This month's utility payment slip has arrived. Payment is due in 12 days. You can pay via 'Bill payment' in the app."}
+{"id": "ja-test-02020", "gloss_title": "Rakuten marathon in progress", "gloss_text": "Enter and shop around for up to 10x points! Storm-like deep discounts, now on an emergency basis."}
+{"id": "ja-test-02021", "gloss_title": "Item shipped", "gloss_text": "Your order 'stainless bottle 500ml' has been shipped. Expected delivery is the day after tomorrow. You can check the delivery status in the app."}
+{"id": "ja-dev-02022", "gloss_title": "Items left in your cart", "gloss_text": "Your favourite sneakers are still in your cart. Why not check them before stock runs out?"}
+{"id": "ja-test-02023", "gloss_title": "Transaction message", "gloss_text": "The buyer has received the item. Please leave a rating for receipt. Once the rating is complete, the sales proceeds are confirmed."}
+{"id": "ja-test-02024", "gloss_title": "Price dropped", "gloss_text": "The 'old paperback set' you liked has been reduced by 300 yen."}
+{"id": "ja-dev-02025", "gloss_title": "[Urgent] Coupon distribution", "gloss_text": "We are giving you a 500-yen-off coupon you can use right now! It expires if not used today."}
+{"id": "ja-test-02026", "gloss_title": "Travel urgent", "gloss_text": "Operations on your current line are suspended due to a fatal accident. No restart is expected yet. Please check the replacement transport."}
+{"id": "ja-test-02027", "gloss_title": "Transfer guidance", "gloss_text": "You will soon reach your transfer station. Transfer to the 8:47 express from platform 4."}
+{"id": "ja-dev-02028", "gloss_title": "Check-in guide", "gloss_text": "Online check-in for your booked accommodation becomes available from tomorrow. Please enter your arrival time."}
+{"id": "ja-test-02029", "gloss_title": "[Warning] Heavy rain and flood warning", "gloss_text": "A heavy rain warning has been issued for your area. The river water level is rising rapidly. Please take action to protect your life."}
+{"id": "ja-test-02030", "gloss_title": "Tomorrow's weather", "gloss_text": "Strong winds are forecast for tomorrow. Be careful; umbrellas may break easily."}
+{"id": "ja-dev-02031", "gloss_title": "News flash", "gloss_text": "The government has announced an outline of next fiscal year's budget plan. Please check the article for details."}
+{"id": "ja-test-02032", "gloss_title": "Road info", "gloss_text": "The bridge on National Route 99 is closed to all traffic due to an accident. We will guide you on a detour."}
+{"id": "ja-test-02033", "gloss_title": "Hinata Mansion residents - Hasegawa", "gloss_text": "Hasegawa: This morning's garbage was wrecked by crows, huh...\nMiura: We saw that too, lol\nHasegawa: Maybe we should replace the net"}
+{"id": "ja-test-02034", "gloss_title": "Neighbourhood association notice - secretariat", "gloss_text": "Secretariat: Next month, on the second Sunday at 9:00, we will hold a park clean-up.\nWork gloves and garbage bags will be provided.\nPlease join if you are available."}
+{"id": "ja-dev-02035", "gloss_title": "Hinata Mansion residents - manager", "gloss_text": "Manager: There is a gas leak smell in the third-floor corridor.\nThe gas company is currently checking.\nAll residents, do not use any fire and evacuate outside immediately."}
+{"id": "ja-test-02036", "gloss_title": "Alumni LINE - Kawaguchi", "gloss_text": "Kawaguchi: [Please share] Information received that a major earthquake will hit tomorrow! Absolutely do not go out!!\nKawaguchi: Please pass this on to your friends too"}
+{"id": "ja-test-02037", "gloss_title": "3rd year class 2 parents - teacher", "gloss_text": "Teacher: Next week's Tuesday has afternoon classes, so students will go home after lunch.\nTeacher: There is no change to belongings.\nMother (Ishii): Understood, thank you!"}

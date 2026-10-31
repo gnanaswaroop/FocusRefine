@@ -68,7 +68,6 @@ class HomeHeaderE2ETest {
             AccessibilityDriver.expectText("App Logo")
             val logo = boundsOf("App Logo")!!
             val title = boundsOf("FocusRefine")!!
-            val badge = boundsOf("On Device AI")!!
             val settings = boundsOf("Settings")!!
 
             assertTrue(
@@ -76,8 +75,8 @@ class HomeHeaderE2ETest {
                 logo.width() >= minLogoDp * density - 1 && logo.height() >= minLogoDp * density - 1
             )
 
-            // The logo is vertically centred on the title block (name + badge).
-            val blockCenter = (title.top + badge.bottom) / 2f
+            // The logo is vertically centred on the app name.
+            val blockCenter = (title.top + title.bottom) / 2f
             assertTrue("logo centre ${logo.centerY()} vs title block centre $blockCenter", Math.abs(logo.centerY() - blockCenter) <= 6 * density)
             assertTrue("a gap between logo and title: ${(title.left - logo.right) / density} dp", title.left - logo.right >= 6 * density)
 
@@ -90,7 +89,7 @@ class HomeHeaderE2ETest {
             assertTrue("name is not truncated: box ${title.width()} px, needs about ${needed.toInt()} px", title.width() >= needed * 0.92f)
 
             // Nothing runs off the screen, and the buttons are a proper touch target.
-            listOf(logo, title, badge, settings).forEach {
+            listOf(logo, title, settings).forEach {
                 assertTrue("inside the screen: $it of $widthPx", it.left >= 0 && it.right <= widthPx)
             }
             val settingsTarget = clickableHeightPx("Settings")!!
@@ -122,37 +121,13 @@ class HomeHeaderE2ETest {
         check(minLogoDp = 40, buttonMinDp = 44, expectHelp = false) // the app name wins over the "?" button here
     }
 
-    /** True when the "On Device AI" badge sits to the right of the app name on the same line, not under it. */
-    private fun badgeBesideName(): Boolean {
-        AccessibilityDriver.expectText("FocusRefine")
-        val title = boundsOf("FocusRefine")!!
-        val badge = boundsOf("On Device AI")!!
-        return badge.left >= title.right - 2 && badge.centerY() in title.top..title.bottom
-    }
-
     @Test
-    fun theBadgeSitsBesideTheNameAtTheDefaultWidth() {
-        ActivityScenario.launch(MainActivity::class.java).use {
-            assertTrue("one line: badge beside the name", badgeBesideName())
-        }
-    }
-
-    @Test
-    fun theBadgeSitsBesideTheNameOnAPhoneSizedScreenWithItsDisplaySizeSetting() {
-        // The user's Pixel Pro XL: 1008x2244 at 408dpi is 395dp wide, which the first version of this layout missed.
+    fun theHeaderHoldsOnAPhoneSizedScreenWithItsDisplaySizeSetting() {
+        // The user's Pixel Pro XL: 1008x2244 at 408dpi is 395dp wide.
         ServiceHarness.shell("wm size 1008x2244; wm density 408")
         Thread.sleep(2000)
         ActivityScenario.launch(MainActivity::class.java).use {
-            assertTrue("one line at 395dp: badge beside the name", badgeBesideName())
             check(minLogoDp = 48, buttonMinDp = 48, expectHelp = true)
-        }
-    }
-
-    @Test
-    fun theBadgeGoesUnderTheNameWhenThereIsNoRoomBesideIt() {
-        narrowPhone()
-        ActivityScenario.launch(MainActivity::class.java).use {
-            assertTrue("stacked on a 320dp phone", !badgeBesideName())
         }
     }
 

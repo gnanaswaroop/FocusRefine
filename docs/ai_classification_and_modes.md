@@ -1,6 +1,6 @@
 # FocusRefine — AI Classification Architecture, Modes, Exceptions & AI Prompt Synthesis
 
-This document defines out-of-the-box filtering modes, system prompts, filtering strength thresholds, JSON-driven pre-configured exceptions, AI prompt synthesis learning, and the integration of **Google AI Edge MediaPipe Tasks Text Classification** in **FocusRefine**.
+This document defines out-of-the-box filtering modes, system prompts, filtering strength thresholds, JSON-driven pre-configured exceptions, AI prompt synthesis learning, and the integration of the on-device **Track B** model (a LiteRT model trained by this project on synthetic data) in **FocusRefine**.
 
 ---
 
@@ -86,7 +86,7 @@ Pre-configured exceptions are externalized into `assets/exceptions.json` and par
 
 ## 4. AI Pipeline vs. Semantic Search Inputs
 
-The decision logic lives in `NotificationClassifier` (shared by the live listener service and the history re-run). It distinguishes the **On-Device AI Pipeline** (an embedding model) from **Semantic Search / Prompt Matcher** inputs. The order below is the real precedence: the first step that matches decides.
+The decision logic lives in `NotificationClassifier` (shared by the live listener service and the history re-run). It distinguishes the **On-Device AI Pipeline** (the Track B model) from **Semantic Search / Prompt Matcher** inputs. The order below is the real precedence: the first step that matches decides.
 
 ```mermaid
 graph TD
@@ -96,7 +96,7 @@ graph TD
     S -->|yes| R2["Use the rule action: Shown or Muted"]
     S -->|no| E{"3. Enabled exception keyword in the text?"}
     E -->|yes| R3["Shown"]
-    E -->|no| M{"4. Embedding model loaded, enabled, built-in mode?"}
+    E -->|no| M{"4. Track B model loaded, enabled, built-in mode?"}
     M -->|yes| R4["AI Pipeline: Shown if score reaches the mode threshold, else Muted"]
     M -->|no| K{"5. Any token of the mode prompt in the text?"}
     K -->|yes| R5["Shown"]
@@ -111,10 +111,10 @@ graph TD
 
 The first step that matches decides, so a learned rule always beats an exception, and an exception always beats the model. The model is only consulted at step 4 (and its inference is skipped entirely when an earlier step already decided). Step 5 never falls through: it always returns Shown or Muted. Step 4's per-mode thresholds are shifted by the filtering-strength setting (`Gentle` -0.02, `Balanced` 0, `Strict` +0.02).
 
-1. **`🤖 [AI Pipeline]`**: an on-device sentence-embedding model (MediaPipe `TextEmbedder`, Universal Sentence Encoder, `assets/text_embedder.tflite`). It scores a notification for the active **built-in** mode as the best similarity to that mode's example phrases minus the best similarity to routine phrases, and compares it with the mode's threshold (`assets/embedding_anchors.json`). Custom modes have no anchors, so they use the keyword engine with your own prompt. Explanations look like:
-   - Shown: `🤖 [AI Pipeline] On-device embedding model scored this 0.071 for Commute, at or above the 0.041 urgency threshold; shown.`
-   - Muted: `🤖 [AI Pipeline] On-device embedding model scored this 0.012 for Commute, below the 0.041 urgency threshold; muted as routine.`
-   - **Availability:** loads on emulators and phones (`tasks-text` 1.1.1). If it cannot load, or `use_ai_model` is off, the keyword engine decides.
+1. **`🤖 [AI Pipeline]`**: the on-device Track B model (`assets/track_b.tflite`, run with LiteRT). It reads `category | app name | title | text` and gives one score per built-in mode. The notification is Shown when that mode's score reaches the threshold (0 at Balanced; filtering strength moves it), adjusted by the user's personal model when they have corrected similar notifications. Custom modes are not scored by the model, so they fall through to step 2.
+   - Shown: `🤖 [AI Pipeline] On-device model scored this 4.76 for Commute, at or above the 0.000 urgency threshold; shown.`
+   - Muted: `🤖 [AI Pipeline] On-device model scored this -5.88 for Commute, below the 0.000 urgency threshold; muted as routine.`
+   - **Availability:** loads on emulators and phones (LiteRT). If it cannot load, or `use_ai_model` is off, the keyword engine decides.
 2. **`🔍 [Semantic Search]`**: Token-based keyword matching, user exception rules, and dynamic AI-synthesized preference rules. It decides whenever the embedding model is off, failed to load, or the mode is custom.
 
 Keep the explanation prefixes (`🤖 [AI Pipeline]`, `🔍 [Semantic Search]`) stable: they are persisted, shown in the detail screen, and referenced by tests and docs.
@@ -152,7 +152,7 @@ A labeled dataset (`testdata/golden/`) and an adb end-to-end replay (`scripts/re
 | Engine | Golden F1 | Held-out F1 |
 | :--- | :--- | :--- |
 | Keyword only (`--engine keyword`) | 0.396 | 0.360 |
-| Embedding model (default, Balanced) | 0.570 | 0.527 |
+| Track B model, model only, golden holdout (1,600 items, macro F1) | 0.748 (old engine: 0.143) | see [`track_b_vs_old_engine.md`](track_b_vs_old_engine.md) |
 
 The keyword engine's main weaknesses, all measured:
 - **Exceptions fire on the whole text, including app names.** "Calls & priority contacts" Shows `Mom | Good morning!` and `Boss | Thanks, noted`; "Navigation prompts" Shows `Google Maps | Rate your visit`; "Security & OTP" Shows a bank statement. Some of this is intended (these exceptions apply in every mode), but it disagrees with mode-specific expectations, and it caps the end-to-end score of the embedding engine too, because exceptions decide before the model does.
@@ -160,12 +160,6 @@ The keyword engine's main weaknesses, all measured:
 - **`Workout / Gym` has no dedicated branch** in the keyword lookup, so it falls back to a generic default prompt.
 - **Paraphrases are missed**: every keyword false negative is "no keyword matched".
 
-**Embedding model alone** (`EmbedderBenchmarkTest`, no rules or exceptions; thresholds tuned on the golden set only):
-
-| | Golden F1 | Held-out F1 |
-| :--- | :--- | :--- |
-| Keyword engine (benchmark re-implementation) | 0.42 | 0.35 |
-| Embedding, similarity to mode prompt only | 0.61 | 0.44 |
-| Embedding, examples minus routine anchors (used) | 0.77 | 0.60 |
+**Model on the golden holdout** (1,600 held-out items, macro F1, model alone): Track B 0.748, the previous engine 0.143. See [`track_b_vs_old_engine.md`](track_b_vs_old_engine.md).
 
 Cost on a Pixel Pro XL: about 40 ms per notification (p95 about 90 ms), about 6 MB of native heap, a one-time anchor embedding of about 1.7 s, and a 6.1 MB model. The weakest mode is Deep Work / Focus (short technical alerts), and real emergencies need shared anchors in every mode. The dataset and anchor phrases are synthetic and written by the same author, so treat these figures as indicative. Model source and license status: [`THIRD_PARTY_MODELS.md`](../THIRD_PARTY_MODELS.md).

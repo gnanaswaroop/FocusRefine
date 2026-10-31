@@ -1,0 +1,96 @@
+{"id": "pt-BR-test-01000", "gloss_title": "Missed call", "gloss_text": "Unknown number +55 11 9XXXX-XXXX"}
+{"id": "pt-BR-test-01001", "gloss_title": "Missed call", "gloss_text": "A private number tried to call you at 14:32."}
+{"id": "pt-BR-dev-01002", "gloss_title": "Incoming call", "gloss_text": "Unidentified number +55 21 9XXXX-XXXX is calling"}
+{"id": "pt-BR-test-01003", "gloss_title": "Missed video call", "gloss_text": "Someone you do not have in your contacts called: +55 31 9XXXX-XXXX"}
+{"id": "pt-BR-test-01004", "gloss_title": "2 missed calls", "gloss_text": "From +55 41 9XXXX-XXXX. Unidentified, no saved contact."}
+{"id": "pt-BR-dev-01005", "gloss_title": "Missed call", "gloss_text": "+55 85 9XXXX-XXXX · Fortaleza, CE · No information in Truecaller"}
+{"id": "pt-BR-test-01006", "gloss_title": "Calling...", "gloss_text": "Unknown number"}
+{"id": "pt-BR-test-01007", "gloss_title": "Missed call", "gloss_text": "Someone tried to talk to you on Meet. Hidden number, no message left."}
+{"id": "pt-BR-dev-01008", "gloss_title": "New missed call", "gloss_text": "+55 71 9XXXX-XXXX called 3 times today. Name not found."}
+{"id": "pt-BR-test-01009", "gloss_title": "Missed call", "gloss_text": "Unknown (+55 61 9XXXX-XXXX)"}
+{"id": "pt-BR-test-01010", "gloss_title": "Unanswered call", "gloss_text": "Landline +55 19 3XXX-XXXX called at 09:10. It is not in your contacts."}
+{"id": "pt-BR-dev-01011", "gloss_title": "Missed call", "gloss_text": "Unknown number called 5 minutes ago 📞"}
+{"id": "pt-BR-test-01012", "gloss_title": "Incoming call", "gloss_text": "A number you do not know is trying to start a call with you."}
+{"id": "pt-BR-test-01013", "gloss_title": "Missed call", "gloss_text": "+55 51 9XXXX-XXXX, Porto Alegre. Call back to see who it is?"}
+{"id": "pt-BR-test-01014", "gloss_title": "Possible spam", "gloss_text": "+55 11 4XXX-XXXX · Telemarketing · 2,381 people reported it"}
+{"id": "pt-BR-test-01015", "gloss_title": "Spam call blocked", "gloss_text": "Call suspected of spam blocked: +55 21 3XXX-XXXX"}
+{"id": "pt-BR-dev-01016", "gloss_title": "Probable spam", "gloss_text": "Credit card offer · Sales centre · +55 11 3XXX-XXXX"}
+{"id": "pt-BR-test-01017", "gloss_title": "Probable spam", "gloss_text": "A telephone operator's telemarketing tried to call you."}
+{"id": "pt-BR-test-01018", "gloss_title": "Missed call · Spam", "gloss_text": "Automatic billing (robot) +55 31 4XXX-XXXX. Marked as spam by 940 users."}
+{"id": "pt-BR-dev-01019", "gloss_title": "Suspicious call", "gloss_text": "This call may be spam. Health plan salesperson."}
+{"id": "pt-BR-test-01020", "gloss_title": "Suspected spam", "gloss_text": "Automatic satisfaction survey, +55 41 3XXX-XXXX. No reports of fraud."}
+{"id": "pt-BR-test-01021", "gloss_title": "Spam · Insurance", "gloss_text": "Mass call from an insurance broker 🚗 +55 11 4XXX-XXXX"}
+{"id": "pt-BR-dev-01022", "gloss_title": "Business number", "gloss_text": "Missed voice call from a number flagged as possible spam."}
+{"id": "pt-BR-test-01023", "gloss_title": "Call blocked", "gloss_text": "Telemarketing +55 85 3XXX-XXXX blocked automatically by Truecaller."}
+{"id": "pt-BR-test-01024", "gloss_title": "Probable spam", "gloss_text": "Consortium company · Called 4 times this week"}
+{"id": "pt-BR-dev-01025", "gloss_title": "Probable spam", "gloss_text": "Internet fibre promotion: +55 61 4XXX-XXXX"}
+{"id": "pt-BR-test-01026", "gloss_title": "Possible spam", "gloss_text": "Video call from a number with many advertising reports."}
+{"id": "pt-BR-test-01027", "gloss_title": "Spam · Customer service", "gloss_text": "Automatic customer service centre, +55 71 3XXX-XXXX. Rated as annoying, not dangerous."}
+{"id": "pt-BR-test-01028", "gloss_title": "Scam alert", "gloss_text": "+55 11 9XXXX-XXXX · Fake bank manager · High chance of scam"}
+{"id": "pt-BR-test-01029", "gloss_title": "Possible scam", "gloss_text": "This call may be a scam. Someone pretending to be a bank employee."}
+{"id": "pt-BR-dev-01030", "gloss_title": "Scam reported", "gloss_text": "Fake Correios courier asking for a fee. 1,204 reports."}
+{"id": "pt-BR-test-01031", "gloss_title": "Missed voice call", "gloss_text": "Number +55 21 9XXXX-XXXX pretending to be technical support. Do not click anything it sends you."}
+{"id": "pt-BR-test-01032", "gloss_title": "Suspicious call blocked", "gloss_text": "Fake kidnapping scam: the calling number has already been reported."}
+{"id": "pt-BR-dev-01033", "gloss_title": "Probable scam", "gloss_text": "Fake INSS attendant asking for personal data · +55 61 9XXXX-XXXX"}
+{"id": "pt-BR-test-01034", "gloss_title": "Missed call", "gloss_text": "Account with no photo called: says it is from the Receita Federal and threatens to block your CPF."}
+{"id": "pt-BR-test-01035", "gloss_title": "Scam alert 🚨", "gloss_text": "Fake card service centre asking you to transfer money to a 'safe account'."}
+{"id": "pt-BR-dev-01036", "gloss_title": "Possible scam", "gloss_text": "Fake Pix support: +55 11 9XXXX-XXXX"}
+{"id": "pt-BR-test-01037", "gloss_title": "Missed video call", "gloss_text": "Fake profile of a 'friend' asking to borrow money. Number already reported for scam."}
+{"id": "pt-BR-test-01038", "gloss_title": "Confirmed scam", "gloss_text": "Automatic call saying your name has been negative-listed and offering to 'clear' the debt on the spot."}
+{"id": "pt-BR-test-01039", "gloss_title": "Suspicious call", "gloss_text": "Fake phone operator support offering a 'free upgrade' and asking for your details."}
+{"id": "pt-BR-dev-01040", "gloss_title": "Scam reported", "gloss_text": "Fake Federal Police auction · +55 91 9XXXX-XXXX"}
+{"id": "pt-BR-test-01041", "gloss_title": "High-risk scam", "gloss_text": "Fake store employee saying your purchase was 'cloned' and asking you to install a remote access app."}
+{"id": "pt-BR-test-01042", "gloss_title": "Missed call", "gloss_text": "Mom"}
+{"id": "pt-BR-test-01043", "gloss_title": "Missed voice call", "gloss_text": "Dad called 3 times. Call him back."}
+{"id": "pt-BR-dev-01044", "gloss_title": "5 missed calls", "gloss_text": "Sister Camila (Home) called 5 times in a row."}
+{"id": "pt-BR-test-01045", "gloss_title": "Grandma Lourdes", "gloss_text": "call me now, please"}
+{"id": "pt-BR-test-01046", "gloss_title": "Dad", "gloss_text": "Son, I tried to call you and could not get through. Call me back as soon as you can, it is important."}
+{"id": "pt-BR-dev-01047", "gloss_title": "2 missed calls", "gloss_text": "Husband Rafael at 06:12 and 06:14"}
+{"id": "pt-BR-test-01048", "gloss_title": "Brother Bruno", "gloss_text": "📞 Missed call. Pick up the phone!!"}
+{"id": "pt-BR-test-01049", "gloss_title": "Missed video call", "gloss_text": "Mom tried to call you twice."}
+{"id": "pt-BR-dev-01050", "gloss_title": "Wife Juliana", "gloss_text": "Please call me as soon as you see this 🙏"}
+{"id": "pt-BR-test-01051", "gloss_title": "Missed call", "gloss_text": "Uncle Marcos (family) · 22:47 · Called again right after"}
+{"id": "pt-BR-test-01052", "gloss_title": "Daughter Beatriz", "gloss_text": "Dad, will you call me? I need to talk to you right now."}
+{"id": "pt-BR-dev-01053", "gloss_title": "Mom", "gloss_text": "Missed voice call. Mom left a message: call me when you can, son."}
+{"id": "pt-BR-test-01054", "gloss_title": "Missed call", "gloss_text": "Grandma Teresa called 4 times in the last 10 minutes"}
+{"id": "pt-BR-test-02000", "gloss_title": "How was your visit?", "gloss_text": "Rate Padaria Pão Dourado and help other people decide where to go."}
+{"id": "pt-BR-test-02001", "gloss_title": "Your weekly route summary", "gloss_text": "You covered 118 km this week, 12% less than last week."}
+{"id": "pt-BR-dev-02002", "gloss_title": "Heavy traffic? Save your places!", "gloss_text": "Add home and work in Waze to receive faster route alerts."}
+{"id": "pt-BR-test-02003", "gloss_title": "New on Waze", "gloss_text": "You can now choose the Waze voice. Try the new options 🎙️"}
+{"id": "pt-BR-test-02004", "gloss_title": "Weekly summary of project Alfa", "gloss_text": "12 tasks completed, 5 new and 3 in progress this week."}
+{"id": "pt-BR-dev-02005", "gloss_title": "New follower", "gloss_text": "larissa-exemplo started following you on GitHub."}
+{"id": "pt-BR-test-02006", "gloss_title": "Task added", "gloss_text": "Rafael added \"Review slides for the monthly meeting\" to the Equipe project."}
+{"id": "pt-BR-test-02007", "gloss_title": "Recording available", "gloss_text": "The recording of yesterday's meeting is ready to share."}
+{"id": "pt-BR-test-02008", "gloss_title": "Summary of your day", "gloss_text": "7,842 steps, 5.4 km and 412 active kcal. Good consistency!"}
+{"id": "pt-BR-dev-02009", "gloss_title": "Time to move", "gloss_text": "You have been still for a while. How about a quick walk?"}
+{"id": "pt-BR-test-02010", "gloss_title": "Marcelo commented on PROJ-482", "gloss_text": "No hurry, you can look at it next week. Just so you are aware."}
+{"id": "pt-BR-test-02011", "gloss_title": "Product team", "gloss_text": "Everyone, does anyone fancy lunch at the Japanese place today? 🍣"}
+{"id": "pt-BR-test-02012", "gloss_title": "Vila Verde condo residents - Syndic Ana", "gloss_text": "Good afternoon, residents! The assembly will be on the 12th, at 7 pm, in the party hall. Agenda: facade renovation and financial statements. We count on everyone's presence."}
+{"id": "pt-BR-test-02013", "gloss_title": "Souza family - Aunt Neide", "gloss_text": "Forwarded. 🌞 GOOD MORNING! May God bless your week! Share it with 10 dear people and receive good news today 🙏"}
+{"id": "pt-BR-dev-02014", "gloss_title": "Thursday football - Diego", "gloss_text": "Someone bring the ball? Thiago already said he will bring the bibs. Lol, it's settled then, Thursday 8 pm."}
+{"id": "pt-BR-test-02015", "gloss_title": "Parents of 5th grade B - Vanessa", "gloss_text": "Folks, I saw in the group that there will be an 'urgent alert' about the trip lol. It is just to bring a snack. Nothing exciting today."}
+{"id": "pt-BR-test-02016", "gloss_title": "Igreja Esperança - Pastor Luís", "gloss_text": "Peace of the Lord! The hall cleaning mutirão will be on Saturday at 8 am. Whoever can, bring a broom and a bucket. There will be breakfast for the volunteers ☕"}
+{"id": "pt-BR-test-02017", "gloss_title": "Fernanda (sister)", "gloss_text": "Dad fell down the stairs and is bleeding heavily, we are going to the emergency room now. Call me urgently!"}
+{"id": "pt-BR-dev-02018", "gloss_title": "Escola Municipal Girassol", "gloss_text": "Dear parents: your son Pedro felt unwell in class and has a high fever. Please come and pick him up at the secretary's office as soon as possible. We called your number but could not reach you."}
+{"id": "pt-BR-test-02019", "gloss_title": "Google Wallet payment", "gloss_text": "You paid R$ 23.90 at Cafeteria Grão Nobre."}
+{"id": "pt-BR-test-02020", "gloss_title": "You received a Pix", "gloss_text": "Carolina Exemplo sent you R$ 150.00. The money is already available in your Mercado Pago account. You can use it to pay bills, shop or transfer."}
+{"id": "pt-BR-dev-02021", "gloss_title": "CAIXA Tem", "gloss_text": "Your benefit has been credited to your digital social savings account. Open the app to check your balance, pay bills or generate a QR Code. Remember: CAIXA never asks for your password by phone or message."}
+{"id": "pt-BR-test-02022", "gloss_title": "PicPay", "gloss_text": "Your R$ 4.20 cashback is already in your wallet 🎉"}
+{"id": "pt-BR-test-02023", "gloss_title": "Credit card bill available", "gloss_text": "Your Itaú card bill due on the 10th is now available. Total: R$ 1,284.36. You can check the details, generate the boleto or pay directly in the app, no hurry."}
+{"id": "pt-BR-test-02024", "gloss_title": "Bradesco", "gloss_text": "Your September monthly statement is available in the app."}
+{"id": "pt-BR-dev-02025", "gloss_title": "Banco do Brasil", "gloss_text": "You have an electricity bill that is due in 3 days. Schedule the payment so you do not forget."}
+{"id": "pt-BR-test-02026", "gloss_title": "Banco Inter", "gloss_text": "Your earnings for today have been credited: R$ 3.17. Keep saving money in Cofrinho to watch your balance grow every day. See the full statement and the investment news in the app."}
+{"id": "pt-BR-test-02027", "gloss_title": "⚠️ LAST CHANCE! Ends in 1 hour", "gloss_text": "Free shipping and up to 90% off, only until midnight!"}
+{"id": "pt-BR-dev-02028", "gloss_title": "Your order is out for delivery", "gloss_text": "The order for your Bluetooth headphones is out for delivery and should arrive today between 2 pm and 6 pm. Follow the courier's route in real time in the Magalu app. Have an ID document at hand to receive it."}
+{"id": "pt-BR-test-02029", "gloss_title": "Your driver has arrived", "gloss_text": "Rogério is waiting in front of number 120. Plate ABC-0000, silver Onix."}
+{"id": "pt-BR-test-02030", "gloss_title": "Rate your ride", "gloss_text": "How was the trip with Luciana? Leave your rating from 1 to 5 stars."}
+{"id": "pt-BR-dev-02031", "gloss_title": "Driver on the way", "gloss_text": "Your driver arrives in 4 minutes. Keep your phone nearby 🚗"}
+{"id": "pt-BR-test-02032", "gloss_title": "Ride cancelled", "gloss_text": "Your ride to the airport was cancelled by the driver. Request another one now so you do not miss the 5:40 pm flight. We are looking for nearby drivers for you."}
+{"id": "pt-BR-test-02033", "gloss_title": "Time to log lunch", "gloss_text": "Don't forget to note what you ate to keep your 6-day streak."}
+{"id": "pt-BR-test-02034", "gloss_title": "EMERGENCY ALERT in Free Fire", "gloss_text": "A storm is about to hit the island! Enter now and secure the event rewards 🌪️"}
+{"id": "pt-BR-dev-02035", "gloss_title": "Your order is being prepared", "gloss_text": "The restaurant Sabor Caseiro confirmed your order and has started preparing it."}
+{"id": "pt-BR-test-02036", "gloss_title": "Hunger alert 🍔", "gloss_text": "R$ 15 off coupon only today on your favourite snack. Hurry, it ends at midnight!"}
+{"id": "pt-BR-test-02037", "gloss_title": "Document available", "gloss_text": "Your Digital Work Card has been updated. Open the federal government app to check the new record, download the PDF or share the document. This is an informational notice and requires no immediate action."}
+{"id": "pt-BR-dev-02038", "gloss_title": "Alert system test", "gloss_text": "This is only a test of the emergency alert system. No action is required."}
+{"id": "pt-BR-test-02039", "gloss_title": "Your Flow is ready", "gloss_text": "New songs in sertanejo and MPB chosen for you. Hit play!"}
+{"id": "pt-BR-test-02040", "gloss_title": "Premieres today", "gloss_text": "The new episode of your favourite series is now on Disney+ 🍿"}

@@ -37,8 +37,8 @@ import kotlinx.coroutines.withContext
 
 /** The two legal documents, shown inside the app (the app has no internet permission, so nothing is fetched). */
 enum class LegalDoc(val title: String, val updated: String) {
-    PRIVACY("Privacy Policy", "20 October 2026"),
-    TERMS("Terms of Use", "20 October 2026")
+    PRIVACY("Privacy Policy", "31 October 2026"),
+    TERMS("Terms of Use", "31 October 2026")
 }
 
 private class LegalSection(val heading: String, val paragraphs: List<String>, val bullets: List<String> = emptyList())
@@ -232,8 +232,12 @@ private fun termsSections() = listOf(
         listOf("By installing or using FocusRefine you agree to these terms. If you do not agree, please uninstall the app."),
         listOf(
             "You may use the app for personal use on devices you own or are allowed to manage.",
-            "Do not copy, resell or repackage it in a way that misleads people about who made it."
+            "The source code is free software under the MIT License (see below). A modified copy must not be presented as the official FocusRefine app."
         )
+    ),
+    LegalSection(
+        "Free to use",
+        listOf("FocusRefine is free of charge. There are no subscriptions, in-app purchases or advertising, and nobody is charged to install or use it.")
     ),
     LegalSection(
         "A filter, not a guarantee",
@@ -256,19 +260,22 @@ private fun termsSections() = listOf(
     ),
     LegalSection(
         "Open-source and third-party parts",
-        listOf("The app includes open-source libraries and an on-device language model from third parties, each under its own license. Their terms apply to those parts.")
+        listOf(
+            "FocusRefine's own source code is released under the MIT License, which allows you to use, copy, modify and redistribute it, free of charge, as long as its copyright and license notice are kept.",
+            "The app includes open-source libraries from third parties, each under its own license, and their terms apply to those parts."
+        )
     ),
     LegalSection(
         "No warranty",
         listOf(
-            "The app is provided as is and as available, without warranties of any kind, to the extent the law allows."
+            "The app is provided as is and as available, without warranties of any kind, express or implied, including fitness for a particular purpose and non-infringement, to the extent the law allows."
         )
     ),
     LegalSection(
         "Limit of liability",
         listOf(
-            "To the extent the law allows, the makers of FocusRefine are not liable for missed or wrongly shown notifications, or for any loss that follows from them. " +
-                "Nothing in these terms limits rights you have by law that cannot be limited."
+            "To the extent the law allows, the makers of FocusRefine (the FocusRefine Contributors) are not liable to you or anyone else for any claim or damage, direct or indirect, incidental or consequential, including missed or wrongly shown notifications, lost data, or any loss that follows from using or being unable to use the app. " +
+                "They have no obligation to provide support, updates or fixes. Nothing in these terms limits rights you have by law that cannot be limited."
         )
     ),
     LegalSection(

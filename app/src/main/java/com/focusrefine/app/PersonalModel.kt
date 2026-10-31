@@ -20,8 +20,8 @@ import kotlin.math.sqrt
 class PersonalModel(val dim: Int, val params: Params = Params()) {
 
     data class Params(
-        /** Strength of the built-in score as a prior (score margins are about +-0.1). */
-        val baseScale: Double = 60.0,
+        /** Strength of the built-in logit as a prior: 1.0 starts from the model's own probability. */
+        val baseScale: Double = 1.0,
         /** Kernel width on cosine similarity: smaller means a correction affects fewer neighbours. */
         val tau: Double = 0.06,
         /** How much a correction made in another mode counts (0 = modes are independent). */
@@ -31,15 +31,19 @@ class PersonalModel(val dim: Int, val params: Params = Params()) {
         val iterations: Int = 300
     )
 
-    class Example(val key: String, val mode: String, val vector: FloatArray, val urgent: Boolean)
+    /** [vector] is the model's pooled features (raw); [unit] is the copy the kernel compares. */
+    class Example(val key: String, val mode: String, val vector: FloatArray, val urgent: Boolean) {
+        val unit: FloatArray = normalize(vector)
+    }
 
     private var examples: List<Example> = emptyList()
     private var alphas = DoubleArray(0)
 
     /** Added to the scaled built-in margin; exactly 0.0 when nothing has been learned. */
     fun adjustment(vector: FloatArray, mode: String): Double {
+        val x = normalize(vector)
         var z = 0.0
-        for (i in examples.indices) z += alphas[i] * kernel(vector, mode, examples[i])
+        for (i in examples.indices) z += alphas[i] * kernel(x, mode, examples[i])
         return z
     }
 
@@ -55,7 +59,7 @@ class PersonalModel(val dim: Int, val params: Params = Params()) {
         alphas = DoubleArray(n)
         if (n == 0) return
 
-        val k = Array(n) { i -> DoubleArray(n) { j -> kernel(examples[i].vector, examples[i].mode, examples[j]) } }
+        val k = Array(n) { i -> DoubleArray(n) { j -> kernel(examples[i].unit, examples[i].mode, examples[j]) } }
         val prior = DoubleArray(n) { params.baseScale * margins[it] }
         val target = DoubleArray(n) { if (examples[it].urgent) 1.0 else 0.0 }
         // Step size from a Gershgorin bound on the Hessian, so the descent is stable for any n.
@@ -89,7 +93,7 @@ class PersonalModel(val dim: Int, val params: Params = Params()) {
     private fun kernel(x: FloatArray, mode: String, e: Example): Double {
         if (mode != e.mode && params.crossMode == 0.0) return 0.0 // modes are independent: skip the dot product
         var cos = 0.0
-        for (d in x.indices) cos += x[d].toDouble() * e.vector[d]
+        for (d in x.indices) cos += x[d].toDouble() * e.unit[d]
         val sameMode = if (mode == e.mode) 1.0 else params.crossMode
         return exp((max(-1.0, cos) - 1.0) / params.tau) * sameMode
     }

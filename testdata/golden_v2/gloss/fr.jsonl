@@ -1,0 +1,60 @@
+{"id": "fr-test-00001", "gloss_title": "Mom", "gloss_text": "Call me right now, dad had a dizzy spell/collapsed, the firefighters are here. We're heading to the emergency room at Lariboisière."}
+{"id": "fr-dev-00002", "gloss_title": "Julie (sister)", "gloss_text": "Léo fell off his bike, he's bleeding a lot from the head. I'm with him, call me back fast!!"}
+{"id": "fr-test-00003", "gloss_title": "Missed call", "gloss_text": "Mom (3 missed calls)"}
+{"id": "fr-test-00004", "gloss_title": "Dad", "gloss_text": "Missed voice call. Dad tried to reach you 4 times in the last ten minutes."}
+{"id": "fr-test-00005", "gloss_title": "Missed call", "gloss_text": "Unknown number - Lyon (69)"}
+{"id": "fr-test-00006", "gloss_title": "Probable spam", "gloss_text": "Call from +33 9XXXXXXXX reported by 1 482 users: solar panel cold-calling"}
+{"id": "fr-dev-00007", "gloss_title": "Missed call", "gloss_text": "Your bank advisor - URGENT, account blocked. Unsaved number: 0X XX XX XX XX"}
+{"id": "fr-test-00008", "gloss_title": "Colissimo - Action required", "gloss_text": "Your parcel is held at customs. Pay 1,99 € in fees at http://colis-suivi.example.invalid/fr to receive it."}
+{"id": "fr-test-00009", "gloss_title": "Winners Department", "gloss_text": "CONGRATULATIONS !!! You won an iPhone. Last chance, reply within the hour: http://cadeau-gagnant.example.invalid/x"}
+{"id": "fr-test-00010", "gloss_title": "Delivery", "gloss_text": "Final notice before return: your parcel could not be delivered. Reschedule here http://livraison-fr.example.invalid/r"}
+{"id": "fr-test-00011", "gloss_title": "FR-Alert", "gloss_text": "Red alert for storms and flooding in your area. Stay indoors, avoid all travel and do not go down into basements."}
+{"id": "fr-dev-00012", "gloss_title": "Earthquake alert", "gloss_text": "Seismic shaking detected near you. Drop down, take cover under a sturdy piece of furniture and protect your head."}
+{"id": "fr-test-00013", "gloss_title": "Les Charmilles neighborhood", "gloss_text": "A gas leak has been reported on rue des Lilas. The firefighters ask that numbers 10 to 24 be evacuated and that no light switch be used."}
+{"id": "fr-test-00014", "gloss_title": "The football buddies - Kevin", "gloss_text": "URGENT guys !!! Who's bringing the chips Saturday? Without them we're not playing 😂"}
+{"id": "fr-test-00015", "gloss_title": "Local news", "gloss_text": "⚠️ ALERT TO SHARE WITH EVERYONE: a man in a white van is abducting children, share this! (received from a friend)"}
+{"id": "fr-test-00016", "gloss_title": "Sound detected", "gloss_text": "Fire alarm detected nearby"}
+{"id": "fr-dev-00017", "gloss_title": "Sound detected", "gloss_text": "Doorbell detected"}
+{"id": "fr-test-00018", "gloss_title": "Your driver has arrived", "gloss_text": "Karim is waiting for you at 12 rue Voltaire - grey Peugeot 308. He has been waiting for 1 minute."}
+{"id": "fr-test-00019", "gloss_title": "In 300 m", "gloss_text": "Turn right onto avenue Foch then take the exit toward the ring road."}
+{"id": "fr-test-00020", "gloss_title": "#incident-prod", "gloss_text": "The payment service has been down since 14 h 05, error rate 92 %. We need you on a video call now."}
+{"id": "fr-dev-00021", "gloss_title": "In 10 minutes", "gloss_text": "Weekly product team meeting - Montmartre room / Meet link"}
+{"id": "fr-test-00023", "gloss_title": "Abnormal heart rate", "gloss_text": "Your heart rate stayed above 150 bpm for 10 minutes while you are at rest. If you feel any pain, call 15."}
+{"id": "fr-test-00024", "gloss_title": "Spotify Premium", "gloss_text": "Your subscription will renew on November 3 for 11,99 €."}
+{"id": "fr-dev-00025", "gloss_title": "Payment problem", "gloss_text": "We couldn't charge your subscription. Update your payment method to keep watching."}
+{"id": "fr-test-00026", "gloss_title": "🔔 New release alert!", "gloss_text": "Your favorite artist's new album just came out, listen before everyone else."}
+{"id": "fr-test-00027", "gloss_title": "For you", "gloss_text": "Le Studio Bleu: \"I tried the cheapest restaurants in Paris\" - 12 min"}
+{"id": "fr-test-00028", "gloss_title": "PROMO STORM ⛈️", "gloss_text": "Up to -60 % on home and garden, last hours! Hurry and take advantage."}
+{"id": "fr-test-00029", "gloss_title": "Last-minute change", "gloss_text": "Your 17 h 42 train to Bordeaux is cancelled. Another departure is planned at 18 h 15 platform 7."}
+{"id": "fr-dev-00030", "gloss_title": "Motion detected", "gloss_text": "A person was detected in front of the front door at 3 h 12."}
+{"id": "fr-test-00031", "gloss_title": "Dr Martin's practice", "gloss_text": "Hello, the lab called: your results show a significant abnormality. The doctor asks you to call him back today."}
+{"id": "fr-test-00032", "gloss_title": "École Jean Moulin", "gloss_text": "Hello, Camille got hurt at recess. Please come pick her up as soon as possible or call us."}
+{"id": "fr-dev-00033", "gloss_title": "Parcel on its way", "gloss_text": "Your parcel will be delivered tomorrow between 9 h and 13 h."}
+{"id": "fr-dev-00034", "gloss_title": "Payment made", "gloss_text": "You paid 4,20 € at Boulangerie Martin."}
+{"id": "fr-test-00035", "gloss_title": "Claire Dubois (client)", "gloss_text": "I need the final version of the contract before 16 h, the client signs this afternoon. Can you send it to me now?"}
+{"id": "fr-dev-00036", "gloss_title": "Deadline in 1 hour", "gloss_text": "Send the application file - final deadline at 12 h"}
+{"id": "fr-dev-00037", "gloss_title": "Deployment failed", "gloss_text": "The \"main\" pipeline failed at the test step. Production deployment is blocked."}
+{"id": "fr-test-00038", "gloss_title": "Smoke alert", "gloss_text": "A smoke detector has been triggered in the kitchen. Audible alarm activated."}
+{"id": "fr-dev-00039", "gloss_title": "Flood watch", "gloss_text": "Rapid rise of the Garonne waters. Evacuation recommended for riverside neighborhoods."}
+{"id": "fr-test-00040", "gloss_title": "FR-Alert", "gloss_text": "Danger: attack in progress in the city center. Take shelter immediately and follow the authorities' instructions."}
+{"id": "fr-test-00041", "gloss_title": "Road closed", "gloss_text": "Accident on the A7 toward Lyon, traffic stopped. Alternate route advised via the D86."}
+{"id": "fr-dev-00042", "gloss_title": "Théo", "gloss_text": "Call me when you can, I've got something crazy to tell you 😂"}
+{"id": "fr-test-00043", "gloss_title": "Mom", "gloss_text": "Did you remember to get bread on the way home? Call me back when you can, nothing serious."}
+{"id": "fr-test-00044", "gloss_title": "Missed call", "gloss_text": "Sarah (colleague)"}
+{"id": "fr-test-00045", "gloss_title": "Motion detected", "gloss_text": "The cat was detected in the living room at 14 h 20."}
+{"id": "fr-dev-00046", "gloss_title": "Evening weather", "gloss_text": "Risk of light showers around 21 h, 14 °C. Take a jacket."}
+{"id": "fr-test-00047", "gloss_title": "Town hall information", "gloss_text": "Water cut planned tomorrow from 9 h to 12 h in the Saint-Michel neighborhood for works."}
+{"id": "fr-dev-00049", "gloss_title": "Vaccination reminder", "gloss_text": "Remember to book your vaccine booster appointment before the end of next month."}
+{"id": "fr-test-00050", "gloss_title": "Collège Victor Hugo", "gloss_text": "Parent-teacher meeting on Thursday November 6 at 18 h in room 12. Your attendance is requested."}
+{"id": "fr-test-00051", "gloss_title": "Antoine Leroy", "gloss_text": "Hey, can you call me when you have 5 min? It's about Friday's get-together."}
+{"id": "fr-dev-00052", "gloss_title": "URGENT - Newsletter", "gloss_text": "The 10 trends not to miss this month: read our newsletter quickly."}
+{"id": "fr-test-00053", "gloss_title": "ALERT ⚔️", "gloss_text": "Your village is under attack! Come back and defend your resources before it's too late."}
+{"id": "fr-test-00054", "gloss_title": "Flash sale alert", "gloss_text": "Only 10 minutes left to get -70 % on the whole site. Don't miss out!"}
+{"id": "fr-test-00055", "gloss_title": "Breaking", "gloss_text": "A famous singer announces his farewell tour: everything you need to know."}
+{"id": "fr-dev-00056", "gloss_title": "Goal!", "gloss_text": "Lyon 2-1 Marseille (78') - Goal by Lacazette"}
+{"id": "fr-test-00057", "gloss_title": "LinkedIn", "gloss_text": "Marc Petit and 3 others reacted to your post."}
+{"id": "fr-dev-00058", "gloss_title": "Your stay is approaching", "gloss_text": "Your stay in Nantes is in 12 days. Discover the host's guide."}
+{"id": "fr-dev-00059", "gloss_title": "Ride receipt", "gloss_text": "Thanks for riding with us! Your 12,40 € ride is complete. Rate your driver."}
+{"id": "fr-dev-00060", "gloss_title": "⚠️ Price alert", "gloss_text": "Bitcoin jumps 8 % in one hour! Don't miss the move."}
+{"id": "fr-test-00022", "gloss_title": "Time for your workout", "gloss_text": "6 pm bike ride: 45 km planned, remember to fill your water bottle 🚴"}
+{"id": "fr-test-00048", "gloss_title": "Goal reached", "gloss_text": "Well done! You reached 10 000 steps today 🎉"}

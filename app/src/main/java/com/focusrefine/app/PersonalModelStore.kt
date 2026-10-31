@@ -31,7 +31,10 @@ class PersonalModelStore(context: Context) {
     @Synchronized
     fun addAndTrain(example: PersonalModel.Example, margin: (FloatArray, String) -> Double): Int {
         val current = load()
-        val examples = (current?.examples.orEmpty().filterNot { it.key == example.key && it.mode == example.mode } + example)
+        // Corrections saved by an earlier engine have a different vector size and cannot be compared with these: drop them.
+        val examples = (current?.examples.orEmpty()
+            .filter { it.vector.size == example.vector.size }
+            .filterNot { it.key == example.key && it.mode == example.mode } + example)
             .takeLast(MAX_EXAMPLES)
         return trainAndSave(example.vector.size, examples, margin)
     }

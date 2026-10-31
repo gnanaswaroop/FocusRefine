@@ -1,0 +1,98 @@
+{"id": "zh-Hans-test-01000", "gloss_title": "Missed call", "gloss_text": "138XXXXXXXX missed call at 2:30 pm; this number is not saved in your contacts"}
+{"id": "zh-Hans-test-01001", "gloss_title": "Incoming call", "gloss_text": "+86 139XXXXXXXX is ringing you; location: unknown"}
+{"id": "zh-Hans-dev-01002", "gloss_title": "Missed video call", "gloss_text": "An unknown user tried to video call you (missed)"}
+{"id": "zh-Hans-test-01003", "gloss_title": "Incoming call", "gloss_text": "Hidden number is calling you"}
+{"id": "zh-Hans-test-01004", "gloss_title": "Missed call", "gloss_text": "Shenzhen landline 0755-XXXXXXXX missed you twice; no information about this number"}
+{"id": "zh-Hans-dev-01005", "gloss_title": "3 missed calls", "gloss_text": "+86 137XXXXXXXX called 3 times yesterday, from 21:05 to 21:09"}
+{"id": "zh-Hans-test-01006", "gloss_title": "Incoming call", "gloss_text": "Unknown number 0571-XXXXXXXX rang for 12 seconds and then hung up"}
+{"id": "zh-Hans-test-01007", "gloss_title": "Missed call", "gloss_text": "Beijing landline 010-XXXXXXXX missed call; the caller could not be identified"}
+{"id": "zh-Hans-dev-01008", "gloss_title": "Incoming call", "gloss_text": "An unknown number invited you to a voice call"}
+{"id": "zh-Hans-test-01009", "gloss_title": "Missed call", "gloss_text": "International number +44 7XXX XXXXXX called early this morning; you did not answer"}
+{"id": "zh-Hans-test-01010", "gloss_title": "Truecaller", "gloss_text": "You have a missed call from an unknown number; the last four digits are not shown"}
+{"id": "zh-Hans-dev-01011", "gloss_title": "Missed call", "gloss_text": "+852 XXXX XXXX called and was not answered; caller unknown"}
+{"id": "zh-Hans-test-01012", "gloss_title": "Missed call", "gloss_text": "158XXXXXXXX called last night at 22:10; no tag information"}
+{"id": "zh-Hans-test-01013", "gloss_title": "Incoming call", "gloss_text": "Shanghai landline 021-XXXXXXXX is calling; number not identified"}
+{"id": "zh-Hans-test-01014", "gloss_title": "Suspected spam call", "gloss_text": "400-XXX-XXXX was marked as advertising sales by 2,314 users"}
+{"id": "zh-Hans-test-01015", "gloss_title": "Suspected spam call", "gloss_text": "Real estate agency · 186XXXXXXXX, already flagged by many people"}
+{"id": "zh-Hans-dev-01016", "gloss_title": "Call blocked", "gloss_text": "A suspected insurance sales call was blocked; flagged 856 times"}
+{"id": "zh-Hans-test-01017", "gloss_title": "Incoming call", "gloss_text": "Possible spam call: loan sales · number starting with 95XXX"}
+{"id": "zh-Hans-test-01018", "gloss_title": "WeChat voice call", "gloss_text": "An unknown account 'Youxuan Classroom Assistant' invited you to a voice call"}
+{"id": "zh-Hans-dev-01019", "gloss_title": "Suspected spam call", "gloss_text": "Renovation company sales · rang once and hung up; silenced for you"}
+{"id": "zh-Hans-test-01020", "gloss_title": "Missed call", "gloss_text": "+86 170XXXXXXXX was recently flagged as telemarketing; promotes investment and finance courses"}
+{"id": "zh-Hans-test-01021", "gloss_title": "Spam call", "gloss_text": "Suspected outbound robocall; automatically rejected"}
+{"id": "zh-Hans-dev-01022", "gloss_title": "Suspected spam call", "gloss_text": "Tutoring agency enrolment sales · 4 incoming calls"}
+{"id": "zh-Hans-test-01023", "gloss_title": "Truecaller notice", "gloss_text": "Incoming number suspected to be a takeout promotion; suggest rejecting"}
+{"id": "zh-Hans-test-01024", "gloss_title": "WhatsApp missed voice call", "gloss_text": "+1 555-0142 · this account is suspected to be a marketing account"}
+{"id": "zh-Hans-dev-01025", "gloss_title": "Suspected spam call", "gloss_text": "Used car sales · flagged 1,207 times"}
+{"id": "zh-Hans-test-01026", "gloss_title": "Blocked", "gloss_text": "A suspected spam call (health supplement sales) was blocked automatically"}
+{"id": "zh-Hans-test-01027", "gloss_title": "Scam risk call", "gloss_text": "This number claims to be the public security bureau and has been flagged by many people as fraud. Do not answer or transfer money."}
+{"id": "zh-Hans-test-01028", "gloss_title": "Suspected scam call", "gloss_text": "Impersonates bank customer service: 'there is an abnormality in your account', +86 10XXXXXXXX"}
+{"id": "zh-Hans-dev-01029", "gloss_title": "High-risk call", "gloss_text": "Impersonates courier customer service, claims a lost parcel needs compensation. Do not provide bank card details."}
+{"id": "zh-Hans-test-01030", "gloss_title": "WeChat voice call", "gloss_text": "'Official customer service' invited you to a voice call, saying you need to process a refund"}
+{"id": "zh-Hans-test-01031", "gloss_title": "Incoming call", "gloss_text": "Suspected scam: impersonates e-commerce customer service, asks you to cancel membership or be charged monthly"}
+{"id": "zh-Hans-dev-01032", "gloss_title": "Fraud risk", "gloss_text": "Brushing-order part-time job scam call · flagged 3,402 times"}
+{"id": "zh-Hans-test-01033", "gloss_title": "Suspected scam call", "gloss_text": "Impersonates a company leader and demands an urgent transfer · +86 155XXXXXXXX"}
+{"id": "zh-Hans-test-01034", "gloss_title": "Video call incoming", "gloss_text": "A stranger claiming to be your 'old classmate' asks to borrow money"}
+{"id": "zh-Hans-dev-01035", "gloss_title": "High-risk call", "gloss_text": "'Credit repair' scam call; claims it can remove bad credit records for you"}
+{"id": "zh-Hans-test-01036", "gloss_title": "QQ voice call", "gloss_text": "A stranger impersonates customer service, says your campus loan account must be cancelled, and asks you to share your screen"}
+{"id": "zh-Hans-test-01037", "gloss_title": "Suspected scam call", "gloss_text": "Impersonates a carrier: 'points expire soon, click the link to redeem'"}
+{"id": "zh-Hans-dev-01038", "gloss_title": "WhatsApp call", "gloss_text": "+44 7700 900123 claims to be 'computer technical support' and says your device is infected"}
+{"id": "zh-Hans-test-01039", "gloss_title": "Scam risk call", "gloss_text": "Suspected 'pig butchering' scam: invites you into a high-return investment group"}
+{"id": "zh-Hans-test-01040", "gloss_title": "Suspected scam call", "gloss_text": "Impersonates the social security bureau, says your medical insurance card is suspected of misuse"}
+{"id": "zh-Hans-test-01041", "gloss_title": "Missed call", "gloss_text": "Mom · 3 missed calls"}
+{"id": "zh-Hans-test-01042", "gloss_title": "Dad", "gloss_text": "[Missed voice call]"}
+{"id": "zh-Hans-dev-01043", "gloss_title": "Missed call", "gloss_text": "Wife · 5 missed calls, most recent 3 minutes ago"}
+{"id": "zh-Hans-test-01044", "gloss_title": "Elder brother", "gloss_text": "Call me back quickly, there is an emergency at home"}
+{"id": "zh-Hans-test-01045", "gloss_title": "Missed call", "gloss_text": "Elder sister: 2 consecutive calls, at 23:40 at night"}
+{"id": "zh-Hans-dev-01046", "gloss_title": "Mom", "gloss_text": "Saw the message, call me back right away"}
+{"id": "zh-Hans-test-01047", "gloss_title": "Dad", "gloss_text": "Are you there? Call back quickly!"}
+{"id": "zh-Hans-test-01048", "gloss_title": "Missed video call", "gloss_text": "Grandma video called; rang 3 times"}
+{"id": "zh-Hans-test-01049", "gloss_title": "Husband", "gloss_text": "I have been calling you and nobody answers; call me back right away when you see this"}
+{"id": "zh-Hans-dev-01050", "gloss_title": "4 missed calls", "gloss_text": "Dad · today from 07:15 to 07:22"}
+{"id": "zh-Hans-test-01051", "gloss_title": "Daughter", "gloss_text": "Where are you, Dad? Answer the phone quickly!"}
+{"id": "zh-Hans-test-01052", "gloss_title": "Younger brother", "gloss_text": "Bro, call me back, I need to talk to you"}
+{"id": "zh-Hans-test-01053", "gloss_title": "Missed call", "gloss_text": "Old mom · 6 missed calls"}
+{"id": "zh-Hans-dev-01054", "gloss_title": "Mom", "gloss_text": "As soon as you see this message, call me; I am waiting for you at the hospital entrance"}
+{"id": "zh-Hans-test-02000", "gloss_title": "Rate your last visit", "gloss_text": "You recently visited 'Binjiang Park'. How was it? Tap to rate this place"}
+{"id": "zh-Hans-dev-02001", "gloss_title": "Weekly driving summary", "gloss_text": "This week you drove 126 km in total, 18 km less than last week. View the detailed report."}
+{"id": "zh-Hans-test-02002", "gloss_title": "New places nearby", "gloss_text": "Several new cafes and bakeries have opened near you; come see what people think of them"}
+{"id": "zh-Hans-test-02003", "gloss_title": "Tip", "gloss_text": "You can now change the navigation voice in settings. Try the new standard Mandarin male voice!"}
+{"id": "zh-Hans-test-02004", "gloss_title": "Task assigned to you", "gloss_text": "Wang Chen assigned 'Optimise homepage loading speed' to you; priority low, to be handled in the next iteration"}
+{"id": "zh-Hans-dev-02005", "gloss_title": "New star", "gloss_text": "A user starred your project; you have received a lot of attention so far"}
+{"id": "zh-Hans-test-02006", "gloss_title": "Task added", "gloss_text": "'Organise material for next week's weekly report' has been added to your inbox"}
+{"id": "zh-Hans-test-02007", "gloss_title": "Meeting recording ready", "gloss_text": "The cloud recording of yesterday afternoon's 'department weekly meeting' has finished processing and can be watched or downloaded on the web"}
+{"id": "zh-Hans-test-02008", "gloss_title": "Weekly activity report", "gloss_text": "This week you walked about 70,000 steps in total; average sleep 7 hours. Tap to view the full weekly report"}
+{"id": "zh-Hans-dev-02009", "gloss_title": "Time to move", "gloss_text": "You have been sitting for an hour straight; get up and walk around for a few minutes"}
+{"id": "zh-Hans-test-02010", "gloss_title": "Chen Lei", "gloss_text": "Shall we go for noodles downstairs at noon? No rush, just reply when you are done"}
+{"id": "zh-Hans-test-02011", "gloss_title": "Weekly review", "gloss_text": "You completed 23 tasks this week, and a few are due tomorrow; find time to look at them"}
+{"id": "zh-Hans-test-02012", "gloss_title": "Grade 3 (2) parents' group - Mrs Li", "gloss_text": "Good evening, parents!\nThe children's monthly exam results came out today.\nPlease don't worry too much; just encourage them at home.\nThank you to the teachers for their hard work."}
+{"id": "zh-Hans-test-02013", "gloss_title": "Residents' group - property officer Xiao Zhang", "gloss_text": "[Water cut notice] Due to municipal pipe maintenance, buildings 1 to 6 in the community will have temporary water cuts from 9 am to 4 pm tomorrow. Please store water in advance. We apologise for the inconvenience. For questions, contact the property front desk; we will reply as soon as possible."}
+{"id": "zh-Hans-dev-02014", "gloss_title": "Health knowledge group - Aunt Chen", "gloss_text": "[Forwarded] Stop drinking water like this! Doctors remind us the first glass of water in the morning is crucial; forward it to your family now! If you don't forward it, you are not Chinese."}
+{"id": "zh-Hans-test-02015", "gloss_title": "Building group - guard Lao Zhao", "gloss_text": "URGENT notice! There is thick smoke in the corridor on the 7th floor of unit 1 in building 3; suspected fire, police have been called. Everyone leave immediately by the stairs. Do not take the lift and do not linger in the corridor!"}
+{"id": "zh-Hans-test-02016", "gloss_title": "Product team weekly meeting group - Lin Yue", "gloss_text": "Colleagues, the weekly meeting minutes are ready in the shared document.\nPlease look when you have time; if you have additions, just comment in the document.\nNo need to reply urgently."}
+{"id": "zh-Hans-test-02017", "gloss_title": "Meeting reminder", "gloss_text": "'Quarterly review meeting' starts in five minutes; the host has already joined, please join soon"}
+{"id": "zh-Hans-dev-02018", "gloss_title": "Urgent alert", "gloss_text": "[Online outage] Order service response timeout; error rate has exceeded the threshold and is currently affecting many users placing orders. On-duty staff, please handle immediately and sync progress in the incident group."}
+{"id": "zh-Hans-test-02019", "gloss_title": "Bill ready", "gloss_text": "Your bill for this month has been generated: total spending this month is 3,420 yuan, slightly less than last month. You can view category details on the bill page, or set a reminder for next month's spending budget."}
+{"id": "zh-Hans-test-02020", "gloss_title": "Utility payment reminder", "gloss_text": "The amount due this period for your bound electricity account has been generated; the payment deadline is the end of this month. To avoid disruption to your power supply, pay before the due date. You can also enable automatic deduction."}
+{"id": "zh-Hans-dev-02021", "gloss_title": "Order out for delivery", "gloss_text": "Your 'insulated cup 500ml' was picked up by courier Master Zhang and is expected to arrive before 6 pm today. Please keep your phone available. Check that the packaging is intact when you receive it."}
+{"id": "zh-Hans-test-02022", "gloss_title": "URGENT! Flash sale", "gloss_text": "Last three hours! Countdown for the subsidy flash sale: miss today and wait a year. Come claim your exclusive red packet"}
+{"id": "zh-Hans-test-02023", "gloss_title": "Driver arriving soon", "gloss_text": "Your driver is two minutes away; please wait at the pickup point. Plate ends in 8, white car"}
+{"id": "zh-Hans-dev-02024", "gloss_title": "Trip ended", "gloss_text": "The fare for this trip has been settled automatically. Please rate the driver; a taxi coupon is waiting for you to claim"}
+{"id": "zh-Hans-test-02025", "gloss_title": "Navigation prompt", "gloss_text": "In 500 metres turn right onto Zhongshan Road, then continue straight on the main road for 3 km"}
+{"id": "zh-Hans-test-02026", "gloss_title": "Route congestion alert", "gloss_text": "The road ahead on your usual route is temporarily closed due to a traffic accident; we recommend detouring immediately. A faster alternative route has been found, about 8 minutes longer. Tap to view and switch."}
+{"id": "zh-Hans-dev-02027", "gloss_title": "Monthly travel report", "gloss_text": "This month you made more than thirty trips; your most frequent destination was 'Company'. Tap to view your monthly footprint"}
+{"id": "zh-Hans-test-02028", "gloss_title": "Train delay notice", "gloss_text": "Your booked G-series train is expected to be delayed by about ninety minutes due to equipment failure. The waiting room and ticket gates may change; follow station announcements and watch for re-issued gate information."}
+{"id": "zh-Hans-test-02029", "gloss_title": "Ticket purchased", "gloss_text": "You have successfully bought your ticket for next Saturday. Please bring valid ID when boarding; you can view your e-ticket on your phone in advance."}
+{"id": "zh-Hans-dev-02030", "gloss_title": "Red rainstorm warning", "gloss_text": "The meteorological bureau has issued a red rainstorm warning: heavy rain in several districts of this city over the next three hours, with serious waterlogging in some areas. Residents, please avoid going out, stay away from low-lying areas and underground spaces, and take care of your safety."}
+{"id": "zh-Hans-test-02031", "gloss_title": "Today's headlines", "gloss_text": "Several regions release a new round of consumer vouchers; experts explain the impact on the market"}
+{"id": "zh-Hans-test-02032", "gloss_title": "Merchant accepted order", "gloss_text": "'Old Street Noodles' has accepted your order and is preparing your meal; expected delivery within half an hour"}
+{"id": "zh-Hans-dev-02033", "gloss_title": "Recommended for you", "gloss_text": "Based on the folk music you often listen to, today's personal playlist has been updated; come listen to the new songs"}
+{"id": "zh-Hans-test-02034", "gloss_title": "Membership expiring soon", "gloss_text": "Your Vinyl membership will expire in three days; renewing lets you keep enjoying lossless audio and the exclusive catalogue"}
+{"id": "zh-Hans-test-02035", "gloss_title": "Douyin", "gloss_text": "Your video received one hundred likes; go see everyone's comments"}
+{"id": "zh-Hans-dev-02036", "gloss_title": "Xiaohongshu", "gloss_text": "Your saved notes have new updates, and many more similar finds are waiting for you"}
+{"id": "zh-Hans-test-02037", "gloss_title": "Weibo hot search", "gloss_text": "Topics you follow are being widely discussed; tap to view the latest discussion"}
+{"id": "zh-Hans-test-02038", "gloss_title": "Elder brother", "gloss_text": "Dad just fell down; he is now in the emergency department of the city people's hospital. Get over there right away!"}
+{"id": "zh-Hans-test-02039", "gloss_title": "Wang teacher (form teacher)", "gloss_text": "Hello, your child accidentally hurt their arm during PE class. They have been taken to the school clinic and are conscious. We suggest you come to school as soon as possible; we will accompany the child to the hospital for further checks."}
+{"id": "zh-Hans-dev-02040", "gloss_title": "Task due soon", "gloss_text": "'Final draft of client proposal' is due at 5 pm this afternoon, and two items still await your confirmation. Please complete the review as soon as possible and sync the results to the project lead so the overall delivery schedule is not affected."}
+{"id": "zh-Hans-test-02041", "gloss_title": "Express service centre", "gloss_text": "Your parcel has been temporarily held by customs because the delivery address is unclear. Click the link to supplement your delivery information and pay a small handling fee today; after the deadline the parcel will be returned to the sender. http://a.example.invalid/c"}
+{"id": "zh-Hans-test-02042", "gloss_title": "Account security centre", "gloss_text": "Your account has recently shown an abnormal-login risk. Click the link below to complete identity verification immediately, otherwise the system will freeze your account within 24 hours. http://a.example.invalid/q"}
