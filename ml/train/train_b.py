@@ -27,6 +27,8 @@ SOURCES = ["testdata/golden_v2/pilot_agreed", "testdata/golden_v2/r2_agreed",
            "testdata/golden_v2/round3/agreed", "testdata/golden_v2/round4/agreed"]
 # Round 5: safety notices added to training. Their families are never held out, so the holdout below stays the same.
 EXTRA_SOURCES = ["testdata/golden_v2/round5/agreed", "testdata/golden_v2/round6/agreed"]
+# Round 7 (general items for the weak languages) did not beat round 6, so it is not in the trained model:
+# testdata/golden_v2/round7/agreed
 # Fresh safety notices (round 5, `test` split), never trained on; scored separately.
 SAFETY_HOLDOUT = "testdata/golden_v2/round5/safety_holdout"
 # The 44 notices measured on the device (docs/safety_recall.md); scored separately, never trained on.
