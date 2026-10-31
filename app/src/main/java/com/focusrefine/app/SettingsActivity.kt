@@ -158,6 +158,7 @@ fun SettingsStudioScreen(
 ) {
     val context = androidx.compose.ui.platform.LocalContext.current
     var showReclassifyDialog by remember { mutableStateOf(false) }
+    var showClearInboxDialog by remember { mutableStateOf(false) }
     val defaultMode = remember { PromptManager.getDefaultModeName(context) }
     var currentMode by remember { mutableStateOf(prefs?.getString("current_mode", defaultMode) ?: defaultMode) }
     var filterStrengthIndex by remember { mutableStateOf(prefs?.getInt("filter_strength", 1) ?: 1) } // 0=Gentle, 1=Balanced, 2=Strict
@@ -824,7 +825,7 @@ fun SettingsStudioScreen(
                 }
 
                 OutlinedButton(
-                    onClick = onClearAllNotifications,
+                    onClick = { showClearInboxDialog = true },
                     modifier = Modifier.weight(1f),
                     shape = CircleShape,
                     border = BorderStroke(1.dp, StudioColors.RedAccent)
@@ -834,6 +835,31 @@ fun SettingsStudioScreen(
             }
 
             StudioFooter(text = "Private by design. Refined by you.")
+            if (showClearInboxDialog) {
+                AlertDialog(
+                    onDismissRequest = { showClearInboxDialog = false },
+                    title = { Text("Clear Inbox?") },
+                    text = { Text("Are you sure you want to clear all notifications from your inbox? This action cannot be undone.") },
+                    confirmButton = {
+                        TextButton(
+                            onClick = {
+                                onClearAllNotifications()
+                                showClearInboxDialog = false
+                            }
+                        ) {
+                            Text("Clear All", color = StudioColors.RedText)
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { showClearInboxDialog = false }) {
+                            Text("Cancel", color = StudioColors.TextPrimary)
+                        }
+                    },
+                    containerColor = StudioColors.CardSurface,
+                    titleContentColor = Color.White,
+                    textContentColor = StudioColors.TextSecondary
+                )
+            }
             }
         }
     }

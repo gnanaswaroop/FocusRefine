@@ -84,6 +84,8 @@ class MainActivity : FragmentActivity() {
         lastThemeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         @Suppress("WrongConstant")
         AppCompatDelegate.setDefaultNightMode(lastThemeMode)
+        // Open the encrypted database now, off the main thread, so the first unlocked frame does not wait for it.
+        Thread { AppDatabase.getDatabase(applicationContext) }.start()
 
         val filter = IntentFilter().apply {
             addAction(NotificationFilterService.ACTION_NOTIFICATION_ARRIVED)
@@ -703,6 +705,16 @@ fun MainStudioScreen(
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth().focusRequester(searchFocus),
                     shape = CircleShape,
+                    trailingIcon = {
+                        if (searchQuery.isNotEmpty()) {
+                            IconButton(
+                                onClick = { searchQuery = "" },
+                                modifier = Modifier.semantics { contentDescription = "Clear search query" }
+                            ) {
+                                Text(text = "✕", fontSize = 14.sp, color = StudioColors.TextSecondary)
+                            }
+                        }
+                    },
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedContainerColor = StudioColors.CardSurface,
                         unfocusedContainerColor = StudioColors.CardSurface,
