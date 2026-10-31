@@ -702,6 +702,16 @@ fun MainStudioScreen(
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth().focusRequester(searchFocus),
                     shape = CircleShape,
+                    trailingIcon = {
+                        if (searchQuery.isNotEmpty()) {
+                            IconButton(
+                                onClick = { searchQuery = "" },
+                                modifier = Modifier.semantics { contentDescription = "Clear search query" }
+                            ) {
+                                Text(text = "✕", fontSize = 14.sp, color = StudioColors.TextSecondary)
+                            }
+                        }
+                    },
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedContainerColor = StudioColors.CardSurface,
                         unfocusedContainerColor = StudioColors.CardSurface,
