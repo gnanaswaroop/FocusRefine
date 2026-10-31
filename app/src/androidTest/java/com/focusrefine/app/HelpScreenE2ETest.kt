@@ -66,7 +66,8 @@ class HelpScreenE2ETest {
         // Only "What it does" starts open, so the next header is right below it and no scrolling is needed.
         val intent = android.content.Intent(context, HelpActivity::class.java).putExtra(HelpActivity.EXTRA_SECTION, "what")
         ActivityScenario.launch<HelpActivity>(intent).use {
-            AccessibilityDriver.expectText("How it decides")
+            // On a small phone the next header is below the fold, so wait for it while scrolling.
+            assertTrue("How it decides is reachable", AccessibilityDriver.waitForText("How it decides", scroll = true))
             assertFalse("a closed section hides its text", AccessibilityDriver.hasText("The first one that applies decides"))
             AccessibilityDriver.tapText("How it decides")
             AccessibilityDriver.expectText("The first one that applies decides", why = "after opening")
