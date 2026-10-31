@@ -159,6 +159,7 @@ fun SettingsStudioScreen(
     val context = androidx.compose.ui.platform.LocalContext.current
     var showReclassifyDialog by remember { mutableStateOf(false) }
     var showResetLearningDialog by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
     val defaultMode = remember { PromptManager.getDefaultModeName(context) }
     var currentMode by remember { mutableStateOf(prefs?.getString("current_mode", defaultMode) ?: defaultMode) }
     var filterStrengthIndex by remember { mutableStateOf(prefs?.getInt("filter_strength", 1) ?: 1) } // 0=Gentle, 1=Balanced, 2=Strict
@@ -185,8 +186,15 @@ fun SettingsStudioScreen(
             confirmButton = {
                 TextButton(onClick = {
                     showResetLearningDialog = false
-                    prefs?.edit()?.putInt("suppressed_count", 0)?.apply()
-                    Toast.makeText(context, "Local learning data reset", Toast.LENGTH_SHORT).show()
+                    scope.launch {
+                        withContext(Dispatchers.IO) {
+                            // Same steps as the Privacy screen's reset: learned rules, personal model, counters
+                            AppDatabase.getDatabase(context).notificationDao().deleteLearnedRules()
+                            PersonalLearning.clear(context)
+                            prefs?.edit()?.putInt("suppressed_count", 0)?.apply()
+                        }
+                        Toast.makeText(context, "Local learning data reset", Toast.LENGTH_SHORT).show()
+                    }
                 }) { Text("Reset", color = StudioColors.RedText) }
             },
             dismissButton = { TextButton(onClick = { showResetLearningDialog = false }) { Text("Cancel") } }
