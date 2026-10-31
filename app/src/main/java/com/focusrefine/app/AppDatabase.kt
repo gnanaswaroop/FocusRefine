@@ -33,6 +33,8 @@ abstract class AppDatabase : RoomDatabase() {
 
                 // SQLCipher 4.6+ leaves loading its native library to the app (UnsatisfiedLinkError otherwise).
                 System.loadLibrary("sqlcipher")
+                // An existing plaintext database is encrypted in place first; the plaintext copy is kept as a backup.
+                EncryptionMigration.migrateIfPlaintext(context.applicationContext, "focusrefine_database", passphrase)
                 LegacyDatabase.keepIfUnreadable(context.applicationContext, "focusrefine_database", passphrase)
                 val factory = SupportOpenHelperFactory(passphrase)
 
