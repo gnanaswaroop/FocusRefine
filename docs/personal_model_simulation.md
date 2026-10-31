@@ -5,7 +5,7 @@ Regenerate: run `CorpusEmbeddingDumpTest` on an emulator, pull `files/corpus_emb
 `./gradlew testDebugUnitTest --tests "*PersonalCorpusSimulationTest"`. Columns: built-in F1 and F1 with learning (mean over 12 seeds),
 mean change, range of the change over seeds, and the share of (notification, mode) decisions fixed or broken.
 
-# Personal model simulation (embedding model alone, macro F1 over 5 modes)
+# Personal model simulation (model alone, macro F1 over 5 modes)
 corpus=1209 items in 185 templates, holdout=76, seeds=12, params=Params(baseScale=60.0, tau=0.06, crossMode=0.0, lambda=0.01, iterations=300)
 
 ## split=same-kind, corrections chosen: random

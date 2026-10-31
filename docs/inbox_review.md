@@ -25,7 +25,7 @@ Each decision stores a confidence: `sigmoid(|z|)`, where `z = 60 x (score - thre
 `NotificationEntity.confidence` (nullable `REAL`) was added with a proper Room migration 5 to 6 (`ALTER TABLE ... ADD COLUMN`), so existing history and learned rules survive; the destructive fallback would have erased them. `NotificationDao.getUncertain` and `countUncertain` back the review list and the banner. The count is mirrored in the preference `uncertain_count` so the ongoing notification can show it without a database query on the main thread (`ReviewQueue`).
 
 ## How well it works: an honest limit
-A flag can only catch a decision that is *near* the line. Measured on the 1,209-item corpus, embedding model alone (760 safety notifications that should be Shown, one per mode they matter in): the model shows 39% of them at Balanced and misses 61%. Of the 465 misses, only 150 (32%) are close enough to the line to be flagged for review; the rest are muted with high confidence and would not be surfaced. Strict filtering (+0.02) would also mute 157 of the 295 that Balanced shows (53%), because many safety alerts score just above the threshold. So the review list helps with borderline cases; it does not replace fixing the model's blind spots (see [`model_coverage_gaps.md`](model_coverage_gaps.md)).
+A flag can only catch a decision that is *near* the line. Measured on the synthetic corpus, a large share of safety notices that should be Shown are muted with high confidence, and a close-call flag catches only the ones near the line.
 
 ## Tests
 - `ConfidenceTest` (JVM): the confidence function and the flag rules.

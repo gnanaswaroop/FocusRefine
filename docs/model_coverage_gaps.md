@@ -1,5 +1,7 @@
 # Where the built-in model fails: coverage gaps found with the expanded corpus
 
+> **Superseded.** These numbers are for the MediaPipe embedding model removed in 1.1.3. For the Track B model see `docs/safety_recall.md` (44 device-measured notices and a 312-item holdout) and `docs/track_b_vs_old_engine.md`.
+
 The 1,209-item corpus ([`personal_model.md`](personal_model.md#33-the-corpus-testdatacorpuscorpus_notificationsjson)) was
 expanded after measuring where the built-in embedding model goes wrong. These numbers are for the **embedding model alone**
 (macro over the five modes, Balanced strength, no rules or exceptions; the real app adds exceptions for a few keywords such

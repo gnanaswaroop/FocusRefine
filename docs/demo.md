@@ -24,7 +24,7 @@ This document provides a feature walkthrough and visual demonstration guide for 
 ![SettingsActivity](../assets/SettingsActivity.png)
 
 - **Collapsible Studio Cards**: All cards are collapsible (open/expanded by default) with clickable headers and expand/collapse chevrons (`˅` / `›`).
-- **Classification Engine Toggle**: Switch between `On-Device AI Engine Active` (on-device embedding model) and `On-Device Keyword Matcher Active`. The banner reflects the engine that actually loaded.
+- **Classification Engine Toggle**: Switch between `On-Device AI Engine Active` (on-device Track B model) and `On-Device Keyword Matcher Active`. The banner reflects the engine that actually loaded.
 - **Filtering Strength**: Tri-state segmented control (`Gentle` | `Balanced` | `Strict`) shifting the AI urgency thresholds.
 - **Urgent Notification Exceptions**: JSON-driven switches for `Navigation prompts`, `Calls & priority contacts`, and `Security & OTP verifications` loaded from `assets/exceptions.json`.
 - **Advanced Settings**: Includes an **"Inbox Swipe Animations"** toggle to enable or disable horizontal slide transitions on Smart Inbox tab switches.
@@ -38,7 +38,7 @@ This document provides a feature walkthrough and visual demonstration guide for 
 ![NotificationDetailActivity](../assets/NotificationDetailActivity.png)
 
 - **Inspection Card**: Displays native app icon, content text, timestamp, and status badge (`Muted: Routine Communication` / `High Urgency: Priority Prompt`).
-- **AI Explanation Card**: Displays why the notification was muted or shown, clearly highlighting **`🤖 [AI Pipeline]`** (MediaPipe model confidence score vs threshold) vs **`🔍 [Semantic Search]`** evaluation reasons.
+- **AI Explanation Card**: Displays why the notification was muted or shown, clearly highlighting **`🤖 [AI Pipeline]`** (Track B model score vs threshold) vs **`🔍 [Semantic Search]`** evaluation reasons.
 - **Dynamic Preference Action Buttons**:
   - When notification is hidden: `"🔔 Show notifications like these in the future"` (Secondary: `"🔕 Keep hiding these"`).
   - When notification is shown: `"🔕 Hide notifications like these in the future"` (Secondary: `"🔔 Keep showing these"`).

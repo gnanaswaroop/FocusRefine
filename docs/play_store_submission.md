@@ -15,7 +15,7 @@ Generated from `app/src/main/assets/changelog.json` (the same text the app shows
 
 ## 1. Blockers before publishing
 
-1. **Embedding model licence.** `THIRD_PARTY_MODELS.md` does not confirm the licence of the bundled text model. Confirm the terms (or swap the model) before publishing. See `CLAUDE.md`.
+1. **Model licence: resolved.** The bundled model is now FocusRefine's own Track B model (`THIRD_PARTY_MODELS.md`); the MediaPipe model whose licence was unconfirmed has been removed.
 2. **Target API level.** `targetSdk` is 36 (`app/build.gradle.kts`), the level Play currently requires. It has not yet had a full device test run on this target: run the device suite before publishing.
 3. **Privacy policy URL.** Play needs a public web address for the policy. The in-app Privacy Policy screen (`LegalActivity`) does not count. The text is now in `docs/privacy.md`, published at `https://gnanaswaroop.github.io/FocusRefine/privacy/` once GitHub Pages is enabled (Settings, Pages, source: GitHub Actions). Until then, the URL does not resolve.
 4. **Store graphics.** `assets/feature_graphic.png` is a 1080x2400 phone screenshot. Play needs a 1024x500 feature graphic. A 512x512 high-resolution icon is also required; only the in-app launcher icon exists.
@@ -52,7 +52,7 @@ The app declares no `INTERNET` or network state permission. `PrivacyGuardsTest` 
 
 - **Target audience:** 18 and over, or general audience with no child-directed features. The app collects no personal data from anyone.
 - **Ads:** none. **In-app purchases:** none.
-- **Export compliance:** the app uses on-device machine learning (MediaPipe). Declare it, and that it complies with export law.
+- **Export compliance:** the app uses on-device machine learning (LiteRT) and encryption of the local database (SQLCipher, AES-256). Declare both, and that it complies with export law.
 - **Content rating:** complete the IARC questionnaire. The app contains no user-generated content and no violence or sexual content.
 
 ## 6. Release checklist

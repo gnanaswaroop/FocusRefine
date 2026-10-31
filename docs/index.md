@@ -54,9 +54,9 @@ FocusRefine features a sleek **Dark Studio UI** (`#0F0E17` background, `#181625`
 
 FocusRefine employs a **Dual-Engine On-Device Intelligence Architecture** to evaluate incoming notifications locally:
 
-### 1. Local AI Engine (Google AI Edge MediaPipe)
-- **Library**: `com.google.mediapipe:tasks-text` 1.1.1 (16 KB-aligned natives for all four ABIs, so it also runs on x86_64 emulators; see the [Technical Implementation Guide](internals.md#f-16-kb-page-size-alignment-android-15-compatibility)).
-- **Model**: `text_embedder.tflite` (Universal Sentence Encoder, 6.1 MB, bundled in `assets/`). Each built-in mode is scored by similarity to example phrases minus similarity to routine phrases, using `assets/embedding_anchors.json`. About 40 ms per notification on a Pixel Pro XL. Source and license status: [`THIRD_PARTY_MODELS.md`](../THIRD_PARTY_MODELS.md).
+### 1. Local AI Engine (Track B, LiteRT)
+- **Library**: LiteRT 2.2.0 (`com.google.ai.edge.litert`), 16 KB-aligned natives (see the [Technical Implementation Guide](internals.md#f-16-kb-page-size-alignment-android-15-compatibility)).
+- **Model**: `track_b.tflite` (FocusRefine's own transformer, trained on synthetic data, 11 MB, bundled in `assets/`). Each built-in mode is scored by similarity to example phrases minus similarity to routine phrases, using `assets/embedding_anchors.json`. About 40 ms per notification on a Pixel Pro XL. Source and license status: [`THIRD_PARTY_MODELS.md`](../THIRD_PARTY_MODELS.md).
 - **Score Thresholds**: per-mode, shifted by Filtering Strength (`Gentle` -0.02, `Balanced` 0, `Strict` +0.02).
 
 ### 2. Semantic Search & Heuristic Matcher
@@ -81,7 +81,7 @@ FocusRefine declares **zero internet permissions** (`android.permission.INTERNET
 | :--- | :--- |
 | **[Permissions Reference](permissions_reference.md)** | Detailed breakdown of required system permissions (Notification Listener, Foreground Service, Post Notifications) and least-privilege justifications. |
 | **[Google Play Store Submission Guide](play_store_submission.md)** | Store listing metadata, short/full descriptions, data safety disclosures, and pre-publication compliance checklists. |
-| **[AI Classification Architecture & Modes](ai_classification_and_modes.md)** | Dual-engine architecture overview detailing the real decision precedence, MediaPipe availability, filtering strength thresholds, AI prompt synthesis, JSON exceptions, history re-classification, and measured accuracy with embedding-classifier findings. |
+| **[AI Classification Architecture & Modes](ai_classification_and_modes.md)** | Dual-engine architecture overview detailing the real decision precedence, engine availability, filtering strength thresholds, AI prompt synthesis, JSON exceptions, history re-classification, and measured accuracy with embedding-classifier findings. |
 | **[Technical Implementation Guide](internals.md)** | In-depth technical breakdown of `NotificationFilterService`, `NotificationClassifier`, `HistoryReclassifier`, 6 activity screens, Room persistence, `ExceptionManager`, `PromptManager`, 16 KB page size alignment, and the testing setup (golden datasets, adb replay, instrumented tests). |
-| **[Local Database & Security Architecture](database_security.md)** | Detailed documentation on SQLite/Room local storage (version 5 schema), Android app sandbox isolation (`chmod 700`), and zero-internet privacy guarantees. |
+| **[Local Database & Security Architecture](database_security.md)** | Detailed documentation on SQLite/Room local storage (version 6 schema, encrypted with SQLCipher), Android app sandbox isolation (`chmod 700`), and zero-internet privacy guarantees. |
 | **[Interactive Feature Walkthrough & Demo Guide](demo.md)** | Step-by-step walkthrough covering the 6 Dark Studio screens, inbox gestures, settings, app rules, context modes, and privacy insights. |
