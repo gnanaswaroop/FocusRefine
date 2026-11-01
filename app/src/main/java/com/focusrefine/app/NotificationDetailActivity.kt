@@ -26,7 +26,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
 import java.util.*
 
 class NotificationDetailActivity : FragmentActivity() {
@@ -158,7 +157,7 @@ fun NotificationDetailScreen(
                             )
                         }
                         Text(
-                            text = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date(timestamp)),
+                            text = formatNotificationTime(timestamp, android.text.format.DateFormat.getTimeFormat(context)),
                             fontSize = 11.sp,
                             color = StudioColors.TextMuted
                         )
