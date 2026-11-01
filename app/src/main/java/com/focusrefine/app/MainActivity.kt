@@ -26,7 +26,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -295,6 +294,10 @@ fun MainStudioScreen(
     }
     LaunchedEffect(session == null) { currentMode = prefs.getString("current_mode", currentMode) ?: currentMode }
     var isFullScreenInbox by remember { mutableStateOf(false) }
+    // Muted items are grouped by app; Shown items and close-call review stay one card per notification.
+    val inboxRowsForTab = remember(notifications, currentTabUrgent, reviewMode) {
+        inboxRows(notifications, groupByApp = !currentTabUrgent && !reviewMode)
+    }
 
     val enableSwipeAnimations = remember(refreshTrigger, liveRefreshTrigger) {
         prefs.getBoolean("enable_swipe_animations", true)
@@ -773,9 +776,7 @@ fun MainStudioScreen(
                             },
                         verticalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
-                        items(notifications, key = { it.id }) { notif ->
-                            InboxNotificationCard(notif = notif, onChanged = { refreshTrigger++ })
-                        }
+                        inboxRowItems(rows = inboxRows(notifications, groupByApp = !isUrgentTab && !reviewMode), onChanged = { refreshTrigger++ })
 
                         item {
                             StudioFooter(
@@ -810,9 +811,7 @@ fun MainStudioScreen(
                         },
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    items(notifications, key = { it.id }) { notif ->
-                        InboxNotificationCard(notif = notif, onChanged = { refreshTrigger++ })
-                    }
+                    inboxRowItems(rows = inboxRowsForTab, onChanged = { refreshTrigger++ })
 
                     item {
                         StudioFooter(
@@ -924,9 +923,7 @@ fun MainStudioScreen(
                                 },
                             verticalArrangement = Arrangement.spacedBy(10.dp)
                         ) {
-                            items(notifications, key = { it.id }) { notif ->
-                                InboxNotificationCard(notif = notif, onChanged = { refreshTrigger++ })
-                            }
+                            inboxRowItems(rows = inboxRowsForTab, onChanged = { refreshTrigger++ })
                         }
                     }
                 }
