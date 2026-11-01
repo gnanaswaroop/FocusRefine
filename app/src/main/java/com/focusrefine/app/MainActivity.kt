@@ -695,35 +695,8 @@ fun MainStudioScreen(
             }
 
             if (searchOpen) {
-                val searchFocus = remember { FocusRequester() }
-                LaunchedEffect(Unit) { searchFocus.requestFocus() }
                 Spacer(modifier = Modifier.height(10.dp))
-                OutlinedTextField(
-                    value = searchQuery,
-                    onValueChange = { searchQuery = it },
-                    placeholder = { Text("Search notifications...", color = StudioColors.TextMuted, fontSize = 13.sp) },
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth().focusRequester(searchFocus),
-                    shape = CircleShape,
-                    trailingIcon = {
-                        if (searchQuery.isNotEmpty()) {
-                            IconButton(
-                                onClick = { searchQuery = "" },
-                                modifier = Modifier.semantics { contentDescription = "Clear search query" }
-                            ) {
-                                Text(text = "✕", fontSize = 14.sp, color = StudioColors.TextSecondary)
-                            }
-                        }
-                    },
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor = StudioColors.CardSurface,
-                        unfocusedContainerColor = StudioColors.CardSurface,
-                        focusedBorderColor = StudioColors.ActiveViolet,
-                        unfocusedBorderColor = StudioColors.StudioBorder,
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White
-                    )
-                )
+                InboxSearchField(query = searchQuery, onQueryChange = { searchQuery = it })
             }
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -851,11 +824,22 @@ fun MainStudioScreen(
                                 color = Color.White
                             )
 
-                            IconButton(
-                                onClick = { isFullScreenInbox = false },
-                                modifier = Modifier.semantics { contentDescription = "Close full screen inbox" }
-                            ) {
-                                Text(text = "✕", fontSize = 18.sp, color = Color.White)
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                IconButton(
+                                    onClick = {
+                                        if (searchOpen) searchQuery = ""
+                                        searchOpen = !searchOpen
+                                    },
+                                    modifier = Modifier.semantics { contentDescription = if (searchOpen) "Close search" else "Search notifications" }
+                                ) {
+                                    Text(text = if (searchOpen) "✕" else "🔍", fontSize = 16.sp, color = StudioColors.TextSecondary)
+                                }
+                                IconButton(
+                                    onClick = { isFullScreenInbox = false },
+                                    modifier = Modifier.semantics { contentDescription = "Close full screen inbox" }
+                                ) {
+                                    Text(text = "✕", fontSize = 18.sp, color = Color.White)
+                                }
                             }
                         }
 
@@ -900,6 +884,11 @@ fun MainStudioScreen(
                         }
 
                         Spacer(modifier = Modifier.height(12.dp))
+
+                        if (searchOpen) {
+                            InboxSearchField(query = searchQuery, onQueryChange = { searchQuery = it })
+                            Spacer(modifier = Modifier.height(12.dp))
+                        }
 
                         var fullScreenDrag by remember { mutableStateOf(0f) }
 
@@ -949,6 +938,39 @@ fun MainStudioPreview() {
             onOpenSettings = {}
         )
     }
+}
+
+/** Search box shared by the Smart Inbox and the full screen inbox. Focuses itself when it appears. */
+@Composable
+private fun InboxSearchField(query: String, onQueryChange: (String) -> Unit) {
+    val searchFocus = remember { FocusRequester() }
+    LaunchedEffect(Unit) { searchFocus.requestFocus() }
+    OutlinedTextField(
+        value = query,
+        onValueChange = onQueryChange,
+        placeholder = { Text("Search notifications...", color = StudioColors.TextMuted, fontSize = 13.sp) },
+        singleLine = true,
+        modifier = Modifier.fillMaxWidth().focusRequester(searchFocus),
+        shape = CircleShape,
+        trailingIcon = {
+            if (query.isNotEmpty()) {
+                IconButton(
+                    onClick = { onQueryChange("") },
+                    modifier = Modifier.semantics { contentDescription = "Clear search query" }
+                ) {
+                    Text(text = "✕", fontSize = 14.sp, color = StudioColors.TextSecondary)
+                }
+            }
+        },
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedContainerColor = StudioColors.CardSurface,
+            unfocusedContainerColor = StudioColors.CardSurface,
+            focusedBorderColor = StudioColors.ActiveViolet,
+            unfocusedBorderColor = StudioColors.StudioBorder,
+            focusedTextColor = Color.White,
+            unfocusedTextColor = Color.White
+        )
+    )
 }
 
 /** Bottom sheet opened from the mode line on Home: each enabled mode, what it lets through, and a way to pick it. */
