@@ -43,9 +43,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 /** Three small bars: one filled = not sure, two = fairly sure, three = very sure. Shown only when a confidence is known. */
 @Composable
@@ -158,7 +155,7 @@ fun InboxNotificationCard(notif: NotificationEntity, onChanged: () -> Unit, modi
                     )
                 }
                 Text(
-                    text = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date(notif.timestamp)),
+                    text = formatNotificationTime(notif.timestamp, android.text.format.DateFormat.getTimeFormat(context)),
                     fontSize = 11.sp,
                     color = StudioColors.TextMuted
                 )
