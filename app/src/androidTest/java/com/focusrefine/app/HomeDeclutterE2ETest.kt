@@ -22,6 +22,7 @@ class HomeDeclutterE2ETest {
 
     @Before
     fun setUp() {
+        ServiceHarness.grantNotificationAccess()
         context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE).edit().putString("current_mode", "Sleeping / Rest").commit()
         ModeSession.end(context)
         dao.deleteAll()

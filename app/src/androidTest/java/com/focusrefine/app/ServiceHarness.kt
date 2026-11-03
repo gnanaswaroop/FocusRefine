@@ -23,6 +23,14 @@ object ServiceHarness {
         return ParcelFileDescriptor.AutoCloseInputStream(stdout).use { it.readBytes().toString(Charsets.UTF_8) }
     }
 
+    /**
+     * Grants notification access, as the user would in Settings. The Home switch sends the user to that settings page
+     * instead of filtering when access is missing, so tests that use the switch must call this first.
+     */
+    fun grantNotificationAccess() {
+        shell("cmd notification allow_listener $LISTENER")
+    }
+
     /** Posts a notification the way adb does; returns the tag it was posted under. */
     fun post(title: String, text: String): String {
         val tag = "h${counter++ % 20}"

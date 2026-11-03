@@ -56,6 +56,7 @@ class ModeSessionE2ETest {
 
     @Before
     fun setUp() {
+        ServiceHarness.grantNotificationAccess()
         ModeSession.end(context)
         manager.cancel(1003)
         prefs.edit().putString("current_mode", "Sleeping / Rest").commit()
