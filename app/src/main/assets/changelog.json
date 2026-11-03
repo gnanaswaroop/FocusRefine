@@ -1,6 +1,20 @@
 {
   "releases": [
     {
+      "version": "1.1.5",
+      "date": "2026-11-03",
+      "title": "Clearer inbox times and search",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "The full-screen Smart Inbox search has one magnifier button, so there is no second close button when search is open.",
+            "Notifications from earlier days show the date and time, and the year when it is not this year. Today's notifications show only the time."
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.1.4",
       "date": "2026-10-31",
       "title": "Smaller permissions",
