@@ -173,6 +173,7 @@ fun SettingsStudioScreen(
     var isExceptionsExpanded by remember { mutableStateOf(false) }
     var isModesExpanded by remember { mutableStateOf(false) }
     var isLearnExpanded by remember { mutableStateOf(false) }
+    var showResetLearningDialog by remember { mutableStateOf(false) }
     var isAdvancedExpanded by remember { mutableStateOf(false) }
 
     val modeOptions = listOf("Commute", "Deep Focus", "Sleep", "Gaming")
@@ -673,8 +674,7 @@ fun SettingsStudioScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
-                                    prefs?.edit()?.putInt("suppressed_count", 0)?.apply()
-                                    Toast.makeText(context, "Local learning data reset", Toast.LENGTH_SHORT).show()
+                                    showResetLearningDialog = true
                                 },
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween
@@ -852,6 +852,33 @@ fun SettingsStudioScreen(
                     },
                     dismissButton = {
                         TextButton(onClick = { showClearInboxDialog = false }) {
+                            Text("Cancel", color = StudioColors.TextPrimary)
+                        }
+                    },
+                    containerColor = StudioColors.CardSurface,
+                    titleContentColor = Color.White,
+                    textContentColor = StudioColors.TextSecondary
+                )
+            }
+
+            if (showResetLearningDialog) {
+                AlertDialog(
+                    onDismissRequest = { showResetLearningDialog = false },
+                    title = { Text("Reset Learning Data?") },
+                    text = { Text("Are you sure you want to reset the local learning data? This will reset all personalized rules.") },
+                    confirmButton = {
+                        TextButton(
+                            onClick = {
+                                prefs?.edit()?.putInt("suppressed_count", 0)?.apply()
+                                Toast.makeText(context, "Local learning data reset", Toast.LENGTH_SHORT).show()
+                                showResetLearningDialog = false
+                            }
+                        ) {
+                            Text("Reset", color = StudioColors.RedText)
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { showResetLearningDialog = false }) {
                             Text("Cancel", color = StudioColors.TextPrimary)
                         }
                     },
