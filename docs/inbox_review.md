@@ -12,6 +12,8 @@ The app now says when it is not sure, and makes a correction a single tap. Every
 
 ![Detail screen for a close call](assets/detail_close_call.png)
 
+- **Muted notifications are grouped by app.** An app with two or more muted items shows as one card, such as "12 from Spotify · 3 close calls", and expands to the individual items. Each item keeps its own **Show it** / **Keep muted** actions. An app with a single muted item stays a plain card. Shown notifications are not grouped, and close-call review is not grouped. Only the list changes, not the decisions. The first version groups by app only; splitting an app's items by similarity is a later step (issue #23).
+
 - **The ongoing notification** in the shade reads, for example, "Suppressed: 12 notifications · 2 close calls to review".
 - The swap icon on every card and the buttons on the detail screen use the same code path, so every correction also teaches the on-device personal model (see [`personal_model.md`](personal_model.md)). Before this change the swap icon did not.
 
