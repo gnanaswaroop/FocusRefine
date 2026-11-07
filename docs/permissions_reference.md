@@ -8,7 +8,6 @@ This document provides a comprehensive technical breakdown of all Android permis
 
 | Permission | Target API | Purpose |
 | :--- | :--- | :--- |
-| `android.permission.BIND_NOTIFICATION_LISTENER_SERVICE` | All APIs | System listener binding to intercept and filter incoming notifications in real-time. |
 | `android.permission.FOREGROUND_SERVICE` | API 28+ | Keeps the background filtering service running reliably without OS termination. |
 | `android.permission.FOREGROUND_SERVICE_SPECIAL_USE` | API 34+ | Compliant foreground service declaration for continuous real-time notification filtering utility. |
 | `android.permission.POST_NOTIFICATIONS` | API 33+ | Displays the persistent ongoing live service notification with suppression counts and quick toggle. |
@@ -18,8 +17,8 @@ This document provides a comprehensive technical breakdown of all Android permis
 
 ## 🔍 Detailed Permission & Code Usage Analysis
 
-### 1. `BIND_NOTIFICATION_LISTENER_SERVICE`
-- **Why Required**: Android restricts access to incoming device notifications for privacy and security. To listen to, evaluate, and suppress notifications, an application must request the system permission `BIND_NOTIFICATION_LISTENER_SERVICE` and be explicitly enabled by the user in system notification listener settings (`Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS`).
+### 1. Notification access (not a manifest permission)
+- **Why Required**: Android restricts access to incoming device notifications for privacy and security. To listen to, evaluate, and suppress notifications, the user must enable the app in system notification listener settings (`Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS`). The app does not request this with `uses-permission`. Its listener service declares `android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"`, which only the system can hold, so only the system can bind to the service.
 - **Class / Component**: [NotificationFilterService.kt](https://github.com/gnanaswaroop/FocusRefine/blob/main/app/src/main/java/com/focusrefine/app/NotificationFilterService.kt) extending `NotificationListenerService`.
 - **Code Usage**:
   ```kotlin

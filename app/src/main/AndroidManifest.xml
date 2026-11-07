@@ -2,7 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"/>
+    <!--
+        Notification access is not a permission the app requests: the user grants it in Settings, and the listener
+        service below protects itself with android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE",
+        which only the system can hold. A uses-permission line for it would do nothing.
+    -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
@@ -19,6 +23,8 @@
     -->
     <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" tools:node="remove" />
+    <!-- LiteRT and asset-delivery declare this foreground service type. FocusRefine runs no data sync service, so it is removed. -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" tools:node="remove" />
 
     <application
         android:name=".App"
@@ -86,6 +92,10 @@
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
             android:foregroundServiceType="specialUse"
             android:exported="true">
+            <!-- Play review: the special use the service needs its foreground type for. -->
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Keeps the on-device notification filter running so it can decide, in real time, which notifications to show and which to mute." />
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
