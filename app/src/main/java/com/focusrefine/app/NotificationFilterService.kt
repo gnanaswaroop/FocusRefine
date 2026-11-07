@@ -22,14 +22,16 @@ import kotlinx.coroutines.launch
 class NotificationFilterService : NotificationListenerService() {
 
     private val TAG = "NotificationFilter"
-    private lateinit var database: AppDatabase
+    // Created on first use, on a background thread. Opening the encrypted database and loading the model take a while,
+    // and onCreate runs on the main thread, where the app's first screen would otherwise wait for them.
+    private val database: AppDatabase by lazy { AppDatabase.getDatabase(this) }
     // v2: the first channel was IMPORTANCE_DEFAULT, which makes sound and vibration on every count update, and a channel's
     // importance cannot be lowered after creation, so the quiet one is a new channel and the old one is deleted.
     private val CHANNEL_ID = "focusrefine_service_quiet"
     private val OLD_CHANNEL_ID = "focusrefine_service_channel"
     private val NOTIFICATION_ID = 1001
-    private var embeddingClassifier: EmbeddingClassifier? = null
-    private lateinit var classifier: NotificationClassifier
+    private val embeddingClassifier: EmbeddingClassifier? by lazy { EmbeddingClassifier.shared(this) }
+    private val classifier: NotificationClassifier by lazy { NotificationClassifier(this, database, embeddingClassifier) }
 
     private val toggleReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -78,17 +80,13 @@ class NotificationFilterService : NotificationListenerService() {
     override fun onCreate() {
         super.onCreate()
         isCreated = true
-        database = AppDatabase.getDatabase(this)
         createNotificationChannel()
 
         val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
-        embeddingClassifier = EmbeddingClassifier.shared(this)
-        classifier = NotificationClassifier(this, database, embeddingClassifier)
-        embeddingClassifier?.let { engine ->
-            Thread {
-                try { engine.warmUp() } catch (e: Throwable) { Log.w(TAG, "Embedding warm-up failed: ${e.message}") }
-            }.start()
-        }
+        // Loads the model in the background, so the first decision does not wait for it.
+        Thread {
+            try { embeddingClassifier?.warmUp() } catch (e: Throwable) { Log.w(TAG, "Embedding warm-up failed: ${e.message}") }
+        }.start()
 
         val filter = IntentFilter().apply {
             addAction(ACTION_TOGGLE_SERVICE)

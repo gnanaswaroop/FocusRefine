@@ -251,7 +251,11 @@ fun MainStudioScreen(
         }
     }
 
-    val database = AppDatabase.getDatabase(context)
+    // Opening the encrypted database takes a moment, so it happens off the main thread: the header and mode card draw
+    // first, and the inbox list fills in once the database is ready.
+    val database by produceState<AppDatabase?>(initialValue = null) {
+        value = withContext(Dispatchers.IO) { AppDatabase.getDatabase(context) }
+    }
 
     var isRunning by remember(isFilteringActive) { mutableStateOf(isFilteringActive) }
     var askLength by remember { mutableStateOf(false) }
@@ -367,9 +371,10 @@ fun MainStudioScreen(
         }
     }
 
-    LaunchedEffect(currentTabUrgent, searchQuery, currentMode, refreshTrigger, liveRefreshTrigger, reviewMode) {
+    LaunchedEffect(currentTabUrgent, searchQuery, currentMode, refreshTrigger, liveRefreshTrigger, reviewMode, database) {
+        val db = database ?: return@LaunchedEffect
         withContext(Dispatchers.IO) {
-            val dao = database.notificationDao()
+            val dao = db.notificationDao()
             notifications = if (reviewMode) {
                 dao.getUncertain(Confidence.UNCERTAIN_BELOW).filter {
                     searchQuery.isEmpty() || (it.title ?: "").contains(searchQuery, ignoreCase = true) || (it.text ?: "").contains(searchQuery, ignoreCase = true)
