@@ -21,8 +21,9 @@ import org.junit.runner.RunWith
  * flipped it again, so one tap changed it twice and the Do Not Disturb change followed the wrong state. The service
  * reports every state change in ACTION_SERVICE_STATE_CHANGED, so these tests count those reports.
  *
- * The Do Not Disturb setting itself is not checked here: the app has no Do Not Disturb access on the emulator, so the
- * service never changes it. Emulator only: uses the real preferences and the real service.
+ * The app must never change Android's Do Not Disturb setting; the last two tests check that. They can only fail on a
+ * build that declares ACCESS_NOTIFICATION_POLICY and has been granted it, because the app cannot change the setting
+ * without that access. Emulator only: uses the real preferences and the real service.
  */
 @RunWith(AndroidJUnit4::class)
 class FocusSwitchE2ETest {
@@ -51,6 +52,7 @@ class FocusSwitchE2ETest {
     @After
     fun tearDown() {
         context.unregisterReceiver(reporter)
+        ServiceHarness.shell("cmd notification set_dnd off") // leave the emulator as it was
         ModeSession.end(context)
         ServiceHarness.stop()
     }
@@ -107,4 +109,32 @@ class FocusSwitchE2ETest {
             assertEquals("on, then off, one report each", listOf(true, false), reported)
         }
     }
+
+    private fun zenMode(): Int = android.provider.Settings.Global.getInt(context.contentResolver, "zen_mode", 0)
+
+    /** Puts Do Not Disturb in [mode], turns filtering on and off, and checks the setting never moved. */
+    private fun switchOnThenOffLeavesDoNotDisturb(mode: String) {
+        ServiceHarness.shell("cmd notification set_dnd $mode")
+        Thread.sleep(500)
+        val before = zenMode()
+        ActivityScenario.launch(MainActivity::class.java).use {
+            assertTrue(AccessibilityDriver.waitForText("Filtering Paused"))
+            AccessibilityDriver.tapSwitch()
+            AccessibilityDriver.tapText("Until I turn it off")
+            assertTrue(AccessibilityDriver.waitForText("AI Filtering Active"))
+            assertTrue(AccessibilityDriver.waitForText("How long should FocusRefine work?", present = false))
+            awaitReports(expected = 1)
+            assertEquals("Do Not Disturb while filtering is on", before, zenMode())
+            AccessibilityDriver.tapSwitch()
+            assertTrue(AccessibilityDriver.waitForText("Filtering Paused"))
+            awaitReports(expected = 2)
+            assertEquals("Do Not Disturb after filtering is turned off", before, zenMode())
+        }
+    }
+
+    @Test
+    fun theSwitchLeavesDoNotDisturbOnWhenItWasOn() = switchOnThenOffLeavesDoNotDisturb("priority")
+
+    @Test
+    fun theSwitchLeavesDoNotDisturbOffWhenItWasOff() = switchOnThenOffLeavesDoNotDisturb("off")
 }
