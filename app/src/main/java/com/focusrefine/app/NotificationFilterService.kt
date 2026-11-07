@@ -34,9 +34,14 @@ class NotificationFilterService : NotificationListenerService() {
     private val toggleReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val prefs = context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
-            if (intent.action == ACTION_TOGGLE_SERVICE) {
-                val current = prefs.getBoolean("service_running", true)
-                val newState = !current
+            if (intent.action == ACTION_TOGGLE_SERVICE || intent.action == ACTION_SET_RUNNING) {
+                // The notification-bar button flips the state; the app's switch asks for an exact state, so a flip
+                // here would undo the app's own change (and turn Do Not Disturb on and off).
+                val newState = if (intent.action == ACTION_SET_RUNNING) {
+                    intent.getBooleanExtra(EXTRA_RUNNING, true)
+                } else {
+                    !prefs.getBoolean("service_running", true)
+                }
                 prefs.edit().putBoolean("service_running", newState).apply()
                 val count = prefs.getInt("suppressed_count", 0)
 
@@ -57,7 +62,7 @@ class NotificationFilterService : NotificationListenerService() {
                         }
                     }
                 } catch (_: Exception) {}
-                Log.d(TAG, "Service toggled from notification bar: running = $newState")
+                Log.d(TAG, "Service running set to $newState")
             } else if (intent.action == ACTION_UPDATE_COUNT) {
                 val isRunning = prefs.getBoolean("service_running", true)
                 val count = prefs.getInt("suppressed_count", 0)
@@ -71,6 +76,9 @@ class NotificationFilterService : NotificationListenerService() {
         /** True while this process has the service created. Home checks it so coming back to the app does not restart (and re-post) it. */
         @Volatile var isCreated = false
         const val ACTION_TOGGLE_SERVICE = "com.focusrefine.app.ACTION_TOGGLE_SERVICE"
+        /** Sets the running state to the boolean extra [EXTRA_RUNNING] instead of flipping it. */
+        const val ACTION_SET_RUNNING = "com.focusrefine.app.ACTION_SET_RUNNING"
+        const val EXTRA_RUNNING = "running"
         const val ACTION_UPDATE_COUNT = "com.focusrefine.app.ACTION_UPDATE_COUNT"
         const val ACTION_SERVICE_STATE_CHANGED = "com.focusrefine.app.ACTION_SERVICE_STATE_CHANGED"
         const val ACTION_NOTIFICATION_ARRIVED = "com.focusrefine.app.ACTION_NOTIFICATION_ARRIVED"
@@ -94,6 +102,7 @@ class NotificationFilterService : NotificationListenerService() {
 
         val filter = IntentFilter().apply {
             addAction(ACTION_TOGGLE_SERVICE)
+            addAction(ACTION_SET_RUNNING)
             addAction(ACTION_UPDATE_COUNT)
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
