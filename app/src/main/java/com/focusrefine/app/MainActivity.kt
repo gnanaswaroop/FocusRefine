@@ -259,7 +259,12 @@ fun MainStudioScreen(
     fun setFiltering(on: Boolean) {
         isRunning = on
         prefs.edit().putBoolean("service_running", on).apply()
-        context.sendBroadcast(Intent(NotificationFilterService.ACTION_TOGGLE_SERVICE).setPackage(context.packageName))
+        // Ask for this exact state: the service flips its state on ACTION_TOGGLE_SERVICE, which made the switch undo itself.
+        context.sendBroadcast(
+            Intent(NotificationFilterService.ACTION_SET_RUNNING)
+                .setPackage(context.packageName)
+                .putExtra(NotificationFilterService.EXTRA_RUNNING, on)
+        )
     }
     var currentTabUrgent by remember { mutableStateOf(false) } // false = Muted, true = Shown
     var searchQuery by remember { mutableStateOf("") }
