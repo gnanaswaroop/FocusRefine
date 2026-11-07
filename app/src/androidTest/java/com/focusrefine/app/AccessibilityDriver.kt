@@ -119,6 +119,29 @@ object AccessibilityDriver {
     }
 
     /** Taps the clickable element containing [text], scrolling the screen while it is not yet visible. */
+    /**
+     * Taps the middle of the smallest node that shows [text] with a real touch, as a finger would. Use it where the
+     * accessibility click of [tapText] is unreliable, for example on a card that opens and closes on every tap.
+     */
+    fun touchText(text: String, timeoutMs: Long = 20_000) {
+        val deadline = System.currentTimeMillis() + timeoutMs
+        while (System.currentTimeMillis() < deadline) {
+            // Several nodes can contain the text (the text itself and the cards around it). Take the smallest one, the
+            // text, because the middle of a big card can land on something else once the card has opened.
+            val root = automation.rootInActiveWindow
+            val target = root?.let { findAll(it, text) }
+                ?.map { n -> android.graphics.Rect().also { n.getBoundsInScreen(it) } }
+                ?.filter { !it.isEmpty }
+                ?.minByOrNull { it.width().toLong() * it.height() }
+            if (target != null) {
+                ServiceHarness.shell("input tap ${target.centerX()} ${target.centerY()}")
+                return
+            }
+            Thread.sleep(300)
+        }
+        throw AssertionError("could not find '$text' to touch; window shows: ${visibleTexts()}")
+    }
+
     fun tapText(text: String, timeoutMs: Long = 20_000) {
         val deadline = System.currentTimeMillis() + timeoutMs
         var last = "no window yet"
