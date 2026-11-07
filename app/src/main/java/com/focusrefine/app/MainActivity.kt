@@ -117,7 +117,7 @@ class MainActivity : FragmentActivity() {
                     LegacyDataNotice(this@MainActivity)
                     MainStudioScreen(
                         isNotificationAccessEnabled = isNotifAccessEnabledState.value,
-                        isFilteringActive = prefs.getBoolean("service_running", true),
+                        isFilteringActive = prefs.getBoolean("service_running", false),
                         prefs = prefs,
                         onEnableNotificationAccess = {
                             try {
@@ -332,7 +332,7 @@ fun MainStudioScreen(
 
     // A session that ends can pause filtering from outside this screen (alarm, notification button): follow the pref.
     LaunchedEffect(liveRefreshTrigger, refreshTrigger) {
-        if (isNotificationAccessEnabled) isRunning = prefs.getBoolean("service_running", true)
+        if (isNotificationAccessEnabled) isRunning = prefs.getBoolean("service_running", false)
     }
 
     if (askLength) {
@@ -351,14 +351,14 @@ fun MainStudioScreen(
     LaunchedEffect(isNotificationAccessEnabled) {
         if (!isNotificationAccessEnabled) {
             // Remember that we paused it, so granting access again turns filtering back on (a pause the user chose stays).
-            if (prefs.getBoolean("service_running", true)) prefs.edit().putBoolean("paused_for_access", true).apply()
+            if (prefs.getBoolean("service_running", false)) prefs.edit().putBoolean("paused_for_access", true).apply()
             isRunning = false
             prefs.edit().putBoolean("service_running", false).apply()
         } else {
             if (prefs.getBoolean("paused_for_access", false)) {
                 prefs.edit().putBoolean("service_running", true).putBoolean("paused_for_access", false).apply()
             }
-            isRunning = prefs.getBoolean("service_running", true)
+            isRunning = prefs.getBoolean("service_running", false)
         }
     }
 

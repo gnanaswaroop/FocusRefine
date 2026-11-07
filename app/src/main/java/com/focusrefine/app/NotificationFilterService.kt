@@ -35,7 +35,7 @@ class NotificationFilterService : NotificationListenerService() {
         override fun onReceive(context: Context, intent: Intent) {
             val prefs = context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
             if (intent.action == ACTION_TOGGLE_SERVICE) {
-                val current = prefs.getBoolean("service_running", true)
+                val current = prefs.getBoolean("service_running", false)
                 val newState = !current
                 prefs.edit().putBoolean("service_running", newState).apply()
                 val count = prefs.getInt("suppressed_count", 0)
@@ -59,7 +59,7 @@ class NotificationFilterService : NotificationListenerService() {
                 } catch (_: Exception) {}
                 Log.d(TAG, "Service toggled from notification bar: running = $newState")
             } else if (intent.action == ACTION_UPDATE_COUNT) {
-                val isRunning = prefs.getBoolean("service_running", true)
+                val isRunning = prefs.getBoolean("service_running", false)
                 val count = prefs.getInt("suppressed_count", 0)
                 updateForegroundNotification(isRunning, count)
                 Log.d(TAG, "Foreground notification updated with count: $count")
@@ -103,7 +103,7 @@ class NotificationFilterService : NotificationListenerService() {
         }
 
         try {
-            val isRunning = prefs.getBoolean("service_running", true)
+            val isRunning = prefs.getBoolean("service_running", false)
             val count = prefs.getInt("suppressed_count", 0)
             startForeground(NOTIFICATION_ID, buildForegroundNotification(isRunning, count))
             Log.d(TAG, "Service Created & Started in Foreground")
@@ -114,7 +114,7 @@ class NotificationFilterService : NotificationListenerService() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
-        val isRunning = prefs.getBoolean("service_running", true)
+        val isRunning = prefs.getBoolean("service_running", false)
         val count = prefs.getInt("suppressed_count", 0)
 
         try {
@@ -214,7 +214,7 @@ class NotificationFilterService : NotificationListenerService() {
         }
 
         val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
-        val isRunning = prefs.getBoolean("service_running", true)
+        val isRunning = prefs.getBoolean("service_running", false)
         if (!isRunning) {
             return
         }
