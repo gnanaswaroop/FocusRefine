@@ -36,7 +36,7 @@ class NotificationFilterService : NotificationListenerService() {
             val prefs = context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
             if (intent.action == ACTION_TOGGLE_SERVICE || intent.action == ACTION_SET_RUNNING) {
                 // The notification-bar button flips the state; the app's switch asks for an exact state, so a flip
-                // here would undo the app's own change (and turn Do Not Disturb on and off).
+                // here would undo the app's own change. The app never changes Android's Do Not Disturb setting.
                 val newState = if (intent.action == ACTION_SET_RUNNING) {
                     intent.getBooleanExtra(EXTRA_RUNNING, true)
                 } else {
@@ -52,16 +52,6 @@ class NotificationFilterService : NotificationListenerService() {
                 context.sendBroadcast(stateIntent)
 
                 updateForegroundNotification(newState, count)
-                try {
-                    val manager = getSystemService(NotificationManager::class.java)
-                    if (manager.isNotificationPolicyAccessGranted) {
-                        if (newState) {
-                            manager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_PRIORITY)
-                        } else {
-                            manager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL)
-                        }
-                    }
-                } catch (_: Exception) {}
                 Log.d(TAG, "Service running set to $newState")
             } else if (intent.action == ACTION_UPDATE_COUNT) {
                 val isRunning = prefs.getBoolean("service_running", true)
@@ -295,13 +285,6 @@ class NotificationFilterService : NotificationListenerService() {
         } catch (_: Exception) {
         }
         try {
-            val manager = getSystemService(NotificationManager::class.java)
-            if (manager.isNotificationPolicyAccessGranted) {
-                manager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL)
-            }
-        } catch (_: Exception) {
-        }
-        try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 stopForeground(STOP_FOREGROUND_REMOVE)
             } else {
@@ -319,9 +302,6 @@ class NotificationFilterService : NotificationListenerService() {
     override fun onTaskRemoved(rootIntent: Intent?) {
         try {
             val manager = getSystemService(NotificationManager::class.java)
-            if (manager.isNotificationPolicyAccessGranted) {
-                manager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL)
-            }
             manager.cancel(NOTIFICATION_ID)
             stopSelf()
         } catch (_: Exception) {}
