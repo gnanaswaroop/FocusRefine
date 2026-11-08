@@ -35,6 +35,8 @@ class CustomModeDeleteE2ETest {
     private fun modeIsSaved() = (prefs.getString("custom_modes_list", "") ?: "").split(",").contains(mode)
 
     private fun tapDelete() {
+        // The list loads after the screen appears; wait for its footer before scrolling down to the mode.
+        assertTrue("the screen has loaded", AccessibilityDriver.waitForText("Add Custom Context Mode", scroll = true))
         assertTrue("the custom mode is listed (it is at the end of a long list)", AccessibilityDriver.waitForText(mode, scroll = true))
         AccessibilityDriver.tapText("Delete custom mode")
         assertTrue("it asks first", AccessibilityDriver.waitForText("Delete Mode?"))
