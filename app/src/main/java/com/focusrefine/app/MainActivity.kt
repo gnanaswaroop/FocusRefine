@@ -116,7 +116,7 @@ class MainActivity : FragmentActivity() {
                     LegacyDataNotice(this@MainActivity)
                     MainStudioScreen(
                         isNotificationAccessEnabled = isNotifAccessEnabledState.value,
-                        isFilteringActive = prefs.getBoolean("service_running", true),
+                        isFilteringActive = prefs.getBoolean("service_running", false),
                         prefs = prefs,
                         onEnableNotificationAccess = {
                             try {
@@ -250,7 +250,11 @@ fun MainStudioScreen(
         }
     }
 
-    val database = AppDatabase.getDatabase(context)
+    // Opening the encrypted database takes a moment, so it happens off the main thread: the header and mode card draw
+    // first, and the inbox list fills in once the database is ready.
+    val database by produceState<AppDatabase?>(initialValue = null) {
+        value = withContext(Dispatchers.IO) { AppDatabase.getDatabase(context) }
+    }
 
     var isRunning by remember(isFilteringActive) { mutableStateOf(isFilteringActive) }
     var askLength by remember { mutableStateOf(false) }
@@ -258,7 +262,12 @@ fun MainStudioScreen(
     fun setFiltering(on: Boolean) {
         isRunning = on
         prefs.edit().putBoolean("service_running", on).apply()
-        context.sendBroadcast(Intent(NotificationFilterService.ACTION_TOGGLE_SERVICE).setPackage(context.packageName))
+        // Ask for this exact state: the service flips its state on ACTION_TOGGLE_SERVICE, which made the switch undo itself.
+        context.sendBroadcast(
+            Intent(NotificationFilterService.ACTION_SET_RUNNING)
+                .setPackage(context.packageName)
+                .putExtra(NotificationFilterService.EXTRA_RUNNING, on)
+        )
     }
     var currentTabUrgent by remember { mutableStateOf(false) } // false = Muted, true = Shown
     var searchQuery by remember { mutableStateOf("") }
@@ -335,7 +344,7 @@ fun MainStudioScreen(
 
     // A session that ends can pause filtering from outside this screen (alarm, notification button): follow the pref.
     LaunchedEffect(liveRefreshTrigger, refreshTrigger) {
-        if (isNotificationAccessEnabled) isRunning = prefs.getBoolean("service_running", true)
+        if (isNotificationAccessEnabled) isRunning = prefs.getBoolean("service_running", false)
     }
 
     if (askLength) {
@@ -354,20 +363,21 @@ fun MainStudioScreen(
     LaunchedEffect(isNotificationAccessEnabled) {
         if (!isNotificationAccessEnabled) {
             // Remember that we paused it, so granting access again turns filtering back on (a pause the user chose stays).
-            if (prefs.getBoolean("service_running", true)) prefs.edit().putBoolean("paused_for_access", true).apply()
+            if (prefs.getBoolean("service_running", false)) prefs.edit().putBoolean("paused_for_access", true).apply()
             isRunning = false
             prefs.edit().putBoolean("service_running", false).apply()
         } else {
             if (prefs.getBoolean("paused_for_access", false)) {
                 prefs.edit().putBoolean("service_running", true).putBoolean("paused_for_access", false).apply()
             }
-            isRunning = prefs.getBoolean("service_running", true)
+            isRunning = prefs.getBoolean("service_running", false)
         }
     }
 
-    LaunchedEffect(currentTabUrgent, searchQuery, currentMode, refreshTrigger, liveRefreshTrigger, reviewMode) {
+    LaunchedEffect(currentTabUrgent, searchQuery, currentMode, refreshTrigger, liveRefreshTrigger, reviewMode, database) {
+        val db = database ?: return@LaunchedEffect
         withContext(Dispatchers.IO) {
-            val dao = database.notificationDao()
+            val dao = db.notificationDao()
             notifications = if (reviewMode) {
                 dao.getUncertain(Confidence.UNCERTAIN_BELOW).filter {
                     searchQuery.isEmpty() || (it.title ?: "").contains(searchQuery, ignoreCase = true) || (it.text ?: "").contains(searchQuery, ignoreCase = true)
@@ -698,35 +708,8 @@ fun MainStudioScreen(
             }
 
             if (searchOpen) {
-                val searchFocus = remember { FocusRequester() }
-                LaunchedEffect(Unit) { searchFocus.requestFocus() }
                 Spacer(modifier = Modifier.height(10.dp))
-                OutlinedTextField(
-                    value = searchQuery,
-                    onValueChange = { searchQuery = it },
-                    placeholder = { Text("Search notifications...", color = StudioColors.TextMuted, fontSize = 13.sp) },
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth().focusRequester(searchFocus),
-                    shape = CircleShape,
-                    trailingIcon = {
-                        if (searchQuery.isNotEmpty()) {
-                            IconButton(
-                                onClick = { searchQuery = "" },
-                                modifier = Modifier.semantics { contentDescription = "Clear search query" }
-                            ) {
-                                Text(text = "✕", fontSize = 14.sp, color = StudioColors.TextSecondary)
-                            }
-                        }
-                    },
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor = StudioColors.CardSurface,
-                        unfocusedContainerColor = StudioColors.CardSurface,
-                        focusedBorderColor = StudioColors.ActiveViolet,
-                        unfocusedBorderColor = StudioColors.StudioBorder,
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White
-                    )
-                )
+                InboxSearchField(query = searchQuery, onQueryChange = { searchQuery = it })
             }
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -850,11 +833,22 @@ fun MainStudioScreen(
                                 color = Color.White
                             )
 
-                            IconButton(
-                                onClick = { isFullScreenInbox = false },
-                                modifier = Modifier.semantics { contentDescription = "Close full screen inbox" }
-                            ) {
-                                Text(text = "✕", fontSize = 18.sp, color = Color.White)
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                IconButton(
+                                    onClick = {
+                                        if (searchOpen) searchQuery = ""
+                                        searchOpen = !searchOpen
+                                    },
+                                    modifier = Modifier.semantics { contentDescription = if (searchOpen) "Close search" else "Search notifications" }
+                                ) {
+                                    Text(text = if (searchOpen) "✕" else "🔍", fontSize = 16.sp, color = StudioColors.TextSecondary)
+                                }
+                                IconButton(
+                                    onClick = { isFullScreenInbox = false },
+                                    modifier = Modifier.semantics { contentDescription = "Close full screen inbox" }
+                                ) {
+                                    Text(text = "✕", fontSize = 18.sp, color = Color.White)
+                                }
                             }
                         }
 
@@ -899,6 +893,11 @@ fun MainStudioScreen(
                         }
 
                         Spacer(modifier = Modifier.height(12.dp))
+
+                        if (searchOpen) {
+                            InboxSearchField(query = searchQuery, onQueryChange = { searchQuery = it })
+                            Spacer(modifier = Modifier.height(12.dp))
+                        }
 
                         var fullScreenDrag by remember { mutableStateOf(0f) }
 
@@ -946,6 +945,39 @@ fun MainStudioPreview() {
             onOpenSettings = {}
         )
     }
+}
+
+/** Search box shared by the Smart Inbox and the full screen inbox. Focuses itself when it appears. */
+@Composable
+private fun InboxSearchField(query: String, onQueryChange: (String) -> Unit) {
+    val searchFocus = remember { FocusRequester() }
+    LaunchedEffect(Unit) { searchFocus.requestFocus() }
+    OutlinedTextField(
+        value = query,
+        onValueChange = onQueryChange,
+        placeholder = { Text("Search notifications...", color = StudioColors.TextMuted, fontSize = 13.sp) },
+        singleLine = true,
+        modifier = Modifier.fillMaxWidth().focusRequester(searchFocus),
+        shape = CircleShape,
+        trailingIcon = {
+            if (query.isNotEmpty()) {
+                IconButton(
+                    onClick = { onQueryChange("") },
+                    modifier = Modifier.semantics { contentDescription = "Clear search query" }
+                ) {
+                    Text(text = "✕", fontSize = 14.sp, color = StudioColors.TextSecondary)
+                }
+            }
+        },
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedContainerColor = StudioColors.CardSurface,
+            unfocusedContainerColor = StudioColors.CardSurface,
+            focusedBorderColor = StudioColors.ActiveViolet,
+            unfocusedBorderColor = StudioColors.StudioBorder,
+            focusedTextColor = Color.White,
+            unfocusedTextColor = Color.White
+        )
+    )
 }
 
 /** Bottom sheet opened from the mode line on Home: each enabled mode, what it lets through, and a way to pick it. */
