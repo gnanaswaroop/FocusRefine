@@ -4,3 +4,6 @@
 ## 2024-10-26 - Add confirmation dialog for "Clear Inbox"
 **Learning:** Destructive actions like clearing the entire notification inbox must require explicit user confirmation to prevent accidental data loss.
 **Action:** Always add an `AlertDialog` confirmation for permanent or destructive actions like clearing user history.
+## 2024-11-20 - Add confirmation dialog for "Delete Custom Mode"
+**Learning:** Destructive actions like deleting a custom mode require explicit user confirmation to prevent accidental data loss.
+**Action:** Added an `AlertDialog` confirmation before permanently deleting custom context modes.
