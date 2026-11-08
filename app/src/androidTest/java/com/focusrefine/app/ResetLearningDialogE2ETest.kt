@@ -32,7 +32,16 @@ class ResetLearningDialogE2ETest {
     }
 
     private fun tapReset() {
-        AccessibilityDriver.tapText("Learning") // its own card; sections start collapsed
+        // Sections start collapsed. A tap on the card can land while the screen is still settling, so retry until its row
+        // shows, and never tap it when the row is already there (that would collapse it again).
+        AccessibilityDriver.waitForText("Learning")
+        var opened = AccessibilityDriver.hasText("Reset local learning data")
+        var attempts = 0
+        while (!opened && attempts < 3) {
+            AccessibilityDriver.tapText("Learning")
+            opened = AccessibilityDriver.waitForText("Reset local learning data", timeoutMs = 3_000)
+            attempts++
+        }
         AccessibilityDriver.tapText("Reset local learning data")
         assertTrue("it asks first", AccessibilityDriver.waitForText("Reset Local Learning Data?"))
     }
