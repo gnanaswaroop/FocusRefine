@@ -117,7 +117,7 @@ class MainActivity : FragmentActivity() {
                     LegacyDataNotice(this@MainActivity)
                     MainStudioScreen(
                         isNotificationAccessEnabled = isNotifAccessEnabledState.value,
-                        isFilteringActive = prefs.getBoolean("service_running", true),
+                        isFilteringActive = prefs.getBoolean("service_running", false),
                         prefs = prefs,
                         onEnableNotificationAccess = {
                             try {
@@ -251,7 +251,11 @@ fun MainStudioScreen(
         }
     }
 
-    val database = AppDatabase.getDatabase(context)
+    // Opening the encrypted database takes a moment, so it happens off the main thread: the header and mode card draw
+    // first, and the inbox list fills in once the database is ready.
+    val database by produceState<AppDatabase?>(initialValue = null) {
+        value = withContext(Dispatchers.IO) { AppDatabase.getDatabase(context) }
+    }
 
     var isRunning by remember(isFilteringActive) { mutableStateOf(isFilteringActive) }
     var askLength by remember { mutableStateOf(false) }
@@ -259,7 +263,12 @@ fun MainStudioScreen(
     fun setFiltering(on: Boolean) {
         isRunning = on
         prefs.edit().putBoolean("service_running", on).apply()
-        context.sendBroadcast(Intent(NotificationFilterService.ACTION_TOGGLE_SERVICE).setPackage(context.packageName))
+        // Ask for this exact state: the service flips its state on ACTION_TOGGLE_SERVICE, which made the switch undo itself.
+        context.sendBroadcast(
+            Intent(NotificationFilterService.ACTION_SET_RUNNING)
+                .setPackage(context.packageName)
+                .putExtra(NotificationFilterService.EXTRA_RUNNING, on)
+        )
     }
     var currentTabUrgent by remember { mutableStateOf(false) } // false = Muted, true = Shown
     var searchQuery by remember { mutableStateOf("") }
@@ -332,7 +341,7 @@ fun MainStudioScreen(
 
     // A session that ends can pause filtering from outside this screen (alarm, notification button): follow the pref.
     LaunchedEffect(liveRefreshTrigger, refreshTrigger) {
-        if (isNotificationAccessEnabled) isRunning = prefs.getBoolean("service_running", true)
+        if (isNotificationAccessEnabled) isRunning = prefs.getBoolean("service_running", false)
     }
 
     if (askLength) {
@@ -351,20 +360,21 @@ fun MainStudioScreen(
     LaunchedEffect(isNotificationAccessEnabled) {
         if (!isNotificationAccessEnabled) {
             // Remember that we paused it, so granting access again turns filtering back on (a pause the user chose stays).
-            if (prefs.getBoolean("service_running", true)) prefs.edit().putBoolean("paused_for_access", true).apply()
+            if (prefs.getBoolean("service_running", false)) prefs.edit().putBoolean("paused_for_access", true).apply()
             isRunning = false
             prefs.edit().putBoolean("service_running", false).apply()
         } else {
             if (prefs.getBoolean("paused_for_access", false)) {
                 prefs.edit().putBoolean("service_running", true).putBoolean("paused_for_access", false).apply()
             }
-            isRunning = prefs.getBoolean("service_running", true)
+            isRunning = prefs.getBoolean("service_running", false)
         }
     }
 
-    LaunchedEffect(currentTabUrgent, searchQuery, currentMode, refreshTrigger, liveRefreshTrigger, reviewMode) {
+    LaunchedEffect(currentTabUrgent, searchQuery, currentMode, refreshTrigger, liveRefreshTrigger, reviewMode, database) {
+        val db = database ?: return@LaunchedEffect
         withContext(Dispatchers.IO) {
-            val dao = database.notificationDao()
+            val dao = db.notificationDao()
             notifications = if (reviewMode) {
                 dao.getUncertain(Confidence.UNCERTAIN_BELOW).filter {
                     searchQuery.isEmpty() || (it.title ?: "").contains(searchQuery, ignoreCase = true) || (it.text ?: "").contains(searchQuery, ignoreCase = true)

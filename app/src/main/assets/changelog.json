@@ -1,6 +1,34 @@
 {
   "releases": [
     {
+      "version": "1.1.6",
+      "date": "2026-11-08",
+      "title": "Filtering stays off until you turn it on",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "On a new install, granting notification access no longer turns filtering on by itself. It stays paused until you switch it on.",
+            "The notice asking for notification access goes away once access is granted."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.1.5",
+      "date": "2026-11-03",
+      "title": "Clearer inbox times and search",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "The full-screen Smart Inbox search has one magnifier button, so there is no second close button when search is open.",
+            "Notifications from earlier days show the date and time, and the year when it is not this year. Today's notifications show only the time."
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.1.4",
       "date": "2026-10-31",
       "title": "Smaller permissions",
