@@ -32,7 +32,7 @@ graph TD
 
 ### A. Background Notification Filtering (`NotificationFilterService`)
 - **Lifecycle**: Persistent Android Foreground Service (`specialUse`) implementing `NotificationListenerService`.
-- **Interruption Filter Safety**: Ensures system Do Not Disturb mode is **always restored to normal (`INTERRUPTION_FILTER_ALL`)** whenever service filtering is paused, stopped, or destroyed (`onDestroy`), preventing devices from being stuck in DND mode.
+- **Do Not Disturb**: The service never changes Android's Do Not Disturb setting. The app does not declare `ACCESS_NOTIFICATION_POLICY`, so it cannot get that access, and turning filtering on or off leaves Do Not Disturb as the user set it.
 - **Delegation**: The service no longer contains the decision logic. On `onCreate` it loads the (optional) Track B model via `EmbeddingClassifier.create(this)`, starts a background warm-up inference, and builds a `NotificationClassifier`; `onNotificationPosted` calls `classifier.classify(title, text, currentMode)`, then persists the result and cancels Muted notifications.
 
 ### B. Classification Engine (`NotificationClassifier.kt`)
