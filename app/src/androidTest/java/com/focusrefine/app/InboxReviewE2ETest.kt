@@ -46,6 +46,9 @@ class InboxReviewE2ETest {
     fun closeCallsAreFlaggedAndOneTapSettlesThem() {
         ActivityScenario.launch(MainActivity::class.java).use {
             assertTrue("the chip counts the close call", AccessibilityDriver.waitForText("Close calls (1)"))
+            // Muted notifications from one app are grouped; the close call's buttons show once the group is opened.
+            AccessibilityDriver.tapText("from Shell")
+            assertTrue(AccessibilityDriver.waitForText("tap to hide them"))
             assertTrue("the uncertain card carries a 'Not sure' pill", AccessibilityDriver.waitForText("Not sure"))
             assertTrue("and the one-tap choices", AccessibilityDriver.hasText("Show it"))
 
@@ -73,6 +76,8 @@ class InboxReviewE2ETest {
     fun keepingTheDecisionAlsoSettlesItAndTeachesTheApp() {
         ActivityScenario.launch(MainActivity::class.java).use {
             assertTrue(AccessibilityDriver.waitForText("Close calls (1)"))
+            AccessibilityDriver.tapText("from Shell") // the close call sits in its app's group until it is opened
+            assertTrue(AccessibilityDriver.waitForText("tap to hide them"))
             AccessibilityDriver.tapText("Keep muted")
 
             val deadline = System.currentTimeMillis() + 60_000
