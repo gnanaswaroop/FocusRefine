@@ -100,6 +100,9 @@ class ScreensE2ETest {
 
         ActivityScenario.launch(LearnedRulesActivity::class.java).use {
             AccessibilityDriver.tapText("Delete")
+            // Deleting asks first (the dialog's confirm button is also "Delete").
+            assertTrue("it asks first", AccessibilityDriver.waitForText("Delete Rule?"))
+            AccessibilityDriver.tapText("Delete")
             assertTrue("one rule and one lesson are gone", waitUntil(60_000) {
                 dao.getLearnedRules().size == 1 && PersonalLearning.correctionCount(context) == 1
             })
