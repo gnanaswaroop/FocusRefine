@@ -159,6 +159,7 @@ fun SettingsStudioScreen(
     val context = androidx.compose.ui.platform.LocalContext.current
     var showReclassifyDialog by remember { mutableStateOf(false) }
     var showClearInboxDialog by remember { mutableStateOf(false) }
+    var showResetLearningDialog by remember { mutableStateOf(false) }
     val defaultMode = remember { PromptManager.getDefaultModeName(context) }
     var currentMode by remember { mutableStateOf(prefs?.getString("current_mode", defaultMode) ?: defaultMode) }
     var filterStrengthIndex by remember { mutableStateOf(prefs?.getInt("filter_strength", 1) ?: 1) } // 0=Gentle, 1=Balanced, 2=Strict
@@ -673,8 +674,7 @@ fun SettingsStudioScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
-                                    prefs?.edit()?.putInt("suppressed_count", 0)?.apply()
-                                    Toast.makeText(context, "Local learning data reset", Toast.LENGTH_SHORT).show()
+                                    showResetLearningDialog = true
                                 },
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween
@@ -835,6 +835,34 @@ fun SettingsStudioScreen(
             }
 
             StudioFooter(text = "Private by design. Refined by you.")
+
+            if (showResetLearningDialog) {
+                AlertDialog(
+                    onDismissRequest = { showResetLearningDialog = false },
+                    title = { Text("Reset Learning Data?") },
+                    text = { Text("Are you sure you want to reset your local learning data? This action cannot be undone.") },
+                    confirmButton = {
+                        TextButton(
+                            onClick = {
+                                prefs?.edit()?.putInt("suppressed_count", 0)?.apply()
+                                Toast.makeText(context, "Local learning data reset", Toast.LENGTH_SHORT).show()
+                                showResetLearningDialog = false
+                            }
+                        ) {
+                            Text("Reset", color = StudioColors.RedText)
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { showResetLearningDialog = false }) {
+                            Text("Cancel", color = StudioColors.TextPrimary)
+                        }
+                    },
+                    containerColor = StudioColors.CardSurface,
+                    titleContentColor = Color.White,
+                    textContentColor = StudioColors.TextSecondary
+                )
+            }
+
             if (showClearInboxDialog) {
                 AlertDialog(
                     onDismissRequest = { showClearInboxDialog = false },
