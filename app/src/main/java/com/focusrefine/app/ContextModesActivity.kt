@@ -67,6 +67,7 @@ fun ContextModesScreen(
     var refreshTrigger by remember { mutableStateOf(0) }
 
     var showAddDialog by remember { mutableStateOf(false) }
+    var modeToDelete by remember { mutableStateOf<String?>(null) }
 
     val modeItems = remember(refreshTrigger, activeMode) {
         val list = mutableListOf<ContextModeInfo>()
@@ -220,20 +221,7 @@ fun ContextModesScreen(
                                     Spacer(modifier = Modifier.width(8.dp))
                                     IconButton(
                                         onClick = {
-                                            val existing = prefs.getString("custom_modes_list", "") ?: ""
-                                            val listCustom = existing.split(",").toMutableList()
-                                            listCustom.remove(modeInfo.name)
-                                            prefs.edit()
-                                                .putString("custom_modes_list", listCustom.joinToString(","))
-                                                .remove("custom_mode_prompt_${modeInfo.name}")
-                                                .remove("custom_mode_enabled_${modeInfo.name}")
-                                                .apply()
-                                            if (activeMode.equals(modeInfo.name, ignoreCase = true)) {
-                                                activeMode = "Commute"
-                                                prefs.edit().putString("current_mode", "Commute").apply()
-                                            }
-                                            refreshTrigger++
-                                            Toast.makeText(context, "Custom mode '${modeInfo.name}' deleted", Toast.LENGTH_SHORT).show()
+                                            modeToDelete = modeInfo.name
                                         },
                                         modifier = Modifier.size(24.dp).semantics { contentDescription = "Delete custom mode" }
                                     ) {
@@ -339,6 +327,42 @@ fun ContextModesScreen(
             }
 
             StudioFooter(text = "Private by design. Refined by you.")
+        }
+
+        if (modeToDelete != null) {
+            AlertDialog(
+                onDismissRequest = { modeToDelete = null },
+                title = { Text("Delete Mode?") },
+                text = { Text("Are you sure you want to delete the '${modeToDelete}' custom mode? This cannot be undone.") },
+                confirmButton = {
+                    TextButton(
+                        onClick = {
+                            val name = modeToDelete!!
+                            val existing = prefs.getString("custom_modes_list", "") ?: ""
+                            val listCustom = existing.split(",").toMutableList()
+                            listCustom.remove(name)
+                            prefs.edit()
+                                .putString("custom_modes_list", listCustom.joinToString(","))
+                                .remove("custom_mode_prompt_${name}")
+                                .remove("custom_mode_enabled_${name}")
+                                .apply()
+                            if (activeMode.equals(name, ignoreCase = true)) {
+                                activeMode = "Commute"
+                                prefs.edit().putString("current_mode", "Commute").apply()
+                            }
+                            refreshTrigger++
+                            Toast.makeText(context, "Custom mode '${name}' deleted", Toast.LENGTH_SHORT).show()
+                            modeToDelete = null
+                        }
+                    ) { Text("Delete", color = StudioColors.RedText) }
+                },
+                dismissButton = {
+                    TextButton(onClick = { modeToDelete = null }) { Text("Cancel") }
+                },
+                containerColor = StudioColors.CardSurface,
+                titleContentColor = Color.White,
+                textContentColor = StudioColors.TextSecondary
+            )
         }
 
         // Add Custom Mode Dialog
