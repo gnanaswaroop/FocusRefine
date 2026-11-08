@@ -24,7 +24,6 @@ class InboxReviewE2ETest {
 
     @Before
     fun setUp() {
-        ServiceHarness.grantNotificationAccess()
         context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE).edit()
             .putBoolean("use_ai_model", true).putBoolean("learn_from_choices", true).putString("current_mode", "Sleeping / Rest").commit()
         dao.deleteAll()

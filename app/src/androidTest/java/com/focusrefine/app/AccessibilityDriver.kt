@@ -1,8 +1,5 @@
 package com.focusrefine.app
 
-import android.accessibilityservice.AccessibilityService
-import android.app.UiAutomation
-import android.os.Build
 import android.view.accessibility.AccessibilityNodeInfo
 import androidx.test.platform.app.InstrumentationRegistry
 
@@ -12,29 +9,7 @@ import androidx.test.platform.app.InstrumentationRegistry
  * implement text search, so the tree is walked by hand.
  */
 object AccessibilityDriver {
-    private val instrumentation get() = InstrumentationRegistry.getInstrumentation()
-    private var shadeChecked = false
-
-    /**
-     * A notification shade or quick-settings panel left open over the app hides everything the tests look for (a
-     * whole class failed that way once). Close it the first time a test looks at the screen; a closed shade is
-     * not affected. Each test class runs in its own process, so once per process is enough.
-     */
-    fun closeOpenShade() {
-        if (shadeChecked) return
-        shadeChecked = true
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            instrumentation.uiAutomation.performGlobalAction(AccessibilityService.GLOBAL_ACTION_DISMISS_NOTIFICATION_SHADE)
-        } else {
-            ServiceHarness.shell("cmd statusbar collapse")
-        }
-        Thread.sleep(700)
-    }
-
-    private val automation: UiAutomation get() {
-        closeOpenShade()
-        return instrumentation.uiAutomation
-    }
+    private val automation get() = InstrumentationRegistry.getInstrumentation().uiAutomation
 
     private fun matches(node: AccessibilityNodeInfo, text: String) =
         node.text?.contains(text, ignoreCase = true) == true || node.contentDescription?.contains(text, ignoreCase = true) == true

@@ -93,7 +93,6 @@ class PersonalLearningFlowE2ETest {
 
     @Before
     fun setUp() {
-        AccessibilityDriver.closeOpenShade() // this class has its own tap helpers, so it closes an open shade itself
         context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE).edit()
             .putString("current_mode", mode).putBoolean("use_ai_model", true).putBoolean("service_running", true)
             .putInt("filter_strength", 1).putBoolean("learn_from_choices", true)

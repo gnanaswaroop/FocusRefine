@@ -22,28 +22,21 @@ import kotlinx.coroutines.launch
 class NotificationFilterService : NotificationListenerService() {
 
     private val TAG = "NotificationFilter"
-    // Created on first use, on a background thread. Opening the encrypted database and loading the model take a while,
-    // and onCreate runs on the main thread, where the app's first screen would otherwise wait for them.
-    private val database: AppDatabase by lazy { AppDatabase.getDatabase(this) }
+    private lateinit var database: AppDatabase
     // v2: the first channel was IMPORTANCE_DEFAULT, which makes sound and vibration on every count update, and a channel's
     // importance cannot be lowered after creation, so the quiet one is a new channel and the old one is deleted.
     private val CHANNEL_ID = "focusrefine_service_quiet"
     private val OLD_CHANNEL_ID = "focusrefine_service_channel"
     private val NOTIFICATION_ID = 1001
-    private val embeddingClassifier: EmbeddingClassifier? by lazy { EmbeddingClassifier.shared(this) }
-    private val classifier: NotificationClassifier by lazy { NotificationClassifier(this, database, embeddingClassifier) }
+    private var embeddingClassifier: EmbeddingClassifier? = null
+    private lateinit var classifier: NotificationClassifier
 
     private val toggleReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val prefs = context.getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
-            if (intent.action == ACTION_TOGGLE_SERVICE || intent.action == ACTION_SET_RUNNING) {
-                // The notification-bar button flips the state; the app's switch asks for an exact state, so a flip
-                // here would undo the app's own change. The app never changes Android's Do Not Disturb setting.
-                val newState = if (intent.action == ACTION_SET_RUNNING) {
-                    intent.getBooleanExtra(EXTRA_RUNNING, true)
-                } else {
-                    !prefs.getBoolean("service_running", false)
-                }
+            if (intent.action == ACTION_TOGGLE_SERVICE) {
+                val current = prefs.getBoolean("service_running", true)
+                val newState = !current
                 prefs.edit().putBoolean("service_running", newState).apply()
                 val count = prefs.getInt("suppressed_count", 0)
 
@@ -54,9 +47,19 @@ class NotificationFilterService : NotificationListenerService() {
                 context.sendBroadcast(stateIntent)
 
                 updateForegroundNotification(newState, count)
-                Log.d(TAG, "Service running set to $newState")
+                try {
+                    val manager = getSystemService(NotificationManager::class.java)
+                    if (manager.isNotificationPolicyAccessGranted) {
+                        if (newState) {
+                            manager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_PRIORITY)
+                        } else {
+                            manager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL)
+                        }
+                    }
+                } catch (_: Exception) {}
+                Log.d(TAG, "Service toggled from notification bar: running = $newState")
             } else if (intent.action == ACTION_UPDATE_COUNT) {
-                val isRunning = prefs.getBoolean("service_running", false)
+                val isRunning = prefs.getBoolean("service_running", true)
                 val count = prefs.getInt("suppressed_count", 0)
                 updateForegroundNotification(isRunning, count)
                 Log.d(TAG, "Foreground notification updated with count: $count")
@@ -68,9 +71,6 @@ class NotificationFilterService : NotificationListenerService() {
         /** True while this process has the service created. Home checks it so coming back to the app does not restart (and re-post) it. */
         @Volatile var isCreated = false
         const val ACTION_TOGGLE_SERVICE = "com.focusrefine.app.ACTION_TOGGLE_SERVICE"
-        /** Sets the running state to the boolean extra [EXTRA_RUNNING] instead of flipping it. */
-        const val ACTION_SET_RUNNING = "com.focusrefine.app.ACTION_SET_RUNNING"
-        const val EXTRA_RUNNING = "running"
         const val ACTION_UPDATE_COUNT = "com.focusrefine.app.ACTION_UPDATE_COUNT"
         const val ACTION_SERVICE_STATE_CHANGED = "com.focusrefine.app.ACTION_SERVICE_STATE_CHANGED"
         const val ACTION_NOTIFICATION_ARRIVED = "com.focusrefine.app.ACTION_NOTIFICATION_ARRIVED"
@@ -80,17 +80,20 @@ class NotificationFilterService : NotificationListenerService() {
     override fun onCreate() {
         super.onCreate()
         isCreated = true
+        database = AppDatabase.getDatabase(this)
         createNotificationChannel()
 
         val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
-        // Loads the model in the background, so the first decision does not wait for it.
-        Thread {
-            try { embeddingClassifier?.warmUp() } catch (e: Throwable) { Log.w(TAG, "Embedding warm-up failed: ${e.message}") }
-        }.start()
+        embeddingClassifier = EmbeddingClassifier.shared(this)
+        classifier = NotificationClassifier(this, database, embeddingClassifier)
+        embeddingClassifier?.let { engine ->
+            Thread {
+                try { engine.warmUp() } catch (e: Throwable) { Log.w(TAG, "Embedding warm-up failed: ${e.message}") }
+            }.start()
+        }
 
         val filter = IntentFilter().apply {
             addAction(ACTION_TOGGLE_SERVICE)
-            addAction(ACTION_SET_RUNNING)
             addAction(ACTION_UPDATE_COUNT)
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -100,7 +103,7 @@ class NotificationFilterService : NotificationListenerService() {
         }
 
         try {
-            val isRunning = prefs.getBoolean("service_running", false)
+            val isRunning = prefs.getBoolean("service_running", true)
             val count = prefs.getInt("suppressed_count", 0)
             startForeground(NOTIFICATION_ID, buildForegroundNotification(isRunning, count))
             Log.d(TAG, "Service Created & Started in Foreground")
@@ -111,7 +114,7 @@ class NotificationFilterService : NotificationListenerService() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
-        val isRunning = prefs.getBoolean("service_running", false)
+        val isRunning = prefs.getBoolean("service_running", true)
         val count = prefs.getInt("suppressed_count", 0)
 
         try {
@@ -211,7 +214,7 @@ class NotificationFilterService : NotificationListenerService() {
         }
 
         val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
-        val isRunning = prefs.getBoolean("service_running", false)
+        val isRunning = prefs.getBoolean("service_running", true)
         if (!isRunning) {
             return
         }
@@ -283,6 +286,13 @@ class NotificationFilterService : NotificationListenerService() {
         } catch (_: Exception) {
         }
         try {
+            val manager = getSystemService(NotificationManager::class.java)
+            if (manager.isNotificationPolicyAccessGranted) {
+                manager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL)
+            }
+        } catch (_: Exception) {
+        }
+        try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 stopForeground(STOP_FOREGROUND_REMOVE)
             } else {
@@ -300,6 +310,9 @@ class NotificationFilterService : NotificationListenerService() {
     override fun onTaskRemoved(rootIntent: Intent?) {
         try {
             val manager = getSystemService(NotificationManager::class.java)
+            if (manager.isNotificationPolicyAccessGranted) {
+                manager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL)
+            }
             manager.cancel(NOTIFICATION_ID)
             stopSelf()
         } catch (_: Exception) {}
