@@ -90,11 +90,7 @@ fun NotificationDetailScreen(
     var decidedByUser by remember { mutableStateOf(false) }
     var feedbackSubmitted by remember { mutableStateOf<Boolean?>(null) }
 
-    val appLabel = remember(packageName) {
-        val segments = packageName.split(".").filter { it.length > 2 && it !in setOf("com", "org", "net", "android", "apps", "app") }
-        val rawName = segments.lastOrNull() ?: packageName.substringAfterLast(".")
-        rawName.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
-    }
+    val appLabel = remember(packageName) { appNameFromPackage(packageName) }
 
     val displayExplanation = explanation.takeIf { !it.isNullOrBlank() }
         ?: (if (!isUrgent)
