@@ -43,6 +43,7 @@ class LearnedRulesActivity : FragmentActivity() {
                 var rules by remember { mutableStateOf(emptyList<NotificationEntity>()) }
                 var refreshTrigger by remember { mutableStateOf(0) }
                 var showClearConfirmDialog by remember { mutableStateOf(false) }
+                var ruleToDelete by remember { mutableStateOf<NotificationEntity?>(null) }
 
                 LaunchedEffect(refreshTrigger) {
                     withContext(Dispatchers.IO) {
@@ -157,17 +158,7 @@ class LearnedRulesActivity : FragmentActivity() {
                                                 Text("Toggle Status", fontSize = 12.sp)
                                             }
                                             OutlinedButton(
-                                                onClick = {
-                                                    lifecycleScope.launch(Dispatchers.IO) {
-                                                        val db = AppDatabase.getDatabase(this@LearnedRulesActivity)
-                                                        db.notificationDao().delete(rule)
-                                                        PersonalLearning.forget(this@LearnedRulesActivity, rule.title, rule.text)
-                                                        refreshTrigger++
-                                                        withContext(Dispatchers.Main) {
-                                                            Toast.makeText(this@LearnedRulesActivity, "Rule deleted", Toast.LENGTH_SHORT).show()
-                                                        }
-                                                    }
-                                                },
+                                                onClick = { ruleToDelete = rule },
                                                 colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
                                             ) {
                                                 Text("Delete", fontSize = 12.sp)
@@ -185,6 +176,38 @@ class LearnedRulesActivity : FragmentActivity() {
                             colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
                         ) {
                             Text("Clear All Learned Rules")
+                        }
+
+                        ruleToDelete?.let { rule ->
+                            AlertDialog(
+                                onDismissRequest = { ruleToDelete = null },
+                                title = { Text("Delete Rule?") },
+                                text = { Text("Are you sure you want to delete this learned rule?") },
+                                confirmButton = {
+                                    Button(
+                                        onClick = {
+                                            lifecycleScope.launch(Dispatchers.IO) {
+                                                val db = AppDatabase.getDatabase(this@LearnedRulesActivity)
+                                                db.notificationDao().delete(rule)
+                                                PersonalLearning.forget(this@LearnedRulesActivity, rule.title, rule.text)
+                                                refreshTrigger++
+                                                withContext(Dispatchers.Main) {
+                                                    Toast.makeText(this@LearnedRulesActivity, "Rule deleted", Toast.LENGTH_SHORT).show()
+                                                }
+                                            }
+                                            ruleToDelete = null
+                                        },
+                                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
+                                    ) {
+                                        Text("Delete")
+                                    }
+                                },
+                                dismissButton = {
+                                    TextButton(onClick = { ruleToDelete = null }) {
+                                        Text("Cancel")
+                                    }
+                                }
+                            )
                         }
 
                         if (showClearConfirmDialog) {
