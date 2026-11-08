@@ -58,7 +58,16 @@ class ScreensE2ETest {
         dao.insert(row("Gate", "Your gate has changed to B7, boarding in 10 minutes", urgent = false, ts = now))   // should be Shown while sleeping
         dao.insert(row("Myntra", "Lightning deal: 50% off sneakers", urgent = true, ts = now - 1000))     // should be Muted
         ActivityScenario.launch(SettingsActivity::class.java).use {
-            AccessibilityDriver.tapText("Learning") // its own card, outside Advanced Settings
+            // Its own card, outside Advanced Settings. A tap can land while the screen is still settling, so retry until
+            // the row shows, and never tap a card that is already open (that would collapse it).
+            AccessibilityDriver.waitForText("Learning")
+            var opened = AccessibilityDriver.hasText("Re-run classification on history")
+            var attempts = 0
+            while (!opened && attempts < 3) {
+                AccessibilityDriver.tapText("Learning")
+                opened = AccessibilityDriver.waitForText("Re-run classification on history", timeoutMs = 3_000)
+                attempts++
+            }
             AccessibilityDriver.tapText("Re-run classification on history")
             assertTrue("the confirmation dialog appears", AccessibilityDriver.waitForText("Re-run classification?"))
             AccessibilityDriver.tapText("Re-run")
@@ -99,6 +108,9 @@ class ScreensE2ETest {
         assertEquals(2, PersonalLearning.correctionCount(context))
 
         ActivityScenario.launch(LearnedRulesActivity::class.java).use {
+            AccessibilityDriver.tapText("Delete")
+            // Deleting asks first (the dialog's confirm button is also "Delete").
+            assertTrue("it asks first", AccessibilityDriver.waitForText("Delete Rule?"))
             AccessibilityDriver.tapText("Delete")
             assertTrue("one rule and one lesson are gone", waitUntil(60_000) {
                 dao.getLearnedRules().size == 1 && PersonalLearning.correctionCount(context) == 1
