@@ -4,3 +4,6 @@
 ## 2024-10-26 - Add confirmation dialog for "Clear Inbox"
 **Learning:** Destructive actions like clearing the entire notification inbox must require explicit user confirmation to prevent accidental data loss.
 **Action:** Always add an `AlertDialog` confirmation for permanent or destructive actions like clearing user history.
+## 2024-11-20 - Add empty state for empty lists
+**Learning:** Found that empty lists (like in LearnedRulesActivity) show up as completely blank screens without giving users feedback on why it's blank or what they are looking at.
+**Action:** Always add an empty state UI when rendering a dynamic list (e.g. `LazyColumn`) so that users understand that the list loaded successfully but has no contents yet.
