@@ -1,0 +1,29 @@
+I will fix the UX by adding an empty state for the `LazyColumn` in `LearnedRulesActivity.kt`. When `rules` is empty, it currently shows a blank screen below the header and the description. This makes the interface less intuitive. Adding an empty state with helpful guidance solves this.
+
+1.  **Modify `LearnedRulesActivity.kt`**: Check if `rules.isEmpty()`. If so, render a helpful empty state message below the description and instead of the `LazyColumn`.
+    *   ```kotlin
+<<<<<<< SEARCH
+                        // Rules List
+                        LazyColumn(
+=======
+                        if (rules.isEmpty()) {
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .fillMaxWidth(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = "No learned rules yet.",
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    fontSize = 14.sp
+                                )
+                            }
+                        } else {
+                        // Rules List
+                        LazyColumn(
+>>>>>>> REPLACE
+        ```
+    *   And don't forget to close the `else` brace at the end of the `LazyColumn`.
+2.  **Verify changes**: Run `pnpm lint` or `./gradlew lint` to check format and `./gradlew test` (or just verify the build) to make sure there are no syntax errors.
+3.  **Complete pre commit steps** to ensure proper testing, verification, review, and reflection are done.

@@ -92,76 +92,91 @@ class LearnedRulesActivity : FragmentActivity() {
                             modifier = Modifier.padding(bottom = 16.dp)
                         )
 
-                        // Rules List
-                        LazyColumn(
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxWidth(),
-                            verticalArrangement = Arrangement.spacedBy(10.dp)
-                        ) {
-                            items(rules) { rule ->
-                                Card(modifier = Modifier.fillMaxWidth()) {
-                                    Column(modifier = Modifier.padding(16.dp)) {
-                                        Row(
-                                            modifier = Modifier.fillMaxWidth(),
-                                            verticalAlignment = Alignment.CenterVertically
-                                        ) {
-                                            Text(
-                                                text = "${rule.title ?: "App"}: ${rule.text ?: ""}",
-                                                fontWeight = FontWeight.Bold,
-                                                fontSize = 15.sp,
-                                                modifier = Modifier.weight(1f)
-                                            )
-                                            Text(
-                                                text = if (rule.isUrgent) "Status: Shown" else "Status: Hidden",
-                                                fontWeight = FontWeight.Bold,
-                                                fontSize = 13.sp,
-                                                color = if (rule.isUrgent) Color(0xFF2E7D32) else MaterialTheme.colorScheme.error
-                                            )
-                                        }
-
-                                        if (!rule.synthesizedRule.isNullOrBlank()) {
-                                            Spacer(modifier = Modifier.height(6.dp))
-                                            Surface(
-                                                shape = androidx.compose.foundation.shape.RoundedCornerShape(4.dp),
-                                                color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f)
+                        if (rules.isEmpty()) {
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .fillMaxWidth(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = "No learned rules yet.",
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    fontSize = 14.sp
+                                )
+                            }
+                        } else {
+                            // Rules List
+                            LazyColumn(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .fillMaxWidth(),
+                                verticalArrangement = Arrangement.spacedBy(10.dp)
+                            ) {
+                                items(rules) { rule ->
+                                    Card(modifier = Modifier.fillMaxWidth()) {
+                                        Column(modifier = Modifier.padding(16.dp)) {
+                                            Row(
+                                                modifier = Modifier.fillMaxWidth(),
+                                                verticalAlignment = Alignment.CenterVertically
                                             ) {
                                                 Text(
-                                                    text = "✨ AI Rule: ${rule.synthesizedRule}",
-                                                    fontSize = 12.sp,
-                                                    fontWeight = FontWeight.Medium,
-                                                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                                                    text = "${rule.title ?: "App"}: ${rule.text ?: ""}",
+                                                    fontWeight = FontWeight.Bold,
+                                                    fontSize = 15.sp,
+                                                    modifier = Modifier.weight(1f)
+                                                )
+                                                Text(
+                                                    text = if (rule.isUrgent) "Status: Shown" else "Status: Hidden",
+                                                    fontWeight = FontWeight.Bold,
+                                                    fontSize = 13.sp,
+                                                    color = if (rule.isUrgent) Color(0xFF2E7D32) else MaterialTheme.colorScheme.error
                                                 )
                                             }
-                                        }
 
-                                        Spacer(modifier = Modifier.height(12.dp))
-                                        Row(
-                                            modifier = Modifier.fillMaxWidth(),
-                                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                                        ) {
-                                            OutlinedButton(
-                                                onClick = {
-                                                    lifecycleScope.launch(Dispatchers.IO) {
-                                                        val db = AppDatabase.getDatabase(this@LearnedRulesActivity)
-                                                        val updated = rule.copy(isUrgent = !rule.isUrgent)
-                                                        db.notificationDao().insert(updated)
-                                                        refreshTrigger++
-                                                        withContext(Dispatchers.Main) {
-                                                            Toast.makeText(this@LearnedRulesActivity, "Rule updated", Toast.LENGTH_SHORT).show()
-                                                        }
-                                                    }
-                                                },
-                                                modifier = Modifier.weight(1f)
-                                            ) {
-                                                Text("Toggle Status", fontSize = 12.sp)
+                                            if (!rule.synthesizedRule.isNullOrBlank()) {
+                                                Spacer(modifier = Modifier.height(6.dp))
+                                                Surface(
+                                                    shape = androidx.compose.foundation.shape.RoundedCornerShape(4.dp),
+                                                    color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f)
+                                                ) {
+                                                    Text(
+                                                        text = "✨ AI Rule: ${rule.synthesizedRule}",
+                                                        fontSize = 12.sp,
+                                                        fontWeight = FontWeight.Medium,
+                                                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                                                    )
+                                                }
                                             }
-                                            OutlinedButton(
-                                                onClick = { ruleToDelete = rule },
-                                                colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
+
+                                            Spacer(modifier = Modifier.height(12.dp))
+                                            Row(
+                                                modifier = Modifier.fillMaxWidth(),
+                                                horizontalArrangement = Arrangement.spacedBy(8.dp)
                                             ) {
-                                                Text("Delete", fontSize = 12.sp)
+                                                OutlinedButton(
+                                                    onClick = {
+                                                        lifecycleScope.launch(Dispatchers.IO) {
+                                                            val db = AppDatabase.getDatabase(this@LearnedRulesActivity)
+                                                            val updated = rule.copy(isUrgent = !rule.isUrgent)
+                                                            db.notificationDao().insert(updated)
+                                                            refreshTrigger++
+                                                            withContext(Dispatchers.Main) {
+                                                                Toast.makeText(this@LearnedRulesActivity, "Rule updated", Toast.LENGTH_SHORT).show()
+                                                            }
+                                                        }
+                                                    },
+                                                    modifier = Modifier.weight(1f)
+                                                ) {
+                                                    Text("Toggle Status", fontSize = 12.sp)
+                                                }
+                                                OutlinedButton(
+                                                    onClick = { ruleToDelete = rule },
+                                                    colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
+                                                ) {
+                                                    Text("Delete", fontSize = 12.sp)
+                                                }
                                             }
                                         }
                                     }
