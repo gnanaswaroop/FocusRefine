@@ -366,6 +366,44 @@ fun ContextModesScreen(
         }
 
         // Add Custom Mode Dialog
+        modeToDelete?.let { modeName ->
+            AlertDialog(
+                onDismissRequest = { modeToDelete = null },
+                title = { Text("Delete Custom Mode?", color = Color.White, fontWeight = FontWeight.Bold) },
+                text = { Text("Are you sure you want to delete the '$modeName' mode? This action cannot be undone.", color = StudioColors.TextSecondary) },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            val existing = prefs.getString("custom_modes_list", "") ?: ""
+                            val listCustom = existing.split(",").toMutableList()
+                            listCustom.remove(modeName)
+                            prefs.edit()
+                                .putString("custom_modes_list", listCustom.joinToString(","))
+                                .remove("custom_mode_prompt_${modeName}")
+                                .remove("custom_mode_enabled_${modeName}")
+                                .apply()
+                            if (activeMode.equals(modeName, ignoreCase = true)) {
+                                activeMode = "Commute"
+                                prefs.edit().putString("current_mode", "Commute").apply()
+                            }
+                            refreshTrigger++
+                            Toast.makeText(context, "Custom mode '$modeName' deleted", Toast.LENGTH_SHORT).show()
+                            modeToDelete = null
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = StudioColors.RedSurface)
+                    ) {
+                        Text("Delete", color = StudioColors.RedText)
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { modeToDelete = null }) {
+                        Text("Cancel", color = StudioColors.TextPrimary)
+                    }
+                },
+                containerColor = StudioColors.CardSurface
+            )
+        }
+
         if (showAddDialog) {
             var nameInput by remember { mutableStateOf("") }
             var promptInput by remember { mutableStateOf("") }
