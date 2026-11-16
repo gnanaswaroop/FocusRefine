@@ -8,7 +8,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.BitmapFactory
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.os.Build
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
@@ -109,6 +110,21 @@ class NotificationFilterService : NotificationListenerService() {
         }
     }
 
+    /**
+     * The app icon as a bitmap for the notification's large icon. The launcher icon is an adaptive-icon XML, which
+     * BitmapFactory cannot decode (it returns null), so it is drawn onto a bitmap instead. Without it the Always-On
+     * Display shows an empty circle.
+     */
+    private fun appIconBitmap(): Bitmap? {
+        val drawable = androidx.core.content.ContextCompat.getDrawable(this, R.mipmap.ic_launcher) ?: return null
+        val size = resources.getDimensionPixelSize(android.R.dimen.notification_large_icon_width).takeIf { it > 0 } ?: 192
+        val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, size, size)
+        drawable.draw(canvas)
+        return bitmap
+    }
+
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val prefs = getSharedPreferences("FocusRefinePrefs", Context.MODE_PRIVATE)
         val isRunning = prefs.getBoolean("service_running", false)
@@ -166,7 +182,7 @@ class NotificationFilterService : NotificationListenerService() {
             PendingIntent.FLAG_UPDATE_CURRENT or flagImmutable
         )
 
-        val appIconBitmap = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
+        val appIconBitmap = appIconBitmap()
 
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(getString(R.string.app_name))
